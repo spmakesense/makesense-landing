@@ -50,6 +50,7 @@ const html = `<!DOCTYPE html>
 <title>שיראל פרגר | MAKE SENSE — עד 30.6.26 אתה יכול לאחד. אחרי — לא.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --royal:#0d21a1;--royal-d:#081890;--royal-l:#1a33c8;
@@ -67,7 +68,7 @@ const html = `<!DOCTYPE html>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:'Arial','Helvetica',sans-serif;background:#fff;color:var(--onyx);direction:rtl;text-align:right;overflow-x:hidden;line-height:1.6}
-h1,h2,h3,.hero h1,.sec-h{font-family:'Arial','Helvetica',sans-serif}
+h1,h2,h3,.hero h1,.sec-h,.mort-title,.guide-title{font-family:'Rubik','Arial',sans-serif;letter-spacing:-.3px}
 a{color:inherit;text-decoration:none} img{max-width:100%;display:block} button{cursor:pointer;border:none;outline:none;font-family:inherit}
 .container{max-width:1140px;margin:0 auto;padding:0 24px}
 
@@ -332,7 +333,15 @@ footer a:hover{color:var(--amber)}
 .sticky-wa:hover{animation:none;transform:scale(1.1)}
 
 /* ── ANIMATIONS ───────────────────────────────────── */
-.fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+/* scroll animations */
+.fade-up{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease}
+.slide-right{opacity:0;transform:translateX(48px);transition:opacity .7s ease,transform .7s ease}
+.slide-left{opacity:0;transform:translateX(-48px);transition:opacity .7s ease,transform .7s ease}
+.scale-up{opacity:0;transform:scale(.93);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible,.slide-right.visible,.slide-left.visible,.scale-up.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.15s}
+@keyframes count-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 .fade-up.d1{transition-delay:.1s}.fade-up.d2{transition-delay:.2s}.fade-up.d3{transition-delay:.3s}
 
@@ -835,12 +844,12 @@ footer a:hover{color:var(--amber)}
 <section class="section sec-white" id="about">
   <div class="container">
     <div class="about-grid">
-      <div class="about-img-wrap fade-up">
+      <div class="about-img-wrap slide-right">
         <img class="about-img" src="${PHOTO}" alt="שיראל פרגר — MAKE SENSE"/>
         <div class="hfca-badge"><img src="${HFCA}" alt="חבר התאחדות"/></div>
         <div class="years-badge"><span class="num">500+</span><span class="lbl">משפחות שעזרתי להן</span></div>
       </div>
-      <div class="about-content fade-up d1">
+      <div class="about-content slide-left d1">
         <div class="about-tag"><span class="icon">${icons.user.replace('width="18" height="18"','width="14" height="14"')}</span>מי אני?</div>
         <h2>שיראל פרגר —<br/>הופך ידע בנקאי<br/><span class="g-text">לכסף פנוי בכיס</span></h2>
         <p>אני יועץ משכנתאות ופיננסי, ומתמחה בדיוק בנקודה שבה בנקים לא ממהרים לעזור: ארגון מחדש של הלוואות קיימות כדי לשחרר תזרים. עבדתי עם מאות משפחות שחיפשו "מאיפה לחסוך" — ורובן גילו שהתשובה לא היתה בצמצום, אלא בניהול חכם יותר של ההתחייבויות.</p>
@@ -891,8 +900,8 @@ footer a:hover{color:var(--amber)}
          'בקשה מסודרת מראה ניהול פיננסי חכם. <b>לקוח שמבין את הזכויות שלו — מקבל יחס אחר.</b>'],
         ['יש לי כבר יועץ / הבנק "ידאג לי".',
          'הבנק עובד בשביל הבנק — לא בשבילך. <b>אני מייצג אותך בלבד.</b> כל עמלה שאני חוסך לך — ישירות לכיסך.'],
-      ].map(([q,a])=>`
-      <div class="obj-card">
+      ].map(([q,a],i)=>`
+      <div class="obj-card scale-up" style="transition-delay:${(i%2)*0.08+Math.floor(i/2)*0.12}s">
         <div class="obj-q">
           <div class="obj-q-icon"><span class="icon">${icons.help.replace('width="18" height="18"','width="12" height="12"')}</span></div>
           ${q}
@@ -901,7 +910,7 @@ footer a:hover{color:var(--amber)}
       </div>`).join('')}
     </div>
 
-    <div class="not-for-box" role="region" aria-label="למי מתאים ולמי לא">
+    <div class="not-for-box fade-up" role="region" aria-label="למי מתאים ולמי לא">
       <div>
         <div class="not-for-title"><span class="icon">${icons.ban.replace('width="22" height="22"','width="16" height="16"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>למי זה <u>לא</u> מתאים</div>
         <ul class="not-for-list">
@@ -1280,7 +1289,7 @@ function tick(){
 tick();setInterval(tick,1000);
 function tog(el){const item=el.parentElement,open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open')}
 const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+document.querySelectorAll('.fade-up,.slide-right,.slide-left,.scale-up').forEach(el=>io.observe(el));
 const sl=document.getElementById('steps-line');
 if(sl){new IntersectionObserver(([e])=>{if(e.isIntersecting)sl.classList.add('animated')},{threshold:.3}).observe(sl)}
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
