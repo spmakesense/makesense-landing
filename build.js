@@ -55,6 +55,11 @@ const html = `<!DOCTYPE html>
 :root{
   --royal:#0d21a1;--royal-d:#081890;--royal-l:#1a33c8;
   --amber:#FF9D00;--amber-d:#e08800;--amber-l:#ffb733;
+  --teal:#3BBDD4;--teal-l:#e8f8fb;
+  --coral:#E5614A;--coral-l:#fef0ee;
+  --lime:#8BB84A;--lime-l:#f2f7e8;
+  --orange:#F0A030;--orange-l:#fef4e4;
+  --sky:#4A9BD4;--sky-l:#eaf3fb;
   --white:#ffffff;--off:#f9fafb;--g50:#f4f5f7;--g100:#eef0f2;
   --g200:#dde0e6;--g400:#9ca3af;--g600:#6b7280;--g800:#1f2937;
   --onyx:#141414;--red-bg:#fef2f2;--red:#dc2626;--green:#16a34a;
@@ -353,17 +358,80 @@ footer a:hover{color:var(--amber)}
   .wakeup-grid{grid-template-columns:1fr 1fr}
   .law-callout{grid-template-columns:1fr;gap:18px}
 }
+/* ── TABLET ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .hero-card{max-width:520px;margin:0 auto}
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  .about-img{width:60%;max-width:280px}
+  .guide-grid,.mort-grid{grid-template-columns:1fr;gap:28px}
+}
+/* ── MOBILE ── */
 @media(max-width:640px){
-  .who-grid,.steps-grid,.testi-grid,.cost-grid,.wakeup-grid{grid-template-columns:1fr}
-  .trust-band .inner{gap:4px}
-  .t-item{padding:8px 16px}
-  .t-item::after{display:none}
-  .cta-box{padding:36px 24px}
+  .container{padding:0 16px}
+  .section{padding:52px 0}
+  .sec-h{font-size:clamp(22px,5.5vw,30px)}
+  .sec-p{font-size:14px}
+
+  /* navbar */
+  .nav-top{padding:8px 0 6px}
+  .nav-logo img{height:60px}
+  .nav-links{display:none}
+  .nav-cta{font-size:13px;padding:9px 18px}
+
+  /* hero */
+  .hero{padding:32px 0 0}
+  .hero-grid{grid-template-columns:1fr;gap:24px}
+  .hero h1{font-size:clamp(24px,6vw,32px);line-height:1.18}
+  .hero-sub{font-size:15px}
   .hero-ctas,.cta-btns{flex-direction:column}
-  .btn-wa,.btn-ghost,.btn-primary-big,.btn-phone{justify-content:center}
-  .deadline-card{flex-direction:column;text-align:center}
+  .btn-wa,.btn-ghost,.btn-primary-big,.btn-phone{justify-content:center;width:100%}
+  .hero-card{padding:22px 18px}
   .cd-num{font-size:28px}
-  .hero{padding:40px 0 0}
+  .hero-trust{font-size:12px;gap:8px}
+  .hero-trust .sep{display:none}
+
+  /* ticker */
+  .ticker{font-size:12px;padding:7px 0}
+  .ticker-inner{gap:6px}
+
+  /* grids */
+  .who-grid,.steps-grid,.testi-grid,.cost-grid,.wakeup-grid,
+  .obj-grid,.videos-grid,.videos-grid-2{grid-template-columns:1fr}
+  .not-for-box{grid-template-columns:1fr}
+
+  /* trust band */
+  .trust-band .inner{gap:4px;flex-wrap:wrap;justify-content:center}
+  .t-item{padding:8px 14px}
+  .t-item::after{display:none}
+
+  /* about */
+  .about-grid{grid-template-columns:1fr;gap:24px}
+  .about-img{width:70%;max-width:240px}
+  .about-img-wrap{text-align:center}
+  .years-badge,.hfca-badge{transform:scale(.85)}
+
+  /* cta */
+  .cta-box{padding:32px 18px}
+  .deadline-card{flex-direction:column;text-align:center}
+
+  /* sticky wa */
+  .sticky-wa{left:12px;bottom:16px;padding:10px 14px}
+  .sticky-wa-text span:last-child{display:none}
+
+  /* acc widget */
+  .acc-btn{width:42px;height:42px;bottom:70px;left:12px}
+  .acc-panel{left:12px;width:calc(100vw - 24px);bottom:120px}
+
+  /* popup */
+  .popup-box{margin:0 8px;max-height:96vh;overflow-y:auto}
+  .popup-opts.grid2{grid-template-columns:1fr 1fr}
+
+  /* misc */
+  .nav-cta span.icon{display:none}
+  .faq-q{font-size:14px}
+  .guide-card,.mort-card{padding:24px 18px}
+  .whisper{margin:20px 0}
 }
 
 /* ── ACCESSIBILITY WIDGET ───────────────────────────── */
@@ -451,6 +519,42 @@ footer a:hover{color:var(--amber)}
   .guide-grid{grid-template-columns:1fr}
   .guide-title{font-size:26px}
 }
+
+/* ── WHISPER BOXES (scattered objections) ───────────── */
+.whisper{display:flex;align-items:flex-start;gap:14px;background:rgba(13,33,161,.04);border-right:4px solid var(--royal);border-radius:0 var(--r-md) var(--r-md) 0;padding:18px 20px;margin:32px 0;max-width:640px}
+.whisper.amber-border{border-right-color:var(--amber);background:rgba(255,157,0,.05)}
+.whisper.green-border{border-right-color:var(--lime);background:rgba(139,184,74,.05)}
+.whisper-icon{width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:var(--sh-xs);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.whisper-icon svg{stroke:var(--royal)}
+.whisper.amber-border .whisper-icon svg{stroke:var(--amber-d)}
+.whisper-body{}
+.whisper-q{font-size:14px;font-weight:800;color:var(--onyx);margin-bottom:4px}
+.whisper-a{font-size:13px;color:var(--g600);line-height:1.6}
+.whisper-a b{color:var(--onyx)}
+
+/* ── SERVICES INFOGRAPHIC ────────────────────────────── */
+.services-section{background:#fff;padding:80px 0}
+.services-hex{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md)}
+.srv{padding:28px 22px;position:relative;transition:filter .2s}
+.srv:hover{filter:brightness(1.04)}
+.srv-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.srv-icon svg{stroke:#fff;stroke-width:1.8}
+.srv h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:6px;line-height:1.3}
+.srv p{font-size:12px;color:rgba(255,255,255,.88);line-height:1.6}
+.srv.teal{background:linear-gradient(135deg,#3BBDD4,#29a8bf)}
+.srv.sky{background:linear-gradient(135deg,#4A9BD4,#3787c0)}
+.srv.coral{background:linear-gradient(135deg,#E5614A,#d04d38)}
+.srv.orange{background:linear-gradient(135deg,#F0A030,#dc8f1e)}
+.srv.lime{background:linear-gradient(135deg,#8BB84A,#79a33c)}
+.srv.royal{background:linear-gradient(135deg,var(--royal),var(--royal-l))}
+.srv-center{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--onyx);padding:32px 20px;text-align:center}
+.srv-center img{height:52px;margin:0 auto 12px;filter:brightness(0) invert(1)}
+.srv-center p{font-size:11px;color:rgba(255,255,255,.55);line-height:1.5}
+@media(max-width:700px){
+  .services-hex{grid-template-columns:1fr 1fr}
+  .srv-center{grid-column:1/3;grid-row:auto}
+}
+@media(max-width:440px){.services-hex{grid-template-columns:1fr}.srv-center{grid-column:1}}
 
 /* ── OBJECTIONS SECTION ──────────────────────────────── */
 .obj-section{background:var(--g50);padding:80px 0}
@@ -591,7 +695,7 @@ footer a:hover{color:var(--amber)}
   <div class="ticker-inner">
     <span class="t-dot"></span>
     <span class="icon" style="line-height:0">${icons.alert.replace('width="18" height="18"','width="14" height="14"')}</span>
-    <b>הוראת בנק ישראל — חוזר 2840:</b>
+    <b>הוראת בנק ישראל החדשה:</b>
     מ-1.7.2026 לא ניתן לאחד הלוואות לכל מטרה למשכנתא. נותרו:&nbsp;<b id="ticker-cd">—</b>
   </div>
 </div>
@@ -675,7 +779,7 @@ footer a:hover{color:var(--amber)}
         </div>
         <div class="reg-pill">
           <span class="icon">${icons.file.replace('width="18" height="18"','width="16" height="16"')}</span>
-          <div><strong>חוזר בנק ישראל 2840 (2026)</strong> — הלוואות לכל מטרה המשועבדות לנכס ייכנסו למגבלת ה-40% DTI. מי שלא יאחד לפני 30.6.26 — לא יוכל לאחד כלל.</div>
+          <div><strong>הוראת בנק ישראל החדשה (2026)</strong> — הלוואות לכל מטרה המשועבדות לנכס ייכנסו למגבלת ה-40% DTI. מי שלא יאחד לפני 30.6.26 — לא יוכל לאחד כלל.</div>
         </div>
       </div>
 
@@ -705,8 +809,7 @@ footer a:hover{color:var(--amber)}
 <section class="section sec-gray" id="problem">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px">
-      <div class="tag"><span class="icon">${icons.alert.replace('width="18" height="18"','width="13" height="13"')}</span>מה בדיוק קורה?</div>
-      <h2 class="sec-h">הבנק לא יזכיר לך את זה.<br/><span class="g-text">אבל אתה חייב לדעת.</span></h2>
+            <h2 class="sec-h">הבנק לא יזכיר לך את זה.<br/><span class="g-text">אבל אתה חייב לדעת.</span></h2>
       <p class="sec-p" style="margin:12px auto 0">רוב בעלי הנכסים בישראל משלמים מאות ואלפי שקלים מיותרים כל חודש — ויש להם עד 30.6.26 לתקן את זה.</p>
     </div>
     <div class="wakeup-grid">
@@ -717,7 +820,7 @@ footer a:hover{color:var(--amber)}
       </div>
       <div class="wcard fade-up d1">
         <div class="wcard-icon amber"><span class="icon">${icons.chart}</span></div>
-        <h3>מה בנק ישראל שינה בחוזר 2840?</h3>
+        <h3>מה בנק ישראל שינה בהוראה החדשה?</h3>
         <p>החל מ-1.7.2026, הלוואות "לכל מטרה" על נכס ייחשבו כחלק ממגבלת ה-DTI (40%). בפועל — הבנק לא יוכל לאחד אותן למשכנתא. החלון שקיים היום ייסגר לגמרי.</p>
       </div>
       <div class="wcard fade-up d2">
@@ -735,7 +838,7 @@ footer a:hover{color:var(--amber)}
       <div class="law-icon-wrap"><span class="icon">${icons.scale}</span></div>
       <div>
         <h3>מה בדיוק אומרת הרגולציה?</h3>
-        <p>חוזר 2840 של בנק ישראל (2026) קובע שסך כל ההחזרים להלוואות דיור — כולל "הלוואות לכל מטרה" המשועבדות לנכס — יוגבל ל-<strong>40% מההכנסה הפנויה</strong>. היום, לפני 30.6.26, ניתן לאחד לפני שהחישוב הזה נכנס לתוקף.</p>
+        <p>הוראת בנק ישראל החדשה קובעת שסך כל ההחזרים להלוואות דיור — כולל "הלוואות לכל מטרה" המשועבדות לנכס — יוגבל ל-<strong>40% מההכנסה הפנויה</strong>. היום, לפני 30.6.26, ניתן לאחד לפני שהחישוב הזה נכנס לתוקף.</p>
         <div class="law-hl">
           <span class="icon">${icons.alert.replace('width="18" height="18"','width="15" height="15"')}</span>
           מי שיפעל לפני 30.6.26 — יוכל לאחד, לחסוך ולארגן מחדש. מי שיחכה — הבנק פשוט לא יאשר.
@@ -749,8 +852,7 @@ footer a:hover{color:var(--amber)}
 <section class="section sec-white" id="who">
   <div class="container">
     <div style="text-align:center;margin-bottom:40px">
-      <div class="tag"><span class="icon">${icons.users.replace('width="18" height="18"','width="13" height="13"')}</span>למי זה רלוונטי?</div>
-      <h2 class="sec-h">תענה על שאלה אחת:<br/><span class="g-text">האם זה אתה?</span></h2>
+            <h2 class="sec-h">תענה על שאלה אחת:<br/><span class="g-text">האם זה אתה?</span></h2>
     </div>
     <div class="who-grid">
       <div class="who-card fade-up">
@@ -771,6 +873,17 @@ footer a:hover{color:var(--amber)}
     </div>
   </div>
 </section>
+
+<!-- WHISPER: not sure it applies to me -->
+<div class="container">
+  <div class="whisper amber-border">
+    <div class="whisper-icon">${icons.help.replace('width="18" height="18"','width="16" height="16"')}</div>
+    <div class="whisper-body">
+      <div class="whisper-q">ומה אם לא ברור לי אם בכלל יש לי מה לעשות?</div>
+      <div class="whisper-a">זה בדיוק מה שבודקים בשיחת האבחון. <b>רוב האנשים שחשבו "לא מתאים" — גילו פוטנציאל שלא ידעו עליו.</b> 20 דקות ויש תשובה ברורה.</div>
+    </div>
+  </div>
+</div>
 
 <!-- COST -->
 <section class="cost-section">
@@ -811,8 +924,7 @@ footer a:hover{color:var(--amber)}
 <section class="section sec-gray" id="how-it-works">
   <div class="container">
     <div style="text-align:center;margin-bottom:56px">
-      <div class="tag"><span class="icon">${icons.refresh.replace('width="18" height="18"','width="13" height="13"')}</span>תהליך העבודה</div>
-      <h2 class="sec-h">3 צעדים —<br/><span class="g-text">מהשיחה הראשונה לכסף בכיס</span></h2>
+            <h2 class="sec-h">3 צעדים —<br/><span class="g-text">מהשיחה הראשונה לכסף בכיס</span></h2>
     </div>
     <div class="steps-wrap">
       <div class="steps-line" id="steps-line"></div>
@@ -839,6 +951,63 @@ footer a:hover{color:var(--amber)}
     </div>
   </div>
 </section>
+
+<!-- SERVICES INFOGRAPHIC -->
+<section class="services-section" id="services" aria-labelledby="srv-heading">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <h2 class="sec-h" id="srv-heading">בכל צומת דרכים משמעותית בחיים<br/><span class="g-text">מעורבת משכנתה</span></h2>
+      <p class="sec-p" style="margin:10px auto 0">שיראל מתמחה בכל סוגי המשכנתאות — בכל שלב בחיים</p>
+    </div>
+    <div class="services-hex">
+      <div class="srv teal fade-up">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <h3>זוג מתחתן</h3>
+        <p>משכנתה לדירה ראשונה — תכנון נכון מהיום הראשון</p>
+      </div>
+      <div class="srv-center">
+        <img src="${LOGO}" alt="MAKE SENSE"/>
+        <p>יעוץ פיננסי וליווי לחופש כלכלי<br/>משכנתאות | כלכלת המשפחה | עסקים</p>
+      </div>
+      <div class="srv sky fade-up d1">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+        <h3>הקמת עסק</h3>
+        <p>רכישת משרד, מכונות, השקעה למטרה עסקית</p>
+      </div>
+      <div class="srv lime fade-up d2">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>משפחה</h3>
+        <p>שיפור דיור, בניה עצמית, שדרוג נכס</p>
+      </div>
+      <div class="srv coral fade-up d3">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg></div>
+        <h3>גיל השלישי</h3>
+        <p>משכנתה הפוכה לבני 55+ — קצבה חודשית או סכום חד-פעמי</p>
+      </div>
+      <div class="srv orange fade-up d4">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>משקיעים</h3>
+        <p>גיוס הון בשעבוד נכס קיים — לרכישת נכסים נוספים בארץ ובחו"ל</p>
+      </div>
+      <div class="srv royal fade-up d5">
+        <div class="srv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>משכנתה לכל מטרה</h3>
+        <p>שיפוץ, תוספת בניה, איחוד הלוואות, מימון לימודים, הלוואות רכב, עזרה לקרוב משפחה</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHISPER: process fit -->
+<div class="container">
+  <div class="whisper">
+    <div class="whisper-icon">${icons.help.replace('width="18" height="18"','width="16" height="16"')}</div>
+    <div class="whisper-body">
+      <div class="whisper-q">ומה אם אין לי זמן לעסוק בתהליך ארוך?</div>
+      <div class="whisper-a">שיחת אבחון — <b>20 דקות בטלפון.</b> התכנית מגיעה תוך 48 שעות. אתה לא צריך לעשות כלום — אני מנהל את הכל מול הבנק בשבילך.</div>
+    </div>
+  </div>
+</div>
 
 <!-- ABOUT -->
 <section class="section sec-white" id="about">
@@ -869,76 +1038,22 @@ footer a:hover{color:var(--amber)}
   </div>
 </section>
 
-<!-- OBJECTIONS -->
-<section class="obj-section" id="objections" aria-labelledby="obj-heading">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:8px">
-      <div class="tag"><span class="icon">${icons.help.replace('width="18" height="18"','width="13" height="13"')}</span>שאלות אמיתיות</div>
-      <h2 class="sec-h" id="obj-heading">מה עובר לך בראש<br/><span class="g-text">עכשיו בזמן שאתה קורא?</span></h2>
-      <p class="sec-p" style="margin:10px auto 0">ריכזתי את כל החששות שאני שומע — עם תשובות ישרות</p>
-    </div>
-
-    <div class="obj-grid">
-      ${[
-        ['כמה זה עולה לי?',
-         'שיחת אבחון — <b>חינמית לחלוטין.</b> אם נמשיך: שכ"ט מוסכם מראש, שקוף, ללא הפתעות. לא גובה עמלות מהבנק.'],
-        ['אני לא בטוח שאני מתאים.',
-         'רוב האנשים חושבים כך. <b>20 דקות אבחון — ואנחנו יודעים.</b> שמעתי "לא מתאים" מלקוחות שחסכו 2,000 ₪ בחודש.'],
-        ['אני יכול לדבר לבד עם הבנק.',
-         'אפשר. אבל הבנק בא מוכן — אתה לא. <b>הפרש ריבית ממוצע שאני משיג ללקוחות: 0.4%–0.8%.</b> על 200K ₪ זה 1,600 ₪ בשנה.'],
-        ['כבר פניתי לבנק — הם אמרו לא.',
-         '<b>הבנק ענה למה שביקשת</b> — לא למה שאפשר לבקש. ניסיון זה לדעת איך לנסח, מה להביא, ואיך לנהל מו"מ.'],
-        ['אין לי זמן לעסוק בזה.',
-         '<b>20 דקות</b> שיחה. <b>48 שעות</b> לתכנית. <b>3–6 שבועות</b> לתוצאה. לעומת: תשלום ריביות מיותרות לשנים.'],
-        ['זה נשמע טוב מדי להיות אמיתי.',
-         'לא קסם — <b>פעולה מפוקחת ע"י בנק ישראל.</b> מאות משפחות עשו זאת. הלקוחות בדף הזה — אמיתיים, עם שמות.'],
-        ['מה יקרה לדירוג האשראי שלי?',
-         'תהליך נכון לא פוגע בדירוג. <b>הפחתת חוב פעיל בריבית גבוהה — משפרת אותו לאורך זמן.</b> נבדוק לפני שמגישים כל בקשה.'],
-        ['אולי עדיף לחכות שהריבית תרד?',
-         'ריבית פריים — לא ידוע מתי תרד ובכמה. <b>מ-1.7.2026 — האיחוד חסום בחוק.</b> החלון לא מחכה לריבית.'],
-        ['אני לא רוצה שהבנק "יסתכל עלי" לרעה.',
-         'בקשה מסודרת מראה ניהול פיננסי חכם. <b>לקוח שמבין את הזכויות שלו — מקבל יחס אחר.</b>'],
-        ['יש לי כבר יועץ / הבנק "ידאג לי".',
-         'הבנק עובד בשביל הבנק — לא בשבילך. <b>אני מייצג אותך בלבד.</b> כל עמלה שאני חוסך לך — ישירות לכיסך.'],
-      ].map(([q,a],i)=>`
-      <div class="obj-card scale-up" style="transition-delay:${(i%2)*0.08+Math.floor(i/2)*0.12}s">
-        <div class="obj-q">
-          <div class="obj-q-icon"><span class="icon">${icons.help.replace('width="18" height="18"','width="12" height="12"')}</span></div>
-          ${q}
-        </div>
-        <div class="obj-a">${a}</div>
-      </div>`).join('')}
-    </div>
-
-    <div class="not-for-box fade-up" role="region" aria-label="למי מתאים ולמי לא">
-      <div>
-        <div class="not-for-title"><span class="icon">${icons.ban.replace('width="22" height="22"','width="16" height="16"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>למי זה <u>לא</u> מתאים</div>
-        <ul class="not-for-list">
-          <li><span class="icon">${icons.ban.replace('width="22" height="22"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>סה"כ הלוואות מחוץ למשכנתה מתחת ל-₪50,000</li>
-          <li><span class="icon">${icons.ban.replace('width="22" height="22"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>מתכנן למכור את הנכס בשנה הקרובה</li>
-          <li><span class="icon">${icons.ban.replace('width="22" height="22"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>ניצול נכס (LTV) גבוה מ-75% ללא גמישות</li>
-          <li><span class="icon">${icons.ban.replace('width="22" height="22"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--red)"')}</span>מחפש פתרון קסם — בלי להבין מספרים</li>
-        </ul>
-      </div>
-      <div>
-        <div class="not-for-title" style="color:var(--green)"><span class="icon">${icons.check.replace('width="14" height="14"','width="16" height="16"').replace('stroke="currentColor"','stroke="var(--green)"')}</span>למי זה <u>כן</u> מתאים</div>
-        <ul class="not-for-list for-list">
-          <li><span class="icon">${icons.check.replace('width="14" height="14"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--green)"')}</span>יש לך נכס עם הלוואות מחוץ למשכנתה</li>
-          <li><span class="icon">${icons.check.replace('width="14" height="14"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--green)"')}</span>ההחזר החודשי לוחץ על התזרים</li>
-          <li><span class="icon">${icons.check.replace('width="14" height="14"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--green)"')}</span>רוצה לדעת בדיוק מה המצב — ולפעול בזמן</li>
-          <li><span class="icon">${icons.check.replace('width="14" height="14"','width="13" height="13"').replace('stroke="currentColor"','stroke="var(--green)"')}</span>מעדיף מישהו שעובד בשבילו — לא בשביל הבנק</li>
-        </ul>
-      </div>
+<!-- WHISPER: credibility + price -->
+<div class="container">
+  <div class="whisper green-border">
+    <div class="whisper-icon">${icons.help.replace('width="18" height="18"','width="16" height="16"')}</div>
+    <div class="whisper-body">
+      <div class="whisper-q">ומה אם זה עולה הרבה ולא שווה?</div>
+      <div class="whisper-a">שיחת האבחון חינמית. שכ"ט — <b>רק אם נמשיך, מוסכם מראש.</b> הלקוחות שמופיעים כאן חסכו בין 1,000 ל-3,100 ₪ בחודש. מהשקל הראשון — אתה ברווח.</div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- TESTIMONIALS -->
 <section class="section sec-gray" id="testimonials">
   <div class="container">
     <div style="text-align:center;margin-bottom:40px">
-      <div class="tag"><span class="icon">${icons.star.replace('width="16" height="16"','width="13" height="13"')}</span>תוצאות אמיתיות</div>
-      <h2 class="sec-h">משפחות שפעלו בזמן —<br/><span class="g-text">ומרגישות את זה בכיס</span></h2>
+            <h2 class="sec-h">משפחות שפעלו בזמן —<br/><span class="g-text">ומרגישות את זה בכיס</span></h2>
     </div>
     <div class="testi-grid">
       <div class="testi-card fade-up">
@@ -982,8 +1097,7 @@ footer a:hover{color:var(--amber)}
 <section class="videos-section" id="videos">
   <div class="container">
     <div style="text-align:center;margin-bottom:8px">
-      <div class="tag"><span class="icon">${icons.star.replace('width="16" height="16"','width="13" height="13"')}</span>לקוחות ממליצים</div>
-      <h2 class="sec-h">הם כבר פעלו —<br/><span class="g-text">תשמע ישירות מהם</span></h2>
+            <h2 class="sec-h">הם כבר פעלו —<br/><span class="g-text">תשמע ישירות מהם</span></h2>
       <p class="sec-p" style="margin:10px auto 0">לא מילים שלי — סרטונים אמיתיים מלקוחות שחסכו אלפי שקלים בחודש</p>
     </div>
     <div class="videos-grid">
@@ -1094,13 +1208,12 @@ footer a:hover{color:var(--amber)}
 <section class="section sec-white" id="faq">
   <div class="container">
     <div style="text-align:center;margin-bottom:40px">
-      <div class="tag"><span class="icon">${icons.help.replace('width="18" height="18"','width="13" height="13"')}</span>שאלות נפוצות</div>
-      <h2 class="sec-h">שאלת? <span class="g-text">כנראה כבר שאלו לפניך</span></h2>
+            <h2 class="sec-h">שאלת? <span class="g-text">כנראה כבר שאלו לפניך</span></h2>
     </div>
     <div class="faq-wrap">
       ${[
         ['מה זה "איחוד הלוואות לתוך המשכנתא" בפשטות?','לוקחים את כל ההלוואות שלך — הלוואות אישיות, "לכל מטרה" על הנכס, הלוואות שיפוץ — ומשלבים אותן לתוך משכנתא אחת. התוצאה: ריבית נמוכה יותר, החזר חודשי נמוך יותר, וסדר כלכלי.'],
-        ['למה דווקא עד 30.6.2026? מה ישתנה?','חוזר בנק ישראל 2840 קובע שמ-1.7.2026 הלוואות "לכל מטרה" על נכס ייחשבו בחישוב ה-DTI המוגבל ל-40%. בפועל — הבנק לא יוכל לאשר איחוד כי יחרוג מהמגבלה. כיום, לפני 30.6.26, החלון עדיין פתוח.'],
+        ['למה דווקא עד 30.6.2026? מה ישתנה?','הוראת בנק ישראל קובעת שמ-1.7.2026 הלוואות "לכל מטרה" על נכס ייחשבו בחישוב ה-DTI המוגבל ל-40%. בפועל — הבנק לא יוכל לאשר איחוד כי יחרוג מהמגבלה. כיום, לפני 30.6.26, החלון עדיין פתוח.'],
         ['כמה כסף אפשר לחסוך? יש מספרים?','זה תלוי בגובה ההלוואות וריביותיהן. הלקוחות שעבדתי איתם חוסכים בין 1,000 ל-3,500 ₪ בחודש. על הלוואה של 200,000 ₪ בריבית של 8% — משלמים 16,000 ₪ ריבית בשנה. איחוד לריבית של 4.5% חוסך 7,000 ₪ בשנה — ו-70,000 ₪ על 10 שנים.'],
         ['האם כל אחד יכול לאחד?','לא כולם מתאימים — זה תלוי ב-LTV (שיעור ניצול הנכס), ה-DTI (יחס ההחזר להכנסה), ומצב ההלוואות הקיים. בדיוק בשביל זה שיחת האבחון קיימת — תוך 20 דקות אנחנו יודעים אם יש כאן פוטנציאל.'],
         ['כמה עולה הייעוץ?','שיחת האבחון הראשונית וניתוח הכלכלי — חינמיים לחלוטין. אם נחליט להמשיך, שכ"ט מוסכם מראש ושקוף, ללא הפתעות. לא גובה עמלות מהבנק — עובד בשבילך בלבד.'],
