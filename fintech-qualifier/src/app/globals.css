@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --royal: #0d21a1;
+  --royal-d: #081890;
+  --royal-l: #1a33c8;
+  --amber: #FF9D00;
+  --teal: #3BBDD4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  background: #f3f4f6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Safe area support for mobile notches */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Prevent double-tap zoom on buttons */
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth transitions */
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-gentle {
+  animation: pulseGently 2s ease-in-out infinite;
+}
+
+@keyframes pulseGently {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
