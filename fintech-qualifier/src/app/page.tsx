@@ -117,8 +117,8 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* Action */}
-          <div className="px-6 pb-6">
+          {/* Actions */}
+          <div className="px-6 pb-6 flex flex-col gap-3">
             <button
               onClick={handleStart}
               className="w-full py-4 rounded-2xl text-white text-lg font-black tracking-wide transition-all active:scale-95"
@@ -127,7 +127,18 @@ export default function HomePage() {
                 boxShadow: "0 8px 28px rgba(13,33,161,0.4)",
               }}
             >
-              🚀 התחל שיחה
+              🚀 התחל שיחה (שאלון דינמי)
+            </button>
+            <button
+              onClick={() => router.push("/tizrom")}
+              className="w-full py-4 rounded-2xl text-base font-black tracking-wide transition-all active:scale-95"
+              style={{
+                background: "#ffffff",
+                color: "#0d21a1",
+                border: "2px solid #0d21a1",
+              }}
+            >
+              📋 דף תזרים שיחה
             </button>
           </div>
         </div>
