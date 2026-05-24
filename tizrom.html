@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Make Sense — דף תזרים שיחה</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --royal:#0d21a1;--royal-l:#1a33c8;
+  --amber:#FF9D00;--green:#16a34a;
+  --r:12px;--r-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;background:#f3f4f6;font-family:'Rubik',Arial,sans-serif;direction:rtl;text-align:right;font-size:15px;color:#1f2937;-webkit-font-smoothing:antialiased}
+button{cursor:pointer;border:none;outline:none;font-family:inherit;touch-action:manipulation}
+
+/* Layout */
+.wrap{max-width:460px;margin:0 auto;padding-bottom:40px}
+
+/* Header */
+.header{background:linear-gradient(135deg,var(--royal),var(--royal-l));padding:16px 20px;display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:100}
+.header h1{color:#fff;font-size:18px;font-weight:800}
+
+/* Cards */
+.card{background:#fff;border-radius:var(--r-lg);border:1px solid #e5e7eb;margin:12px 12px 0;overflow:hidden}
+.card-header{background:linear-gradient(135deg,var(--royal),var(--royal-l));padding:12px 16px;display:flex;align-items:center;gap:10px}
+.card-header .num{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;flex-shrink:0}
+.card-header span{color:#fff;font-weight:700;font-size:14px}
+.card-body{padding:14px 16px}
+
+/* Client row */
+.client-row{display:flex;gap:10px}
+.field{flex:1;display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:700;color:#6b7280}
+.field input,.field textarea{border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 12px;font-size:15px;font-family:inherit;color:#1f2937;text-align:right;width:100%;transition:border-color .2s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--royal)}
+
+/* Opening script */
+.script-box{background:#fff8e1;border:1.5px solid rgba(255,157,0,0.35);border-radius:var(--r-lg);margin:12px 12px 0;padding:14px 16px}
+.script-label{font-size:12px;font-weight:800;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.script-text{font-size:13px;color:#78350f;line-height:1.7;font-weight:500}
+#client-name-display{font-weight:800;color:#92400e}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:460px}
+thead th{padding:9px 12px;font-size:11px;font-weight:700;color:#6b7280;background:#f8f9ff;border-bottom:1px solid #f0f0f0;text-align:right}
+tbody td{padding:10px 12px;vertical-align:top;border-bottom:1px solid #f3f4f6}
+.q-cell{width:36%;font-size:13px;font-weight:600;color:#1f2937;line-height:1.4}
+.q-sub{display:block;font-size:11px;font-weight:400;color:#9ca3af;margin-top:2px}
+.a-cell{width:40%}
+.n-cell{width:24%}
+
+/* Buttons */
+.btn-group{display:flex;flex-wrap:wrap;gap:6px}
+.opt-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:9px;font-size:12px;font-weight:700;border:1.5px solid #e5e7eb;background:#f3f4f6;color:#374151;transition:all .15s;cursor:pointer}
+.opt-btn.active{background:var(--royal);border-color:var(--royal);color:#fff}
+.opt-btn.active-green{background:var(--green);border-color:var(--green);color:#fff}
+.chk{width:13px;height:13px;border-radius:3px;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.chk svg{display:none}
+.opt-btn.active .chk svg,.opt-btn.active-green .chk svg{display:block}
+
+/* Radio options */
+.radio-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:600;border:1.5px solid #e5e7eb;background:#f3f4f6;color:#374151;cursor:pointer;margin-bottom:6px;transition:all .15s;width:100%;text-align:right}
+.radio-opt:last-child{margin-bottom:0}
+.radio-dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.radio-dot-inner{width:6px;height:6px;border-radius:50%;background:currentColor;display:none}
+.radio-opt.active{background:var(--royal);border-color:var(--royal);color:#fff}
+.radio-opt.active .radio-dot-inner{display:block}
+
+/* Note input */
+.note-inp{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:6px 8px;font-size:12px;font-family:inherit;color:#374151;text-align:right;transition:border-color .2s}
+.note-inp:focus{outline:none;border-color:var(--royal)}
+
+/* Free text */
+.free-inp{border:1.5px solid #e5e7eb;border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;color:#1f2937;text-align:right;width:100%;transition:border-color .2s;margin-top:6px}
+.free-inp:focus{outline:none;border-color:var(--royal)}
+
+/* Closing scripts */
+.close-blue{background:linear-gradient(135deg,var(--royal),var(--royal-l));border-radius:16px;padding:16px;color:#fff;font-size:14px;line-height:1.7;font-weight:500}
+.close-green{background:#f0fdf4;border:1.5px solid #86efac;border-radius:14px;padding:12px;font-size:13px;color:#166534;line-height:1.6;font-weight:500;margin-top:10px}
+
+/* Send button */
+.send-btn{display:block;width:calc(100% - 24px);margin:16px 12px 0;padding:16px;border-radius:var(--r-lg);background:linear-gradient(135deg,var(--royal),var(--royal-l));color:#fff;font-size:17px;font-weight:900;text-align:center;box-shadow:0 8px 28px rgba(13,33,161,0.35);cursor:pointer;border:none;font-family:inherit;transition:transform .15s,opacity .15s}
+.send-btn:active{transform:scale(.97)}
+.send-btn:disabled{opacity:.6}
+
+/* Success */
+.success-box{background:#f0fdf4;border:2px solid #86efac;border-radius:var(--r-lg);margin:12px;padding:20px;text-align:center;display:none}
+.success-box.show{display:block}
+
+/* Hidden section */
+.hidden{display:none}
+
+/* Amount input */
+.amount-row{display:flex;gap:8px;align-items:center;margin-top:7px}
+.amount-inp{border:1.5px solid var(--royal);border-radius:9px;padding:6px 10px;font-size:13px;font-family:inherit;color:var(--royal);text-align:right;width:100%;font-weight:600}
+.amount-inp:focus{outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>📋 דף תזרים שיחה</h1>
+  </div>
+
+  <!-- CLIENT / AGENT -->
+  <div class="card" style="margin-top:12px">
+    <div class="card-body">
+      <div class="client-row">
+        <div class="field">
+          <label>שם הלקוח</label>
+          <input type="text" id="clientName" placeholder="שם מלא" oninput="updateClientName()" autocomplete="off"/>
+        </div>
+        <div class="field">
+          <label>שם הסוכן</label>
+          <input type="text" id="agentName" placeholder="שם הסוכן" autocomplete="off"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPENING SCRIPT -->
+  <div class="script-box">
+    <div class="script-label">📢 סקריפט פתיחה — קרא ללקוח</div>
+    <p class="script-text">
+      "<span id="client-name-display">_________</span>, כחלק מהשירות המשולב שלנו בסוכנות, עלו הרבה שאלות וחששות דומים מלקוחות בעקבות אי וודאות לרמת החוסן והביטחון הכלכלי בבית ובעסק, במיוחד בתקופה הזו במדינה.
+      אני רוצה לשאול אותך עוד כמה שאלות מהירות כדי לעזור גם לך לעשות סדר במה שצריך, ולראות שאתם באמת על המסלול הנכון ולא זורקים כסף לפח. זה ייקח 3 דקות, בסדר?"
+    </p>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 1 — Mandatory           -->
+  <!-- ════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="num">1</div>
+      <span>שאלות חובה — עם כל לקוח</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="q-cell" style="width:36%">שאלה</th>
+            <th style="width:40%">סימון</th>
+            <th style="width:24%">הערות</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 1. Employment -->
+          <tr>
+            <td class="q-cell">תעסוקה<span class="q-sub">מה תחום העיסוק? ובן/בת זוגך?</span></td>
+            <td class="a-cell">
+              <div class="btn-group" style="margin-bottom:8px">
+                <button class="opt-btn" onclick="toggleMulti(this,'employment','employed')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  שכיר
+                </button>
+                <button class="opt-btn" onclick="toggleMulti(this,'employment','self')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  עצמאי
+                </button>
+                <button class="opt-btn" onclick="toggleMulti(this,'employment','company')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  חברה בע"מ
+                </button>
+              </div>
+              <input class="free-inp" type="text" placeholder="תחום: ______" id="emp_field" style="margin-bottom:5px;margin-top:0"/>
+              <input class="free-inp" type="text" placeholder="בן/בת זוג: ______" id="emp_spouse" style="margin-top:0"/>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 2. Property -->
+          <tr>
+            <td class="q-cell">נכס בבעלות</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'property','owned'); showSection2()" >
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  נכס בבעלות
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'property','renting'); showSection2()">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  שכירות
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'property','family'); showSection2()">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  אצל משפחה
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 3. Obligations -->
+          <tr>
+            <td class="q-cell">התחייבויות<span class="q-sub">משכנתה, הלוואות, מינוס</span></td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'obligations','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'obligations','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 4. Goals -->
+          <tr>
+            <td class="q-cell">שאיפות<span class="q-sub">יעד גדול בשנה הקרובה?</span></td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'goals','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'goals','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 5. Pain -->
+          <tr>
+            <td class="q-cell">מצוקה<span class="q-sub">מה הכי מפריע לך בכסף?</span></td>
+            <td class="a-cell" colspan="2" style="width:64%">
+              <input class="free-inp" type="text" id="pain_point" placeholder="תשובה פתוחה..."/>
+            </td>
+          </tr>
+
+          <!-- 6. Cash flow -->
+          <tr>
+            <td class="q-cell">דינמיקת תזרים<span class="q-sub">הכנסות מול הוצאות</span></td>
+            <td class="a-cell">
+              <button class="radio-opt" onclick="selectRadio(this,'cashflow','a')">
+                <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+                <span>א׳ — על הקצה, לא מצליחים לחסוך</span>
+              </button>
+              <button class="radio-opt" onclick="selectRadio(this,'cashflow','b')">
+                <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+                <span>ב׳ — לא גומרים חודש, מעמיקים מינוס</span>
+              </button>
+              <button class="radio-opt" onclick="selectRadio(this,'cashflow','c')">
+                <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+                <span>ג׳ — מתנהלים נכון, יש חיסכון קבוע</span>
+              </button>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 7. Lazy savings -->
+          <tr>
+            <td class="q-cell">כסף עצלן<span class="q-sub">חסכונות בעו"ש / פק"מ שנשחקים?</span></td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'savings','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'savings','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+          <!-- 8. Future -->
+          <tr>
+            <td class="q-cell">חרדת עתיד<span class="q-sub">תוכנית לעתיד — עזרה לילדים, שדרוג?</span></td>
+            <td class="a-cell">
+              <button class="radio-opt" onclick="selectRadio(this,'future','has_plan')">
+                <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+                <span>יש תוכנית ברורה</span>
+              </button>
+              <button class="radio-opt" onclick="selectRadio(this,'future','no_plan')">
+                <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+                <span>אין תוכנית — צריך לדאוג לזה</span>
+              </button>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 2A — Property Owner     -->
+  <!-- ════════════════════════════════ -->
+  <div class="card hidden" id="section2a">
+    <div class="card-header">
+      <div class="num">2</div>
+      <span>שאלות בחירה — בעל נכס</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:36%">שאלה</th>
+            <th style="width:40%">סימון</th>
+            <th style="width:24%">הערות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Mortgage -->
+          <tr>
+            <td class="q-cell">יש על הבית משכנתה?</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'mortgage','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  יש
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'mortgage','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  אין
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+          <!-- Extra loans -->
+          <tr>
+            <td class="q-cell">הלוואות נוספות?<span class="q-sub">מימון רכב, בנק, אשראי</span></td>
+            <td class="a-cell">
+              <div class="btn-group" style="margin-bottom:8px">
+                <button class="opt-btn" onclick="selectSingle(this,'extraloans','yes'); document.getElementById('amount_row').style.display='flex'">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  יש
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'extraloans','no'); document.getElementById('amount_row').style.display='none'">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  אין
+                </button>
+              </div>
+              <div class="amount-row" id="amount_row" style="display:none">
+                <input class="amount-inp" type="text" id="loan_amount" placeholder="סכום חודשי: ₪"/>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+          <!-- Inflation -->
+          <tr>
+            <td class="q-cell">הרגשתם שהכל מתייקר בשנתיים?</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'inflation','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'inflation','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+          <!-- Knows terms -->
+          <tr>
+            <td class="q-cell">בטוחים שלא משלמים יותר ממה שצריך?</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'terms','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן יודעים
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'terms','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא בטוחים
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+          <!-- Advice -->
+          <tr>
+            <td class="q-cell">מעוניין ייעוץ מקצועי, ללא עלות?</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'advice','yes')" style="background:#dcfce7;border-color:#86efac;color:#166534" onmousedown="this.style.background='#16a34a';this.style.color='#fff'">
+                  <span class="chk" style="border-color:#166534"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#166534" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  ✅ כן מעוניין
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'advice','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא מעוניין
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 2B — Renter             -->
+  <!-- ════════════════════════════════ -->
+  <div class="card hidden" id="section2b">
+    <div class="card-header">
+      <div class="num">2</div>
+      <span>שאלות בחירה — שוכר</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:36%">שאלה</th>
+            <th style="width:40%">סימון</th>
+            <th style="width:24%">הערות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="q-cell">תכננתם לעבור לדירה מתאימה יותר או לקנות משלכם?</td>
+            <td class="a-cell">
+              <div class="btn-group">
+                <button class="opt-btn" onclick="selectSingle(this,'buysoon','yes')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  כן
+                </button>
+                <button class="opt-btn" onclick="selectSingle(this,'buysoon','no')">
+                  <span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+                  לא
+                </button>
+              </div>
+            </td>
+            <td class="n-cell"><input class="note-inp" type="text" placeholder="הערות..."/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION 3 — Closing script      -->
+  <!-- ════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="num">3</div>
+      <span>שיקוף, Vision והעלאת הפתרון</span>
+    </div>
+    <div class="card-body">
+      <div class="close-blue">
+        "אוקיי <span id="closing-name">_______</span>, אז ממה שאני מבין ומסכם מהשיחה שלנו:<br/><br/>
+        מצד אחד הבית שלכם, אבל מצד שני הוצאות ה(משכנתה / שכירות / הלוואות) לוקחים לכם נתח מטורף מהתזרים, וכרגע אין לכם גוף מקצועי שמגן עליכם מולם.<br/><br/>
+        זה אומר שאם היית יכול לקבל מפה ברורה שמראה איך לקחת את הנתונים הקיימים שלכם, ופשוט להחזיר אליכם לחשבון עוד 1,500 עד 3,000 ₪ בכל חודש — זה משהו שהיה לכם אינטרס לראות איך מיישמים?"
+      </div>
+      <div class="close-green">
+        <strong>לאחר שהלקוח אמר כן:</strong><br/>
+        "מעולה. בשביל זה בדיוק אני מחבר אותך ליועץ הפיננסי שעובד צמוד עם הלקוחות שלי. אני מעביר לו את הנתונים היבשים שרשמתי כאן, והוא ירים אליך שיחה קצרה — ללא שום עלות או התחייבות. הוא יתקשר מחר, תענה לו."
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <label>📝 הערות כלליות</label>
+        <textarea id="general_notes" rows="3" placeholder="הערות נוספות, תצפיות, מידע רלוונטי..." style="margin-top:5px;resize:none"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEND BUTTON -->
+  <button class="send-btn" onclick="sendForm()" id="sendBtn">📤 שלח ליועץ — sp.makesense@gmail.com</button>
+
+  <!-- SUCCESS -->
+  <div class="success-box" id="successBox">
+    <div style="font-size:36px;margin-bottom:8px">✅</div>
+    <div style="font-size:18px;font-weight:800;color:#166534;margin-bottom:4px">הטופס נשלח!</div>
+    <div style="font-size:14px;color:#4ade80">נפתח מייל לשליחה ל-sp.makesense@gmail.com</div>
+    <button onclick="resetForm()" style="margin-top:14px;padding:10px 24px;border-radius:12px;background:#0d21a1;color:#fff;font-size:14px;font-weight:700;border:none;font-family:inherit;cursor:pointer">🆕 שיחה חדשה</button>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+var data = { employment: [] };
+
+function updateClientName() {
+  var n = document.getElementById('clientName').value || '_________';
+  document.getElementById('client-name-display').textContent = n;
+  document.getElementById('closing-name').textContent = n || '_______';
+}
+
+// ─── Toggle multi-select ─────────────────────────────────────────────────────
+function toggleMulti(btn, key, val) {
+  if (!data[key]) data[key] = [];
+  var idx = data[key].indexOf(val);
+  if (idx >= 0) {
+    data[key].splice(idx, 1);
+    btn.classList.remove('active');
+  } else {
+    data[key].push(val);
+    btn.classList.add('active');
+  }
+}
+
+// ─── Single select (radio-like) ───────────────────────────────────────────────
+function selectSingle(btn, key, val) {
+  data[key] = val;
+  var parent = btn.closest('.btn-group') || btn.closest('td');
+  parent.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('active','active-green'); });
+  btn.classList.add('active');
+}
+
+// ─── Radio option ─────────────────────────────────────────────────────────────
+function selectRadio(btn, key, val) {
+  data[key] = val;
+  var parent = btn.parentElement;
+  parent.querySelectorAll('.radio-opt').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+// ─── Show Section 2 ───────────────────────────────────────────────────────────
+function showSection2() {
+  var prop = data['property'];
+  var s2a = document.getElementById('section2a');
+  var s2b = document.getElementById('section2b');
+  if (prop === 'owned') {
+    s2a.classList.remove('hidden');
+    s2b.classList.add('hidden');
+  } else if (prop === 'renting' || prop === 'family') {
+    s2b.classList.remove('hidden');
+    s2a.classList.add('hidden');
+  }
+}
+
+// ─── Build summary ────────────────────────────────────────────────────────────
+function buildSummary() {
+  var yn = function(v){ return v==='yes'?'כן':v==='no'?'לא':v||'—'; };
+  var emp = (data.employment||[]).map(function(e){ return e==='employed'?'שכיר':e==='self'?'עצמאי':'חברה בע"מ'; }).join(', ') || '—';
+  var prop = data.property==='owned'?'נכס בבעלות':data.property==='renting'?'שכירות':data.property==='family'?'אצל משפחה':'—';
+  var cf = data.cashflow==='a'?'א - על הקצה':data.cashflow==='b'?'ב - לא גומרים חודש':data.cashflow==='c'?'ג - מתנהלים נכון':'—';
+  var future = data.future==='has_plan'?'יש תוכנית ברורה':data.future==='no_plan'?'אין תוכנית':'—';
+
+  var lines = [
+    'לקוח: ' + (document.getElementById('clientName').value||'—'),
+    'סוכן: ' + (document.getElementById('agentName').value||'—'),
+    '',
+    '=== שלב 1 - שאלות חובה ===',
+    'תעסוקה: ' + emp,
+    'תחום: ' + (document.getElementById('emp_field').value||'—'),
+    'בן/בת זוג: ' + (document.getElementById('emp_spouse').value||'—'),
+    'מצב דיור: ' + prop,
+    'התחייבויות: ' + yn(data.obligations),
+    'יעד גדול: ' + yn(data.goals),
+    'כאב כלכלי: ' + (document.getElementById('pain_point').value||'—'),
+    'דינמיקת תזרים: ' + cf,
+    'חסכונות עצלים: ' + yn(data.savings),
+    'תוכנית עתיד: ' + future,
+  ];
+
+  if (data.property === 'owned') {
+    lines.push('','=== שלב 2 - בעל נכס ===');
+    lines.push('משכנתה: ' + yn(data.mortgage));
+    lines.push('הלוואות נוספות: ' + yn(data.extraloans) + (data.extraloans==='yes' ? ' | ' + (document.getElementById('loan_amount').value||'—') : ''));
+    lines.push('מרגיש התייקרות: ' + yn(data.inflation));
+    lines.push('יודע תנאים: ' + yn(data.terms));
+    lines.push('מעוניין ייעוץ: ' + yn(data.advice));
+  }
+  if (data.property === 'renting' || data.property === 'family') {
+    lines.push('','=== שלב 2 - שוכר ===');
+    lines.push('מתכנן לקנות: ' + yn(data.buysoon));
+  }
+
+  var notes = document.getElementById('general_notes').value;
+  if (notes) lines.push('','=== הערות ===', notes);
+  return lines.join('\n');
+}
+
+// ─── Send via mailto ──────────────────────────────────────────────────────────
+function sendForm() {
+  var btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.textContent = '...שולח';
+
+  var client = document.getElementById('clientName').value || 'לקוח';
+  var summary = buildSummary();
+  var subject = encodeURIComponent('ליד חדש — ' + client + ' | Make Sense');
+  var body = encodeURIComponent(summary);
+
+  // Open mailto
+  window.location.href = 'mailto:sp.makesense@gmail.com?subject=' + subject + '&body=' + body;
+
+  // Show success
+  setTimeout(function(){
+    document.getElementById('successBox').classList.add('show');
+    btn.style.display = 'none';
+  }, 800);
+}
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
+function resetForm() {
+  data = { employment: [] };
+  document.querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('active','active-green'); });
+  document.querySelectorAll('.radio-opt').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('input[type=text], textarea').forEach(function(i){ i.value=''; });
+  document.getElementById('section2a').classList.add('hidden');
+  document.getElementById('section2b').classList.add('hidden');
+  document.getElementById('amount_row').style.display='none';
+  document.getElementById('successBox').classList.remove('show');
+  document.getElementById('sendBtn').style.display='block';
+  document.getElementById('sendBtn').disabled=false;
+  document.getElementById('sendBtn').textContent='📤 שלח ליועץ — sp.makesense@gmail.com';
+  document.getElementById('client-name-display').textContent='_________';
+  document.getElementById('closing-name').textContent='_______';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
