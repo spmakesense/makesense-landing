@@ -2,8 +2,8 @@ const fs = require('fs');
 
 const LOGO  = 'data:image/jpeg;base64,' + fs.readFileSync('./logo_b64.txt',  'utf8');
 const PHOTO = 'data:image/png;base64,'  + fs.readFileSync('./photo_b64.txt', 'utf8');
-const HFCA  = 'data:image/png;base64,'  + fs.readFileSync('G:/האחסון שלי/תהליך השירות/הוצלא/MAKESENSE Logo/חבר-התאחדות.png').toString('base64');
-const GUIDE = 'data:application/pdf;base64,' + fs.readFileSync('G:/האחסון שלי/תהליך השירות/מדריכים/תרשים תהליך מחזור משכנתה.pdf').toString('base64');
+const HFCA  = (() => { try { return 'data:image/png;base64,' + fs.readFileSync('./hfca_b64.txt','utf8').trim(); } catch(e) { return ''; } })();
+const GUIDE = (() => { try { return 'data:application/pdf;base64,' + fs.readFileSync('./guide_b64.txt','utf8').trim(); } catch(e) { return ''; } })();
 
 // ── Lucide-style inline SVG helpers ──────────────────────────
 const icons = {
