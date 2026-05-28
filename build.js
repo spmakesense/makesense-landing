@@ -1515,6 +1515,1860 @@ document.getElementById('warmup-overlay')?.addEventListener('click',function(e){
 </body>
 </html>`;
 
-fs.writeFileSync('./index.html', html, 'utf8');
-const size = fs.statSync('./index.html').size;
-console.log('Built successfully. File size:', (size/1024).toFixed(0), 'KB');
+// ── Calculator builder ────────────────────────────────────────
+
+function buildCalculator() {
+  let logo = '';
+  try { logo = 'data:image/jpeg;base64,' + require('fs').readFileSync('./logo_b64.txt','utf8').trim(); } catch(e) {}
+  const calcHtml = generateCalculatorHTML(logo);
+  fs.writeFileSync('./calculator.html', calcHtml, 'utf8');
+  console.log('Calculator built:', (fs.statSync('./calculator.html').size/1024).toFixed(0), 'KB');
+}
+
+function generateCalculatorHTML(LOGO) {
+  return `<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>מחשבון הלוואות - MakeSense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/decimal.js@10/decimal.min.js"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.0/jspdf.plugin.autotable.min.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>
+<style>
+:root{
+  --royal:#0d21a1;--royal-d:#081890;--royal-l:#1a33c8;
+  --amber:#FF9D00;--amber-d:#e08800;
+  --teal:#3BBDD4;--coral:#E5614A;--lime:#8BB84A;
+  --onyx:#141414;--g50:#f4f5f7;--g100:#eef0f2;--g200:#dde0e6;
+  --g400:#9ca3af;--g600:#6b7280;--g800:#1f2937;
+  --r:8px;--r-md:16px;--r-lg:24px;--r-xl:40px;
+  --sh-sm:0 2px 12px rgba(13,33,161,.08);--sh-md:0 8px 32px rgba(13,33,161,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#f8f9fc;color:var(--onyx);direction:rtl}
+h1,h2,h3,h4,h5{font-family:'Rubik',Arial,sans-serif}
+
+/* Navbar */
+.navbar{background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--sh-sm)}
+.navbar-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.navbar-logo{height:40px;width:auto;object-fit:contain}
+.navbar-title{font-family:'Rubik',Arial,sans-serif;font-weight:700;font-size:1.1rem;color:var(--royal)}
+.navbar-actions{display:flex;align-items:center;gap:12px}
+.btn-back{display:flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--g200);border-radius:var(--r);background:#fff;color:var(--g800);font-size:.9rem;cursor:pointer;text-decoration:none;transition:.2s}
+.btn-back:hover{border-color:var(--royal);color:var(--royal)}
+.btn-wa{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r);background:#25D366;color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s}
+.btn-wa:hover{background:#1ebe5d}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--royal-d) 0%,var(--royal) 50%,var(--royal-l) 100%);color:#fff;padding:56px 24px 48px;text-align:center}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin-bottom:12px}
+.hero p{font-size:1.05rem;opacity:.88;margin-bottom:28px}
+.hero-badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:var(--r-xl);padding:8px 18px;font-size:.9rem;backdrop-filter:blur(4px)}
+
+/* Container */
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* Section */
+.section{padding:40px 0}
+.section-title{font-size:1.4rem;font-weight:700;color:var(--royal);margin-bottom:24px}
+
+/* Card */
+.card{background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:28px}
+
+/* Track selector */
+.track-selector{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.track-card{flex:1;min-width:150px;padding:16px;border:2px solid var(--g200);border-radius:var(--r-md);cursor:pointer;text-align:center;transition:.2s;background:#fff}
+.track-card:hover{border-color:var(--royal-l);background:var(--g50)}
+.track-card.active{border-color:var(--royal);background:rgba(13,33,161,.06)}
+.track-card .track-name{font-weight:700;color:var(--onyx);font-size:1rem}
+.track-card .track-desc{font-size:.82rem;color:var(--g600);margin-top:4px}
+
+/* Form */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:.88rem;font-weight:600;color:var(--g800)}
+.form-label span.req{color:var(--coral)}
+.form-input{padding:10px 14px;border:1.5px solid var(--g200);border-radius:var(--r);font-size:.95rem;background:#fff;transition:.2s;font-family:Arial,sans-serif;direction:ltr;text-align:right}
+.form-input:focus{outline:none;border-color:var(--royal);box-shadow:0 0 0 3px rgba(13,33,161,.1)}
+.form-input.error{border-color:var(--coral)}
+.form-error{font-size:.8rem;color:var(--coral);display:none}
+.form-hint{font-size:.8rem;color:var(--g600)}
+.prime-display{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r);padding:10px 14px;font-size:.9rem;color:var(--royal);font-weight:600;margin-top:4px}
+
+/* Extra fields */
+.extra-field{display:none}
+.extra-field.visible{display:flex}
+
+/* Calculate button */
+.btn-calc{width:100%;padding:16px;background:linear-gradient(90deg,var(--royal),var(--royal-l));color:#fff;border:none;border-radius:var(--r-md);font-size:1.1rem;font-weight:700;font-family:'Rubik',Arial,sans-serif;cursor:pointer;margin-top:24px;transition:.2s;box-shadow:var(--sh-md)}
+.btn-calc:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(13,33,161,.25)}
+.btn-calc:active{transform:translateY(0)}
+
+/* KPI Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px}
+.kpi-card{background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:20px;border-top:3px solid var(--royal)}
+.kpi-label{font-size:.8rem;color:var(--g600);margin-bottom:6px}
+.kpi-value{font-size:1.4rem;font-weight:700;color:var(--royal);font-family:'Rubik',Arial,sans-serif}
+.kpi-sub{font-size:.75rem;color:var(--g400);margin-top:3px}
+.kpi-card.amber{border-top-color:var(--amber)}.kpi-card.amber .kpi-value{color:var(--amber-d)}
+.kpi-card.teal{border-top-color:var(--teal)}.kpi-card.teal .kpi-value{color:var(--teal)}
+.kpi-card.coral{border-top-color:var(--coral)}.kpi-card.coral .kpi-value{color:var(--coral)}
+.kpi-card.lime{border-top-color:var(--lime)}.kpi-card.lime .kpi-value{color:#6a8f38}
+
+/* Explanation */
+.explanation-box{background:var(--g50);border-right:3px solid var(--royal);border-radius:var(--r);padding:16px 20px;font-size:.95rem;line-height:1.7;color:var(--g800)}
+.explanation-warn{color:#b45309;font-weight:600}
+
+/* Charts */
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px;margin-bottom:32px}
+.chart-card{background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:20px}
+.chart-card h3{font-size:1rem;color:var(--royal);margin-bottom:16px}
+.chart-wrap{position:relative;height:260px}
+
+/* Table */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead tr{background:var(--royal);color:#fff}
+thead th{padding:10px 12px;font-weight:600;white-space:nowrap;text-align:right}
+tbody tr{border-bottom:1px solid var(--g100)}
+tbody tr:nth-child(even){background:var(--g50)}
+tbody tr.yearly{background:rgba(13,33,161,.06)!important;font-weight:600}
+tbody td{padding:9px 12px;white-space:nowrap;text-align:right}
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.page-btn{padding:7px 14px;border:1.5px solid var(--g200);border-radius:var(--r);background:#fff;cursor:pointer;font-size:.88rem;transition:.2s}
+.page-btn:hover:not(:disabled){border-color:var(--royal);color:var(--royal)}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+.page-btn.active{background:var(--royal);color:#fff;border-color:var(--royal)}
+.page-info{font-size:.88rem;color:var(--g600)}
+.btn-csv{padding:9px 20px;background:var(--lime);color:#fff;border:none;border-radius:var(--r);font-size:.88rem;font-weight:700;cursor:pointer;margin-top:12px;transition:.2s}
+.btn-csv:hover{background:#6a8f38}
+
+/* Market comparison */
+.market-card{background:linear-gradient(135deg,var(--royal-d),var(--royal));color:#fff;border-radius:var(--r-lg);padding:32px;margin-bottom:32px}
+.market-card h2{font-size:1.3rem;margin-bottom:6px}
+.market-card p{opacity:.8;font-size:.9rem;margin-bottom:24px}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.market-item{background:rgba(255,255,255,.12);border-radius:var(--r-md);padding:16px}
+.market-item-label{font-size:.82rem;opacity:.8;margin-bottom:6px}
+.market-item-rate{font-size:1.3rem;font-weight:700}
+.market-bar-wrap{margin-top:8px;background:rgba(255,255,255,.2);border-radius:4px;height:6px}
+.market-bar{height:6px;border-radius:4px;background:var(--amber);transition:.8s}
+.rating-badge{display:inline-block;padding:6px 18px;border-radius:var(--r-xl);font-weight:700;font-size:1rem;margin-bottom:20px}
+.rating-excellent{background:#dcfce7;color:#166534}
+.rating-good{background:#dbeafe;color:#1e40af}
+.rating-avg{background:#fef9c3;color:#854d0e}
+.rating-expensive{background:#fee2e2;color:#991b1b}
+.user-rate-display{font-size:1.5rem;font-weight:700;margin-bottom:8px}
+
+/* Comparison */
+.comparison-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px}
+.comp-loan-card{background:#fff;border:2px solid var(--g200);border-radius:var(--r-md);padding:20px}
+.comp-loan-card.filled{border-color:var(--royal)}
+.comp-loan-card h4{font-size:1rem;color:var(--royal);margin-bottom:12px}
+.comp-empty{text-align:center;padding:24px;color:var(--g400)}
+.comp-empty svg{margin-bottom:8px;opacity:.4}
+.btn-add-loan{width:100%;padding:10px;border:2px dashed var(--g200);border-radius:var(--r);background:#fff;cursor:pointer;color:var(--g600);font-size:.9rem;transition:.2s;margin-top:8px}
+.btn-add-loan:hover{border-color:var(--royal);color:var(--royal)}
+.btn-remove-loan{padding:4px 10px;background:var(--coral);color:#fff;border:none;border-radius:var(--r);font-size:.78rem;cursor:pointer;float:left}
+.comp-detail{font-size:.82rem;color:var(--g600);margin-top:4px}
+.comp-table-wrap{overflow-x:auto}
+.comp-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.comp-table th{padding:10px 14px;background:var(--g50);font-weight:600;text-align:right;border-bottom:2px solid var(--g200)}
+.comp-table td{padding:10px 14px;border-bottom:1px solid var(--g100);text-align:right}
+.comp-best{background:#dcfce7;color:#166534;font-weight:700}
+.comp-worst{background:#fee2e2;color:#991b1b;font-weight:700}
+
+/* Export */
+.export-panel{background:#fff;border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:28px;margin-bottom:32px}
+.export-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn-export{display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:var(--r-md);font-size:.9rem;font-weight:700;cursor:pointer;border:none;transition:.2s}
+.btn-pdf{background:var(--royal);color:#fff}.btn-pdf:hover{background:var(--royal-d)}
+.btn-pdf2{background:var(--royal-l);color:#fff}.btn-pdf2:hover{background:var(--royal)}
+.btn-csv2{background:var(--lime);color:#fff}.btn-csv2:hover{background:#6a8f38}
+.btn-wa2{background:#25D366;color:#fff}.btn-wa2:hover{background:#1ebe5d}
+
+/* Footer */
+.footer{background:var(--onyx);color:#fff;padding:32px 24px;text-align:center}
+.footer a{color:var(--amber);text-decoration:none}
+.footer-disclaimer{font-size:.78rem;opacity:.6;margin-top:16px;line-height:1.6}
+
+/* Hidden */
+#results-section{display:none}
+
+/* Responsive */
+@media(max-width:640px){
+  .hero{padding:36px 16px 32px}
+  .charts-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .track-selector{flex-direction:column}
+  .comparison-grid{grid-template-columns:1fr}
+  .export-grid{flex-direction:column}
+  .navbar-title{display:none}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ── PURPOSE SELECTOR ── */
+.purpose-section{margin-bottom:28px}
+.purpose-section-title{font-size:13px;font-weight:700;color:var(--onyx);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.purpose-section-title svg{color:var(--royal)}
+.purpose-category{margin-bottom:14px}
+.purpose-cat-label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.purpose-chips{display:flex;flex-wrap:wrap;gap:6px}
+.purpose-chip{padding:6px 14px;border-radius:var(--r-xl);border:1.5px solid var(--g200);background:#fff;font-size:12px;font-weight:600;color:var(--g600);cursor:pointer;transition:all .18s;user-select:none}
+.purpose-chip:hover{border-color:var(--royal-l);color:var(--royal);background:#f0f3ff}
+.purpose-chip.active-lifestyle{background:var(--coral);border-color:var(--coral);color:#fff}
+.purpose-chip.active-financial{background:var(--lime);border-color:var(--lime);color:#fff}
+.purpose-chip.active-investment{background:var(--royal);border-color:var(--royal);color:#fff}
+
+/* ── ADVISOR CARD ── */
+.advisor-card{border-radius:var(--r-lg);padding:24px 28px;margin-bottom:28px;border:1.5px solid rgba(13,33,161,.15);background:linear-gradient(135deg,#f8f9ff,#fff);position:relative;overflow:hidden}
+.advisor-card.risk-low{border-color:rgba(22,163,74,.3);background:linear-gradient(135deg,#f0fdf4,#fff)}
+.advisor-card.risk-medium{border-color:rgba(217,119,6,.3);background:linear-gradient(135deg,#fffbeb,#fff)}
+.advisor-card.risk-high{border-color:rgba(220,38,38,.3);background:linear-gradient(135deg,#fef2f2,#fff)}
+.adv-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.adv-avatar{width:44px;height:44px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.risk-low .adv-avatar{background:var(--success)}
+.risk-medium .adv-avatar{background:var(--warning)}
+.risk-high .adv-avatar{background:var(--red)}
+.adv-meta-name{font-size:13px;font-weight:700;color:var(--onyx)}
+.adv-meta-role{font-size:11px;color:var(--g400)}
+.adv-score-badge{margin-right:auto;font-family:'Rubik',sans-serif;font-size:20px;font-weight:800;padding:5px 13px;border-radius:var(--r-xl)}
+.risk-low .adv-score-badge{color:var(--success);background:#dcfce7}
+.risk-medium .adv-score-badge{color:var(--warning);background:#fef9c3}
+.risk-high .adv-score-badge{color:var(--red);background:#fee2e2}
+.adv-title{font-size:16px;font-weight:800;color:var(--onyx);margin-bottom:10px;font-family:'Rubik',sans-serif}
+.adv-message{font-size:14px;line-height:1.75;color:var(--g800);margin-bottom:12px}
+.adv-alt{font-size:13px;color:var(--g600);background:var(--g50);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;border-right:3px solid var(--amber)}
+.adv-footer{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.adv-cta-btn{background:var(--amber);color:#fff;font-size:13px;font-weight:700;padding:10px 20px;border-radius:var(--r-xl);display:inline-flex;align-items:center;gap:6px;transition:all .2s;box-shadow:var(--sh-amber);text-decoration:none}
+.adv-cta-btn:hover{background:var(--amber-d);transform:translateY(-1px)}
+
+/* ── ADVISOR FLOATING WIDGET ── */
+.advisor-widget{position:fixed;bottom:24px;left:24px;z-index:8000}
+.adv-bubble{display:flex;align-items:center;gap:10px;background:var(--royal);color:#fff;padding:12px 18px;border-radius:var(--r-xl);cursor:pointer;box-shadow:var(--sh-md);position:relative;transition:all .25s;user-select:none;border:none;font-family:inherit}
+.adv-bubble:hover{background:var(--royal-d);transform:translateY(-2px);box-shadow:var(--sh-lg)}
+.adv-bubble-icon{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.adv-bubble-label{font-size:13px;font-weight:700}
+.adv-bubble-pulse{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--amber);border-radius:50%;border:2px solid #fff;animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.adv-panel{position:absolute;bottom:64px;left:0;width:280px;background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-lg);border:1px solid var(--g100);overflow:hidden;display:none}
+.adv-panel.open{display:block;animation:slide-up-widget .25s ease}
+@keyframes slide-up-widget{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.adv-panel-head{background:var(--royal);color:#fff;padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
+.adv-panel-head-title{font-size:14px;font-weight:700;font-family:'Rubik',sans-serif}
+.adv-panel-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;flex-shrink:0}
+.adv-panel-body{padding:16px}
+.adv-panel-text{font-size:13px;color:var(--g800);line-height:1.6;margin-bottom:10px}
+.adv-panel-wa{display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:10px 14px;border-radius:var(--r);margin-bottom:8px;transition:all .2s;text-decoration:none}
+.adv-panel-wa:hover{background:#1db954}
+.adv-panel-calc{display:block;text-align:center;font-size:12px;color:var(--royal);font-weight:600;padding:6px;text-decoration:none}
+@media(max-width:480px){
+  .advisor-widget{bottom:16px;left:12px}
+  .adv-bubble{padding:10px 14px}
+  .adv-bubble-label{display:none}
+  .adv-panel{width:260px;left:-10px}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a class="navbar-brand" href="index.html">
+    ${LOGO ? '<img src="' + LOGO + '" class="navbar-logo" alt="MakeSense" />' : '<span style="font-family:Rubik,Arial;font-weight:900;font-size:1.3rem;color:var(--royal)">MakeSense</span>'}
+    <span class="navbar-title">מחשבון הלוואות</span>
+  </a>
+  <div class="navbar-actions">
+    <a href="index.html" class="btn-back">&#8592; חזרה לאתר</a>
+    <a href="https://wa.me/972524415395" target="_blank" class="btn-wa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      ייעוץ חינם
+    </a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>חשב את ההלוואה שלך בדיוק מקסימלי</h1>
+    <p>כלי מקצועי לחישוב לוחות סילוקין, השוואת מסלולים וניתוח עלויות</p>
+    <div class="hero-badges">
+      <span class="hero-badge">✓ כל לוחות הסילוקין</span>
+      <span class="hero-badge">✓ הפקת PDF מלא</span>
+      <span class="hero-badge">✓ השוואת מסלולים</span>
+    </div>
+  </div>
+</section>
+
+<!-- Main Calculator -->
+<section class="section" id="calculator">
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title">פרטי ההלוואה</h2>
+
+      <!-- Purpose Selector -->
+      <div class="purpose-section">
+        <div class="purpose-section-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          למה ההלוואה? (בחר מטרה לקבלת ניתוח אישי)
+        </div>
+        <div class="purpose-category">
+          <div class="purpose-cat-label">צריכה / אירועי חיים</div>
+          <div class="purpose-chips" data-cat="lifestyle">
+            <button type="button" class="purpose-chip" data-purpose="חופשה" data-cat="lifestyle" onclick="togglePurpose(this)">חופשה</button>
+            <button type="button" class="purpose-chip" data-purpose="חתונה" data-cat="lifestyle" onclick="togglePurpose(this)">חתונה</button>
+            <button type="button" class="purpose-chip" data-purpose="רכב" data-cat="lifestyle" onclick="togglePurpose(this)">רכב</button>
+            <button type="button" class="purpose-chip" data-purpose="שיפוץ" data-cat="lifestyle" onclick="togglePurpose(this)">שיפוץ</button>
+            <button type="button" class="purpose-chip" data-purpose="ריהוט" data-cat="lifestyle" onclick="togglePurpose(this)">ריהוט</button>
+            <button type="button" class="purpose-chip" data-purpose="אלקטרוניקה" data-cat="lifestyle" onclick="togglePurpose(this)">אלקטרוניקה</button>
+            <button type="button" class="purpose-chip" data-purpose="לימודים" data-cat="lifestyle" onclick="togglePurpose(this)">לימודים</button>
+            <button type="button" class="purpose-chip" data-purpose="מעבר דירה" data-cat="lifestyle" onclick="togglePurpose(this)">מעבר דירה</button>
+          </div>
+        </div>
+        <div class="purpose-category">
+          <div class="purpose-cat-label">פיננסי / הישרדותי</div>
+          <div class="purpose-chips" data-cat="financial">
+            <button type="button" class="purpose-chip" data-purpose="סגירת מינוס" data-cat="financial" onclick="togglePurpose(this)">סגירת מינוס</button>
+            <button type="button" class="purpose-chip" data-purpose="איחוד הלוואות" data-cat="financial" onclick="togglePurpose(this)">איחוד הלוואות</button>
+            <button type="button" class="purpose-chip" data-purpose="סגירת חובות" data-cat="financial" onclick="togglePurpose(this)">סגירת חובות</button>
+            <button type="button" class="purpose-chip" data-purpose="כיסוי תזרים" data-cat="financial" onclick="togglePurpose(this)">כיסוי תזרים</button>
+            <button type="button" class="purpose-chip" data-purpose="עזרה למשפחה" data-cat="financial" onclick="togglePurpose(this)">עזרה למשפחה</button>
+          </div>
+        </div>
+        <div class="purpose-category">
+          <div class="purpose-cat-label">השקעה / צמיחה</div>
+          <div class="purpose-chips" data-cat="investment">
+            <button type="button" class="purpose-chip" data-purpose="פתיחת עסק" data-cat="investment" onclick="togglePurpose(this)">פתיחת עסק</button>
+            <button type="button" class="purpose-chip" data-purpose="השקעה בעסק" data-cat="investment" onclick="togglePurpose(this)">השקעה בעסק</button>
+            <button type="button" class="purpose-chip" data-purpose="קורס מקצועי" data-cat="investment" onclick="togglePurpose(this)">קורס מקצועי</button>
+            <button type="button" class="purpose-chip" data-purpose="נדל&quot;ן" data-cat="investment" onclick="togglePurpose(this)">נדל"ן</button>
+            <button type="button" class="purpose-chip" data-purpose="השקעה מניבה" data-cat="investment" onclick="togglePurpose(this)">השקעה מניבה</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Track type -->
+      <div class="track-selector" id="trackSelector">
+        <div class="track-card active" data-track="regular" onclick="selectTrack('regular',this)">
+          <div class="track-name">קבועה לא צמודה</div>
+          <div class="track-desc">ריבית קבועה, תשלום יציב</div>
+        </div>
+        <div class="track-card" data-track="indexed" onclick="selectTrack('indexed',this)">
+          <div class="track-name">קבועה צמודה</div>
+          <div class="track-desc">צמוד מדד המחירים לצרכן</div>
+        </div>
+        <div class="track-card" data-track="prime" onclick="selectTrack('prime',this)">
+          <div class="track-name">פריים</div>
+          <div class="track-desc">ריבית משתנה, בסיס פריים</div>
+        </div>
+      </div>
+
+      <!-- Prime spread row -->
+      <div class="form-group extra-field" id="row-prime-spread" style="margin-bottom:18px">
+        <label class="form-label">מרווח מעל פריים (%)<span class="req">*</span></label>
+        <input type="number" id="primeSpread" class="form-input" value="1.5" step="0.1" min="-3" max="10"/>
+        <div class="prime-display" id="primeTotalDisplay">פריים 6.25% + 1.5% = 7.75%</div>
+        <div class="form-error" id="err-primeSpread">הכנס מרווח תקין</div>
+      </div>
+
+      <!-- CPI row -->
+      <div class="form-group extra-field" id="row-cpi" style="margin-bottom:18px">
+        <label class="form-label">הנחת עליית מדד שנתית (%)</label>
+        <input type="number" id="cpiRate" class="form-input" value="3" step="0.1" min="0" max="20"/>
+        <div class="form-hint">ברירת מחדל 3% — עליית מדד שנתית משוערת</div>
+      </div>
+
+      <!-- Main form -->
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="loanAmount">סכום ההלוואה (₪)<span class="req">*</span></label>
+          <input type="text" id="loanAmount" class="form-input" placeholder="200,000" inputmode="numeric"/>
+          <div class="form-error" id="err-loanAmount">הכנס סכום תקין גדול מ-0</div>
+        </div>
+        <div class="form-group" id="row-rate">
+          <label class="form-label" for="annualRate">ריבית שנתית (%)<span class="req">*</span></label>
+          <input type="number" id="annualRate" class="form-input" placeholder="5.0" step="0.01" min="0.1" max="30"/>
+          <div class="form-error" id="err-annualRate">ריבית חייבת להיות בין 0.1% ל-30%</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="termMonths">תקופה (חודשים)<span class="req">*</span></label>
+          <input type="number" id="termMonths" class="form-input" placeholder="120" min="1" max="360"/>
+          <div class="form-error" id="err-termMonths">תקופה חייבת להיות בין 1 ל-360 חודשים</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loanType">לוח סילוקין<span class="req">*</span></label>
+          <select id="loanType" class="form-input" onchange="onLoanTypeChange()">
+            <option value="shpitzer">שפיצר — תשלום שווה</option>
+            <option value="grace-full">גרייס מלא — ריבית בלבד</option>
+            <option value="grace-partial">גרייס חלקי — ריבית + קרן מינימלית</option>
+            <option value="balloon-full">בלון מלא — ריבית בלבד + קרן בסוף</option>
+            <option value="balloon-partial">בלון חלקי — שפיצר + יתרת קרן בסוף</option>
+          </select>
+        </div>
+        <div class="form-group extra-field" id="row-grace">
+          <label class="form-label" for="graceMonths">חודשי גרייס<span class="req">*</span></label>
+          <input type="number" id="graceMonths" class="form-input" placeholder="12" min="1"/>
+          <div class="form-hint">מספר חודשים בתקופת הגרייס</div>
+          <div class="form-error" id="err-graceMonths">חודשי גרייס חייבים להיות קטנים מסך התקופה</div>
+        </div>
+        <div class="form-group extra-field" id="row-balloon">
+          <label class="form-label" for="balloonPct">אחוז בלון (%)<span class="req">*</span></label>
+          <input type="number" id="balloonPct" class="form-input" placeholder="30" min="1" max="95"/>
+          <div class="form-hint">אחוז מהקרן שיוחזר בתשלום הסופי</div>
+          <div class="form-error" id="err-balloonPct">אחוז בלון חייב להיות בין 1% ל-95%</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="startDate">תאריך תחילת ההלוואה</label>
+          <input type="date" id="startDate" class="form-input"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="openingFee">עמלת פתיחת תיק (₪)</label>
+          <input type="text" id="openingFee" class="form-input" placeholder="0" inputmode="numeric"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="monthlyInsurance">ביטוח חודשי (₪)</label>
+          <input type="text" id="monthlyInsurance" class="form-input" placeholder="0" inputmode="numeric"/>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calculate()">חשב לוח סילוקין &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="section" id="results-section">
+  <div class="container">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card">
+        <div class="kpi-label">החזר חודשי התחלתי</div>
+        <div class="kpi-value" id="kpi-monthly">—</div>
+        <div class="kpi-sub" id="kpi-monthly-sub"></div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">ריבית כוללת</div>
+        <div class="kpi-value" id="kpi-totalInterest">—</div>
+        <div class="kpi-sub" id="kpi-interest-sub"></div>
+      </div>
+      <div class="kpi-card teal">
+        <div class="kpi-label">סך תשלומים</div>
+        <div class="kpi-value" id="kpi-totalPayments">—</div>
+        <div class="kpi-sub"></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">עלות לשקל</div>
+        <div class="kpi-value" id="kpi-costPerShekel">—</div>
+        <div class="kpi-sub">₪ ריבית על כל ₪ קרן</div>
+      </div>
+      <div class="kpi-card coral">
+        <div class="kpi-label">אחוז ריבית</div>
+        <div class="kpi-value" id="kpi-interestRatio">—</div>
+        <div class="kpi-sub">מסך התשלומים</div>
+      </div>
+      <div class="kpi-card lime">
+        <div class="kpi-label">תאריך סיום</div>
+        <div class="kpi-value" id="kpi-endDate" style="font-size:1.1rem">—</div>
+        <div class="kpi-sub" id="kpi-endDate-sub"></div>
+      </div>
+    </div>
+
+    <!-- Explanation -->
+    <div class="explanation-box" id="explanationBox" style="margin-bottom:28px"></div>
+
+    <!-- Advisor Card (shown when purposes selected) -->
+    <div class="advisor-card" id="advisorCard" style="display:none">
+      <div class="adv-header">
+        <div class="adv-avatar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="adv-meta-name">יועץ חכם | MakeSense</div>
+          <div class="adv-meta-role">ניתוח פיננסי אישי</div>
+        </div>
+        <div class="adv-score-badge" id="advScoreBadge">—</div>
+      </div>
+      <div class="adv-title" id="advTitle"></div>
+      <div class="adv-message" id="advMessage"></div>
+      <div class="adv-alt" id="advAlt" style="display:none"></div>
+      <div class="adv-footer">
+        <a href="https://wa.me/972524415395" target="_blank" class="adv-cta-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.846L.057 23.157c-.08.292.195.558.483.464l5.453-1.721A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.37l-.359-.213-3.723 1.174 1.187-3.63-.233-.371A9.818 9.818 0 0112 2.182c5.428 0 9.818 4.39 9.818 9.818S17.428 21.818 12 21.818z"/></svg>
+          שוחח עם שיראל ישירות
+        </a>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>תשלום חודשי לאורך זמן</h3>
+        <div class="chart-wrap"><canvas id="chartPayment"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>קרן vs ריבית לאורך זמן</h3>
+        <div class="chart-wrap"><canvas id="chartStack"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>הרכב סך התשלומים</h3>
+        <div class="chart-wrap"><canvas id="chartPie"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>יתרת קרן לאורך זמן</h3>
+        <div class="chart-wrap"><canvas id="chartBalance"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Amortization Table -->
+    <div class="card" style="margin-bottom:32px">
+      <h2 class="section-title">לוח סילוקין מפורט</h2>
+      <div class="table-wrap">
+        <table id="amortTable">
+          <thead>
+            <tr>
+              <th>#</th><th>תאריך</th><th>תשלום</th><th>קרן</th><th>ריבית</th>
+              <th>יתרה</th><th>ריבית מצטברת</th><th>קרן מצטברת</th>
+            </tr>
+          </thead>
+          <tbody id="amortBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+      <button class="btn-csv" onclick="exportCSV()">הורד CSV &#8595;</button>
+    </div>
+
+    <!-- Market Comparison -->
+    <div class="market-card" id="marketCard">
+      <h2>השוואה לריביות השוק</h2>
+      <p>נתוני בנק ישראל — <span id="boiDate"></span></p>
+      <div id="ratingWrap" style="margin-bottom:16px"></div>
+      <div id="userRateWrap" style="margin-bottom:20px"></div>
+      <div class="market-grid" id="marketGrid"></div>
+    </div>
+
+    <!-- Comparison Tool -->
+    <div class="card" style="margin-bottom:32px">
+      <h2 class="section-title">השוואת הלוואות</h2>
+      <p style="color:var(--g600);font-size:.9rem;margin-bottom:20px">הוסף עד 3 תצורות הלוואה שונות להשוואה</p>
+      <div class="comparison-grid" id="compGrid">
+        <div class="comp-loan-card" id="compSlot0">
+          <div class="comp-empty">
+            <div>הלוואה 1</div>
+            <button class="btn-add-loan" onclick="addToComparison(0)">+ הוסף הלוואה זו להשוואה</button>
+          </div>
+        </div>
+        <div class="comp-loan-card" id="compSlot1">
+          <div class="comp-empty">
+            <div>הלוואה 2</div>
+            <button class="btn-add-loan" onclick="addToComparison(1)">+ הוסף הלוואה זו להשוואה</button>
+          </div>
+        </div>
+        <div class="comp-loan-card" id="compSlot2">
+          <div class="comp-empty">
+            <div>הלוואה 3</div>
+            <button class="btn-add-loan" onclick="addToComparison(2)">+ הוסף הלוואה זו להשוואה</button>
+          </div>
+        </div>
+      </div>
+      <div class="comp-table-wrap" id="compTableWrap" style="display:none">
+        <table class="comp-table" id="compTable">
+          <thead id="compTableHead"></thead>
+          <tbody id="compTableBody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:20px;display:none" id="compChartWrap">
+        <div class="chart-wrap" style="height:220px"><canvas id="chartComp"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Export Panel -->
+    <div class="export-panel" id="exportPanel">
+      <h2 class="section-title">ייצוא ושיתוף</h2>
+      <div class="export-grid">
+        <button class="btn-export btn-pdf" onclick="exportPDFSummary()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          PDF סיכום
+        </button>
+        <button class="btn-export btn-pdf2" onclick="exportPDFSchedule()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          PDF לוח סילוקין
+        </button>
+        <button class="btn-export btn-csv2" onclick="exportCSV()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          ייצוא CSV
+        </button>
+        <a href="https://wa.me/972524415395" target="_blank" class="btn-export btn-wa2" id="waShareBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          שתף בוואטסאפ
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p><strong>MakeSense</strong> — ייעוץ משכנתאות ופיננסים</p>
+    <p style="margin-top:8px"><a href="index.html">חזרה לאתר הראשי</a> &nbsp;|&nbsp; <a href="https://wa.me/972524415395">WhatsApp: 052-441-5395</a></p>
+    <p class="footer-disclaimer">כלי זה מיועד למטרות הדגמה ומידע בלבד. החישובים הינם אינדיקטיביים ואינם מהווים ייעוץ פיננסי מוסמך. לייעוץ אישי פנה ל-MakeSense.</p>
+  </div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// Constants & State
+// ─────────────────────────────────────────────
+var BOI_RATES = {
+  lastUpdated: 'מאי 2026',
+  primeRate: 6.25,
+  consumerLoanAvg: 8.5,
+  mortgageFixed: 5.2,
+  mortgagePrimeSpread: 2.1,
+  bankPersonalAvg: 7.8
+};
+
+var currentTrack = 'regular';
+var currentSchedule = [];
+var currentSummary = null;
+var currentParams = null;
+var compLoans = [null, null, null];
+var chartInstances = {};
+var currentPage = 1;
+var ROWS_PER_PAGE = 25;
+var compChartInstance = null;
+
+// ─────────────────────────────────────────────
+// Utility
+// ─────────────────────────────────────────────
+function fmtCurrency(v) {
+  return '₪' + Math.round(v).toLocaleString('he-IL');
+}
+function fmtCurrencyFull(v) {
+  return '₪' + v.toFixed(2).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');
+}
+function fmtPct(v) { return v.toFixed(1) + '%'; }
+function fmtDate(d) {
+  if (!d) return '';
+  return d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0');
+}
+function addMonths(d, n) {
+  var r = new Date(d);
+  r.setMonth(r.getMonth() + n);
+  return r;
+}
+function parseAmount(s) {
+  return parseFloat(String(s).replace(/,/g,'')) || 0;
+}
+
+// ─────────────────────────────────────────────
+// Track Selection
+// ─────────────────────────────────────────────
+function selectTrack(track, el) {
+  currentTrack = track;
+  var cards = document.querySelectorAll('.track-card');
+  cards.forEach(function(c) { c.classList.remove('active'); });
+  el.classList.add('active');
+
+  var primeRow = document.getElementById('row-prime-spread');
+  var cpiRow = document.getElementById('row-cpi');
+  var rateRow = document.getElementById('row-rate');
+
+  if (track === 'prime') {
+    primeRow.classList.add('visible');
+    cpiRow.classList.remove('visible');
+    rateRow.style.display = 'none';
+    updatePrimeDisplay();
+  } else if (track === 'indexed') {
+    primeRow.classList.remove('visible');
+    cpiRow.classList.add('visible');
+    rateRow.style.display = '';
+  } else {
+    primeRow.classList.remove('visible');
+    cpiRow.classList.remove('visible');
+    rateRow.style.display = '';
+  }
+}
+
+function updatePrimeDisplay() {
+  var spread = parseFloat(document.getElementById('primeSpread').value) || 0;
+  var total = (BOI_RATES.primeRate + spread).toFixed(2);
+  document.getElementById('primeTotalDisplay').textContent =
+    'פריים ' + BOI_RATES.primeRate + '% + ' + spread + '% = ' + total + '%';
+}
+
+document.getElementById('primeSpread').addEventListener('input', updatePrimeDisplay);
+
+// ─────────────────────────────────────────────
+// Loan Type Change
+// ─────────────────────────────────────────────
+function onLoanTypeChange() {
+  var t = document.getElementById('loanType').value;
+  var graceRow = document.getElementById('row-grace');
+  var balloonRow = document.getElementById('row-balloon');
+
+  graceRow.classList.remove('visible');
+  balloonRow.classList.remove('visible');
+
+  if (t === 'grace-full' || t === 'grace-partial') {
+    graceRow.classList.add('visible');
+  }
+  if (t === 'balloon-full' || t === 'balloon-partial') {
+    balloonRow.classList.add('visible');
+  }
+}
+
+// ─────────────────────────────────────────────
+// Format inputs on blur
+// ─────────────────────────────────────────────
+function formatNumberInput(id) {
+  var el = document.getElementById(id);
+  el.addEventListener('blur', function() {
+    var val = parseAmount(this.value);
+    if (val > 0) this.value = val.toLocaleString('he-IL');
+  });
+  el.addEventListener('focus', function() {
+    var val = parseAmount(this.value);
+    if (val > 0) this.value = val;
+  });
+}
+formatNumberInput('loanAmount');
+formatNumberInput('openingFee');
+formatNumberInput('monthlyInsurance');
+
+// Set default date
+(function() {
+  var d = new Date();
+  d.setMonth(d.getMonth()+1);
+  document.getElementById('startDate').value = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-01';
+})();
+
+// ─────────────────────────────────────────────
+// Validation
+// ─────────────────────────────────────────────
+function showError(id, show) {
+  var el = document.getElementById('err-' + id);
+  var inp = document.getElementById(id);
+  if (el) el.style.display = show ? 'block' : 'none';
+  if (inp) { if (show) inp.classList.add('error'); else inp.classList.remove('error'); }
+}
+
+function validate() {
+  var ok = true;
+  var amount = parseAmount(document.getElementById('loanAmount').value);
+  if (!amount || amount <= 0) { showError('loanAmount', true); ok = false; } else showError('loanAmount', false);
+
+  var rate;
+  if (currentTrack === 'prime') {
+    var spread = parseFloat(document.getElementById('primeSpread').value);
+    if (isNaN(spread)) { showError('primeSpread', true); ok = false; } else showError('primeSpread', false);
+    rate = BOI_RATES.primeRate + (spread || 0);
+  } else {
+    rate = parseFloat(document.getElementById('annualRate').value);
+    if (!rate || rate < 0.1 || rate > 30) { showError('annualRate', true); ok = false; } else showError('annualRate', false);
+  }
+
+  var term = parseInt(document.getElementById('termMonths').value);
+  if (!term || term < 1 || term > 360) { showError('termMonths', true); ok = false; } else showError('termMonths', false);
+
+  var loanType = document.getElementById('loanType').value;
+  if (loanType === 'grace-full' || loanType === 'grace-partial') {
+    var grace = parseInt(document.getElementById('graceMonths').value);
+    if (!grace || grace < 1 || grace >= term) { showError('graceMonths', true); ok = false; } else showError('graceMonths', false);
+  }
+  if (loanType === 'balloon-full' || loanType === 'balloon-partial') {
+    var bp = parseFloat(document.getElementById('balloonPct').value);
+    if (!bp || bp < 1 || bp > 95) { showError('balloonPct', true); ok = false; } else showError('balloonPct', false);
+  }
+
+  return ok;
+}
+
+// ─────────────────────────────────────────────
+// Calculation Engine — Decimal.js
+// ─────────────────────────────────────────────
+function calcShpitzer(P_num, rAnnual_num, nMonths, startDate, cpiRate_num) {
+  var D = Decimal;
+  var P = new D(P_num);
+  var r = new D(rAnnual_num).div(12).div(100);
+  var n = nMonths;
+  var cpi = cpiRate_num ? new D(cpiRate_num).div(100) : new D(0);
+
+  var rn = D.pow(D.add(1, r), n);
+  var payment;
+  if (r.isZero()) {
+    payment = P.div(n);
+  } else {
+    payment = P.mul(r).mul(rn).div(rn.sub(1));
+  }
+
+  var schedule = [];
+  var balance = P;
+  var cumInt = new D(0);
+  var cumPrin = new D(0);
+  var d = startDate ? new Date(startDate) : new Date();
+
+  for (var i = 1; i <= n; i++) {
+    // Annual CPI adjustment for indexed track
+    if (cpiRate_num && i > 1 && (i - 1) % 12 === 0) {
+      balance = balance.mul(D.add(1, cpi));
+      // Recalculate payment for remaining months
+      var rem = n - i + 1;
+      if (!r.isZero()) {
+        var rnRem = D.pow(D.add(1, r), rem);
+        payment = balance.mul(r).mul(rnRem).div(rnRem.sub(1));
+      } else {
+        payment = balance.div(rem);
+      }
+    }
+
+    var interest = balance.mul(r);
+    var principal = payment.sub(interest);
+    if (i === n) { principal = balance; payment = principal.add(interest); }
+    balance = balance.sub(principal);
+    if (balance.lt(0.001)) balance = new D(0);
+
+    cumInt = cumInt.add(interest);
+    cumPrin = cumPrin.add(principal);
+
+    schedule.push({
+      month: i,
+      date: fmtDate(d),
+      payment: payment.toNumber(),
+      principal: principal.toNumber(),
+      interest: interest.toNumber(),
+      balance: balance.toNumber(),
+      cumInt: cumInt.toNumber(),
+      cumPrincipal: cumPrin.toNumber()
+    });
+
+    d = addMonths(d, 1);
+  }
+
+  return schedule;
+}
+
+function calcGraceFull(P_num, rAnnual_num, nMonths, graceMonths, startDate, cpiRate_num) {
+  var D = Decimal;
+  var P = new D(P_num);
+  var r = new D(rAnnual_num).div(12).div(100);
+  var cpi = cpiRate_num ? new D(cpiRate_num).div(100) : new D(0);
+  var schedule = [];
+  var balance = P;
+  var cumInt = new D(0);
+  var cumPrin = new D(0);
+  var d = startDate ? new Date(startDate) : new Date();
+
+  // Grace period: interest only
+  for (var i = 1; i <= graceMonths; i++) {
+    if (cpiRate_num && i > 1 && (i - 1) % 12 === 0) {
+      balance = balance.mul(D.add(1, cpi));
+    }
+    var interest = balance.mul(r);
+    var principal = new D(0);
+    cumInt = cumInt.add(interest);
+    schedule.push({ month: i, date: fmtDate(d), payment: interest.toNumber(), principal: 0, interest: interest.toNumber(), balance: balance.toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: 0 });
+    d = addMonths(d, 1);
+  }
+
+  // Shpitzer on remaining months
+  var rem = nMonths - graceMonths;
+  var rn = D.pow(D.add(1, r), rem);
+  var payment = r.isZero() ? balance.div(rem) : balance.mul(r).mul(rn).div(rn.sub(1));
+
+  for (var j = 1; j <= rem; j++) {
+    var mi = graceMonths + j;
+    if (cpiRate_num && (mi - 1) % 12 === 0 && mi > 1) {
+      balance = balance.mul(D.add(1, cpi));
+      var remNow = rem - j + 1;
+      var rnNow = D.pow(D.add(1, r), remNow);
+      payment = r.isZero() ? balance.div(remNow) : balance.mul(r).mul(rnNow).div(rnNow.sub(1));
+    }
+    var interest2 = balance.mul(r);
+    var principal2 = payment.sub(interest2);
+    if (j === rem) { principal2 = balance; payment = principal2.add(interest2); }
+    balance = balance.sub(principal2);
+    if (balance.lt(0.001)) balance = new D(0);
+    cumInt = cumInt.add(interest2);
+    cumPrin = cumPrin.add(principal2);
+    schedule.push({ month: mi, date: fmtDate(d), payment: payment.toNumber(), principal: principal2.toNumber(), interest: interest2.toNumber(), balance: balance.toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: cumPrin.toNumber() });
+    d = addMonths(d, 1);
+  }
+
+  return schedule;
+}
+
+function calcGracePartial(P_num, rAnnual_num, nMonths, graceMonths, startDate, cpiRate_num) {
+  var D = Decimal;
+  var P = new D(P_num);
+  var r = new D(rAnnual_num).div(12).div(100);
+  var minPrincipal = P.div(nMonths);
+  var schedule = [];
+  var balance = P;
+  var cumInt = new D(0);
+  var cumPrin = new D(0);
+  var d = startDate ? new Date(startDate) : new Date();
+  var cpi = cpiRate_num ? new D(cpiRate_num).div(100) : new D(0);
+
+  for (var i = 1; i <= graceMonths; i++) {
+    if (cpiRate_num && i > 1 && (i-1) % 12 === 0) balance = balance.mul(D.add(1, cpi));
+    var interest = balance.mul(r);
+    var principal = minPrincipal;
+    var payment = interest.add(principal);
+    balance = balance.sub(principal);
+    if (balance.lt(0.001)) balance = new D(0);
+    cumInt = cumInt.add(interest);
+    cumPrin = cumPrin.add(principal);
+    schedule.push({ month: i, date: fmtDate(d), payment: payment.toNumber(), principal: principal.toNumber(), interest: interest.toNumber(), balance: balance.toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: cumPrin.toNumber() });
+    d = addMonths(d, 1);
+  }
+
+  var rem = nMonths - graceMonths;
+  var rn = D.pow(D.add(1, r), rem);
+  var payReg = r.isZero() ? balance.div(rem) : balance.mul(r).mul(rn).div(rn.sub(1));
+
+  for (var j = 1; j <= rem; j++) {
+    var mi = graceMonths + j;
+    if (cpiRate_num && (mi-1) % 12 === 0 && mi > 1) {
+      balance = balance.mul(D.add(1, cpi));
+      var remNow2 = rem - j + 1;
+      var rnNow2 = D.pow(D.add(1, r), remNow2);
+      payReg = r.isZero() ? balance.div(remNow2) : balance.mul(r).mul(rnNow2).div(rnNow2.sub(1));
+    }
+    var interest3 = balance.mul(r);
+    var principal3 = payReg.sub(interest3);
+    if (j === rem) { principal3 = balance; payReg = principal3.add(interest3); }
+    balance = balance.sub(principal3);
+    if (balance.lt(0.001)) balance = new D(0);
+    cumInt = cumInt.add(interest3);
+    cumPrin = cumPrin.add(principal3);
+    schedule.push({ month: mi, date: fmtDate(d), payment: payReg.toNumber(), principal: principal3.toNumber(), interest: interest3.toNumber(), balance: balance.toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: cumPrin.toNumber() });
+    d = addMonths(d, 1);
+  }
+
+  return schedule;
+}
+
+function calcBalloonFull(P_num, rAnnual_num, nMonths, startDate, cpiRate_num) {
+  var D = Decimal;
+  var P = new D(P_num);
+  var r = new D(rAnnual_num).div(12).div(100);
+  var cpi = cpiRate_num ? new D(cpiRate_num).div(100) : new D(0);
+  var schedule = [];
+  var balance = P;
+  var cumInt = new D(0);
+  var cumPrin = new D(0);
+  var d = startDate ? new Date(startDate) : new Date();
+
+  for (var i = 1; i <= nMonths; i++) {
+    if (cpiRate_num && i > 1 && (i-1) % 12 === 0) balance = balance.mul(D.add(1, cpi));
+    var interest = balance.mul(r);
+    var principal = new D(0);
+    var payment = interest;
+    if (i === nMonths) { principal = balance; payment = interest.add(principal); balance = new D(0); }
+    cumInt = cumInt.add(interest);
+    cumPrin = cumPrin.add(principal);
+    schedule.push({ month: i, date: fmtDate(d), payment: payment.toNumber(), principal: principal.toNumber(), interest: interest.toNumber(), balance: balance.toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: cumPrin.toNumber() });
+    d = addMonths(d, 1);
+  }
+
+  return schedule;
+}
+
+function calcBalloonPartial(P_num, rAnnual_num, nMonths, balloonPct, startDate, cpiRate_num) {
+  var D = Decimal;
+  var P = new D(P_num);
+  var balloonAmt = P.mul(balloonPct).div(100);
+  var regularP = P.sub(balloonAmt);
+  var r = new D(rAnnual_num).div(12).div(100);
+  var cpi = cpiRate_num ? new D(cpiRate_num).div(100) : new D(0);
+  var schedule = [];
+  var balanceReg = regularP;
+  var balanceBalloon = balloonAmt;
+  var cumInt = new D(0);
+  var cumPrin = new D(0);
+  var d = startDate ? new Date(startDate) : new Date();
+
+  var rn = D.pow(D.add(1, r), nMonths);
+  var shpPayment = r.isZero() ? regularP.div(nMonths) : regularP.mul(r).mul(rn).div(rn.sub(1));
+
+  for (var i = 1; i <= nMonths; i++) {
+    if (cpiRate_num && i > 1 && (i-1) % 12 === 0) {
+      balanceReg = balanceReg.mul(D.add(1, cpi));
+      balanceBalloon = balanceBalloon.mul(D.add(1, cpi));
+      var remNow3 = nMonths - i + 1;
+      var rnNow3 = D.pow(D.add(1, r), remNow3);
+      shpPayment = r.isZero() ? balanceReg.div(remNow3) : balanceReg.mul(r).mul(rnNow3).div(rnNow3.sub(1));
+    }
+    var interestReg = balanceReg.mul(r);
+    var interestBalloon = balanceBalloon.mul(r);
+    var principalReg = shpPayment.sub(interestReg);
+    if (i === nMonths) { principalReg = balanceReg; }
+    var principalBalloon = new D(0);
+    if (i === nMonths) { principalBalloon = balanceBalloon; }
+
+    var totalPayment = shpPayment.add(interestBalloon);
+    if (i === nMonths) { totalPayment = principalReg.add(interestReg).add(principalBalloon).add(interestBalloon); }
+
+    var totalInterest = interestReg.add(interestBalloon);
+    var totalPrincipal = principalReg.add(principalBalloon);
+
+    balanceReg = balanceReg.sub(principalReg);
+    balanceBalloon = balanceBalloon.sub(principalBalloon);
+    if (balanceReg.lt(0.001)) balanceReg = new D(0);
+    if (balanceBalloon.lt(0.001)) balanceBalloon = new D(0);
+
+    cumInt = cumInt.add(totalInterest);
+    cumPrin = cumPrin.add(totalPrincipal);
+
+    schedule.push({ month: i, date: fmtDate(d), payment: totalPayment.toNumber(), principal: totalPrincipal.toNumber(), interest: totalInterest.toNumber(), balance: balanceReg.add(balanceBalloon).toNumber(), cumInt: cumInt.toNumber(), cumPrincipal: cumPrin.toNumber() });
+    d = addMonths(d, 1);
+  }
+
+  return schedule;
+}
+
+function buildSummary(schedule, params) {
+  var last = schedule[schedule.length - 1];
+  var totalInterest = last.cumInt;
+  var totalPrincipal = last.cumPrincipal;
+  var totalPayments = totalInterest + totalPrincipal + (params.openingFee || 0) + (params.monthlyInsurance || 0) * schedule.length;
+  var totalCost = totalInterest + (params.openingFee || 0) + (params.monthlyInsurance || 0) * schedule.length;
+  var interestRatio = totalPayments > 0 ? (totalInterest / totalPayments) * 100 : 0;
+  var costPerShekel = totalPrincipal > 0 ? totalInterest / totalPrincipal : 0;
+  var endDateParts = last.date.split('/');
+  var endDate = endDateParts[0] + '/' + endDateParts[1];
+
+  return {
+    monthlyPaymentInitial: schedule[0].payment,
+    monthlyPaymentFinal: last.payment,
+    totalInterest: totalInterest,
+    totalPrincipal: totalPrincipal,
+    totalPayments: totalPayments,
+    totalCost: totalCost,
+    interestRatio: interestRatio,
+    costPerShekel: costPerShekel,
+    endDate: endDate
+  };
+}
+
+// ─────────────────────────────────────────────
+// Generate Explanation
+// ─────────────────────────────────────────────
+function generateExplanation(summary, params) {
+  var parts = [];
+  var cps = summary.costPerShekel.toFixed(2);
+  parts.push('על כל ₪ שלוות תחזיר ₪' + (1 + parseFloat(cps)).toFixed(2) + ' (כולל ₪' + cps + ' ריבית).');
+
+  if (summary.interestRatio > 40) {
+    parts.push('<span class="explanation-warn">שים לב — ' + summary.interestRatio.toFixed(1) + '% מסך התשלומים הוא ריבית. שקול לקצר את התקופה או לבחור ריבית נמוכה יותר.</span>');
+  }
+
+  var loanType = params.loanType;
+  if (loanType === 'grace-full') {
+    parts.push('בחרת <strong>גרייס מלא</strong>: ב-' + params.graceMonths + ' החודשים הראשונים תשלם ריבית בלבד (' + fmtCurrency(summary.monthlyPaymentInitial) + '/חודש). לאחר מכן ייפתח לוח שפיצר רגיל על יתרת הקרן המלאה.');
+  } else if (loanType === 'grace-partial') {
+    parts.push('בחרת <strong>גרייס חלקי</strong>: ב-' + params.graceMonths + ' החודשים הראשונים תשלם ריבית + תשלום קרן מינימלי. לאחר מכן תעבור ללוח שפיצר על היתרה.');
+  } else if (loanType === 'balloon-full') {
+    parts.push('בחרת <strong>בלון מלא</strong>: במהלך כל התקופה תשלם ריבית בלבד. בתשלום האחרון תחזיר את <strong>כל הקרן</strong> (' + fmtCurrency(params.loanAmount) + '). חשוב להתכונן לסכום זה מראש.');
+  } else if (loanType === 'balloon-partial') {
+    parts.push('בחרת <strong>בלון חלקי</strong>: תשלם שפיצר על ' + (100 - params.balloonPct) + '% מהקרן, ובסוף תחזיר ' + params.balloonPct + '% (' + fmtCurrency(params.loanAmount * params.balloonPct / 100) + ') בתשלום בלון אחד.');
+  }
+
+  if (params.trackType === 'indexed') {
+    parts.push('המסלול <strong>צמוד מדד</strong> — יתרת הקרן מתעדכנת מדי שנה לפי עליית מדד המחירים לצרכן (הנחה: ' + params.cpiRate + '% לשנה). התשלומים עשויים לגדול עם השנים.');
+  } else if (params.trackType === 'prime') {
+    parts.push('המסלול <strong>פריים</strong> — הריבית משתנה עם שינויי ריבית בנק ישראל. ריבית הפריים הנוכחית: ' + BOI_RATES.primeRate + '%. שינוי של 0.25% בריבית משפיע על ההחזר החודשי.');
+  }
+
+  if (params.openingFee > 0) {
+    parts.push('עמלת פתיחת תיק: ' + fmtCurrency(params.openingFee) + ' (חד-פעמי).');
+  }
+  if (params.monthlyInsurance > 0) {
+    parts.push('ביטוח חודשי: ' + fmtCurrency(params.monthlyInsurance) + '/חודש (סה"כ ' + fmtCurrency(params.monthlyInsurance * currentSchedule.length) + ' לכל התקופה).');
+  }
+
+  return parts.join(' ');
+}
+
+// ─────────────────────────────────────────────
+// Market Rating
+// ─────────────────────────────────────────────
+function getRating(rate, trackType) {
+  var ref = trackType === 'prime' ? BOI_RATES.mortgagePrimeSpread :
+            trackType === 'indexed' ? BOI_RATES.mortgageFixed : BOI_RATES.bankPersonalAvg;
+  if (rate <= ref - 1.5) return { label: 'מצוין', cls: 'rating-excellent' };
+  if (rate <= ref - 0.5) return { label: 'טוב', cls: 'rating-good' };
+  if (rate <= ref + 0.5) return { label: 'ממוצע', cls: 'rating-avg' };
+  return { label: 'יקר', cls: 'rating-expensive' };
+}
+
+// ─────────────────────────────────────────────
+// Main Calculate
+// ─────────────────────────────────────────────
+function calculate() {
+  if (!validate()) return;
+
+  var amount = parseAmount(document.getElementById('loanAmount').value);
+  var term = parseInt(document.getElementById('termMonths').value);
+  var loanType = document.getElementById('loanType').value;
+  var startDateVal = document.getElementById('startDate').value;
+  var startDate = startDateVal ? new Date(startDateVal) : new Date();
+  var openingFee = parseAmount(document.getElementById('openingFee').value) || 0;
+  var monthlyInsurance = parseAmount(document.getElementById('monthlyInsurance').value) || 0;
+
+  var rate, spread, cpiRate;
+  if (currentTrack === 'prime') {
+    spread = parseFloat(document.getElementById('primeSpread').value) || 0;
+    rate = BOI_RATES.primeRate + spread;
+    cpiRate = 0;
+  } else if (currentTrack === 'indexed') {
+    rate = parseFloat(document.getElementById('annualRate').value);
+    cpiRate = parseFloat(document.getElementById('cpiRate').value) || 3;
+  } else {
+    rate = parseFloat(document.getElementById('annualRate').value);
+    cpiRate = 0;
+  }
+
+  var graceMonths = parseInt(document.getElementById('graceMonths').value) || 0;
+  var balloonPct = parseFloat(document.getElementById('balloonPct').value) || 0;
+
+  var schedule;
+  if (loanType === 'shpitzer') {
+    schedule = calcShpitzer(amount, rate, term, startDate, cpiRate);
+  } else if (loanType === 'grace-full') {
+    schedule = calcGraceFull(amount, rate, term, graceMonths, startDate, cpiRate);
+  } else if (loanType === 'grace-partial') {
+    schedule = calcGracePartial(amount, rate, term, graceMonths, startDate, cpiRate);
+  } else if (loanType === 'balloon-full') {
+    schedule = calcBalloonFull(amount, rate, term, startDate, cpiRate);
+  } else if (loanType === 'balloon-partial') {
+    schedule = calcBalloonPartial(amount, rate, term, balloonPct, startDate, cpiRate);
+  }
+
+  var params = { loanAmount: amount, rate: rate, term: term, loanType: loanType, graceMonths: graceMonths, balloonPct: balloonPct, trackType: currentTrack, cpiRate: cpiRate, spread: spread, openingFee: openingFee, monthlyInsurance: monthlyInsurance, startDate: startDate };
+  var summary = buildSummary(schedule, params);
+
+  currentSchedule = schedule;
+  currentSummary = summary;
+  currentParams = params;
+
+  renderKPIs(summary, params);
+  renderExplanation(summary, params);
+  renderCharts(schedule, summary);
+  renderTable(1);
+  renderMarket(params, summary);
+  renderExportWALink(summary, params);
+
+  var selectedPurposes = getSelectedPurposes();
+  if (selectedPurposes.length > 0) {
+    var advice = analyzeAdvisor(params, summary, selectedPurposes);
+    renderAdvisorCard(advice);
+  } else {
+    document.getElementById('advisorCard').style.display = 'none';
+  }
+
+  var rs = document.getElementById('results-section');
+  rs.style.display = 'block';
+  setTimeout(function() { rs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+}
+
+// ─────────────────────────────────────────────
+// Render KPIs
+// ─────────────────────────────────────────────
+function renderKPIs(s, p) {
+  document.getElementById('kpi-monthly').textContent = fmtCurrency(s.monthlyPaymentInitial);
+  document.getElementById('kpi-monthly-sub').textContent = p.loanType !== 'shpitzer' ? 'תשלום סופי: ' + fmtCurrency(s.monthlyPaymentFinal) : 'תשלום קבוע';
+  document.getElementById('kpi-totalInterest').textContent = fmtCurrency(s.totalInterest);
+  document.getElementById('kpi-interest-sub').textContent = fmtPct(s.interestRatio) + ' מהסכום';
+  document.getElementById('kpi-totalPayments').textContent = fmtCurrency(s.totalPayments);
+  document.getElementById('kpi-costPerShekel').textContent = '₪' + s.costPerShekel.toFixed(3);
+  document.getElementById('kpi-interestRatio').textContent = fmtPct(s.interestRatio);
+  document.getElementById('kpi-endDate').textContent = s.endDate;
+  var months = currentSchedule.length;
+  var years = Math.floor(months / 12);
+  var rem = months % 12;
+  document.getElementById('kpi-endDate-sub').textContent = years + ' שנים' + (rem ? ' ו-' + rem + ' חודשים' : '');
+}
+
+// ─────────────────────────────────────────────
+// Render Explanation
+// ─────────────────────────────────────────────
+function renderExplanation(s, p) {
+  document.getElementById('explanationBox').innerHTML = generateExplanation(s, p);
+}
+
+// ─────────────────────────────────────────────
+// Charts
+// ─────────────────────────────────────────────
+function destroyChart(id) {
+  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+}
+
+function renderCharts(schedule, summary) {
+  // Subsample for large schedules
+  var labels = [], payments = [], principals = [], interests = [], balances = [];
+  var step = Math.max(1, Math.floor(schedule.length / 60));
+  schedule.forEach(function(row, idx) {
+    if (idx % step === 0 || idx === schedule.length - 1) {
+      labels.push(row.date);
+      payments.push(Math.round(row.payment));
+      principals.push(Math.round(row.principal));
+      interests.push(Math.round(row.interest));
+      balances.push(Math.round(row.balance));
+    }
+  });
+
+  // Chart 1: Payment timeline
+  destroyChart('chartPayment');
+  chartInstances['chartPayment'] = new Chart(document.getElementById('chartPayment'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'תשלום חודשי',
+        data: payments,
+        borderColor: '#0d21a1',
+        backgroundColor: 'rgba(13,33,161,.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { rtl: true, labels: { font: { family: 'Arial' } } } },
+      scales: {
+        y: { ticks: { callback: function(v) { return '₪' + v.toLocaleString('he-IL'); } } }
+      }
+    }
+  });
+
+  // Chart 2: Stacked bar principal vs interest (every 12th month)
+  var stackLabels = [], stackPrin = [], stackInt = [];
+  for (var i = 11; i < schedule.length; i += 12) {
+    stackLabels.push(schedule[i].date);
+    stackPrin.push(Math.round(schedule[i].principal));
+    stackInt.push(Math.round(schedule[i].interest));
+  }
+  if (stackLabels.length === 0 && schedule.length > 0) {
+    stackLabels.push(schedule[0].date);
+    stackPrin.push(Math.round(schedule[0].principal));
+    stackInt.push(Math.round(schedule[0].interest));
+  }
+
+  destroyChart('chartStack');
+  chartInstances['chartStack'] = new Chart(document.getElementById('chartStack'), {
+    type: 'bar',
+    data: {
+      labels: stackLabels,
+      datasets: [
+        { label: 'קרן', data: stackPrin, backgroundColor: '#0d21a1' },
+        { label: 'ריבית', data: stackInt, backgroundColor: '#FF9D00' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { rtl: true, labels: { font: { family: 'Arial' } } } },
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, ticks: { callback: function(v) { return '₪' + v.toLocaleString('he-IL'); } } }
+      }
+    }
+  });
+
+  // Chart 3: Pie
+  destroyChart('chartPie');
+  chartInstances['chartPie'] = new Chart(document.getElementById('chartPie'), {
+    type: 'pie',
+    data: {
+      labels: ['קרן', 'ריבית'],
+      datasets: [{ data: [Math.round(summary.totalPrincipal), Math.round(summary.totalInterest)], backgroundColor: ['#0d21a1','#FF9D00'] }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { rtl: true, labels: { font: { family: 'Arial' } } },
+        tooltip: { callbacks: { label: function(c) { return c.label + ': ₪' + c.parsed.toLocaleString('he-IL'); } } }
+      }
+    }
+  });
+
+  // Chart 4: Balance over time
+  destroyChart('chartBalance');
+  chartInstances['chartBalance'] = new Chart(document.getElementById('chartBalance'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'יתרת קרן',
+        data: balances,
+        borderColor: '#3BBDD4',
+        backgroundColor: 'rgba(59,189,212,.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { rtl: true, labels: { font: { family: 'Arial' } } } },
+      scales: {
+        y: { ticks: { callback: function(v) { return '₪' + v.toLocaleString('he-IL'); } } }
+      }
+    }
+  });
+}
+
+// ─────────────────────────────────────────────
+// Amortization Table
+// ─────────────────────────────────────────────
+function renderTable(page) {
+  currentPage = page;
+  var tbody = document.getElementById('amortBody');
+  tbody.innerHTML = '';
+  var totalPages = Math.ceil(currentSchedule.length / ROWS_PER_PAGE);
+  var start = (page - 1) * ROWS_PER_PAGE;
+  var end = Math.min(start + ROWS_PER_PAGE, currentSchedule.length);
+
+  for (var i = start; i < end; i++) {
+    var row = currentSchedule[i];
+    var tr = document.createElement('tr');
+    if (row.month % 12 === 0) tr.classList.add('yearly');
+    tr.innerHTML = '<td>' + row.month + '</td>' +
+      '<td>' + row.date + '</td>' +
+      '<td>' + fmtCurrency(row.payment) + '</td>' +
+      '<td>' + fmtCurrency(row.principal) + '</td>' +
+      '<td>' + fmtCurrency(row.interest) + '</td>' +
+      '<td>' + fmtCurrency(row.balance) + '</td>' +
+      '<td>' + fmtCurrency(row.cumInt) + '</td>' +
+      '<td>' + fmtCurrency(row.cumPrincipal) + '</td>';
+    tbody.appendChild(tr);
+  }
+
+  renderPagination(page, totalPages);
+}
+
+function renderPagination(page, totalPages) {
+  var pg = document.getElementById('pagination');
+  pg.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  function btn(label, p, disabled, active) {
+    var b = document.createElement('button');
+    b.className = 'page-btn' + (active ? ' active' : '');
+    b.textContent = label;
+    b.disabled = disabled;
+    if (!disabled) b.onclick = function() { renderTable(p); };
+    return b;
+  }
+
+  pg.appendChild(btn('ראשון', 1, page === 1, false));
+  pg.appendChild(btn('&#8592; הקודם', page - 1, page === 1, false));
+
+  var start = Math.max(1, page - 2);
+  var end2 = Math.min(totalPages, page + 2);
+  for (var i = start; i <= end2; i++) {
+    pg.appendChild(btn(String(i), i, false, i === page));
+  }
+
+  pg.appendChild(btn('הבא &#8594;', page + 1, page === totalPages, false));
+  pg.appendChild(btn('אחרון', totalPages, page === totalPages, false));
+
+  var info = document.createElement('span');
+  info.className = 'page-info';
+  info.textContent = 'עמוד ' + page + ' מתוך ' + totalPages + ' (' + currentSchedule.length + ' חודשים)';
+  pg.appendChild(info);
+}
+
+// ─────────────────────────────────────────────
+// Export CSV
+// ─────────────────────────────────────────────
+function exportCSV() {
+  var BOM = '\\uFEFF';
+  var headers = ['חודש','תאריך','תשלום','קרן','ריבית','יתרה','ריבית מצטברת','קרן מצטברת'];
+  var rows = [headers.join(',')];
+  currentSchedule.forEach(function(r) {
+    rows.push([r.month, r.date, r.payment.toFixed(2), r.principal.toFixed(2), r.interest.toFixed(2), r.balance.toFixed(2), r.cumInt.toFixed(2), r.cumPrincipal.toFixed(2)].join(','));
+  });
+  var csv = BOM + rows.join('\\n');
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'loan_schedule.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─────────────────────────────────────────────
+// Market Comparison
+// ─────────────────────────────────────────────
+function renderMarket(params, summary) {
+  document.getElementById('boiDate').textContent = BOI_RATES.lastUpdated;
+
+  var displayRate = params.trackType === 'prime' ? params.spread : params.rate;
+  var displayLabel = params.trackType === 'prime' ? 'מרווח: +' + displayRate + '%' : displayRate + '%';
+
+  var rating = getRating(params.rate, params.trackType);
+  document.getElementById('ratingWrap').innerHTML =
+    '<span class="rating-badge ' + rating.cls + '">' + rating.label + '</span>';
+  document.getElementById('userRateWrap').innerHTML =
+    '<div class="user-rate-display">הריבית שלך: ' + params.rate.toFixed(2) + '%</div>' +
+    '<div style="opacity:.8;font-size:.88rem">' + displayLabel + '</div>';
+
+  var refs = [
+    { label: 'משכנתא קבועה (ממוצע בנקים)', rate: BOI_RATES.mortgageFixed, max: 10 },
+    { label: 'פריים + מרווח ממוצע', rate: BOI_RATES.primeRate + BOI_RATES.mortgagePrimeSpread, max: 12 },
+    { label: 'הלוואה אישית (ממוצע)', rate: BOI_RATES.bankPersonalAvg, max: 15 }
+  ];
+
+  var grid = document.getElementById('marketGrid');
+  grid.innerHTML = '';
+  refs.forEach(function(ref) {
+    var pct = Math.min(100, (ref.rate / ref.max) * 100);
+    var userPct = Math.min(100, (params.rate / ref.max) * 100);
+    var div = document.createElement('div');
+    div.className = 'market-item';
+    div.innerHTML = '<div class="market-item-label">' + ref.label + '</div>' +
+      '<div class="market-item-rate">' + ref.rate.toFixed(2) + '%</div>' +
+      '<div class="market-bar-wrap"><div class="market-bar" style="width:' + pct + '%"></div></div>' +
+      '<div style="margin-top:6px;font-size:.78rem;opacity:.7">הריבית שלך: ' + params.rate.toFixed(2) + '% (' + (params.rate <= ref.rate ? '✓ מתחת לממוצע' : '▲ מעל הממוצע') + ')</div>';
+    grid.appendChild(div);
+  });
+}
+
+// ─────────────────────────────────────────────
+// Comparison Tool
+// ─────────────────────────────────────────────
+function addToComparison(slot) {
+  if (!currentSummary) { alert('יש לחשב הלוואה תחילה'); return; }
+  compLoans[slot] = { summary: JSON.parse(JSON.stringify(currentSummary)), params: JSON.parse(JSON.stringify(currentParams)) };
+  compLoans[slot].params.startDate = currentParams.startDate ? currentParams.startDate.toString() : '';
+  renderCompSlot(slot);
+  renderCompTable();
+}
+
+function removeFromComparison(slot) {
+  compLoans[slot] = null;
+  renderCompSlot(slot);
+  renderCompTable();
+}
+
+function renderCompSlot(slot) {
+  var el = document.getElementById('compSlot' + slot);
+  var loan = compLoans[slot];
+  if (!loan) {
+    el.classList.remove('filled');
+    el.innerHTML = '<div class="comp-empty"><div>הלוואה ' + (slot+1) + '</div><button class="btn-add-loan" onclick="addToComparison(' + slot + ')">+ הוסף הלוואה זו להשוואה</button></div>';
+  } else {
+    el.classList.add('filled');
+    var trackNames = { regular: 'קבועה לא צמודה', indexed: 'קבועה צמודה', prime: 'פריים' };
+    var typeNames = { shpitzer: 'שפיצר', 'grace-full': 'גרייס מלא', 'grace-partial': 'גרייס חלקי', 'balloon-full': 'בלון מלא', 'balloon-partial': 'בלון חלקי' };
+    el.innerHTML = '<h4>הלוואה ' + (slot+1) + ' <button class="btn-remove-loan" onclick="removeFromComparison(' + slot + ')">הסר</button></h4>' +
+      '<div class="comp-detail">סכום: ' + fmtCurrency(loan.params.loanAmount) + '</div>' +
+      '<div class="comp-detail">ריבית: ' + loan.params.rate.toFixed(2) + '%  |  ' + loan.params.term + ' חודשים</div>' +
+      '<div class="comp-detail">מסלול: ' + (trackNames[loan.params.trackType] || '') + '</div>' +
+      '<div class="comp-detail">לוח: ' + (typeNames[loan.params.loanType] || '') + '</div>' +
+      '<div class="comp-detail" style="margin-top:8px;font-weight:600">החזר ראשוני: ' + fmtCurrency(loan.summary.monthlyPaymentInitial) + '/חודש</div>';
+  }
+}
+
+function renderCompTable() {
+  var filled = compLoans.filter(function(l) { return l !== null; });
+  var tableWrap = document.getElementById('compTableWrap');
+  var compChartWrap = document.getElementById('compChartWrap');
+  if (filled.length < 2) { tableWrap.style.display = 'none'; compChartWrap.style.display = 'none'; return; }
+
+  tableWrap.style.display = 'block';
+  compChartWrap.style.display = 'block';
+
+  var head = document.getElementById('compTableHead');
+  var body = document.getElementById('compTableBody');
+
+  var headerCols = '<th>פרמטר</th>';
+  compLoans.forEach(function(l, i) {
+    if (l) headerCols += '<th>הלוואה ' + (i+1) + '</th>';
+  });
+  head.innerHTML = '<tr>' + headerCols + '</tr>';
+
+  var rows = [
+    { label: 'מסלול', key: 'trackType', fmt: function(v) { return {regular:'קבועה לא צמודה',indexed:'קבועה צמודה',prime:'פריים'}[v]||v; }, compareType: 'none' },
+    { label: 'לוח סילוקין', key: 'loanType', fmt: function(v) { return {shpitzer:'שפיצר','grace-full':'גרייס מלא','grace-partial':'גרייס חלקי','balloon-full':'בלון מלא','balloon-partial':'בלון חלקי'}[v]||v; }, compareType: 'none' },
+    { label: 'החזר חודשי ראשוני', key: 'monthlyPaymentInitial', fmt: fmtCurrency, compareType: 'lower', src: 'summary' },
+    { label: 'ריבית כוללת', key: 'totalInterest', fmt: fmtCurrency, compareType: 'lower', src: 'summary' },
+    { label: 'סך תשלומים', key: 'totalPayments', fmt: fmtCurrency, compareType: 'lower', src: 'summary' },
+    { label: 'תאריך סיום', key: 'endDate', fmt: function(v) { return v; }, compareType: 'none', src: 'summary' }
+  ];
+
+  body.innerHTML = '';
+  rows.forEach(function(rowDef) {
+    var vals = compLoans.filter(function(l) { return l !== null; }).map(function(l) {
+      return rowDef.src === 'summary' ? l.summary[rowDef.key] : l.params[rowDef.key];
+    });
+    var numVals = vals.filter(function(v) { return typeof v === 'number'; });
+    var minVal = numVals.length ? Math.min.apply(null, numVals) : null;
+    var maxVal = numVals.length ? Math.max.apply(null, numVals) : null;
+
+    var tr = document.createElement('tr');
+    var tdLabel = document.createElement('td');
+    tdLabel.style.fontWeight = '600';
+    tdLabel.textContent = rowDef.label;
+    tr.appendChild(tdLabel);
+
+    var vi = 0;
+    compLoans.forEach(function(l) {
+      if (!l) return;
+      var raw = rowDef.src === 'summary' ? l.summary[rowDef.key] : l.params[rowDef.key];
+      var td = document.createElement('td');
+      td.textContent = rowDef.fmt(raw);
+      if (rowDef.compareType === 'lower' && typeof raw === 'number') {
+        if (raw === minVal && numVals.length > 1) td.className = 'comp-best';
+        else if (raw === maxVal && numVals.length > 1) td.className = 'comp-worst';
+      }
+      tr.appendChild(td);
+      vi++;
+    });
+
+    body.appendChild(tr);
+  });
+
+  // Comparison bar chart
+  if (compChartInstance) { compChartInstance.destroy(); compChartInstance = null; }
+  var compLabels = [];
+  var compMonthly = [], compInterest = [], compTotal = [];
+  compLoans.forEach(function(l, i) {
+    if (!l) return;
+    compLabels.push('הלוואה ' + (i+1));
+    compMonthly.push(Math.round(l.summary.monthlyPaymentInitial));
+    compInterest.push(Math.round(l.summary.totalInterest));
+    compTotal.push(Math.round(l.summary.totalPayments));
+  });
+
+  compChartInstance = new Chart(document.getElementById('chartComp'), {
+    type: 'bar',
+    data: {
+      labels: compLabels,
+      datasets: [
+        { label: 'החזר חודשי', data: compMonthly, backgroundColor: '#0d21a1' },
+        { label: 'ריבית כוללת', data: compInterest, backgroundColor: '#FF9D00' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { rtl: true, labels: { font: { family: 'Arial' } } } },
+      scales: { y: { ticks: { callback: function(v) { return '₪' + v.toLocaleString('he-IL'); } } } }
+    }
+  });
+}
+
+// ─────────────────────────────────────────────
+// WhatsApp Share
+// ─────────────────────────────────────────────
+function renderExportWALink(summary, params) {
+  var msg = 'שלום, חישבתי הלוואה:\n' +
+    'סכום: ' + fmtCurrency(params.loanAmount) + '\n' +
+    'ריבית: ' + params.rate.toFixed(2) + '%\n' +
+    'תקופה: ' + params.term + ' חודשים\n' +
+    'החזר חודשי: ' + fmtCurrency(summary.monthlyPaymentInitial) + '\n' +
+    'ריבית כוללת: ' + fmtCurrency(summary.totalInterest) + '\n' +
+    'אשמח לייעוץ!';
+  var encoded = encodeURIComponent(msg);
+  document.getElementById('waShareBtn').href = 'https://wa.me/972524415395?text=' + encoded;
+}
+
+// ─────────────────────────────────────────────
+// PDF Export — Summary
+// ─────────────────────────────────────────────
+function exportPDFSummary() {
+  if (!currentSummary) { alert('יש לחשב הלוואה תחילה'); return; }
+  var doc = new jspdf.jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+  var s = currentSummary;
+  var p = currentParams;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.text('MakeSense - סיכום הלוואה', 105, 20, { align: 'center' });
+
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Generated: ' + new Date().toLocaleDateString('he-IL'), 105, 28, { align: 'center' });
+
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Loan Parameters', 20, 40);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  var yp = 48;
+  var paramRows = [
+    ['Amount', fmtCurrency(p.loanAmount)],
+    ['Annual Rate', p.rate.toFixed(2) + '%'],
+    ['Term', p.term + ' months'],
+    ['Track', {regular:'Fixed non-indexed', indexed:'Fixed indexed', prime:'Prime'}[p.trackType]||p.trackType],
+    ['Schedule', {shpitzer:'Shpitzer','grace-full':'Full Grace','grace-partial':'Partial Grace','balloon-full':'Full Balloon','balloon-partial':'Partial Balloon'}[p.loanType]||p.loanType]
+  ];
+  if (p.openingFee) paramRows.push(['Opening Fee', fmtCurrency(p.openingFee)]);
+  if (p.monthlyInsurance) paramRows.push(['Monthly Insurance', fmtCurrency(p.monthlyInsurance)]);
+  paramRows.forEach(function(row) {
+    doc.text(row[0] + ': ' + row[1], 25, yp);
+    yp += 7;
+  });
+
+  yp += 5;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.text('Summary', 20, yp);
+  yp += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  var summaryRows = [
+    ['Initial Monthly Payment', fmtCurrency(s.monthlyPaymentInitial)],
+    ['Total Interest', fmtCurrency(s.totalInterest)],
+    ['Total Payments', fmtCurrency(s.totalPayments)],
+    ['Interest Ratio', s.interestRatio.toFixed(1) + '%'],
+    ['Cost per Shekel', s.costPerShekel.toFixed(3)],
+    ['End Date', s.endDate]
+  ];
+  summaryRows.forEach(function(row) {
+    doc.text(row[0] + ': ' + row[1], 25, yp);
+    yp += 7;
+  });
+
+  yp += 8;
+  doc.setFontSize(8);
+  doc.setTextColor(120);
+  doc.text('This document is for informational purposes only. Not financial advice.', 105, yp, { align: 'center' });
+  doc.text('MakeSense | wa.me/972524415395', 105, yp + 5, { align: 'center' });
+
+  doc.save('loan_summary.pdf');
+}
+
+// ─────────────────────────────────────────────
+// PDF Export — Schedule
+// ─────────────────────────────────────────────
+function exportPDFSchedule() {
+  if (!currentSchedule.length) { alert('יש לחשב הלוואה תחילה'); return; }
+  var doc = new jspdf.jsPDF({ orientation: 'l', unit: 'mm', format: 'a4' });
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.text('MakeSense - Loan Amortization Schedule', 148, 15, { align: 'center' });
+
+  var tableBody = currentSchedule.map(function(r) {
+    return [r.month, r.date, r.payment.toFixed(0), r.principal.toFixed(0), r.interest.toFixed(0), r.balance.toFixed(0), r.cumInt.toFixed(0), r.cumPrincipal.toFixed(0)];
+  });
+
+  doc.autoTable({
+    head: [['Month','Date','Payment','Principal','Interest','Balance','Cum.Interest','Cum.Principal']],
+    body: tableBody,
+    startY: 22,
+    styles: { fontSize: 7, cellPadding: 2 },
+    headStyles: { fillColor: [13, 33, 161], textColor: 255, fontStyle: 'bold' },
+    alternateRowStyles: { fillColor: [244, 245, 247] },
+    rowPageBreak: 'auto',
+    didParseCell: function(data) {
+      if (data.section === 'body' && (parseInt(data.row.raw[0]) % 12 === 0)) {
+        data.cell.styles.fillColor = [220, 230, 255];
+        data.cell.styles.fontStyle = 'bold';
+      }
+    },
+    didDrawPage: function(data) {
+      var pageCount = doc.internal.getNumberOfPages();
+      doc.setFontSize(7);
+      doc.setTextColor(150);
+      doc.text('Page ' + doc.internal.getCurrentPageInfo().pageNumber + ' of ' + pageCount, 148, doc.internal.pageSize.height - 8, { align: 'center' });
+      doc.text('MakeSense | wa.me/972524415395', 148, doc.internal.pageSize.height - 4, { align: 'center' });
+    }
+  });
+
+  doc.save('loan_schedule.pdf');
+}
+
+// ── PURPOSE SELECTOR ──────────────────────────────────────────
+function togglePurpose(el) {
+  var cat = el.dataset.cat;
+  el.classList.toggle('active-' + cat);
+}
+
+function getSelectedPurposes() {
+  return Array.prototype.slice.call(document.querySelectorAll('.purpose-chip.active-lifestyle, .purpose-chip.active-financial, .purpose-chip.active-investment')).map(function(el) { return el.dataset.purpose; });
+}
+
+// ── ADVISOR ANALYSIS ENGINE ────────────────────────────────────
+var PURPOSE_CATEGORIES = {
+  lifestyle: ['חופשה','חתונה','רכב','שיפוץ','ריהוט','אלקטרוניקה','לימודים','מעבר דירה'],
+  financial: ['סגירת מינוס','איחוד הלוואות','סגירת חובות','כיסוי תזרים','עזרה למשפחה'],
+  investment: ['פתיחת עסק','השקעה בעסק','קורס מקצועי','נדל"ן','השקעה מניבה']
+};
+
+function getPurposeCategory(purpose) {
+  if (PURPOSE_CATEGORIES.lifestyle.indexOf(purpose) !== -1) return 'lifestyle';
+  if (PURPOSE_CATEGORIES.financial.indexOf(purpose) !== -1) return 'financial';
+  if (PURPOSE_CATEGORIES.investment.indexOf(purpose) !== -1) return 'investment';
+  return 'lifestyle';
+}
+
+function analyzeAdvisor(params, summary, selectedPurposes) {
+  var score = 100;
+  var warnings = [];
+  var positives = [];
+  var primaryCategory = getPurposeCategory(selectedPurposes[0] || '');
+  var loanType = params.loanType || '';
+  var isBalloon = loanType === 'balloon-full' || loanType === 'balloon-partial';
+  var hasGrace = (params.graceMonths || 0) > 0;
+  var termYears = (params.term || 0) / 12;
+
+  if (primaryCategory === 'lifestyle') {
+    if (termYears > 3) {
+      score -= 25;
+      warnings.push('תקופת ההלוואה (' + termYears.toFixed(1) + ' שנים) ארוכה ביחס לצורך הצרכני — תמשיך לשלם עליה גם כשהיא כבר לא רלוונטית.');
+    }
+    if (termYears > 5) score -= 15;
+    if ((params.rate || 0) > 7) {
+      score -= 15;
+      warnings.push('ריבית של ' + (params.rate || 0) + '% על הוצאה צרכנית גבוהה — שקול הלוואה ממקום עבודה, קרן השתלמות, או פריסה קצרה יותר.');
+    }
+    if (hasGrace) {
+      score -= 20;
+      warnings.push('גרייס על הוצאה שכבר נעשתה — הקרן לא יורדת בתקופה זו והריבית ממשיכה לרוץ.');
+    }
+    if (isBalloon) {
+      score -= 30;
+      warnings.push('תשלום בלון על הוצאה צרכנית הוא מסוכן — ייתכן שלא תהיה לך יכולת לשלם סכום גדול בסיום.');
+    }
+  }
+
+  if (primaryCategory === 'financial') {
+    if ((params.rate || 0) < 8) {
+      score += 5;
+      positives.push('הלוואה פיננסית-הישרדותית בריבית סבירה היא לרוב צעד נכון לניהול חובות.');
+    }
+    if ((params.rate || 0) > 12) {
+      score -= 20;
+      warnings.push('ריבית של ' + (params.rate || 0) + '% לאיחוד חובות גבוהה — ודא שהיא באמת נמוכה מהחוב הנוכחי שלך.');
+    }
+    if (selectedPurposes.indexOf('איחוד הלוואות') !== -1) {
+      positives.push('איחוד הלוואות בריבית נמוכה יכול לחסוך אלפי שקלים ולפשט את ניהול התזרים החודשי.');
+    }
+  }
+
+  if (primaryCategory === 'investment') {
+    positives.push('הלוואה לצורך השקעה או צמיחה עסקית עשויה ליצור ערך עתידי מעבר לעלות הריבית.');
+    if (hasGrace) {
+      positives.push('גרייס על הלוואה עסקית הגיוני — מאפשר זמן לייצר הכנסות לפני ההחזר המלא.');
+    }
+    if ((params.rate || 0) > 10) {
+      score -= 10;
+      warnings.push('ריבית של ' + (params.rate || 0) + '% על הלוואה עסקית גבוהה — ודא שהתשואה הצפויה תכסה אותה בוודאות.');
+    }
+  }
+
+  if ((summary.interestRatio || 0) > 50) {
+    score -= 20;
+    warnings.push('מעל 50% מסך ההחזרים הוא ריבית — שקול קיצור התקופה להפחתת העלות הכוללת.');
+  }
+
+  score = Math.max(0, Math.min(100, score));
+
+  var riskLevel = score >= 75 ? 'low' : score >= 50 ? 'medium' : 'high';
+  var recType = score >= 70 ? 'positive' : score >= 45 ? 'warning' : 'critical';
+
+  var advisorTitle = '';
+  var advisorMessage = '';
+  var suggestedAlternative = '';
+
+  if (recType === 'positive') {
+    advisorTitle = 'ההלוואה נראית מתאימה לצרכים שלך';
+    advisorMessage = 'על הלוואה של ' + fmtCurrency(params.loanAmount) + ' ל' + selectedPurposes.join(' / ') + ': ';
+    if (positives.length > 0) advisorMessage += positives.join(' ');
+    advisorMessage += ' ההחזר החודשי של ' + fmtCurrency(summary.monthlyPaymentInitial) + ' נראה סביר — ודא שהוא מתאים לתזרים החודשי שלך.';
+  } else if (recType === 'warning') {
+    advisorTitle = 'כמה דברים שכדאי לשים לב אליהם';
+    advisorMessage = 'לגבי ההלוואה ל' + selectedPurposes.join(' / ') + ': ' + warnings.slice(0, 2).join(' ');
+    if (positives.length > 0) advisorMessage += ' מצד שני — ' + positives[0];
+    suggestedAlternative = primaryCategory === 'lifestyle' ? 'שקול הלוואה לטווח קצר יותר (עד 24 חודשים) בריבית נמוכה, או חיסכון קצר לפני הרכישה.' : primaryCategory === 'financial' ? 'ודא שהריבית החדשה נמוכה משמעותית מהחוב הנוכחי — הפרש של פחות מ-1% לא מצדיק שינוי.' : 'לפני הלוואה עסקית, ודא שיש תוכנית עסקית עם תחזית תזרים חיובית לפחות ל-12 חודשים.';
+  } else {
+    advisorTitle = 'ממליץ לבחון אלטרנטיבות לפני שחותמים';
+    advisorMessage = 'ההלוואה כפי שהיא מוגדרת מעלה מספר דגלים: ' + warnings.join(' ') + ' לפני שחותמים, כדאי מאוד לדבר עם יועץ פיננסי.';
+    suggestedAlternative = primaryCategory === 'lifestyle' ? 'הגבל את תקופת ההלוואה ל-24 חודשים, בחר מסלול שפיצר פשוט, ובדוק ריבית נמוכה יותר בבנק המשכנתאות.' : 'בחן אפשרות של הלוואה מקרן השתלמות, קופת גמל, או הלוואה מהמעסיק בריבית נמוכה משמעותית.';
+  }
+
+  return { advisorScore: score, riskLevel: riskLevel, recommendationType: recType, advisorTitle: advisorTitle, advisorMessage: advisorMessage, suggestedAlternative: suggestedAlternative };
+}
+
+function renderAdvisorCard(advice) {
+  var card = document.getElementById('advisorCard');
+  card.style.display = 'block';
+  card.className = 'advisor-card risk-' + advice.riskLevel;
+  document.getElementById('advTitle').textContent = advice.advisorTitle;
+  document.getElementById('advMessage').textContent = advice.advisorMessage;
+  document.getElementById('advScoreBadge').textContent = advice.advisorScore + '/100';
+  var altEl = document.getElementById('advAlt');
+  if (advice.suggestedAlternative) {
+    altEl.textContent = 'הצעה חלופית: ' + advice.suggestedAlternative;
+    altEl.style.display = 'block';
+  } else {
+    altEl.style.display = 'none';
+  }
+}
+
+// ── FLOATING WIDGET ──────────────────────────────────────────
+function toggleAdvWidget() {
+  var panel = document.getElementById('advPanel');
+  panel.classList.toggle('open');
+}
+
+<\/script>
+
+<!-- Floating Advisor Widget -->
+<div class="advisor-widget">
+  <div class="adv-panel" id="advPanel">
+    <div class="adv-panel-head">
+      <span class="adv-panel-head-title">יועץ חכם | MakeSense</span>
+      <button class="adv-panel-close" onclick="toggleAdvWidget()">✕</button>
+    </div>
+    <div class="adv-panel-body">
+      <p class="adv-panel-text">בנית הלוואה? בחר מטרה למעלה לקבלת ניתוח פיננסי אישי.</p>
+      <p class="adv-panel-text">רוצה ייעוץ ישיר? שיראל זמינה:</p>
+      <a href="https://wa.me/972524415395?text=%D7%94%D7%99%D7%99%20%D7%A9%D7%99%D7%A8%D7%90%D7%9C%2C%20%D7%A0%D7%99%D7%A1%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%9E%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%94%D7%AA%D7%99%D7%99%D7%A2%D7%A5" target="_blank" class="adv-panel-wa">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.846L.057 23.157c-.08.292.195.558.483.464l5.453-1.721A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.37l-.359-.213-3.723 1.174 1.187-3.63-.233-.371A9.818 9.818 0 0112 2.182c5.428 0 9.818 4.39 9.818 9.818S17.428 21.818 12 21.818z"/></svg>
+        שוחח עם שיראל בוואטסאפ
+      </a>
+      <a href="#calculator" class="adv-panel-calc" onclick="toggleAdvWidget()">עבור למחשבון</a>
+    </div>
+  </div>
+  <button class="adv-bubble" onclick="toggleAdvWidget()">
+    <div class="adv-bubble-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </div>
+    <span class="adv-bubble-label">התייעצות חינמית</span>
+    <div class="adv-bubble-pulse"></div>
+  </button>
+</div>
+</body>
+</html>`;
+}
+
+// ── CLI routing ────────────────────────────────────────────────
+const target = process.argv[2];
+if (target === 'calculator') {
+  buildCalculator();
+} else if (target === 'all') {
+  fs.writeFileSync('./index.html', html, 'utf8');
+  console.log('Landing built:', (fs.statSync('./index.html').size/1024).toFixed(0), 'KB');
+  buildCalculator();
+} else {
+  fs.writeFileSync('./index.html', html, 'utf8');
+  console.log('Built successfully. File size:', (fs.statSync('./index.html').size/1024).toFixed(0), 'KB');
+}
