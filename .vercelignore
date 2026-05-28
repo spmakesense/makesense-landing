@@ -1,0 +1,5 @@
+# Source files not needed in the served output
+hfca_b64.txt
+guide_b64.txt
+*.md
+.git
