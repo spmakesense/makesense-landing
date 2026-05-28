@@ -1548,6 +1548,9 @@ function generateCalculatorHTML(LOGO) {
   --g400:#9ca3af;--g600:#6b7280;--g800:#1f2937;
   --r:8px;--r-md:16px;--r-lg:24px;--r-xl:40px;
   --sh-sm:0 2px 12px rgba(13,33,161,.08);--sh-md:0 8px 32px rgba(13,33,161,.13);
+  --sh-lg:0 16px 48px rgba(13,33,161,.18);--sh-amber:0 4px 16px rgba(255,157,0,.3);
+  --success:#16a34a;--warning:#d97706;--red:#dc2626;
+  --success-bg:#dcfce7;--warning-bg:#fef3c7;--danger-bg:#fee2e2;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
