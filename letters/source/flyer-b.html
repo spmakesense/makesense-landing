@@ -1,0 +1,87 @@
+<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><style>
+@page{size:A4;margin:0}*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1f3a5f;--green:#12805c;--mint:#7fe0b8;--ink:#1b2b3f;--mut:#55677d;--bg:#f2f6fb;--line:#d8e2ee;--red:#c8361d;--yel:#ffd45c}
+html,body{width:210mm;height:297mm}
+body{font-family:"Liberation Sans","DejaVu Sans",sans-serif;color:var(--ink);background:#fff;position:relative;overflow:hidden}
+.page{position:absolute;inset:0;display:flex;flex-direction:column}
+.hero{background:var(--navy);color:#fff;padding:8mm 12mm 7mm;position:relative}
+.hero .top{display:flex;justify-content:space-between;align-items:flex-start}
+.tag{background:var(--yel);color:var(--navy);font-weight:800;font-size:14px;padding:6px 14px;border-radius:20px}
+.lg{background:#fff;border-radius:10px;padding:3px 8px}.lg img{height:15mm;display:block}
+.k{font-size:20px;color:#cfdcec;font-weight:700;margin-top:3mm}
+h1{font-size:58px;line-height:1;font-weight:800;margin-top:6px;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--yel)}
+.sub{font-size:22px;font-weight:800;margin-top:12px;line-height:1.3}
+.sub em{font-style:normal;color:#ff9a85}
+.body{padding:5mm 12mm 9mm;flex:1;display:flex;flex-direction:column}
+.lead{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:3mm}
+.tracks{display:flex;gap:10px}
+.tr{flex:1;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.tr .hd{background:var(--bg);padding:9px 12px;font-size:17px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:50%}
+.tr .when{padding:10px 12px 4px;font-size:15.5px;font-weight:800;line-height:1.3}
+.tr .but{margin:6px 12px 12px;padding:8px 10px;background:#fff1ec;border-radius:10px;font-size:13px;line-height:1.35;color:var(--ink);flex:1}
+.tr .but b{color:var(--red)}
+.facts{margin-top:4mm;display:flex;gap:10px;align-items:stretch}
+.f{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:12px;padding:8px 12px}
+.f .v{font-size:26px;font-weight:800;white-space:nowrap;display:flex;align-items:baseline;gap:6px}
+.f .d{font-size:12.5px;color:var(--mut);line-height:1.3}
+.old{font-size:16px;color:#8a99ab;text-decoration:line-through;font-weight:700;margin-left:4px}
+.who{margin-top:4mm;display:flex;gap:12px;align-items:center;border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:3mm 0}
+.who .nm{font-size:20px;font-weight:800;color:var(--navy);white-space:nowrap}
+.who .nm small{display:block;font-size:13px;color:var(--mut);font-weight:400;margin-top:2px}
+.pills{display:flex;flex-wrap:wrap;gap:6px;flex:1;justify-content:flex-end}
+.pill{font-size:12.5px;font-weight:800;padding:4px 10px;border-radius:14px;background:var(--bg);color:var(--navy);border:1px solid var(--line)}
+.pill.g{background:#e3f4ec;color:#0e6a4c;border-color:#9fd8c0}
+.cta{margin-top:auto;display:flex;gap:6mm;align-items:center;background:var(--green);border-radius:18px;padding:5mm 6mm;color:#fff}
+.cta .t{flex:1}
+.cta .l1{font-size:28px;font-weight:800;line-height:1.1}
+.cta .l2{font-size:16px;color:#d9f3e8;margin-top:4px;font-weight:700}
+.phone{margin-top:10px;display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:40px;padding:5px 20px 5px 7px}
+.pi{width:40px;height:40px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.num{font-size:36px;font-weight:800;color:var(--navy);direction:ltr}
+.qr{background:#fff;border-radius:12px;padding:6px 6px 4px;text-align:center}
+.qr img{width:30mm;height:30mm;display:block}.qr .c{font-size:13px;font-weight:800;color:var(--navy)}
+.info{display:flex;justify-content:space-between;align-items:center;margin-top:3mm;font-size:13px;color:var(--mut)}
+.info span{display:inline-flex;align-items:center;gap:5px}
+.bar{background:#fff;border:1.5px solid #c3d1e1;border-radius:18px;padding:3px 10px;font-weight:700;color:var(--ink)}
+.src{font-size:8.5px;color:#8a99ab;margin-top:2.5mm;line-height:1.35}
+.chk{margin-top:4mm}
+.ch{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cl{display:flex;gap:8px}
+.cl span{flex:1;display:flex;gap:8px;align-items:center;font-size:14px;font-weight:700;line-height:1.3;background:#e3f4ec;border-radius:12px;padding:9px 11px}
+.cl i{font-style:normal;flex:none;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cta{margin-top:auto}
+</style></head><body><div class="page">
+<div class="hero">
+ <div class="top"><span class="tag">שאלה לכל בעל משכנתה בבניין</span><span class="lg"><img src="logo.png"></span></div>
+ <div class="k">שאלה פשוטה, בלי לבדוק בניירת:</div>
+ <h1>מתי הריבית<br>שלכם <em>מתעדכנת?</em></h1>
+ <div class="sub">לא בטוחים? אז גם לא תדעו<br>אם אתם <em>הפראיירים של הבנק.</em></div>
+</div>
+<div class="body">
+ <div class="lead">התשובה תלויה במסלול שלכם:</div>
+ <div class="tracks">
+  <div class="tr"><div class="hd"><span class="dot" style="background:#2f80d1"></span>פריים</div><div class="when">מתעדכנת עם כל החלטת ריבית של בנק ישראל</div><div class="but">אבל <b>ההנחה שהבנק נתן לכם</b> על הפריים נקבעה ביום החתימה, ולא משתנה מעצמה.</div></div>
+  <div class="tr"><div class="hd"><span class="dot" style="background:var(--red)"></span>ריבית קבועה</div><div class="when">לא מתעדכנת. אף פעם.</div><div class="but">הריבית במשק ירדה? <b>אצלכם לא יזוז כלום</b>. ובמסלול צמוד, המדד ממשיך להוסיף לחוב.</div></div>
+  <div class="tr"><div class="hd"><span class="dot" style="background:#e3a21a"></span>משתנה כל 5 שנים</div><div class="when">מתעדכנת רק בנקודת השינוי</div><div class="but">עד אז <b>אתם צמודים לריבית של יום החתימה</b>, גם כשהשוק כבר במקום אחר.</div></div>
+ </div>
+ <div class="facts">
+  <div class="f"><span class="v" style="color:var(--green)"><span class="old">4.75%</span><span>3.25%</span></span><span class="d">ריבית בנק ישראל:<br>מהשיא ב-2023 להיום</span></div>
+  <div class="f"><span class="v" style="color:var(--red)">‎+10%‎</span><span class="d">עליית המדד מאז 2023.<br>במסלול צמוד, גם החוב עלה</span></div>
+ </div>
+ <div class="who">
+  <div class="nm">שיראל פרגר<small>יועץ משכנתאות, נדל"ן ומימון · MAKE SENSE</small></div>
+  <div class="pills"><span class="pill g">✓ יועץ רשום בהתאחדות יועצי המשכנתאות</span><span class="pill">כלכלן, MBA</span><span class="pill">בצד שלכם מול הבנק</span><span class="pill">כל התמונה: משכנתה, הלוואות, כלכלת המשפחה</span></div>
+ </div>
+ <div class="chk"><div class="ch">מה בודקים בבדיקה הראשונית?</div><div class="cl">
+  <span><i>✓</i>אילו מסלולים יש לכם ומתי כל אחד מתעדכן</span><span><i>✓</i>כמה באמת ירד מהקרן</span><span><i>✓</i>אם מחזור, תוספת מימון או איחוד הלוואות יכולים לעזור</span></div></div>
+ <div class="cta">
+  <div class="t"><div class="l1">תפסיקו לנחש. תבדקו.</div><div class="l2">בדיקת משכנתה ראשונית, ללא עלות</div>
+   <div class="phone"><span class="pi"><svg width="21" height="21" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span><span class="num">052-4415395</span></div></div>
+  <div class="qr"><img src="qr.png"><div class="c">סרקו עכשיו</div></div>
+ </div>
+ <div class="info"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="#1f3a5f"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>משרד: הנאמנים 14, חיפה</span><span>חפשו בגוגל: <span class="bar">🔍︎ שיראל פרגר יועץ משכנתאות</span></span></div>
+ <div class="src">ריבית בנק ישראל 3.25% (שיא 2023: 4.75%) נכונה לאוקטובר 2026, בנק ישראל. מדד המחירים לצרכן: הלמ"ס, מרץ 2023 עד אוגוסט 2026. תיאור המסלולים כללי; התנאים המדויקים מופיעים בהסכם ההלוואה שלכם. החזר חודשי נמוך יותר לא תמיד אומר עלות כוללת נמוכה יותר. המידע כללי ואינו מהווה ייעוץ אישי.</div>
+</div>
+</div></body></html>
