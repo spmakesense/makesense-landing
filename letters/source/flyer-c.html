@@ -53,7 +53,7 @@ li small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
 .cases{margin-top:3.5mm}
 .cases .h{font-family:Rubik;font-weight:800;font-size:16px;color:var(--navy);margin-bottom:5px}
 .cw{display:flex;gap:8px}
-.case{flex:1;background:#fff;border:1.5px dashed #b9c6d6;border-radius:12px;padding:8px 11px;position:relative}
+.case{flex:1;display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--line);border-top:4px solid var(--green);border-radius:12px;padding:8px 11px;position:relative}
 .case .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
 .fam{font-weight:700;font-size:13.5px;color:var(--navy)}
 .pend{font-size:10px;font-weight:700;color:#a35a00;background:#fff3d6;border-radius:8px;padding:1px 6px}
@@ -83,6 +83,13 @@ li small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
 .ad{font-size:12.5px;color:#c9d6e6;margin-top:8px;display:flex;align-items:center;gap:5px}
 .gs{font-size:11.5px;color:#c9d6e6;margin-top:5px}
 .gs span{display:block;margin-top:3px;background:#fff;color:var(--ink);font-weight:700;border-radius:14px;padding:3px 9px;font-size:12px;text-align:center}
+.kind{font-size:10.5px;font-weight:700;color:var(--navy);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:1px 7px}
+.ba{display:flex;align-items:baseline;gap:6px;margin-top:5px;font-family:Rubik}
+.was{font-size:15px;font-weight:700;color:#8a99ab;text-decoration:line-through}
+.to{color:#8a99ab;font-size:13px}
+.now{font-size:21px;font-weight:900;color:var(--navy)}
+.pm{font-size:12px;color:var(--mut);font-family:Heebo}
+.win{margin-top:auto;align-self:flex-start;background:var(--green);color:#fff;font-family:Rubik;font-weight:800;font-size:13.5px;border-radius:8px;padding:3px 10px;margin-top:6px}
 </style></head><body><div class="page">
 <aside class="side">
  <div class="lg"><img src="logo.png"></div>
@@ -116,13 +123,15 @@ li small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
 <path d="M30.0,25.5 H48.6 V17.1 H123.0 V25.5 H327.7 V33.9 H346.3 V42.3 H383.5 V50.7 H402.1 V59.2 H420.7 V67.6 H430.0 V76.0 H30.0 Z" fill="url(#ga)"/><path d="M30.0,25.5 H48.6 V17.1 H123.0 V25.5 H327.7 V33.9 H346.3 V42.3 H383.5 V50.7 H402.1 V59.2 H420.7 V67.6 H430.0" fill="none" stroke="#1b3557" stroke-width="2.6" stroke-linejoin="round"/>
 <circle cx="48.6" cy="17.1" r="4.5" fill="#d23a1f"/><text x="57.6" y="10.1" font-size="11" font-weight="800" fill="#d23a1f">4.75%</text>
 <circle cx="430.0" cy="67.6" r="4.5" fill="#12805c"/><text x="422.0" y="71.6" font-size="12" font-weight="800" fill="#12805c" text-anchor="end">3.25% היום</text></svg></div>
- <div class="cases"><div class="h">משפחות שכבר בדקו:</div><div class="cw"><div class="case"><div class="ch"><span class="fam">[משפחה מ... · הרכב]</span><span class="pend">ממתין לפרטים</span></div>
- <div class="cr"><i>לפני</i><span>[המצב לפני הבדיקה]</span></div>
- <div class="cr"><i>מה עשינו</i><span>[מחזור / איחוד / תוספת מימון]</span></div>
- <div class="res2">[התוצאה]</div></div><div class="case"><div class="ch"><span class="fam">[משפחה מ... · הרכב]</span><span class="pend">ממתין לפרטים</span></div>
- <div class="cr"><i>לפני</i><span>[המצב לפני הבדיקה]</span></div>
- <div class="cr"><i>מה עשינו</i><span>[מחזור / איחוד / תוספת מימון]</span></div>
- <div class="res2">[התוצאה]</div></div></div></div>
- <div class="src">ריבית בנק ישראל לפי החלטות הוועדה המוניטרית, נכון לאוקטובר 2026. מדד המחירים לצרכן: הלמ"ס, מרץ 2023 עד אוגוסט 2026. המקרים מוצגים באישור המשפחות ובשינוי פרטים מזהים; תוצאה אישית, כל משפחה נבדקת לגופה. החזר חודשי נמוך יותר לא תמיד אומר עלות כוללת נמוכה יותר. המידע כללי ואינו מהווה ייעוץ אישי.</div>
+ <div class="cases"><div class="h">משפחות שכבר בדקו:</div><div class="cw"><div class="case"><div class="ch"><span class="fam">משפחה מנהריה</span><span class="kind">מחזור משכנתה</span></div>
+ <div class="cr"><i>לפני</i><span>משכנתה של ₪1.04 מיליון</span></div>
+ <div class="cr"><i>מה עשינו</i><span>מחזור של אותה משכנתה, בלי להגדיל אותה</span></div>
+ <div class="ba"><span class="was">₪8,300</span><span class="to">←</span><span class="now">₪6,100</span><span class="pm">בחודש</span></div>
+ <div class="win">₪2,200 פחות בכל חודש</div></div><div class="case"><div class="ch"><span class="fam">משפחה מעכו</span><span class="kind">מחזור + איחוד הלוואות</span></div>
+ <div class="cr"><i>לפני</i><span>מינוס ₪40,000 והלוואות ₪150,000 (₪3,500 בחודש), נוסף על המשכנתה</span></div>
+ <div class="cr"><i>מה עשינו</i><span>סגרנו מינוס והלוואות ומחזרנו את המשכנתה</span></div>
+ <div class="ba"><span class="now" style="font-size:15px">אותו החזר כמו המשכנתה לבד</span></div>
+ <div class="win">₪3,500 בחודש התפנו</div></div></div></div>
+ <div class="src">ריבית בנק ישראל לפי החלטות הוועדה המוניטרית, נכון לאוקטובר 2026. מדד המחירים לצרכן: הלמ"ס, מרץ 2023 עד אוגוסט 2026. המקרים מוצגים באישור המשפחות ובשינוי פרטים מזהים; תוצאה אישית, כל משפחה נבדקת לגופה. החזר חודשי נמוך יותר לא תמיד אומר עלות כוללת נמוכה יותר, ובאיחוד הלוואות גם תקופה ארוכה יותר. המידע כללי ואינו מהווה ייעוץ אישי.</div>
 </main>
 </div></body></html>
