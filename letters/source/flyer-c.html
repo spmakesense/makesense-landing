@@ -1,47 +1,87 @@
 <!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><style>
+@font-face{font-family:'Heebo';font-weight:400;font-style:normal;src:url(fonts/heebo-hebrew-400.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Heebo';font-weight:400;font-style:normal;src:url(fonts/heebo-latin-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Heebo';font-weight:500;font-style:normal;src:url(fonts/heebo-hebrew-500.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Heebo';font-weight:500;font-style:normal;src:url(fonts/heebo-latin-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Heebo';font-weight:700;font-style:normal;src:url(fonts/heebo-hebrew-700.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Heebo';font-weight:700;font-style:normal;src:url(fonts/heebo-latin-700.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Heebo';font-weight:800;font-style:normal;src:url(fonts/heebo-hebrew-800.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Heebo';font-weight:800;font-style:normal;src:url(fonts/heebo-latin-800.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Karantina';font-weight:700;font-style:normal;src:url(fonts/karantina-hebrew-700.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Karantina';font-weight:700;font-style:normal;src:url(fonts/karantina-latin-700.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Rubik';font-weight:700;font-style:normal;src:url(fonts/rubik-hebrew-700.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Rubik';font-weight:700;font-style:normal;src:url(fonts/rubik-latin-700.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Rubik';font-weight:800;font-style:normal;src:url(fonts/rubik-hebrew-800.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Rubik';font-weight:800;font-style:normal;src:url(fonts/rubik-latin-800.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Rubik';font-weight:900;font-style:normal;src:url(fonts/rubik-hebrew-900.woff2) format('woff2');unicode-range:U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F}
+@font-face{font-family:'Rubik';font-weight:900;font-style:normal;src:url(fonts/rubik-latin-900.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @page{size:A4;margin:0}*{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#1f3a5f;--green:#12805c;--mint:#7fe0b8;--ink:#1b2b3f;--mut:#55677d;--bg:#f2f6fb;--line:#d8e2ee;--red:#c8361d}
+:root{--navy:#1b3557;--navy2:#24476f;--green:#12805c;--mint:#7fe0b8;--ink:#17263a;--mut:#56687e;--bg:#f3f5f8;--line:#d6dee8;--red:#d23a1f;--yel:#ffd23f;--paper:#fffdf8}
 html,body{width:210mm;height:297mm}
-body{font-family:"Liberation Sans","DejaVu Sans",sans-serif;color:var(--ink);background:#fff;overflow:hidden}
+body{font-family:Heebo,sans-serif;color:var(--ink);background:var(--paper);overflow:hidden;position:relative}
+body:after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");opacity:.07;mix-blend-mode:multiply;pointer-events:none;z-index:50}
 .page{position:absolute;inset:0;display:flex}
-.main{flex:1;padding:10mm 9mm 9mm 9mm;display:flex;flex-direction:column}
-.side{width:66mm;background:var(--navy);color:#fff;padding:10mm 6mm 9mm;display:flex;flex-direction:column;align-items:stretch}
+.main{flex:1;padding:10mm 9mm 8.5mm 9mm;display:flex;flex-direction:column;position:relative}
+.side{width:66mm;background:var(--navy);color:#fff;padding:10mm 6mm 8.5mm;display:flex;flex-direction:column;position:relative;
+ background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.3px);background-size:11px 11px}
+.hz{height:9px;background:repeating-linear-gradient(-45deg,var(--yel) 0 9px,#17263a 9px 18px);border-radius:3px}
 /* main */
-.tag{align-self:flex-start;background:var(--red);color:#fff;font-weight:800;font-size:13px;padding:5px 13px;border-radius:20px}
-h1{font-size:44px;line-height:1.05;font-weight:800;color:var(--navy);margin-top:5mm;letter-spacing:-.3px}
-h1 em{font-style:normal;color:var(--red)}
-.sub{font-size:19px;font-weight:800;color:var(--green);margin-top:3mm}
-.q{margin-top:6mm;font-size:19px;font-weight:800;color:var(--navy)}
-.q span{font-weight:400;font-size:14px;color:var(--mut)}
-ul{list-style:none;margin-top:3mm;display:flex;flex-direction:column;gap:7px}
-li{display:flex;gap:11px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:9px 12px}
-.box{flex:none;width:24px;height:24px;border:2.5px solid var(--navy);border-radius:6px;margin-top:1px}
-li b{display:block;font-size:15.5px;line-height:1.25}
-li small{display:block;font-size:12.5px;color:var(--mut);margin-top:2px}
-.res{margin-top:4mm;background:var(--navy);color:#fff;border-radius:14px;padding:10px 14px;font-size:17px;font-weight:800;line-height:1.35}
-.res em{font-style:normal;color:var(--mint)}
-.chart{margin-top:4mm;background:var(--bg);border-radius:14px;padding:9px 12px 4px}
-.chart .ct{font-size:15px;font-weight:800;color:var(--navy)}
-.chart .ct span{font-weight:400;font-size:12px;color:var(--mut)}
-.src{margin-top:auto;font-size:8.3px;color:#8a99ab;line-height:1.35;padding-top:3mm}
+.tag{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-weight:700;font-size:13px;padding:5px 13px 5px 5px;border-radius:20px}
+.tag:before{content:"";width:22px;height:14px;border-radius:10px;background:repeating-linear-gradient(-45deg,var(--yel) 0 4px,var(--ink) 4px 8px)}
+h1{font-family:Rubik;font-weight:900;font-size:43px;line-height:1.06;color:var(--navy);margin-top:5mm;letter-spacing:-.6px}
+.mk{color:var(--red);background:linear-gradient(176deg,transparent 0 52%,var(--yel) 52% 90%,transparent 90%);padding:0 4px;-webkit-box-decoration-break:clone}
+.stamp{position:absolute;left:9mm;top:21mm;width:31mm;height:31mm;border:3px solid var(--red);border-radius:50%;transform:rotate(-12deg);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--red);text-align:center;opacity:.9;box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4.5px var(--red)}
+.stamp b{font-family:Karantina;font-size:31px;line-height:.85;font-weight:700}
+.stamp span{font-family:Rubik;font-weight:800;font-size:11px;letter-spacing:.3px}
+.sub{font-family:Rubik;font-weight:700;font-size:19px;color:var(--green);margin-top:3mm}
+.q{margin-top:5mm;display:flex;align-items:baseline;gap:10px}
+.q b{font-family:Rubik;font-weight:800;font-size:19px;color:var(--navy)}
+.q i{font-family:Karantina;font-style:normal;font-weight:700;font-size:25px;color:var(--red);transform:rotate(-2deg);display:inline-block}
+ul{list-style:none;margin-top:2.5mm;display:flex;flex-direction:column;gap:5px}
+li{display:flex;gap:11px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:7px 11px}
+.box{flex:none;width:23px;height:23px;border:2.5px solid var(--navy);border-radius:5px;position:relative}
+.hand{position:absolute;width:34px;height:34px;left:-3px;top:-12px}
+li b{display:block;font-weight:700;font-size:15px;line-height:1.25}
+li small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
+.urg{margin-top:3.5mm;border-radius:12px 12px 0 0;padding:6px 14px;font-family:Rubik;font-weight:800;font-size:14px;color:#fff;
+ background:repeating-linear-gradient(-45deg,var(--red) 0 12px,#b9301a 12px 24px)}
+.res{background:var(--navy);color:#fff;border-radius:0 0 12px 12px;padding:9px 14px;font-size:15.5px;font-weight:500;line-height:1.4}
+.res em{font-style:normal;color:var(--mint);font-weight:800}
+.chart{margin-top:3.5mm;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:7px 12px 2px}
+.chart .ct{font-family:Rubik;font-weight:800;font-size:14px;color:var(--navy)}
+.chart .ct span{font-family:Heebo;font-weight:400;font-size:11.5px;color:var(--mut)}
+.cases{margin-top:3.5mm}
+.cases .h{font-family:Rubik;font-weight:800;font-size:16px;color:var(--navy);margin-bottom:5px}
+.cw{display:flex;gap:8px}
+.case{flex:1;background:#fff;border:1.5px dashed #b9c6d6;border-radius:12px;padding:8px 11px;position:relative}
+.case .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.fam{font-weight:700;font-size:13.5px;color:var(--navy)}
+.pend{font-size:10px;font-weight:700;color:#a35a00;background:#fff3d6;border-radius:8px;padding:1px 6px}
+.cr{display:flex;gap:6px;font-size:12px;line-height:1.35;margin-top:2px}
+.cr i{font-style:normal;font-weight:700;color:var(--mut);flex:none;width:54px}
+.res2{margin-top:5px;font-family:Rubik;font-weight:800;font-size:16px;color:var(--green)}
+.src{margin-top:auto;font-size:8px;color:#8a99ab;line-height:1.35;padding-top:2.5mm}
 /* side */
-.lg{background:#fff;border-radius:12px;padding:6px;text-align:center}.lg img{width:100%;display:block}
-.nm{font-size:22px;font-weight:800;margin-top:6mm}
-.ti{font-size:13px;color:#cfdcec;margin-top:2px}
-.bd{margin-top:7px;background:#e3f4ec;color:#0e6a4c;font-size:11.5px;font-weight:800;padding:4px 8px;border-radius:10px;line-height:1.3}
-.why{margin-top:5mm;display:flex;flex-direction:column;gap:7px}
-.why div{font-size:13px;line-height:1.3;color:#e6edf6;padding-right:14px;position:relative}
-.why div:before{content:"";position:absolute;right:0;top:5px;width:7px;height:7px;border-radius:50%;background:var(--mint)}
-.why b{color:#fff;display:block;font-size:14px}
+.lg{background:#fff;border-radius:12px;padding:6px}.lg img{width:100%;display:block}
+.nm{font-family:Rubik;font-weight:800;font-size:23px;margin-top:5.5mm}
+.ti{font-size:13px;color:#c9d6e6;margin-top:1px}
+.bd{margin-top:7px;background:#e3f4ec;color:#0e6a4c;font-size:11.5px;font-weight:700;padding:4px 8px;border-radius:9px;line-height:1.3}
+.why{margin-top:5mm;display:flex;flex-direction:column;gap:8px}
+.why div{font-size:12.5px;line-height:1.3;color:#dfe7f1;padding-right:15px;position:relative}
+.why div:before{content:"✓";position:absolute;right:0;top:0;color:var(--mint);font-weight:800;font-size:13px}
+.why b{color:#fff;display:block;font-family:Rubik;font-weight:700;font-size:14px}
 .go{margin-top:auto}
-.off{font-size:20px;font-weight:800;color:var(--mint);line-height:1.2}
-.ph{margin-top:8px;background:#fff;border-radius:12px;padding:8px 8px;display:flex;align-items:center;gap:8px;justify-content:center}
-.pi{flex:none;width:32px;height:32px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
-.num{font-size:24px;font-weight:800;color:var(--navy);direction:ltr;white-space:nowrap}
+.hzt{display:flex;align-items:center;gap:6px;margin-bottom:9px}
+.hzt .hz{flex:1}
+.hzt span{font-family:Rubik;font-weight:800;font-size:12.5px;color:var(--yel);white-space:nowrap}
+.off{font-family:Rubik;font-size:20px;font-weight:800;color:var(--mint);line-height:1.15}
+.ph{margin-top:8px;background:#fff;border-radius:12px;padding:7px 6px;display:flex;align-items:center;gap:6px;justify-content:center;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.pi{flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
+.num{font-family:Rubik;font-size:20.5px;font-weight:800;color:var(--navy);direction:ltr;white-space:nowrap}
 .qr{margin-top:8px;background:#fff;border-radius:12px;padding:7px 7px 4px;text-align:center}
-.qr img{width:36mm;height:36mm}.qr .c{font-size:13px;font-weight:800;color:var(--navy)}
-.ad{font-size:12.5px;color:#cfdcec;margin-top:8px;display:flex;align-items:center;gap:5px}
-.gs{font-size:11.5px;color:#cfdcec;margin-top:6px}
+.qr img{width:35mm;height:35mm}.qr .c{font-family:Rubik;font-size:13px;font-weight:800;color:var(--navy)}
+.ad{font-size:12.5px;color:#c9d6e6;margin-top:8px;display:flex;align-items:center;gap:5px}
+.gs{font-size:11.5px;color:#c9d6e6;margin-top:5px}
 .gs span{display:block;margin-top:3px;background:#fff;color:var(--ink);font-weight:700;border-radius:14px;padding:3px 9px;font-size:12px;text-align:center}
 </style></head><body><div class="page">
 <aside class="side">
@@ -55,6 +95,7 @@ li small{display:block;font-size:12.5px;color:var(--mut);margin-top:2px}
   <div><b>פנים מול פנים</b>משרד בחיפה, שירות אישי</div>
  </div>
  <div class="go">
+  <div class="hzt"><div class="hz"></div><span>עוד חודש = עוד תשלום</span><div class="hz"></div></div>
   <div class="off">בדיקת משכנתה ראשונית ללא עלות</div>
   <div class="ph"><span class="pi"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span><span class="num">052-4415395</span></div>
   <div class="qr"><img src="qr.png"><div class="c">סרקו עכשיו</div></div>
@@ -64,15 +105,24 @@ li small{display:block;font-size:12.5px;color:var(--mut);margin-top:2px}
 </aside>
 <main class="main">
  <span class="tag">לכל בעלי המשכנתה בבניין</span>
- <h1>הבנק לא יתקשר<br>להגיד לכם<br><em>שאפשר לשלם פחות.</em></h1>
+ <div class="stamp"><span>בדיקה ראשונית</span><b>ללא עלות</b></div>
+ <h1>הבנק לא יתקשר<br>להגיד לכם<br><span class="mk">שאפשר לשלם פחות.</span></h1>
  <div class="sub">אז בואו נבדוק את זה בעצמנו. ב-30 שניות.</div>
- <div class="q">סמנו ✓ ליד מה שנכון לגביכם: <span>(עם עט, ממש עכשיו)</span></div>
- <ul><li><span class="box"></span><div><b>לקחתי משכנתה ב-3 השנים האחרונות</b></div></li><li><span class="box"></span><div><b>יש לי מסלול צמוד מדד</b><small>המדד עלה בכ-10% מאז 2023, והחוב הצמוד איתו</small></div></li><li><span class="box"></span><div><b>יש לי מסלול בריבית קבועה או משתנה (צמודה / לא צמודה)</b><small>הריבית במשק ירדה, אבל המסלולים האלה לא זזים איתה</small></div></li><li><span class="box"></span><div><b>יש לי הלוואות נוספות לצד המשכנתה</b><small>אולי אפשר לאחד, אולי לא. שווה לבדוק</small></div></li><li><span class="box"></span><div><b>אני לא באמת יודע מתי הריבית שלי מתעדכנת</b><small>ולא כמה ירד מהקרן מאז החתימה</small></div></li></ul>
- <div class="res">סימנתם אפילו ✓ אחד? אולי אתם משלמים לבנק יותר ממה שצריך, ואין לכם דרך לדעת בלי בדיקה. <em>הבדיקה הראשונית לא עולה לכם כלום.</em></div>
- <div class="chart"><div class="ct">ריבית בנק ישראל מאז 2023 <span>(באחוזים)</span></div><svg viewBox="0 0 420 150" width="100%" style="direction:ltr;font-family:Liberation Sans"><line x1="34" x2="406" y1="124.0" y2="124.0" stroke="#e3e9f1"/><text x="29" y="128.0" font-size="10" fill="#8a99ab" text-anchor="end">3.0%</text><line x1="34" x2="406" y1="95.1" y2="95.1" stroke="#e3e9f1"/><text x="29" y="99.1" font-size="10" fill="#8a99ab" text-anchor="end">3.5%</text><line x1="34" x2="406" y1="66.1" y2="66.1" stroke="#e3e9f1"/><text x="29" y="70.1" font-size="10" fill="#8a99ab" text-anchor="end">4.0%</text><line x1="34" x2="406" y1="37.2" y2="37.2" stroke="#e3e9f1"/><text x="29" y="41.2" font-size="10" fill="#8a99ab" text-anchor="end">4.5%</text><text x="34.0" y="142" font-size="11" fill="#55677d" text-anchor="start">2023</text><text x="120.5" y="142" font-size="11" fill="#55677d" text-anchor="middle">2024</text><text x="224.3" y="142" font-size="11" fill="#55677d" text-anchor="middle">2025</text><text x="328.1" y="142" font-size="11" fill="#55677d" text-anchor="middle">2026</text>
-<path d="M34.0,37.2 H51.3 V22.7 H120.5 V37.2 H310.8 V51.6 H328.1 V66.1 H362.7 V80.6 H380.0 V95.1 H397.3 V109.5 H406.0" fill="none" stroke="#1f3a5f" stroke-width="3" stroke-linejoin="round"/>
-<circle cx="51.3" cy="22.7" r="5" fill="#c8361d"/><text x="57.3" y="17.7" font-size="12" font-weight="700" fill="#c8361d">4.75%</text>
-<circle cx="406.0" cy="109.5" r="5" fill="#12805c"/><text x="402.0" y="126.5" font-size="13" font-weight="800" fill="#12805c" text-anchor="end">3.25% היום</text></svg></div>
- <div class="src">ריבית בנק ישראל לפי החלטות הוועדה המוניטרית, נכון לאוקטובר 2026. מדד המחירים לצרכן: הלמ"ס, מרץ 2023 עד אוגוסט 2026. תיאור המסלולים כללי; התנאים המדויקים בהסכם ההלוואה שלכם. החזר חודשי נמוך יותר לא תמיד אומר עלות כוללת נמוכה יותר. המידע כללי ואינו מהווה ייעוץ אישי.</div>
+ <div class="q"><b>סמנו ✓ ליד מה שנכון לגביכם</b><i>עם עט, ממש עכשיו!</i></div>
+ <ul><li><span class="box"><svg class="hand" viewBox="0 0 40 40"><path d="M6 21 C10 24, 13 28, 16 33 C21 21, 28 11, 37 4" fill="none" stroke="#c8361d" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>לקחתי משכנתה ב-3 השנים האחרונות</b></div></li><li><span class="box"></span><div><b>יש לי מסלול צמוד מדד</b><small>המדד עלה בכ-10% מאז 2023, והחוב הצמוד איתו</small></div></li><li><span class="box"></span><div><b>יש לי מסלול בריבית קבועה או מסלולים בריבית משתנה</b><small>הריבית במשק ירדה, אבל זה לא אומר שהמסלולים שלכם זזו איתה</small></div></li><li><span class="box"></span><div><b>יש לי הלוואות נוספות לצד המשכנתה</b><small>אולי אפשר לאחד, אולי לא. שווה לבדוק</small></div></li><li><span class="box"></span><div><b>אני לא באמת יודע מתי הריבית שלי מתעדכנת</b><small>ולא כמה ירד מהקרן מאז החתימה</small></div></li></ul>
+ <div class="urg">סימנתם אפילו ✓ אחד? אל תחכו לחודש הבא.</div>
+ <div class="res">אולי אתם משלמים לבנק יותר ממה שצריך, ואין לכם דרך לדעת בלי בדיקה. <em>הבדיקה הראשונית לא עולה לכם כלום.</em></div>
+ <div class="chart"><div class="ct">ריבית בנק ישראל מאז 2023 <span>(באחוזים)</span></div><svg viewBox="0 0 440 96" width="100%" style="direction:ltr;font-family:Heebo;display:block"><defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1b3557" stop-opacity=".16"/><stop offset="1" stop-color="#1b3557" stop-opacity="0"/></linearGradient></defs><line x1="30" x2="430" y1="76.0" y2="76.0" stroke="#e6ebf2"/><text x="26" y="79.0" font-size="8.5" fill="#8a99ab" text-anchor="end">3.0%</text><line x1="30" x2="430" y1="59.2" y2="59.2" stroke="#e6ebf2"/><text x="26" y="62.2" font-size="8.5" fill="#8a99ab" text-anchor="end">3.5%</text><line x1="30" x2="430" y1="42.3" y2="42.3" stroke="#e6ebf2"/><text x="26" y="45.3" font-size="8.5" fill="#8a99ab" text-anchor="end">4.0%</text><line x1="30" x2="430" y1="25.5" y2="25.5" stroke="#e6ebf2"/><text x="26" y="28.5" font-size="8.5" fill="#8a99ab" text-anchor="end">4.5%</text><text x="30.0" y="91" font-size="9.5" fill="#56687e" text-anchor="start">2023</text><text x="123.0" y="91" font-size="9.5" fill="#56687e" text-anchor="middle">2024</text><text x="234.7" y="91" font-size="9.5" fill="#56687e" text-anchor="middle">2025</text><text x="346.3" y="91" font-size="9.5" fill="#56687e" text-anchor="middle">2026</text>
+<path d="M30.0,25.5 H48.6 V17.1 H123.0 V25.5 H327.7 V33.9 H346.3 V42.3 H383.5 V50.7 H402.1 V59.2 H420.7 V67.6 H430.0 V76.0 H30.0 Z" fill="url(#ga)"/><path d="M30.0,25.5 H48.6 V17.1 H123.0 V25.5 H327.7 V33.9 H346.3 V42.3 H383.5 V50.7 H402.1 V59.2 H420.7 V67.6 H430.0" fill="none" stroke="#1b3557" stroke-width="2.6" stroke-linejoin="round"/>
+<circle cx="48.6" cy="17.1" r="4.5" fill="#d23a1f"/><text x="57.6" y="10.1" font-size="11" font-weight="800" fill="#d23a1f">4.75%</text>
+<circle cx="430.0" cy="67.6" r="4.5" fill="#12805c"/><text x="422.0" y="71.6" font-size="12" font-weight="800" fill="#12805c" text-anchor="end">3.25% היום</text></svg></div>
+ <div class="cases"><div class="h">משפחות שכבר בדקו:</div><div class="cw"><div class="case"><div class="ch"><span class="fam">[משפחה מ... · הרכב]</span><span class="pend">ממתין לפרטים</span></div>
+ <div class="cr"><i>לפני</i><span>[המצב לפני הבדיקה]</span></div>
+ <div class="cr"><i>מה עשינו</i><span>[מחזור / איחוד / תוספת מימון]</span></div>
+ <div class="res2">[התוצאה]</div></div><div class="case"><div class="ch"><span class="fam">[משפחה מ... · הרכב]</span><span class="pend">ממתין לפרטים</span></div>
+ <div class="cr"><i>לפני</i><span>[המצב לפני הבדיקה]</span></div>
+ <div class="cr"><i>מה עשינו</i><span>[מחזור / איחוד / תוספת מימון]</span></div>
+ <div class="res2">[התוצאה]</div></div></div></div>
+ <div class="src">ריבית בנק ישראל לפי החלטות הוועדה המוניטרית, נכון לאוקטובר 2026. מדד המחירים לצרכן: הלמ"ס, מרץ 2023 עד אוגוסט 2026. המקרים מוצגים באישור המשפחות ובשינוי פרטים מזהים; תוצאה אישית, כל משפחה נבדקת לגופה. החזר חודשי נמוך יותר לא תמיד אומר עלות כוללת נמוכה יותר. המידע כללי ואינו מהווה ייעוץ אישי.</div>
 </main>
 </div></body></html>
