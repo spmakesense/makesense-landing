@@ -1,0 +1,179 @@
+import "server-only";
+import fs from "node:fs";
+import path from "node:path";
+import { all, get, PDF_DIR, run, tx } from "./db";
+import { newId, newToken, now, sha256 } from "./ids";
+import { renderPdf } from "./pdf";
+import { sendSms } from "./sms";
+import { getTemplate, type Interest, type RenderCtx, type Values } from "./templates";
+import type { AuditRow, Doc, Office, Property, Signer, User } from "./types";
+
+export const SHARE_TTL_MS = 30 * 86_400_000;
+
+export interface FullDoc {
+  doc: Doc;
+  data: Values;
+  annex: Interest | null;
+  signers: Signer[];
+  agent: User;
+  office: Office;
+  property: Property | null;
+  audit: AuditRow[];
+}
+
+export function loadDoc(id: string): FullDoc | null {
+  const doc = get<Doc>("SELECT * FROM documents WHERE id = ?", id);
+  if (!doc) return null;
+  return {
+    doc,
+    data: JSON.parse(doc.data),
+    annex: doc.annex ? JSON.parse(doc.annex) : null,
+    signers: all<Signer>("SELECT * FROM signers WHERE document_id = ? ORDER BY position", id),
+    agent: get<User>("SELECT * FROM users WHERE id = ?", doc.agent_id)!,
+    office: get<Office>("SELECT * FROM offices WHERE id = ?", doc.office_id)!,
+    property: doc.property_id ? (get<Property>("SELECT * FROM properties WHERE id = ?", doc.property_id) ?? null) : null,
+    audit: all<AuditRow>("SELECT * FROM audit WHERE document_id = ? ORDER BY at, id", id),
+  };
+}
+
+export function renderCtx(f: FullDoc): RenderCtx {
+  const p = f.property;
+  return {
+    data: f.data,
+    date: f.doc.created_at,
+    agent: { name: f.agent.name ?? "", license: f.agent.license ?? "", phone: f.agent.phone },
+    office: { name: f.office.name, company_id: f.office.company_id, address: f.office.address },
+    property: p
+      ? {
+          address: p.address,
+          city: p.city,
+          parcel: p.parcel,
+          kind: p.kind,
+          rooms: p.rooms,
+          sqm: p.sqm,
+          floor: p.floor,
+          price: p.price,
+          deal_type: p.deal_type,
+          disclosure: p.disclosure ? JSON.parse(p.disclosure) : null,
+        }
+      : null,
+    signers: f.signers.map((s) => {
+      const v = JSON.parse(s.values_json) as Values;
+      return { name: String(v.name || s.name), phone: s.phone, id_number: String(v.id_number ?? ""), address: String(v.address ?? "") };
+    }),
+  };
+}
+
+export function audit(documentId: string, actor: string, action: string, meta?: Record<string, unknown>) {
+  run("INSERT INTO audit (document_id, actor, action, meta, at) VALUES (?, ?, ?, ?, ?)", documentId, actor, action, meta ? JSON.stringify(meta) : null, now());
+}
+
+export interface NewDocInput {
+  officeId: string;
+  agent: User;
+  templateKey: string;
+  propertyId: string | null;
+  data: Values;
+  signers: { clientId: string | null; name: string; phone: string | null; email: string | null }[];
+}
+
+export function createDocument(input: NewDocInput): string {
+  const t = getTemplate(input.templateKey);
+  if (!t) throw new Error("unknown template");
+  const property = input.propertyId ? get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", input.propertyId, input.officeId) : undefined;
+  const interest: Interest | null = property?.interest ? JSON.parse(property.interest) : null;
+  const annex = t.buyerSide(input.data) && interest ? interest : null;
+  const title = property ? `${t.title} · ${property.address}` : t.title;
+  const id = newId();
+  tx(() => {
+    run(
+      "INSERT INTO documents (id, office_id, agent_id, template, title, property_id, data, annex, status, agent_signature, share_token, share_expires, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'sent', ?, ?, ?, ?)",
+      id,
+      input.officeId,
+      input.agent.id,
+      t.key,
+      title,
+      property?.id ?? null,
+      JSON.stringify(input.data),
+      annex ? JSON.stringify(annex) : null,
+      input.agent.signature,
+      newToken(),
+      now() + SHARE_TTL_MS,
+      now(),
+    );
+    input.signers.forEach((s, i) => {
+      run(
+        "INSERT INTO signers (id, document_id, client_id, position, name, phone, email, token, values_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        newId(),
+        id,
+        s.clientId,
+        i,
+        s.name,
+        s.phone,
+        s.email,
+        newToken(),
+        JSON.stringify({ name: s.name }),
+      );
+    });
+    audit(id, input.agent.name ?? "מתווך", "created", { template: t.key, signers: input.signers.length, annex: Boolean(annex) });
+  });
+  return id;
+}
+
+export function pdfPath(docId: string) {
+  return path.join(PDF_DIR, `${docId}.pdf`);
+}
+
+export function pdfFileName(f: FullDoc): string {
+  const t = getTemplate(f.doc.template);
+  const d = new Date(f.doc.completed_at ?? f.doc.created_at).toLocaleDateString("en-CA", { timeZone: "Asia/Jerusalem" });
+  const parts = [t?.title ?? "מסמך", f.property?.address, f.signers[0]?.name, d];
+  return parts.filter(Boolean).join("_").replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_") + ".pdf";
+}
+
+/** Called after each signature. When everyone has signed: render the PDF, seal it, apply side effects, send copies. */
+export async function finalizeIfComplete(docId: string, origin: string): Promise<boolean> {
+  const f = loadDoc(docId);
+  if (!f || f.doc.status === "signed" || f.doc.status === "cancelled") return false;
+  if (f.signers.some((s) => s.status !== "signed")) {
+    run("UPDATE documents SET status = 'partial' WHERE id = ? AND status = 'sent'", docId);
+    return false;
+  }
+  const completedAt = now();
+  // Two signers can finish at the same moment: only the first caller seals the document.
+  if (run("UPDATE documents SET completed_at = ? WHERE id = ? AND completed_at IS NULL", completedAt, docId).changes === 0) return false;
+  f.doc.completed_at = completedAt;
+  const bytes = await renderPdf(f, renderCtx(f));
+  fs.writeFileSync(pdfPath(docId), bytes);
+  const hash = sha256(bytes);
+  run("UPDATE documents SET status = 'signed', completed_at = ?, pdf_sha256 = ?, share_expires = ? WHERE id = ?", completedAt, hash, completedAt + SHARE_TTL_MS, docId);
+  audit(docId, "מערכת", "completed", { sha256: hash });
+  applySideEffects(f);
+
+  if (f.office.auto_send_copy) {
+    const link = `${origin}/d/${f.doc.share_token}`;
+    for (const s of f.signers) {
+      if (!s.phone) continue;
+      await sendSms(s.phone, `שלום ${s.name}, העתק חתום של "${f.doc.title}" מאת ${f.office.name}: ${link}`);
+      audit(docId, "מערכת", "copy_sent", { to: s.name, channel: "sms" });
+    }
+  }
+  return true;
+}
+
+function applySideEffects(f: FullDoc) {
+  if (!f.property) return;
+  if (f.doc.template === "exclusivity") {
+    const marketing = Object.fromEntries((Array.isArray(f.data.marketing) ? (f.data.marketing as string[]) : []).map((k) => [k, false]));
+    run(
+      "UPDATE properties SET exclusive_from = ?, exclusive_to = ?, marketing = ? WHERE id = ?",
+      String(f.data.from),
+      String(f.data.to),
+      JSON.stringify(marketing),
+      f.property.id,
+    );
+  }
+  if (f.doc.template === "seller_questionnaire") {
+    run("UPDATE properties SET disclosure = ? WHERE id = ?", JSON.stringify({ ...f.data, _doc: f.doc.id, _at: now() }), f.property.id);
+  }
+}
