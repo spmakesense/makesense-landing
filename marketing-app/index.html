@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סטודיו שיווק נכסים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Rubik:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand" id="brand" role="button" tabindex="0" title="כל הנכסים">
+      <span class="brand-mark">◆</span>
+      <span class="brand-txt"><b>סטודיו שיווק נכסים</b><small id="project-name">כל הנכסים</small></span>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="מודולים">
+      <button data-tab="dashboard">🏠 נכסים</button>
+      <button data-tab="questionnaire" data-need="project">📝 שאלון נכס</button>
+      <button data-tab="cma" data-need="project">📊 שוק ו-CMA</button>
+      <button data-tab="plan" data-need="project">🗓️ תכנית שיווק</button>
+      <button data-tab="studio" data-need="project">🎨 גרפיקות</button>
+      <button data-tab="content" data-need="project">💬 פוסטים ווואטסאפ</button>
+      <button data-tab="deck" data-need="project">🖥️ מצגת</button>
+      <button data-tab="settings">⚙️ הגדרות</button>
+    </nav>
+  </header>
+  <main id="view" class="view"></main>
+</div>
+<div id="print-deck" aria-hidden="true"></div>
+<div id="presenter" class="presenter" hidden></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/questionnaire.js"></script>
+<script src="js/cma.js"></script>
+<script src="js/plan.js"></script>
+<script src="js/studio.js"></script>
+<script src="js/content.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
