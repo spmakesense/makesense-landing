@@ -1,0 +1,272 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap">
+<style>
+:root{--navy:#1E2A5A;--navy2:#2C3E8C;--teal:#14B8A6;--teal-d:#0F9488;--amber:#F59E0B;--green:#16A34A;--red:#E5484D;--bg:#F5F7FB;--card:#fff;--line:#E6E9F2;--ink:#151A30;--mute:#6B7390}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,sans-serif;background:#DDE2EE;color:var(--ink);padding:40px;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;width:1420px}
+h1,h2,h3,.r{font-family:Rubik,sans-serif}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.cap{font-family:Rubik;font-weight:600;font-size:20px;color:var(--navy)}
+.cap small{display:block;font-family:Heebo;font-weight:400;font-size:14px;color:var(--mute);text-align:center}
+.phone{width:390px;height:844px;background:var(--bg);border-radius:46px;overflow:hidden;position:relative;box-shadow:0 0 0 10px #10142A,0 30px 60px rgba(20,30,70,.35);display:flex;flex-direction:column}
+.sb{height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 30px;font-size:15px;font-weight:600;direction:ltr}
+.sb .n{width:120px;height:30px;background:#10142A;border-radius:20px;position:absolute;left:135px;top:8px}
+.dark .sb{color:#fff}
+.body{flex:1;overflow:hidden;padding:0 18px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sm svg.i,svg.i.sm{width:16px;height:16px}
+.tab{height:84px;flex:none;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-start;padding-top:10px;position:relative}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mute);width:60px}
+.tab .on{color:var(--navy);font-weight:700}
+.tab .fab{width:58px;height:58px;border-radius:20px;background:var(--teal);color:#fff;margin-top:-28px;justify-content:center;box-shadow:0 8px 20px rgba(20,184,166,.45)}
+.tab .fab svg{width:28px;height:28px;stroke-width:2.6}
+.card{background:var(--card);border-radius:18px;padding:14px;box-shadow:0 1px 2px rgba(20,30,70,.06)}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.chip{font-size:12px;padding:3px 9px;border-radius:20px;font-weight:600;white-space:nowrap}
+.c-amber{background:#FEF3C7;color:#B45309}.c-gray{background:#EEF0F5;color:var(--mute)}.c-green{background:#DCFCE7;color:#15803D}.c-teal{background:#CCFBF1;color:#0F766E}.c-navy{background:#E3E8FA;color:var(--navy)}.c-red{background:#FEE2E2;color:#B91C1C}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:18px 2px 10px}
+.sec h3{font-size:17px;font-weight:600}.sec a{font-size:13px;color:var(--teal-d);font-weight:600}
+.av{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:600;font-size:15px;flex:none}
+.t{font-weight:600;font-size:15px}.s{font-size:13px;color:var(--mute)}
+.btn{height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:Rubik;font-weight:600;font-size:16px}
+.bp{background:var(--teal);color:#fff}.bn{background:var(--navy);color:#fff}.bo{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.wa{background:#25D366;color:#fff}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 0 12px}
+.hdr h2{font-size:20px;font-weight:600}
+.ib{width:40px;height:40px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--navy);position:relative}
+.steps{display:flex;gap:6px;margin:4px 0 16px}.steps i{flex:1;height:5px;border-radius:5px;background:var(--line)}.steps i.on{background:var(--teal)}
+.lbl{font-size:13px;color:var(--mute);margin-bottom:6px;font-weight:500}
+.inp{height:50px;border-radius:14px;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;padding:0 14px;font-size:16px;gap:8px}
+.seg{display:flex;background:#EBEEF5;border-radius:14px;padding:4px;gap:4px}.seg div{flex:1;text-align:center;padding:9px 0;border-radius:11px;font-size:14px;font-weight:600;color:var(--mute)}.seg .on{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.list .card+.card{margin-top:10px}
+.divider{height:1px;background:var(--line);margin:10px 0}
+</style></head><body>
+
+<!-- 1 HOME -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div><div class="s">יום שבת, 17 באוקטובר</div><h2 style="font-size:24px">בוקר טוב, אבי</h2></div>
+  <div class="row"><div class="ib"><svg class="i" data-i="bell"></svg><span style="position:absolute;top:8px;left:9px;width:9px;height:9px;border-radius:50%;background:var(--red);border:2px solid #fff"></span></div><div class="av" style="background:var(--navy);color:#fff">אכ</div></div></div>
+ <div class="card" style="background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px">
+  <div class="row between"><div><div style="opacity:.75;font-size:13px">עמלות צפויות החודש</div><div class="r" style="font-size:30px;font-weight:700">₪86,400</div></div>
+  <div style="text-align:left"><div style="opacity:.75;font-size:13px">נחתמו החודש</div><div class="r" style="font-size:30px;font-weight:700">37</div></div></div>
+  <div style="height:6px;border-radius:6px;background:rgba(255,255,255,.18);margin-top:12px"><div style="width:68%;height:100%;border-radius:6px;background:var(--teal)"></div></div>
+  <div style="font-size:12px;opacity:.75;margin-top:6px">68% מהיעד החודשי</div></div>
+ <div class="row" style="margin-top:14px;gap:8px">
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="av c-teal" style="margin:0 auto 6px"><svg class="i" data-i="file"></svg></div><div style="font-size:12px;font-weight:600">הזמנת תיווך</div></div>
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="av c-navy" style="margin:0 auto 6px"><svg class="i" data-i="eye"></svg></div><div style="font-size:12px;font-weight:600">הצגת נכס</div></div>
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="av c-amber" style="margin:0 auto 6px"><svg class="i" data-i="key"></svg></div><div style="font-size:12px;font-weight:600">בלעדיות</div></div>
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="av c-green" style="margin:0 auto 6px"><svg class="i" data-i="phone2"></svg></div><div style="font-size:12px;font-weight:600">החתמה במקום</div></div>
+ </div>
+ <div class="sec"><h3>ממתינים לחתימה <span class="chip c-amber">4</span></h3><a>הכל</a></div>
+ <div class="list">
+  <div class="card row"><div class="av c-navy">של</div><div style="flex:1"><div class="t">שירה לוי</div><div class="s">הזמנת תיווך · ביאליק 24, ר״ג</div></div><div style="text-align:left"><span class="chip c-amber">נצפה · 5 דק׳</span></div></div>
+  <div class="card row"><div class="av c-gray">דמ</div><div style="flex:1"><div class="t">דוד מזרחי</div><div class="s">הסכם בלעדיות · הרצל 8, גבעתיים</div></div><div class="row" style="gap:6px"><span class="chip c-gray">לא נפתח</span><div class="ib" style="width:34px;height:34px;background:#25D366;color:#fff;border-radius:11px"><svg class="i sm" data-i="bell"></svg></div></div></div>
+ </div>
+ <div class="sec"><h3>סיורים היום</h3><a>ליומן</a></div>
+ <div class="card row"><div style="text-align:center;width:52px;border-left:1.5px solid var(--line);padding-left:10px"><div class="r" style="font-size:18px;font-weight:700;color:var(--navy)">11:00</div><div class="s">שעה</div></div><div style="flex:1"><div class="t">ז׳בוטינסקי 112, רמת גן</div><div class="s">4 חד׳ · 3 קונים · טופס הצגה מוכן</div></div><svg class="i" data-i="chev" style="color:var(--mute)"></svg></div>
+</div>
+<div class="tab"><div class="on"><svg class="i" data-i="home"></svg>בית</div><div><svg class="i" data-i="users"></svg>לקוחות</div><div class="fab"><svg class="i" data-i="plus"></svg></div><div><svg class="i" data-i="bld"></svg>נכסים</div><div><svg class="i" data-i="menu"></svg>עוד</div></div>
+</div><div class="cap">1 · מסך בית<small>מצב היום, ממתינים לחתימה, פעולות מהירות</small></div></div>
+
+<!-- 2 TEMPLATES -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div class="ib"><svg class="i" data-i="x"></svg></div><h2>מסמך חדש</h2><div style="width:40px"></div></div>
+ <div class="steps"><i class="on"></i><i></i><i></i></div>
+ <div class="s" style="margin-bottom:4px">שלב 1 מתוך 3</div><h2 style="font-size:22px;margin-bottom:14px">מה מחתימים?</h2>
+ <div class="inp" style="margin-bottom:14px;color:var(--mute)"><svg class="i" data-i="search"></svg>חיפוש תבנית</div>
+ <div class="seg" style="margin-bottom:14px"><div class="on">הכל</div><div>מכירה</div><div>שכירות</div><div>המשרד שלי</div></div>
+ <div class="card row" style="border:2px solid var(--teal);margin-bottom:10px"><div class="av c-teal"><svg class="i" data-i="eye"></svg></div><div style="flex:1"><div class="t">טופס הצגת נכס</div><div class="s">ללקוחות בסיור · תומך בכמה חותמים</div></div><span class="chip c-teal">הכי בשימוש</span></div>
+ <div class="list">
+  <div class="card row"><div class="av c-navy"><svg class="i" data-i="file"></svg></div><div style="flex:1"><div class="t">הזמנת שירותי תיווך – מכירה</div><div class="s">למוכר · כולל דמי תיווך ותוקף</div></div><svg class="i" data-i="chev" style="color:var(--mute)"></svg></div>
+  <div class="card row"><div class="av c-navy"><svg class="i" data-i="file"></svg></div><div style="flex:1"><div class="t">הזמנת שירותי תיווך – שכירות</div><div class="s">לשוכר / למשכיר</div></div><svg class="i" data-i="chev" style="color:var(--mute)"></svg></div>
+  <div class="card row"><div class="av c-amber"><svg class="i" data-i="key"></svg></div><div style="flex:1"><div class="t">הסכם בלעדיות</div><div class="s">כולל פעולות שיווק ותאריך סיום</div></div><svg class="i" data-i="chev" style="color:var(--mute)"></svg></div>
+  <div class="card row"><div class="av c-gray"><svg class="i" data-i="users"></svg></div><div style="flex:1"><div class="t">שיתוף פעולה בין מתווכים</div><div class="s">תבנית משרדית · נעולה</div></div><span class="chip c-navy">משרדי</span></div>
+ </div>
+ <div class="row" style="margin-top:16px;background:#E8F7F4;border-radius:14px;padding:12px;color:#0F766E;font-size:13px;gap:8px"><svg class="i" data-i="shield"></svg><span>כל התבניות כוללות את שדות החובה לפי תקנות המתווכים במקרקעין</span></div>
+</div>
+</div><div class="cap">2 · בחירת תבנית<small>אשף 3 שלבים, תבניות תואמות חוק</small></div></div>
+
+<!-- 3 DETAILS & SIGNERS -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div class="ib"><svg class="i" data-i="back"></svg></div><h2>טופס הצגת נכס</h2><div style="width:40px"></div></div>
+ <div class="steps"><i class="on"></i><i class="on"></i><i></i></div>
+ <div class="lbl">הנכס</div>
+ <div class="card row" style="margin-bottom:14px"><div style="width:54px;height:54px;border-radius:14px;background:linear-gradient(160deg,#9FB4E8,#5A72C4);flex:none"></div><div style="flex:1"><div class="t">ז׳בוטינסקי 112, רמת גן</div><div class="s">4 חד׳ · 110 מ״ר · ₪2,850,000</div></div><span class="s" style="color:var(--teal-d);font-weight:600">שינוי</span></div>
+ <div class="lbl">דמי תיווך (כולל מע״מ כחוק)</div>
+ <div class="seg" style="margin-bottom:14px"><div>1.5%</div><div class="on">2%</div><div>סכום קבוע</div></div>
+ <div class="row between" style="margin-bottom:8px"><div class="lbl" style="margin:0">קונים בסיור (3)</div><span class="chip c-teal">החתמה קבוצתית</span></div>
+ <div class="card" style="padding:4px 14px">
+  <div class="row" style="padding:10px 0"><div class="av c-navy">של</div><div style="flex:1"><div class="t">שירה לוי</div><div class="s" style="direction:ltr;text-align:right">054-712-3388</div></div><svg class="i" data-i="check" style="color:var(--green)"></svg></div>
+  <div class="divider" style="margin:0"></div>
+  <div class="row" style="padding:10px 0"><div class="av c-amber">יב</div><div style="flex:1"><div class="t">יוסי ברק</div><div class="s" style="direction:ltr;text-align:right">052-430-9912</div></div><svg class="i" data-i="check" style="color:var(--green)"></svg></div>
+  <div class="divider" style="margin:0"></div>
+  <div class="row" style="padding:10px 0"><div class="av c-gray">רא</div><div style="flex:1"><div class="t">רונית אזולאי</div><div class="s">חסר מספר טלפון</div></div><span class="chip c-red">להשלמה</span></div>
+ </div>
+ <div class="row" style="gap:8px;margin-top:10px">
+  <div class="btn bo" style="flex:1;height:46px;font-size:14px"><svg class="i sm" data-i="uplus"></svg>מאנשי קשר</div>
+  <div class="btn bo" style="flex:1;height:46px;font-size:14px"><svg class="i sm" data-i="idc"></svg>סריקת ת״ז</div>
+ </div>
+ <div class="row" style="margin-top:12px;font-size:13px;color:var(--mute);gap:6px"><svg class="i sm" data-i="pin"></svg>חותמת מיקום וזמן תתווסף אוטומטית</div>
+</div>
+<div style="padding:12px 18px 30px;background:#fff;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
+ <div class="btn bp"><svg class="i" data-i="phone2"></svg>החתמה במקום · מסור ללקוח</div>
+ <div class="btn wa"><svg class="i" data-i="msg"></svg>שליחה ב-WhatsApp</div>
+</div>
+</div><div class="cap">3 · פרטים וחותמים<small>כמה קונים, השלמה מאנשי קשר / ת״ז</small></div></div>
+
+<!-- 4 CLIENT SIGN -->
+<div class="wrap"><div class="phone" style="background:#fff"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div style="margin:0 14px 8px;background:#F0F2F7;border-radius:12px;height:36px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--mute);direction:ltr"><svg class="i sm" data-i="lock"></svg>chotmim.co.il/s/8F2K</div>
+<div class="body" style="padding:0 20px">
+ <div class="row" style="margin:6px 0 14px"><div class="av" style="background:var(--navy);color:#fff">אכ</div><div><div class="t">אבי כהן נדל״ן</div><div class="s">רישיון מתווך 3127845</div></div></div>
+ <h2 style="font-size:22px">שלום שירה, נא לחתום על</h2><h2 style="font-size:22px;color:var(--teal-d);margin-bottom:12px">טופס הצגת נכס</h2>
+ <div style="background:var(--bg);border-radius:14px;padding:14px;font-size:13.5px;line-height:1.7;color:#3A4160;height:150px;overflow:hidden;position:relative">
+  אני הח״מ <b style="background:#CCFBF1;padding:0 4px;border-radius:4px">שירה לוי</b>, ת״ז <b style="background:#CCFBF1;padding:0 4px;border-radius:4px">03•••••12</b>, מאשר/ת כי המתווך הציג בפניי ביום 17.10.2026 את הנכס ברח׳ <b>ז׳בוטינסקי 112, רמת גן</b>. היה ואתקשר בהסכם לרכישת הנכס, אשלם למתווך דמי תיווך בשיעור <b>2%</b> ממחיר העסקה בתוספת מע״מ...
+  <div style="position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(transparent,var(--bg))"></div></div>
+ <div style="text-align:center;font-size:13px;color:var(--teal-d);font-weight:600;margin:8px 0 14px">קריאת המסמך המלא (2 עמודים)</div>
+ <div class="row between"><div class="lbl" style="margin:0">החתימה שלך</div><span class="s">ניקוי</span></div>
+ <div style="height:150px;border:2px dashed #C9D0E2;border-radius:16px;margin-top:6px;position:relative;display:flex;align-items:center;justify-content:center">
+  <svg viewBox="0 0 300 110" width="270" height="100" style="fill:none;stroke:var(--navy);stroke-width:3;stroke-linecap:round"><path d="M20 70c20-40 35-55 40-40s-20 50-5 45 25-55 35-50-5 45 10 40 15-30 25-25 0 25 15 22 20-35 35-30 5 28 20 25 25-20 40-18M200 64c15-5 30 2 45-4 10-4 20-10 35-6"/></svg>
+  <div style="position:absolute;bottom:22px;right:30px;left:30px;height:1px;background:#C9D0E2"></div></div>
+ <div class="row" style="margin:14px 0;gap:10px;font-size:14px"><div style="width:22px;height:22px;border-radius:7px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center"><svg class="i sm" data-i="check" style="stroke-width:3"></svg></div>קראתי את המסמך ואני מאשר/ת את תוכנו</div>
+ <div class="btn bp">חתימה ואישור בקוד SMS</div>
+ <div class="row" style="justify-content:center;margin-top:12px;font-size:12px;color:var(--mute);gap:6px"><svg class="i sm" data-i="shield"></svg>חתימה אלקטרונית מאובטחת · ללא התקנה</div>
+</div>
+</div><div class="cap">4 · מסך החתימה של הלקוח<small>נפתח מקישור WhatsApp, בלי אפליקציה</small></div></div>
+
+<!-- 5 SIGNED -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div class="ib"><svg class="i" data-i="back"></svg></div><h2>סטטוס מסמך</h2><div class="ib"><svg class="i" data-i="dots"></svg></div></div>
+ <div style="text-align:center;margin:6px 0 18px"><div style="width:84px;height:84px;border-radius:50%;background:#DCFCE7;color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 0 0 10px #F0FDF4"><svg class="i" data-i="check" style="width:44px;height:44px;stroke-width:3"></svg></div>
+ <h2 style="font-size:24px">נחתם על ידי כולם</h2><div class="s" style="margin-top:4px">טופס הצגת נכס · ז׳בוטינסקי 112, ר״ג</div></div>
+ <div class="card">
+  <div class="row" style="align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;align-items:center"><span class="dot" style="background:var(--green);width:12px;height:12px;margin-top:4px"></span><span style="width:2px;height:40px;background:var(--line)"></span></div><div style="flex:1"><div class="row between"><div class="t">שירה לוי</div><span class="chip c-green">נחתם 11:14</span></div><div class="s">נצפה 11:12 · אומת ב-SMS</div></div></div>
+  <div class="row" style="align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;align-items:center"><span class="dot" style="background:var(--green);width:12px;height:12px;margin-top:4px"></span><span style="width:2px;height:40px;background:var(--line)"></span></div><div style="flex:1"><div class="row between"><div class="t">יוסי ברק</div><span class="chip c-green">נחתם 11:16</span></div><div class="s">החתמה במקום · אומת ב-SMS</div></div></div>
+  <div class="row" style="align-items:flex-start;gap:12px"><span class="dot" style="background:var(--green);width:12px;height:12px;margin-top:4px"></span><div style="flex:1"><div class="row between"><div class="t">רונית אזולאי</div><span class="chip c-green">נחתם 11:21</span></div><div class="s">נצפה 11:19 · אומת ב-SMS</div></div></div>
+ </div>
+ <div class="sec"><h3>תיעוד ראייתי</h3></div>
+ <div class="card" style="font-size:13.5px">
+  <div class="row between" style="padding:4px 0"><span class="s row" style="gap:6px"><svg class="i sm" data-i="clock"></svg>חותמת זמן</span><span>17.10.2026 · 11:21:08</span></div>
+  <div class="row between" style="padding:4px 0"><span class="s row" style="gap:6px"><svg class="i sm" data-i="pin"></svg>מיקום</span><span>ז׳בוטינסקי 112, ר״ג</span></div>
+  <div class="row between" style="padding:4px 0"><span class="s row" style="gap:6px"><svg class="i sm" data-i="lock"></svg>Hash</span><span style="direction:ltr;font-family:monospace;font-size:12px">a3f9…7c21</span></div>
+ </div>
+ <div class="row" style="gap:8px;margin-top:16px"><div class="btn bo" style="flex:1"><svg class="i" data-i="dl"></svg>PDF</div><div class="btn bn" style="flex:2"><svg class="i" data-i="uplus"></svg>פתיחת 3 לידים</div></div>
+ <div class="s" style="text-align:center;margin-top:10px">עותק חתום נשלח אוטומטית לכל החותמים</div>
+</div>
+</div><div class="cap">5 · נחתם + תיעוד<small>מעקב לכל חותם, Audit Trail, לידים אוטומטיים</small></div></div>
+
+<!-- 6 CLIENT CARD -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div class="ib"><svg class="i" data-i="back"></svg></div><h2>כרטיס לקוח</h2><div class="ib"><svg class="i" data-i="pen"></svg></div></div>
+ <div class="card" style="text-align:center;padding:18px">
+  <div class="av c-navy" style="width:64px;height:64px;font-size:22px;border-radius:20px;margin:0 auto 8px">של</div>
+  <h2 style="font-size:21px">שירה לוי</h2>
+  <div class="row" style="justify-content:center;gap:6px;margin:8px 0 14px"><span class="chip c-navy">קונה</span><span class="chip c-red">חם</span><span class="chip c-gray">מקור: יד2</span></div>
+  <div class="row" style="gap:8px"><div class="btn bo" style="flex:1;height:44px;font-size:14px"><svg class="i sm" data-i="phone"></svg>חיוג</div><div class="btn wa" style="flex:1;height:44px;font-size:14px"><svg class="i sm" data-i="msg"></svg>WhatsApp</div><div class="btn bp" style="flex:1;height:44px;font-size:14px"><svg class="i sm" data-i="file"></svg>החתמה</div></div>
+ </div>
+ <div class="seg" style="margin:14px 0"><div class="on">סקירה</div><div>מסמכים 4</div><div>נכסים 3</div><div>פעילות</div></div>
+ <div class="card" style="background:#FFFBEB;border:1.5px solid #FDE68A"><div class="row" style="gap:8px"><svg class="i" data-i="clock" style="color:var(--amber)"></svg><div style="flex:1"><div class="t">משימה: שיחת המשך אחרי סיור</div><div class="s">מחר · 10:00</div></div><div style="width:24px;height:24px;border-radius:8px;border:2px solid #FBBF24"></div></div></div>
+ <div class="card" style="margin-top:10px"><div class="lbl">מחפשת</div><div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip c-gray">4–5 חד׳</span><span class="chip c-gray">רמת גן / גבעתיים</span><span class="chip c-gray">עד ₪3.0M</span><span class="chip c-gray">מעלית + חניה</span></div></div>
+ <div class="sec"><h3>נכסים שהוצגו</h3><a>3 התאמות חדשות</a></div>
+ <div class="list">
+  <div class="card row"><div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(160deg,#9FB4E8,#5A72C4);flex:none"></div><div style="flex:1"><div class="t">ז׳בוטינסקי 112, ר״ג</div><div class="s">היום · ₪2.85M</div></div><span class="chip c-green row" style="gap:4px"><svg class="i sm" data-i="check"></svg>טופס חתום</span></div>
+  <div class="card row"><div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(160deg,#F8C8A0,#D9885A);flex:none"></div><div style="flex:1"><div class="t">כצנלסון 40, גבעתיים</div><div class="s">12.10 · ₪2.95M</div></div><span class="chip c-green row" style="gap:4px"><svg class="i sm" data-i="check"></svg>טופס חתום</span></div>
+ </div>
+</div>
+<div class="tab"><div><svg class="i" data-i="home"></svg>בית</div><div class="on"><svg class="i" data-i="users"></svg>לקוחות</div><div class="fab"><svg class="i" data-i="plus"></svg></div><div><svg class="i" data-i="bld"></svg>נכסים</div><div><svg class="i" data-i="menu"></svg>עוד</div></div>
+</div><div class="cap">6 · כרטיס לקוח<small>כל המסמכים, הנכסים והמשימות במקום אחד</small></div></div>
+
+<!-- 7 PROPERTY -->
+<div class="wrap"><div class="phone dark"><div style="position:absolute;top:0;left:0;right:0;height:250px;background:linear-gradient(180deg,rgba(16,20,42,.55),transparent 45%),linear-gradient(160deg,#7F96D6,#3D4F9C 60%,#1E2A5A)">
+ <svg viewBox="0 0 390 250" width="390" height="250" style="position:absolute;bottom:0;opacity:.35"><g fill="#fff"><rect x="40" y="90" width="90" height="160"/><rect x="150" y="50" width="110" height="200"/><rect x="280" y="120" width="80" height="130"/></g><g fill="#3D4F9C"><rect x="60" y="110" width="18" height="18"/><rect x="92" y="110" width="18" height="18"/><rect x="60" y="145" width="18" height="18"/><rect x="92" y="145" width="18" height="18"/><rect x="172" y="70" width="22" height="20"/><rect x="216" y="70" width="22" height="20"/><rect x="172" y="108" width="22" height="20"/><rect x="216" y="108" width="22" height="20"/><rect x="172" y="146" width="22" height="20"/><rect x="216" y="146" width="22" height="20"/></g></svg></div>
+<div class="sb" style="position:relative"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body" style="position:relative">
+ <div class="hdr"><div class="ib" style="background:rgba(255,255,255,.9)"><svg class="i" data-i="back"></svg></div><div class="row" style="gap:8px"><div class="ib" style="background:rgba(255,255,255,.9)"><svg class="i" data-i="send"></svg></div><div class="ib" style="background:rgba(255,255,255,.9)"><svg class="i" data-i="pen"></svg></div></div></div>
+ <div style="height:120px"></div>
+ <div class="card" style="padding:16px">
+  <div class="row between"><div class="r" style="font-size:26px;font-weight:700;color:var(--navy)">₪2,850,000</div><span class="chip c-amber row" style="gap:4px"><svg class="i sm" data-i="key"></svg>בלעדי</span></div>
+  <div class="t" style="margin-top:2px">ז׳בוטינסקי 112, רמת גן</div>
+  <div class="row" style="gap:6px;margin-top:10px"><span class="chip c-gray">4 חד׳</span><span class="chip c-gray">110 מ״ר</span><span class="chip c-gray">קומה 3/8</span><span class="chip c-gray">חניה</span></div>
+ </div>
+ <div class="card" style="margin-top:10px">
+  <div class="row between"><div class="t">בלעדיות עד 12.01.2027</div><span class="chip c-teal">נותרו 87 ימים</span></div>
+  <div style="height:8px;border-radius:8px;background:var(--line);margin:10px 0 12px"><div style="width:52%;height:100%;border-radius:8px;background:var(--teal)"></div></div>
+  <div class="lbl">פעולות שיווק (לפי ההסכם)</div>
+  <div class="row" style="gap:8px;font-size:14px;margin-bottom:6px"><svg class="i sm" data-i="check" style="color:var(--green)"></svg>פרסום ביד2 ובמדלן</div>
+  <div class="row" style="gap:8px;font-size:14px;margin-bottom:6px"><svg class="i sm" data-i="check" style="color:var(--green)"></svg>שלט "למכירה"</div>
+  <div class="row" style="gap:8px;font-size:14px;color:var(--mute)"><span style="width:16px;height:16px;border-radius:5px;border:2px solid #C9D0E2"></span>בית פתוח – לא בוצע</div>
+ </div>
+ <div class="row" style="gap:8px;margin-top:10px">
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="r" style="font-size:22px;font-weight:700;color:var(--navy)">12</div><div class="s">סיורים</div></div>
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="r" style="font-size:22px;font-weight:700;color:var(--green)">19</div><div class="s">טפסי הצגה</div></div>
+  <div class="card" style="flex:1;text-align:center;padding:12px 4px"><div class="r" style="font-size:22px;font-weight:700;color:var(--red)">3</div><div class="s">מתעניינים חמים</div></div>
+ </div>
+ <div class="btn bp" style="margin-top:12px"><svg class="i" data-i="cal"></svg>קביעת סיור + טופס הצגה</div>
+</div>
+</div><div class="cap">7 · כרטיס נכס<small>מעקב בלעדיות, סיורים, הוכחת הצגה</small></div></div>
+
+<!-- 8 DEALS -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><h2 style="font-size:24px">עסקאות ועמלות</h2><div class="ib"><svg class="i" data-i="filter"></svg></div></div>
+ <div class="card" style="padding:16px">
+  <div class="s">עמלות צפויות ברבעון</div><div class="r" style="font-size:28px;font-weight:700;color:var(--navy)">₪214,500</div>
+  <div style="display:flex;height:10px;border-radius:10px;overflow:hidden;margin:12px 0 10px;gap:2px"><div style="flex:3.1;background:var(--green)"></div><div style="flex:4.2;background:var(--teal)"></div><div style="flex:2.7;background:var(--amber)"></div></div>
+  <div class="row" style="gap:14px;font-size:12px;color:var(--mute)"><span class="row" style="gap:5px"><span class="dot" style="background:var(--green)"></span>שולם ₪66K</span><span class="row" style="gap:5px"><span class="dot" style="background:var(--teal)"></span>חוזה ₪90K</span><span class="row" style="gap:5px"><span class="dot" style="background:var(--amber)"></span>מו״מ ₪58K</span></div>
+ </div>
+ <div class="row" style="gap:6px;margin:14px 0;overflow:hidden">
+  <span class="chip c-gray" style="padding:7px 12px">ליד 24</span><span class="chip c-gray" style="padding:7px 12px">סיור 11</span><span class="chip c-navy" style="padding:7px 12px;background:var(--navy);color:#fff">מו״מ 5</span><span class="chip c-gray" style="padding:7px 12px">זכ״ד 2</span><span class="chip c-gray" style="padding:7px 12px">חוזה 3</span><span class="chip c-gray" style="padding:7px 12px">שולם</span>
+ </div>
+ <div class="list">
+  <div class="card"><div class="row between"><div class="t">ז׳בוטינסקי 112, ר״ג</div><span class="chip c-amber">מו״מ</span></div><div class="s" style="margin:4px 0 10px">מוכר: משה פרץ · קונה: שירה לוי</div>
+   <div class="row between"><div><div class="s">עמלה (2 צדדים)</div><div class="r" style="font-weight:700;font-size:18px">₪114,000</div></div><div class="row" style="gap:-6px"><div class="av c-navy" style="width:30px;height:30px;font-size:12px;border-radius:10px;border:2px solid #fff">אכ</div><div class="av c-teal" style="width:30px;height:30px;font-size:12px;border-radius:10px;border:2px solid #fff;margin-right:-8px">דנ</div></div></div></div>
+  <div class="card"><div class="row between"><div class="t">כצנלסון 40, גבעתיים</div><span class="chip c-amber">מו״מ</span></div><div class="s" style="margin:4px 0 10px">קונה: יוסי ברק · הצעה ₪2.8M</div>
+   <div class="row between"><div><div class="s">עמלה צפויה</div><div class="r" style="font-weight:700;font-size:18px">₪56,000</div></div><div class="av c-navy" style="width:30px;height:30px;font-size:12px;border-radius:10px">אכ</div></div></div>
+  <div class="card" style="border:1.5px solid #BBF7D0"><div class="row between"><div class="t">הרצל 8, גבעתיים</div><span class="chip c-green">חוזה נחתם</span></div><div class="s" style="margin:4px 0 10px">עמלה ₪48,000 · מועד תשלום 20.10</div>
+   <div class="btn bn" style="height:44px;font-size:14px"><svg class="i sm" data-i="file"></svg>הפקת חשבונית ושליחה</div></div>
+ </div>
+</div>
+<div class="tab"><div><svg class="i" data-i="home"></svg>בית</div><div><svg class="i" data-i="users"></svg>לקוחות</div><div class="fab"><svg class="i" data-i="plus"></svg></div><div><svg class="i" data-i="bld"></svg>נכסים</div><div class="on"><svg class="i" data-i="menu"></svg>עוד</div></div>
+</div><div class="cap">8 · עסקאות ועמלות<small>Pipeline מליד ועד תשלום + חשבונית</small></div></div>
+
+<!-- 9 MANAGER -->
+<div class="wrap"><div class="phone"><div class="sb"><span>9:41</span><span class="n"></span><span>●●● 5G</span></div>
+<div class="body">
+ <div class="hdr"><div><div class="s">מנהל משרד</div><h2 style="font-size:24px">המשרד שלי</h2></div><div class="ib"><svg class="i" data-i="uplus"></svg></div></div>
+ <div class="seg" style="margin-bottom:14px"><div>שבוע</div><div class="on">חודש</div><div>רבעון</div></div>
+ <div class="row" style="gap:10px">
+  <div class="card" style="flex:1"><div class="s">חתימות</div><div class="r" style="font-size:24px;font-weight:700">142</div><div style="font-size:12px;color:var(--green);font-weight:600">▲ 18%</div></div>
+  <div class="card" style="flex:1"><div class="s">עסקאות</div><div class="r" style="font-size:24px;font-weight:700">9</div><div style="font-size:12px;color:var(--green);font-weight:600">▲ 2</div></div>
+  <div class="card" style="flex:1"><div class="s">עמלות</div><div class="r" style="font-size:24px;font-weight:700">₪412K</div><div style="font-size:12px;color:var(--red);font-weight:600">▼ 4%</div></div>
+ </div>
+ <div class="card" style="margin-top:12px"><div class="row between"><div class="t">חתימות לפי שבוע</div><span class="s">אוקטובר</span></div>
+  <div class="row" style="align-items:flex-end;gap:14px;height:110px;margin-top:12px;padding:0 6px">
+   <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:52px;background:#C7D2F5;border-radius:8px 8px 4px 4px"></div><span class="s" style="font-size:11px">ש1</span></div>
+   <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:70px;background:#C7D2F5;border-radius:8px 8px 4px 4px"></div><span class="s" style="font-size:11px">ש2</span></div>
+   <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:62px;background:#C7D2F5;border-radius:8px 8px 4px 4px"></div><span class="s" style="font-size:11px">ש3</span></div>
+   <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:88px;background:var(--teal);border-radius:8px 8px 4px 4px"></div><span class="s" style="font-size:11px">ש4</span></div>
+  </div></div>
+ <div class="sec"><h3>הצוות</h3><a>6 סוכנים</a></div>
+ <div class="card" style="padding:4px 14px">
+  <div class="row" style="padding:10px 0"><div class="av c-navy">אכ</div><div style="flex:1"><div class="t">אבי כהן</div><div class="s">37 חתימות · 14 סיורים</div></div><div style="text-align:left"><div class="r" style="font-weight:700">₪128K</div><span class="chip c-green">מוביל</span></div></div>
+  <div class="divider" style="margin:0"></div>
+  <div class="row" style="padding:10px 0"><div class="av c-teal">דנ</div><div style="flex:1"><div class="t">דניאל נחום</div><div class="s">29 חתימות · 18 סיורים</div></div><div style="text-align:left"><div class="r" style="font-weight:700">₪96K</div></div></div>
+  <div class="divider" style="margin:0"></div>
+  <div class="row" style="padding:10px 0"><div class="av c-amber">מג</div><div style="flex:1"><div class="t">מאיה גולן</div><div class="s">8 חתימות · 3 ממתינות מעל 48ש׳</div></div><span class="chip c-red">דורש מעקב</span></div>
+ </div>
+</div>
+<div class="tab"><div><svg class="i" data-i="home"></svg>בית</div><div><svg class="i" data-i="users"></svg>לקוחות</div><div class="fab"><svg class="i" data-i="plus"></svg></div><div><svg class="i" data-i="bld"></svg>נכסים</div><div class="on"><svg class="i" data-i="menu"></svg>עוד</div></div>
+</div><div class="cap">9 · דשבורד מנהל משרד<small>ביצועי צוות, חתימות ועמלות</small></div></div>
+
+<script>
+const P={home:'<path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',users:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M16 4a4 4 0 0 1 0 8M22 21c0-3-2-5-4-6"/>',plus:'<path d="M12 5v14M5 12h14"/>',bld:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',file:'<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',check:'<path d="M5 12l5 5 9-10"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',msg:'<path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/>',chev:'<path d="M15 6l-6 6 6 6"/>',back:'<path d="M9 6l6 6-6 6"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',pin:'<path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>',uplus:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/>',phone2:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',idc:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-1.5 1.7-2 3-2s2.5.5 3 2M14 10h4M14 13h3"/>',lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',dl:'<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',dots:'<circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>',filter:'<path d="M3 5h18l-7 8v6l-4 2v-8z"/>'};
+document.querySelectorAll('svg[data-i]').forEach(s=>{if(!s.getAttribute('viewBox'))s.setAttribute('viewBox','0 0 24 24');s.innerHTML=P[s.dataset.i]||''});
+</script>
+</body></html>
