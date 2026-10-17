@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { all, get, PDF_DIR, run, tx } from "./db";
 import { newId, newToken, now, sha256 } from "./ids";
+import { driveUserFor, savePdfToDrive } from "./gdrive";
 import { renderPdf } from "./pdf";
 import { sendSms } from "./sms";
 import { getTemplate, type Interest, type RenderCtx, type Values } from "./templates";
@@ -150,6 +151,9 @@ export async function finalizeIfComplete(docId: string, origin: string): Promise
   audit(docId, "מערכת", "completed", { sha256: hash });
   applySideEffects(f);
 
+  const driveUser = driveUserFor(f.doc.agent_id);
+  if (driveUser?.drive_auto) await saveToDriveSafe(f, driveUser, bytes);
+
   if (f.office.auto_send_copy) {
     const link = `${origin}/d/${f.doc.share_token}`;
     for (const s of f.signers) {
@@ -175,5 +179,24 @@ function applySideEffects(f: FullDoc) {
   }
   if (f.doc.template === "seller_questionnaire") {
     run("UPDATE properties SET disclosure = ? WHERE id = ?", JSON.stringify({ ...f.data, _doc: f.doc.id, _at: now() }), f.property.id);
+  }
+}
+
+export function driveFolderName(f: FullDoc): string {
+  return f.property ? [f.property.address, f.property.city].filter(Boolean).join(", ") : "מסמכים ללא נכס";
+}
+
+/** Uploads the signed PDF to the agent's Google Drive. Never throws: a Drive problem must not break signing. */
+export async function saveToDriveSafe(f: FullDoc, user: User, bytes?: Uint8Array): Promise<string | null> {
+  try {
+    const data = bytes ?? new Uint8Array(fs.readFileSync(pdfPath(f.doc.id)));
+    const fresh = get<Doc>("SELECT * FROM documents WHERE id = ?", f.doc.id)!;
+    const link = await savePdfToDrive(user, fresh, pdfFileName(f), driveFolderName(f), data);
+    if (!fresh.drive_link) audit(f.doc.id, "מערכת", "drive_saved", { to: user.google_email });
+    return link;
+  } catch (e) {
+    console.error("drive upload failed", e);
+    audit(f.doc.id, "מערכת", "drive_failed");
+    return null;
   }
 }

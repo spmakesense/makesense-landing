@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requestMeta, requireCtx } from "@/lib/auth";
 import { get, run } from "@/lib/db";
-import { audit, createDocument, loadDoc } from "@/lib/documents";
+import { audit, createDocument, loadDoc, saveToDriveSafe } from "@/lib/documents";
+import { disconnectDrive } from "@/lib/gdrive";
 import { normalizePhone } from "@/lib/format";
 import { newId, now } from "@/lib/ids";
 import { DEMO_MODE, sendSms } from "@/lib/sms";
@@ -140,4 +141,26 @@ export async function sendCopySms(docId: string, signerIds: string[], extraPhone
   run("UPDATE documents SET share_expires = ? WHERE id = ?", now() + 30 * 86_400_000, docId);
   revalidatePath(`/documents/${docId}`);
   return { sent: targets.length, demo: DEMO_MODE };
+}
+
+/** Saves a signed document to the agent's connected Google Drive (manual "save to Drive"). */
+export async function saveDocToDrive(docId: string): Promise<{ link?: string; error?: string; notConnected?: boolean }> {
+  const { f, user } = await ownedDoc(docId);
+  if (f.doc.status !== "signed") return { error: "המסמך עוד לא נחתם על ידי כולם" };
+  if (!user.google_refresh) return { notConnected: true };
+  const link = await saveToDriveSafe(f, user);
+  revalidatePath(`/documents/${docId}`);
+  return link ? { link } : { error: "השמירה ל-Google Drive נכשלה. נסו שוב או חברו מחדש בהגדרות." };
+}
+
+export async function disconnectDriveAction() {
+  const { user } = await requireCtx();
+  await disconnectDrive(user);
+  revalidatePath("/settings");
+}
+
+export async function setDriveAuto(on: boolean) {
+  const { user } = await requireCtx();
+  run("UPDATE users SET drive_auto = ? WHERE id = ?", on ? 1 : 0, user.id);
+  revalidatePath("/settings");
 }

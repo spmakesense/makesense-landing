@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { cancelDocument, logShare, sendCopySms, sendSigningSms } from "@/app/actions/documents";
+import { cancelDocument, logShare, saveDocToDrive, sendCopySms, sendSigningSms } from "@/app/actions/documents";
 import { Icon } from "@/components/Icon";
 import { intlPhone, normalizePhone } from "@/lib/format";
 
@@ -66,6 +66,38 @@ interface SharePayload {
   office: string;
   link: string;
   signers: { id: string; name: string; phone: string | null; email: string | null }[];
+  driveConnected: boolean;
+  driveLink: string | null;
+}
+
+/** "Saved to Google Drive" line on a signed document, or a button to save / connect. */
+export function DriveStatus({ docId, link, connected }: { docId: string; link: string | null; connected: boolean }) {
+  const [state, setState] = useState<{ link?: string | null; error?: string }>({ link });
+  const [pending, start] = useTransition();
+  if (state.link) {
+    return (
+      <a className="row xs" href={state.link} target="_blank" rel="noreferrer" style={{ justifyContent: "center", gap: 6, marginTop: 8, color: "var(--green)" }}>
+        <Icon name="cloud" size="sm" />
+        נשמר ב-Google Drive · פתיחה
+      </a>
+    );
+  }
+  if (!connected) {
+    return (
+      <a className="row xs link" href="/settings" style={{ justifyContent: "center", gap: 6, marginTop: 8 }}>
+        <Icon name="cloud" size="sm" />
+        חיבור Google Drive לשמירת הסכמים
+      </a>
+    );
+  }
+  return (
+    <div className="center" style={{ marginTop: 8 }}>
+      <button className="link" disabled={pending} onClick={() => start(async () => setState(await saveDocToDrive(docId)))}>
+        {pending ? "שומר ב-Drive…" : "שמירה ל-Google Drive"}
+      </button>
+      {state.error ? <div className="xs" style={{ color: "var(--red)" }}>{state.error}</div> : null}
+    </div>
+  );
 }
 
 export function ShareSheetButton({ payload }: { payload: SharePayload }) {
@@ -111,6 +143,19 @@ function ShareSheet({ p, onClose }: { p: SharePayload; onClose: () => void }) {
     await navigator.clipboard?.writeText(p.link);
     logShare(p.docId, "copy_link");
     setMsg({ ok: "הקישור הועתק (בתוקף 30 יום)" });
+  };
+
+  const [driveLink, setDriveLink] = useState(p.driveLink);
+  const toDrive = () => {
+    if (driveLink) return void window.open(driveLink, "_blank");
+    if (!p.driveConnected) return void (window.location.href = "/settings");
+    start(async () => {
+      const r = await saveDocToDrive(p.docId);
+      if (r.link) {
+        setDriveLink(r.link);
+        setMsg({ ok: "נשמר ב-Google Drive" });
+      } else setMsg({ err: r.error ?? "השמירה נכשלה" });
+    });
   };
 
   // Native share sheet: lets the agent save the PDF to Files / Google Drive / any app on the phone.
@@ -201,14 +246,18 @@ function ShareSheet({ p, onClose }: { p: SharePayload; onClose: () => void }) {
         </div>
 
         <div className="lbl">שמירת PDF</div>
-        <div className="grid2">
+        <div className="grid3">
           <a className="btn bo sm" href={`/api/documents/${p.docId}/pdf?download=1`} onClick={() => logShare(p.docId, "pdf_saved")}>
             <Icon name="dl" size="sm" />
             לטלפון
           </a>
+          <button className="btn bo sm" onClick={toDrive} disabled={pending}>
+            <Icon name="cloud" size="sm" />
+            {driveLink ? "ב-Drive ✓" : "Google Drive"}
+          </button>
           <button className="btn bo sm" onClick={nativeShare}>
             <Icon name="share" size="sm" />
-            Drive / שיתוף…
+            שיתוף…
           </button>
         </div>
         <div className="row xs" style={{ marginTop: 12, gap: 6 }}>

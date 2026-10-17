@@ -6,7 +6,7 @@ import { requestMeta, requireCtx } from "@/lib/auth";
 import { loadDoc } from "@/lib/documents";
 import { dateTimeHe, timeHe } from "@/lib/format";
 import { getTemplate, interestLabel } from "@/lib/templates";
-import { CancelButton, ShareSheetButton, SignerActions } from "./DocActions";
+import { CancelButton, DriveStatus, ShareSheetButton, SignerActions } from "./DocActions";
 
 const ACTION_LABEL: Record<string, string> = {
   created: "המסמך נוצר",
@@ -25,11 +25,13 @@ const ACTION_LABEL: Record<string, string> = {
   pdf_saved: "PDF נשמר במכשיר",
   pdf_shared: "PDF שותף",
   copy_downloaded: "הלקוח הוריד את ההעתק",
+  drive_saved: "נשמר ב-Google Drive",
+  drive_failed: "השמירה ל-Google Drive נכשלה",
   cancelled: "המסמך בוטל",
 };
 
 export default async function DocPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
-  const { office } = await requireCtx();
+  const { office, user } = await requireCtx();
   const { id } = await params;
   const sp = await searchParams;
   const f = loadDoc(id);
@@ -44,6 +46,8 @@ export default async function DocPage({ params, searchParams }: { params: Promis
     office: f.office.name,
     link: `${origin}/d/${f.doc.share_token}`,
     signers: f.signers.map((s) => ({ id: s.id, name: s.name, phone: s.phone, email: s.email })),
+    driveConnected: Boolean(user.google_refresh),
+    driveLink: f.doc.drive_link,
   };
 
   return (
@@ -136,6 +140,7 @@ export default async function DocPage({ params, searchParams }: { params: Promis
               העתק חתום נשלח אוטומטית לכל החותמים
             </div>
           ) : null}
+          <DriveStatus docId={f.doc.id} link={f.doc.drive_link} connected={Boolean(user.google_refresh)} />
           <Link href={`/api/documents/${f.doc.id}/pdf`} target="_blank" className="btn bo sm" style={{ marginTop: 10 }}>
             <Icon name="eye" size="sm" />
             צפייה במסמך החתום

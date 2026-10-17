@@ -162,6 +162,23 @@ CREATE INDEX IF NOT EXISTS idx_deals_office ON deals(office_id);
 CREATE INDEX IF NOT EXISTS idx_tasks_user ON tasks(user_id, done);
 `;
 
+// Columns added after the first release. SQLite has no "ADD COLUMN IF NOT EXISTS", so check first.
+const COLUMNS: [table: string, column: string, definition: string][] = [
+  ["users", "google_email", "TEXT"],
+  ["users", "google_refresh", "TEXT"],
+  ["users", "drive_folder_id", "TEXT"],
+  ["users", "drive_auto", "INTEGER NOT NULL DEFAULT 1"],
+  ["documents", "drive_file_id", "TEXT"],
+  ["documents", "drive_link", "TEXT"],
+];
+
+function migrate(d: DatabaseSyncType) {
+  for (const [table, column, definition] of COLUMNS) {
+    const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+    if (!cols.some((c) => c.name === column)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+  }
+}
+
 const g = globalThis as unknown as { __db?: DatabaseSyncType };
 
 export function db(): DatabaseSyncType {
@@ -170,6 +187,7 @@ export function db(): DatabaseSyncType {
     const d = new DatabaseSync(path.join(DATA_DIR, "app.db"));
     d.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;");
     d.exec(SCHEMA);
+    migrate(d);
     g.__db = d;
   }
   return g.__db;

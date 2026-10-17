@@ -82,6 +82,14 @@ async function wizard(p, { t, property, signers, fill }) {
   await p.getByRole("button", { name: "סיום והתחלה" }).click();
   await p.waitForURL(`${BASE}/`);
 
+  // Google Drive (only with the local Google stand-in: TEST_DRIVE=1, see tests/google-mock.cjs)
+  if (process.env.TEST_DRIVE) {
+    await p.goto(`${BASE}/settings`);
+    await p.getByText("חיבור Google Drive").click();
+    await p.getByText("Google Drive חובר").waitFor();
+    await shot(p, "drive-connected");
+  }
+
   // Seller client + property
   await p.goto(`${BASE}/clients/new`);
   await p.getByLabel("שם מלא").fill("משה פרץ");
@@ -161,6 +169,17 @@ async function wizard(p, { t, property, signers, fill }) {
   await p.getByText(/נשלח ב-SMS ל-2 נמענים/).waitFor();
   const pdf = await p.request.get(`${BASE}/api/documents/${showId}/pdf`);
   fs.writeFileSync(`${OUT}/showing.pdf`, await pdf.body());
+
+  if (process.env.TEST_DRIVE) {
+    await p.getByText("נשמר ב-Google Drive · פתיחה").waitFor();
+    const res = await p.request.get(`${process.env.GOOGLE_API_URL}/_files`, { headers: { authorization: "Bearer access-1" } });
+    const tree = await res.json();
+    const pdfs = tree.filter((f) => f.isPdf);
+    const root = tree.find((f) => f.name === "חותמים – הסכמים חתומים");
+    const propFolder = tree.find((f) => f.parents.includes(root.id) && f.name.includes("ז׳בוטינסקי 112"));
+    if (pdfs.length < 3 || !pdfs.every((f) => f.parents.includes(propFolder.id))) throw new Error("Drive upload check failed: " + JSON.stringify(tree));
+    console.log("Drive OK:", pdfs.map((f) => f.name));
+  }
 
   // Buyer info sheet (from questionnaire)
   const infoId = await wizard(p, { t: "buyer_info_sheet", property: propertyId, signers: [{ existing: "שירה לוי · קונה" }] });

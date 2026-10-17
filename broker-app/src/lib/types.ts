@@ -21,6 +21,10 @@ export interface User {
   email: string | null;
   license: string | null;
   signature: string | null;
+  google_email: string | null;
+  google_refresh: string | null;
+  drive_folder_id: string | null;
+  drive_auto: number;
   created_at: number;
 }
 
@@ -88,6 +92,8 @@ export interface Doc {
   pdf_sha256: string | null;
   share_token: string | null;
   share_expires: number | null;
+  drive_file_id: string | null;
+  drive_link: string | null;
   created_at: number;
   completed_at: number | null;
   cancelled_at: number | null;
