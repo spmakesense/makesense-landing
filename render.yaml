@@ -1,0 +1,25 @@
+# Render Blueprint for the broker app (broker-app/). Data (SQLite + signed PDFs) lives on the attached disk.
+services:
+  - type: web
+    name: chotmim
+    runtime: docker
+    dockerContext: ./broker-app
+    dockerfilePath: ./broker-app/Dockerfile
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /login
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: APP_SECRET
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: SMS_WEBHOOK_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
