@@ -26,6 +26,13 @@ export function visualRuns(line: string): Run[] {
   for (let i = 1; i < chars.length - 1; i++) {
     if (t[i] === "N" && SEPARATOR.test(chars[i]) && t[i - 1] === "E" && t[i + 1] === "E") t[i] = "E";
   }
+  // Masking dots inside a number ("03•••••12") keep the digits in order.
+  for (let i = 0; i < chars.length; ) {
+    let j = i;
+    while (j < chars.length && chars[j] === "•") j++;
+    if (j > i && t[i - 1] === "E" && t[j] === "E") for (let k = i; k < j; k++) t[k] = "E";
+    i = Math.max(j, i + 1);
+  }
   for (let i = 0; i < chars.length; i++) {
     if (STICKY.test(chars[i]) && (t[i - 1] === "E" || t[i + 1] === "E")) t[i] = "E";
   }

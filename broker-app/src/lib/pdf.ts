@@ -269,7 +269,7 @@ export async function renderPdf(f: FullDoc, c: RenderCtx): Promise<Uint8Array> {
     let geo = "לא נמסר";
     if (s.geo) {
       const g = JSON.parse(s.geo);
-      geo = `${Number(g.lat).toFixed(5)}, ${Number(g.lng).toFixed(5)} · דיוק ${Math.round(g.acc)} מ׳`;
+      geo = `קו רוחב ${Number(g.lat).toFixed(5)} · קו אורך ${Number(g.lng).toFixed(5)} · דיוק ${Math.round(g.acc)} מ׳`;
     }
     drawBlocks(
       w,

@@ -38,3 +38,7 @@ test("brackets around a number inside Hebrew", () => {
 test("Latin text with numbers stays together", () => {
   assert.equal(visualOrder("מכשיר iPhone 15 חדש"), "שדח iPhone 15 רישכמ");
 });
+
+test("masked ID number keeps its digit order", () => {
+  assert.equal(visualOrder("ת״ז 03•••••12"), "03•••••12 ז״ת");
+});
