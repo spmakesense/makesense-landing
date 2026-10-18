@@ -1,12 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
+import { AsyncLocalStorage } from "node:async_hooks";
 import type { DatabaseSync as DatabaseSyncType } from "node:sqlite";
+import type { Pool, PoolClient } from "pg";
 
-// node:sqlite is loaded at runtime so the bundler never tries to resolve it.
-const { DatabaseSync } = process.getBuiltinModule("node:sqlite") as typeof import("node:sqlite");
+// Two storage backends behind one async API:
+// - Postgres when DATABASE_URL / POSTGRES_URL is set (Vercel + Neon, Supabase, any hosted Postgres);
+// - otherwise SQLite in DATA_DIR (local development, a server with a disk).
+// Queries are written once with "?" placeholders and translated for Postgres.
 
 export const DATA_DIR = path.resolve(process.env.DATA_DIR || "./data");
-export const PDF_DIR = path.join(DATA_DIR, "pdfs");
+const PG_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL || "";
+export const USING_POSTGRES = Boolean(PG_URL);
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS offices (
@@ -153,6 +158,10 @@ CREATE TABLE IF NOT EXISTS tasks (
   done INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS files (
+  document_id TEXT PRIMARY KEY REFERENCES documents(id),
+  data BLOB NOT NULL
+);
 CREATE INDEX IF NOT EXISTS idx_clients_office ON clients(office_id);
 CREATE INDEX IF NOT EXISTS idx_properties_office ON properties(office_id);
 CREATE INDEX IF NOT EXISTS idx_documents_office ON documents(office_id, created_at);
@@ -162,7 +171,7 @@ CREATE INDEX IF NOT EXISTS idx_deals_office ON deals(office_id);
 CREATE INDEX IF NOT EXISTS idx_tasks_user ON tasks(user_id, done);
 `;
 
-// Columns added after the first release. SQLite has no "ADD COLUMN IF NOT EXISTS", so check first.
+// Columns added after the first release.
 const COLUMNS: [table: string, column: string, definition: string][] = [
   ["users", "google_email", "TEXT"],
   ["users", "google_refresh", "TEXT"],
@@ -172,53 +181,130 @@ const COLUMNS: [table: string, column: string, definition: string][] = [
   ["documents", "drive_link", "TEXT"],
 ];
 
-function migrate(d: DatabaseSyncType) {
-  for (const [table, column, definition] of COLUMNS) {
-    const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
-    if (!cols.some((c) => c.name === column)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
-  }
-}
+/** SQLite types → Postgres: millisecond timestamps and money need 64-bit integers. */
+const toPg = (ddl: string) =>
+  ddl
+    .replace(/INTEGER PRIMARY KEY AUTOINCREMENT/g, "BIGSERIAL PRIMARY KEY")
+    .replace(/\bINTEGER\b/g, "BIGINT")
+    .replace(/\bREAL\b/g, "DOUBLE PRECISION")
+    .replace(/\bBLOB\b/g, "BYTEA");
 
-const g = globalThis as unknown as { __db?: DatabaseSyncType };
+export type Param = string | number | null | undefined | Uint8Array;
+const clean = (p: Param[]) => p.map((v) => (v === undefined ? null : v));
 
-export function db(): DatabaseSyncType {
-  if (!g.__db) {
-    fs.mkdirSync(PDF_DIR, { recursive: true });
+// ---------- SQLite ----------
+
+const g = globalThis as unknown as { __sqlite?: DatabaseSyncType; __pg?: Promise<Pool>; __lock?: Promise<unknown> };
+
+function sqlite(): DatabaseSyncType {
+  if (!g.__sqlite) {
+    // Loaded at runtime so the bundler never tries to resolve it (and Postgres deployments never load it).
+    const { DatabaseSync } = process.getBuiltinModule("node:sqlite") as typeof import("node:sqlite");
+    fs.mkdirSync(DATA_DIR, { recursive: true });
     const d = new DatabaseSync(path.join(DATA_DIR, "app.db"));
     d.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;");
     d.exec(SCHEMA);
-    migrate(d);
-    g.__db = d;
+    for (const [table, column, definition] of COLUMNS) {
+      const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+      if (!cols.some((c) => c.name === column)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    }
+    g.__sqlite = d;
   }
-  return g.__db;
+  return g.__sqlite;
 }
 
-type Param = string | number | null | undefined;
-const clean = (p: Param[]) => p.map((v) => (v === undefined ? null : v)) as (string | number | null)[];
+// ---------- Postgres ----------
 
-// node:sqlite returns null-prototype rows; spread them into plain objects so they can cross to client components.
-export function all<T>(sql: string, ...params: Param[]): T[] {
-  return db().prepare(sql).all(...clean(params)).map((r) => ({ ...r })) as T[];
+async function pgPool(): Promise<Pool> {
+  if (!g.__pg) {
+    g.__pg = (async () => {
+      const { default: pg } = await import("pg");
+      pg.types.setTypeParser(20, (v) => Number(v)); // BIGINT (timestamps, counts) → number
+      pg.types.setTypeParser(1700, (v) => Number(v)); // NUMERIC (sums) → number
+      const pool = new pg.Pool({
+        connectionString: PG_URL,
+        max: 5,
+        ssl: /localhost|127\.0\.0\.1/.test(PG_URL) ? undefined : { rejectUnauthorized: false },
+      });
+      await pool.query(toPg(SCHEMA));
+      for (const [table, column, definition] of COLUMNS) {
+        await pool.query(`ALTER TABLE ${table} ADD COLUMN IF NOT EXISTS ${column} ${toPg(definition)}`);
+      }
+      return pool;
+    })().catch((e) => {
+      g.__pg = undefined;
+      throw e;
+    });
+  }
+  return g.__pg;
 }
 
-export function get<T>(sql: string, ...params: Param[]): T | undefined {
-  const r = db().prepare(sql).get(...clean(params));
-  return r ? ({ ...r } as T) : undefined;
+function pgSql(sql: string): string {
+  let n = 0;
+  return sql.replace(/\?/g, () => `$${++n}`).replace(/GROUP_CONCAT\(/g, "string_agg(");
 }
 
-export function run(sql: string, ...params: Param[]) {
-  return db().prepare(sql).run(...clean(params));
+// Inside tx(), queries run on the transaction's client.
+const txClient = new AsyncLocalStorage<PoolClient>();
+
+async function pgQuery(sql: string, params: Param[]) {
+  const runner = txClient.getStore() ?? (await pgPool());
+  return runner.query(pgSql(sql), clean(params));
 }
 
-export function tx<T>(fn: () => T): T {
-  const d = db();
+// ---------- public API ----------
+
+export async function all<T>(sql: string, ...params: Param[]): Promise<T[]> {
+  if (USING_POSTGRES) return (await pgQuery(sql, params)).rows as T[];
+  // node:sqlite returns null-prototype rows; spread them into plain objects so they can cross to client components.
+  return sqlite()
+    .prepare(sql)
+    .all(...(clean(params) as (string | number | null | Uint8Array)[]))
+    .map((r) => ({ ...r })) as T[];
+}
+
+export async function get<T>(sql: string, ...params: Param[]): Promise<T | undefined> {
+  return (await all<T>(sql, ...params))[0];
+}
+
+export async function run(sql: string, ...params: Param[]): Promise<{ changes: number }> {
+  if (USING_POSTGRES) return { changes: (await pgQuery(sql, params)).rowCount ?? 0 };
+  const r = sqlite()
+    .prepare(sql)
+    .run(...(clean(params) as (string | number | null | Uint8Array)[]));
+  return { changes: Number(r.changes) };
+}
+
+export async function tx<T>(fn: () => Promise<T>): Promise<T> {
+  if (USING_POSTGRES) {
+    const client = await (await pgPool()).connect();
+    try {
+      await client.query("BEGIN");
+      const out = await txClient.run(client, fn);
+      await client.query("COMMIT");
+      return out;
+    } catch (e) {
+      await client.query("ROLLBACK");
+      throw e;
+    } finally {
+      client.release();
+    }
+  }
+  // SQLite has one connection: serialize transactions so two requests never interleave inside one.
+  const prev = g.__lock ?? Promise.resolve();
+  let release!: () => void;
+  g.__lock = new Promise<void>((r) => (release = r));
+  await prev.catch(() => {});
+  const d = sqlite();
   d.exec("BEGIN");
   try {
-    const out = fn();
+    const out = await fn();
     d.exec("COMMIT");
     return out;
   } catch (e) {
     d.exec("ROLLBACK");
     throw e;
+  } finally {
+    release();
   }
 }

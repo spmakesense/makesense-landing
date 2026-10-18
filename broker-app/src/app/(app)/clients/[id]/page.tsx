@@ -11,14 +11,14 @@ import type { Client, Doc, Task } from "@/lib/types";
 export default async function ClientCard({ params }: { params: Promise<{ id: string }> }) {
   const { office } = await requireCtx();
   const { id } = await params;
-  const c = get<Client>("SELECT * FROM clients WHERE id = ? AND office_id = ?", id, office.id);
+  const c = await get<Client>("SELECT * FROM clients WHERE id = ? AND office_id = ?", id, office.id);
   if (!c) notFound();
-  const docs = all<Doc>(
+  const docs = await all<Doc>(
     "SELECT d.* FROM documents d JOIN signers s ON s.document_id = d.id WHERE s.client_id = ? GROUP BY d.id ORDER BY d.created_at DESC",
     id,
   );
-  const owned = all<{ id: string; address: string; price: number | null }>("SELECT id, address, price FROM properties WHERE owner_client_id = ?", id);
-  const tasks = all<Task>("SELECT * FROM tasks WHERE client_id = ? ORDER BY done, due", id);
+  const owned = await all<{ id: string; address: string; price: number | null }>("SELECT id, address, price FROM properties WHERE owner_client_id = ?", id);
+  const tasks = await all<Task>("SELECT * FROM tasks WHERE client_id = ? ORDER BY done, due", id);
   const tone = c.temperature === "hot" ? "c-red" : c.temperature === "cold" ? "c-gray" : "c-amber";
 
   return (

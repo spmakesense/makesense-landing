@@ -17,7 +17,7 @@ const TABS = [
 export default async function Documents({ searchParams }: { searchParams: Promise<{ status?: string; q?: string }> }) {
   const { office } = await requireCtx();
   const { status = "all", q = "" } = await searchParams;
-  const docs = all<Doc & { signer_names: string }>(
+  const docs = await all<Doc & { signer_names: string }>(
     `SELECT d.*, (SELECT GROUP_CONCAT(name, ', ') FROM signers s WHERE s.document_id = d.id) AS signer_names
      FROM documents d WHERE d.office_id = ?
      AND (? = 'all' OR (? = 'open' AND d.status IN ('sent','partial')) OR d.status = ?)

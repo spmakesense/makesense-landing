@@ -13,13 +13,13 @@ import { InterestForm } from "./InterestForm";
 export default async function PropertyCard({ params }: { params: Promise<{ id: string }> }) {
   const { office } = await requireCtx();
   const { id } = await params;
-  const p = get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", id, office.id);
+  const p = await get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", id, office.id);
   if (!p) notFound();
-  const owner = p.owner_client_id ? get<Client>("SELECT * FROM clients WHERE id = ?", p.owner_client_id) : undefined;
-  const docs = all<Doc>("SELECT * FROM documents WHERE property_id = ? ORDER BY created_at DESC", id);
+  const owner = p.owner_client_id ? await get<Client>("SELECT * FROM clients WHERE id = ?", p.owner_client_id) : undefined;
+  const docs = await all<Doc>("SELECT * FROM documents WHERE property_id = ? ORDER BY created_at DESC", id);
   const showings = docs.filter((d) => d.template === "showing_form");
   const showingSigners = showings.length
-    ? get<{ n: number }>(`SELECT COUNT(*) AS n FROM signers WHERE status = 'signed' AND document_id IN (${showings.map(() => "?").join(",")})`, ...showings.map((d) => d.id))!.n
+    ? (await get<{ n: number }>(`SELECT COUNT(*) AS n FROM signers WHERE status = 'signed' AND document_id IN (${showings.map(() => "?").join(",")})`, ...showings.map((d) => d.id)))!.n
     : 0;
   const today = todayIso();
   const excl = p.exclusive_from && p.exclusive_to;

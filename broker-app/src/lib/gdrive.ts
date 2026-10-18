@@ -1,6 +1,7 @@
 import "server-only";
 import crypto from "node:crypto";
 import { get, run } from "./db";
+import { appSecret } from "./ids";
 import type { User } from "./types";
 
 // Google Drive for saving signed agreements. Each agent connects their own Drive (OAuth, scope drive.file:
@@ -13,8 +14,8 @@ export const ROOT_FOLDER = "חותמים – הסכמים חתומים";
 
 export const driveConfigured = () => Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
 
-// The refresh token is stored encrypted with a key derived from APP_SECRET.
-const key = () => crypto.createHash("sha256").update(`drive:${process.env.APP_SECRET || "dev-secret-change-me"}`).digest();
+// The refresh token is stored encrypted with a key derived from the app secret.
+const key = () => crypto.createHash("sha256").update(`drive:${appSecret()}`).digest();
 
 function encrypt(text: string): string {
   const iv = crypto.randomBytes(12);
@@ -60,7 +61,7 @@ export async function connectDrive(userId: string, code: string, origin: string)
   if (!t.refresh_token) throw new Error("Google did not return a refresh token");
   const info = await gfetch<{ email: string }>(t.access_token, `${API}/oauth2/v2/userinfo`);
   const folder = await ensureFolder(t.access_token, ROOT_FOLDER, null);
-  run(
+  await run(
     "UPDATE users SET google_email = ?, google_refresh = ?, drive_folder_id = ?, drive_auto = 1 WHERE id = ?",
     info.email,
     encrypt(t.refresh_token),
@@ -74,7 +75,7 @@ export async function disconnectDrive(user: User) {
     // Best effort: revoke the grant at Google too.
     await fetch(`https://oauth2.googleapis.com/revoke?token=${encodeURIComponent(decrypt(user.google_refresh))}`, { method: "POST" }).catch(() => {});
   }
-  run("UPDATE users SET google_email = NULL, google_refresh = NULL, drive_folder_id = NULL WHERE id = ?", user.id);
+  await run("UPDATE users SET google_email = NULL, google_refresh = NULL, drive_folder_id = NULL WHERE id = ?", user.id);
 }
 
 async function accessToken(user: User): Promise<string> {
@@ -114,7 +115,7 @@ export async function savePdfToDrive(user: User, doc: { id: string; drive_link: 
   // The root folder may have been deleted by the user – recreate it.
   if (!root || !(await folderExists(token, root))) {
     root = await ensureFolder(token, ROOT_FOLDER, null);
-    run("UPDATE users SET drive_folder_id = ? WHERE id = ?", root, user.id);
+    await run("UPDATE users SET drive_folder_id = ? WHERE id = ?", root, user.id);
   }
   const folder = await ensureFolder(token, folderName, root);
   const boundary = `chotmim${crypto.randomBytes(8).toString("hex")}`;
@@ -129,7 +130,7 @@ export async function savePdfToDrive(user: User, doc: { id: string; drive_link: 
     headers: { "content-type": `multipart/related; boundary=${boundary}` },
     body,
   });
-  run("UPDATE documents SET drive_file_id = ?, drive_link = ? WHERE id = ?", file.id, file.webViewLink, doc.id);
+  await run("UPDATE documents SET drive_file_id = ?, drive_link = ? WHERE id = ?", file.id, file.webViewLink, doc.id);
   return file.webViewLink;
 }
 
@@ -143,8 +144,8 @@ async function folderExists(token: string, id: string): Promise<boolean> {
 }
 
 /** Agent who owns the document, when their Drive is connected. */
-export function driveUserFor(agentId: string): User | null {
-  const u = get<User>("SELECT * FROM users WHERE id = ?", agentId);
+export async function driveUserFor(agentId: string): Promise<User | null> {
+  const u = await get<User>("SELECT * FROM users WHERE id = ?", agentId);
   return u?.google_refresh ? u : null;
 }
 

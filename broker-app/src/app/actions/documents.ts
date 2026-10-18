@@ -27,7 +27,7 @@ export async function createDocumentAction(input: {
   const { office, user } = await requireCtx();
   const t = getTemplate(input.template);
   if (!t) return { error: "תבנית לא קיימת" };
-  const property = input.propertyId ? get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", input.propertyId, office.id) : undefined;
+  const property = input.propertyId ? await get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", input.propertyId, office.id) : undefined;
   if (t.needsProperty && !property) return { error: "נא לבחור נכס" };
   if (input.signers.length === 0) return { error: "נא להוסיף לפחות חותם אחד" };
   if (!t.multiSigner && input.signers.length > 1) return { error: "תבנית זו מיועדת לחותם אחד" };
@@ -56,13 +56,13 @@ export async function createDocumentAction(input: {
     const phone = normalizePhone(s.phone);
     if (!s.name.trim()) return { error: "לכל חותם צריך שם" };
     if (!phone) return { error: `מספר טלפון לא תקין עבור ${s.name}` };
-    let clientId = s.clientId && get("SELECT id FROM clients WHERE id = ? AND office_id = ?", s.clientId, office.id) ? s.clientId : null;
+    let clientId = s.clientId && await get("SELECT id FROM clients WHERE id = ? AND office_id = ?", s.clientId, office.id) ? s.clientId : null;
     if (!clientId) {
-      clientId = get<{ id: string }>("SELECT id FROM clients WHERE office_id = ? AND phone = ?", office.id, phone)?.id ?? null;
+      clientId = (await get<{ id: string }>("SELECT id FROM clients WHERE office_id = ? AND phone = ?", office.id, phone))?.id ?? null;
     }
     if (!clientId) {
       clientId = newId();
-      run(
+      await run(
         "INSERT INTO clients (id, office_id, owner_id, name, phone, kind, temperature, source, created_at) VALUES (?,?,?,?,?,?, 'warm', ?, ?)",
         clientId,
         office.id,
@@ -74,18 +74,18 @@ export async function createDocumentAction(input: {
         now(),
       );
     }
-    const c = get<Client>("SELECT * FROM clients WHERE id = ?", clientId)!;
+    const c = (await get<Client>("SELECT * FROM clients WHERE id = ?", clientId))!;
     signers.push({ clientId, name: s.name.trim(), phone, email: c.email });
   }
 
-  const id = createDocument({ officeId: office.id, agent: user, templateKey: t.key, propertyId: property?.id ?? null, data: input.data, signers });
+  const id = await createDocument({ officeId: office.id, agent: user, templateKey: t.key, propertyId: property?.id ?? null, data: input.data, signers });
   revalidatePath("/", "layout");
   redirect(`/documents/${id}?new=1`);
 }
 
 async function ownedDoc(id: string) {
   const ctx = await requireCtx();
-  const f = loadDoc(id);
+  const f = await loadDoc(id);
   if (!f || f.doc.office_id !== ctx.office.id) throw new Error("not found");
   return { ...ctx, f };
 }
@@ -93,8 +93,8 @@ async function ownedDoc(id: string) {
 export async function cancelDocument(id: string) {
   const { f, user } = await ownedDoc(id);
   if (f.doc.status === "signed") return;
-  run("UPDATE documents SET status = 'cancelled', cancelled_at = ? WHERE id = ?", now(), id);
-  audit(id, user.name ?? "מתווך", "cancelled");
+  await run("UPDATE documents SET status = 'cancelled', cancelled_at = ? WHERE id = ?", now(), id);
+  await audit(id, user.name ?? "מתווך", "cancelled");
   revalidatePath(`/documents/${id}`);
 }
 
@@ -106,7 +106,7 @@ export async function sendSigningSms(docId: string, signerId: string): Promise<{
   if (f.doc.status === "cancelled") return { error: "המסמך בוטל" };
   const { origin } = await requestMeta();
   const ok = await sendSms(s.phone, `שלום ${s.name}, ${user.name} (${f.office.name}) שלח/ה לך מסמך לחתימה: "${f.doc.title}". לחתימה: ${origin}/s/${s.token}`);
-  audit(docId, user.name ?? "מתווך", s.status === "pending" ? "sent_sms" : "reminder_sms", { to: s.name });
+  await audit(docId, user.name ?? "מתווך", s.status === "pending" ? "sent_sms" : "reminder_sms", { to: s.name });
   revalidatePath(`/documents/${docId}`);
   return ok ? { ok: true, demo: DEMO_MODE } : { error: "שליחת ה-SMS נכשלה" };
 }
@@ -114,7 +114,7 @@ export async function sendSigningSms(docId: string, signerId: string): Promise<{
 /** Records a share made from the device (WhatsApp / mail / copy link / download / native share). */
 export async function logShare(docId: string, action: string, to?: string) {
   const { user } = await ownedDoc(docId);
-  audit(docId, user.name ?? "מתווך", action, to ? { to } : undefined);
+  await audit(docId, user.name ?? "מתווך", action, to ? { to } : undefined);
   revalidatePath(`/documents/${docId}`);
 }
 
@@ -135,10 +135,10 @@ export async function sendCopySms(docId: string, signerIds: string[], extraPhone
   if (!targets.length) return { error: "נא לבחור נמענים" };
   for (const t of targets) {
     await sendSms(t.phone, `העתק חתום של "${f.doc.title}" מאת ${f.office.name}: ${link}`);
-    audit(docId, user.name ?? "מתווך", "copy_sent", { to: t.name, channel: "sms" });
+    await audit(docId, user.name ?? "מתווך", "copy_sent", { to: t.name, channel: "sms" });
   }
   // A fresh send extends the download link.
-  run("UPDATE documents SET share_expires = ? WHERE id = ?", now() + 30 * 86_400_000, docId);
+  await run("UPDATE documents SET share_expires = ? WHERE id = ?", now() + 30 * 86_400_000, docId);
   revalidatePath(`/documents/${docId}`);
   return { sent: targets.length, demo: DEMO_MODE };
 }
@@ -161,6 +161,6 @@ export async function disconnectDriveAction() {
 
 export async function setDriveAuto(on: boolean) {
   const { user } = await requireCtx();
-  run("UPDATE users SET drive_auto = ? WHERE id = ?", on ? 1 : 0, user.id);
+  await run("UPDATE users SET drive_auto = ? WHERE id = ?", on ? 1 : 0, user.id);
   revalidatePath("/settings");
 }

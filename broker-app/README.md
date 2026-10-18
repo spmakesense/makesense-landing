@@ -25,7 +25,7 @@
 
 ## הרצה מקומית
 
-דרוש Node.js 22.13 ומעלה (משתמשים ב-SQLite המובנה של Node).
+דרוש Node.js 22.13 ומעלה. מקומית האפליקציה משתמשת ב-SQLite המובנה של Node; כדי לעבוד מול Postgres מגדירים `DATABASE_URL`.
 
 ```bash
 cd broker-app
@@ -44,7 +44,18 @@ npm run build && DATA_DIR=/tmp/e2e npm start &
 npm i -D playwright && BASE_URL=http://localhost:3000 npm run e2e   # בדיקת קצה-לקצה בדפדפן במסך טלפון
 ```
 
-## העלאה לשרת ב-Render (הדרך הקצרה)
+## העלאה ל-Vercel (מומלץ – בלי שרת ובלי דיסק)
+
+ב-Vercel הנתונים וקבצי ה-PDF החתומים נשמרים במסד Postgres (Neon), שמתחבר בלחיצה מתוך Vercel. לא צריך להעתיק מפתחות.
+
+1. נכנסים ל-[vercel.com](https://vercel.com) ← Continue with GitHub.
+2. **Add New → Project** ← Import לריפו `makesense-landing` ← ב-**Root Directory** בוחרים `broker-app` ← Deploy.
+3. בפרויקט שנוצר: **Storage → Create Database → Neon** (יש תוכנית חינם) ← Connect לפרויקט. Vercel מוסיף לבד את `DATABASE_URL`.
+4. **Deployments → Redeploy**. זהו – הכתובת `https://<שם>.vercel.app` נפתחת בטלפון.
+
+הערות: מפתח האבטחה נגזר אוטומטית מ-`DATABASE_URL` (אפשר לקבוע `APP_SECRET` משלכם). תוכנית Hobby של Vercel מיועדת לשימוש לא-מסחרי; לשימוש עסקי – Pro.
+
+## העלאה לשרת ב-Render
 
 בשורש הריפו יש `render.yaml` שמגדיר הכול: השרת, דיסק קבוע לנתונים ומפתח סודי שנוצר אוטומטית.
 
@@ -58,7 +69,7 @@ npm i -D playwright && BASE_URL=http://localhost:3000 npm run e2e   # בדיקת
 
 ## פריסה לפרודקשן
 
-- שרת Node רגיל או Docker (`Dockerfile` מצורף). הנתונים (מסד SQLite וקבצי PDF חתומים) נשמרים ב-`DATA_DIR` – **חייבים דיסק קבוע ומגובה** (למשל Railway / Render / Fly.io עם volume). Vercel לא מתאים כי אין בו דיסק קבוע.
+- **אחסון נתונים:** אם מוגדר `DATABASE_URL` (או `POSTGRES_URL`) – הכול (כולל קבצי ה-PDF) נשמר ב-Postgres, ואין צורך בדיסק (Vercel, Neon, Supabase). אחרת – SQLite ב-`DATA_DIR`, שחייב להיות על דיסק קבוע ומגובה (Render / Railway / Fly.io עם volume, או Docker – `Dockerfile` מצורף).
 - משתני סביבה: ראו `.env.example`. חובה: `APP_SECRET`, `APP_URL`, `SMS_WEBHOOK_URL`.
 - ספק SMS: `SMS_WEBHOOK_URL` מקבל `POST {to, text, sender}`. אפשר לחבר ישירות ספק ישראלי, או דרך Make/Zapier.
 - HTTPS חובה (עוגיות מאובטחות, מיקום, תפריט שיתוף).
@@ -84,7 +95,7 @@ src/lib/pdf.ts         יצירת PDF עם גופן עברי, חתימות ות�
 src/lib/bidi.ts        סידור טקסט מימין לשמאל (עברית + מספרים) ב-PDF
 src/lib/documents.ts   יצירת מסמך, סגירה כשכולם חתמו, שליחת העתקים, שמירה ל-Drive
 src/lib/gdrive.ts      חיבור Google (OAuth) והעלאה ל-Google Drive
-src/lib/db.ts          סכמת SQLite
+src/lib/db.ts          מסד הנתונים: Postgres (כש-DATABASE_URL מוגדר) או SQLite
 src/app/(app)/…        מסכי המתווך (בית, לקוחות, נכסים, מסמכים, עסקאות, צוות, הגדרות)
 src/app/s/[token]      דף החתימה ללקוח (ציבורי, לפי קישור אישי)
 src/app/d/[token]      הורדת העתק חתום (ציבורי, 30 יום)

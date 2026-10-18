@@ -10,7 +10,7 @@ export default async function Properties({ searchParams }: { searchParams: Promi
   const { office } = await requireCtx();
   const { q = "", f = "active" } = await searchParams;
   const like = `%${q.trim()}%`;
-  const rows = all<Property>(
+  const rows = await all<Property>(
     `SELECT * FROM properties WHERE office_id = ? AND (? = '' OR address LIKE ? OR city LIKE ?)
      AND (? = 'all' OR (? = 'active' AND status = 'active') OR (? = 'exclusive' AND exclusive_to >= ?) OR (? = 'closed' AND status != 'active'))
      ORDER BY created_at DESC LIMIT 200`,

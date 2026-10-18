@@ -12,9 +12,9 @@ export const metadata: Metadata = { title: "חתימה על מסמך", robots: {
 export default async function SignPage({ params, searchParams }: { params: Promise<{ token: string }>; searchParams: Promise<{ inperson?: string; back?: string }> }) {
   const { token } = await params;
   const sp = await searchParams;
-  const signer = get<Signer>("SELECT * FROM signers WHERE token = ?", token);
+  const signer = await get<Signer>("SELECT * FROM signers WHERE token = ?", token);
   if (!signer) notFound();
-  const f = loadDoc(signer.document_id)!;
+  const f = (await loadDoc(signer.document_id))!;
   const t = getTemplate(f.doc.template)!;
   const ctx = renderCtx(f);
   // Other signers' ID numbers are masked on this public page.

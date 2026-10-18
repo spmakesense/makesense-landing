@@ -18,7 +18,7 @@ export default async function Clients({ searchParams }: { searchParams: Promise<
   const { office } = await requireCtx();
   const { q = "", kind = "" } = await searchParams;
   const like = `%${q.trim()}%`;
-  const rows = all<Client>(
+  const rows = await all<Client>(
     `SELECT * FROM clients WHERE office_id = ? AND (? = '' OR name LIKE ? OR phone LIKE ?) AND (? = '' OR kind = ?) ORDER BY created_at DESC LIMIT 200`,
     office.id,
     q.trim(),

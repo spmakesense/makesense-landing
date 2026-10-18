@@ -13,25 +13,25 @@ export default async function Home() {
   monthStart.setDate(1);
   monthStart.setHours(0, 0, 0, 0);
 
-  const expected = get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE office_id = ? AND agent_id = ? AND stage != 'paid'", office.id, user.id)?.s ?? 0;
-  const paid = get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE office_id = ? AND agent_id = ? AND stage = 'paid' AND paid_at >= ?", office.id, user.id, monthStart.getTime())?.s ?? 0;
-  const signedMonth = get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND agent_id = ? AND status = 'signed' AND completed_at >= ?", office.id, user.id, monthStart.getTime())!.n;
-  const pending = all<Doc>("SELECT * FROM documents WHERE office_id = ? AND agent_id = ? AND status IN ('sent','partial') ORDER BY created_at DESC LIMIT 6", office.id, user.id);
+  const expected = (await get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE office_id = ? AND agent_id = ? AND stage != 'paid'", office.id, user.id))?.s ?? 0;
+  const paid = (await get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE office_id = ? AND agent_id = ? AND stage = 'paid' AND paid_at >= ?", office.id, user.id, monthStart.getTime()))?.s ?? 0;
+  const signedMonth = (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND agent_id = ? AND status = 'signed' AND completed_at >= ?", office.id, user.id, monthStart.getTime()))!.n;
+  const pending = await all<Doc>("SELECT * FROM documents WHERE office_id = ? AND agent_id = ? AND status IN ('sent','partial') ORDER BY created_at DESC LIMIT 6", office.id, user.id);
   const signers = pending.length
-    ? all<Signer>(`SELECT * FROM signers WHERE document_id IN (${pending.map(() => "?").join(",")}) ORDER BY position`, ...pending.map((d) => d.id))
+    ? await all<Signer>(`SELECT * FROM signers WHERE document_id IN (${pending.map(() => "?").join(",")}) ORDER BY position`, ...pending.map((d) => d.id))
     : [];
   const today = todayIso();
-  const tasks = all<Task & { client_name: string | null }>(
+  const tasks = await all<Task & { client_name: string | null }>(
     "SELECT t.*, c.name AS client_name FROM tasks t LEFT JOIN clients c ON c.id = t.client_id WHERE t.user_id = ? AND t.done = 0 AND (t.due IS NULL OR t.due <= ?) ORDER BY t.due LIMIT 5",
     user.id,
     today,
   );
-  const ending = all<Property>(
+  const ending = (await all<Property>(
     "SELECT * FROM properties WHERE office_id = ? AND exclusive_to IS NOT NULL AND exclusive_to >= ? AND status = 'active' ORDER BY exclusive_to LIMIT 3",
     office.id,
     today,
-  ).filter((p) => daysBetween(today, p.exclusive_to!) <= 30);
-  const pendingCount = get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND agent_id = ? AND status IN ('sent','partial')", office.id, user.id)!.n;
+  )).filter((p) => daysBetween(today, p.exclusive_to!) <= 30);
+  const pendingCount = (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND agent_id = ? AND status IN ('sent','partial')", office.id, user.id))!.n;
 
   const quick = [
     { t: "brokerage_order", label: "הזמנת תיווך", icon: "file", tone: "c-teal" },

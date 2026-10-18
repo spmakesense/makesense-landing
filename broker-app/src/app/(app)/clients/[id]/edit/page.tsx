@@ -8,7 +8,7 @@ import { ClientForm } from "../../ClientForm";
 export default async function EditClient({ params }: { params: Promise<{ id: string }> }) {
   const { office } = await requireCtx();
   const { id } = await params;
-  const c = get<Client>("SELECT * FROM clients WHERE id = ? AND office_id = ?", id, office.id);
+  const c = await get<Client>("SELECT * FROM clients WHERE id = ? AND office_id = ?", id, office.id);
   if (!c) notFound();
   return (
     <main className="page">

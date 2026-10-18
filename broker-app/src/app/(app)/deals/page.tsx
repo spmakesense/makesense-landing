@@ -12,7 +12,7 @@ const STAGE_CHIP: Record<string, string> = { lead: "c-gray", showing: "c-navy", 
 export default async function Deals({ searchParams }: { searchParams: Promise<{ stage?: string }> }) {
   const { office } = await requireCtx();
   const { stage = "" } = await searchParams;
-  const deals = all<Deal & { agent_name: string | null; client_name: string | null }>(
+  const deals = await all<Deal & { agent_name: string | null; client_name: string | null }>(
     `SELECT d.*, u.name AS agent_name, c.name AS client_name FROM deals d LEFT JOIN users u ON u.id = d.agent_id LEFT JOIN clients c ON c.id = d.client_id
      WHERE d.office_id = ? ORDER BY d.created_at DESC`,
     office.id,

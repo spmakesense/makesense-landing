@@ -6,7 +6,7 @@ import { Wizard, type WizardProperty } from "./Wizard";
 export default async function NewDocument({ searchParams }: { searchParams: Promise<{ t?: string; property?: string; client?: string }> }) {
   const { office } = await requireCtx();
   const sp = await searchParams;
-  const properties: WizardProperty[] = all<Property>("SELECT * FROM properties WHERE office_id = ? AND status = 'active' ORDER BY created_at DESC", office.id).map((p) => ({
+  const properties: WizardProperty[] = (await all<Property>("SELECT * FROM properties WHERE office_id = ? AND status = 'active' ORDER BY created_at DESC", office.id)).map((p) => ({
     id: p.id,
     address: p.address,
     city: p.city,
@@ -22,7 +22,7 @@ export default async function NewDocument({ searchParams }: { searchParams: Prom
     interest: p.interest ? JSON.parse(p.interest) : null,
     disclosure: p.disclosure ? JSON.parse(p.disclosure) : null,
   }));
-  const clients = all<Pick<Client, "id" | "name" | "phone" | "kind">>("SELECT id, name, phone, kind FROM clients WHERE office_id = ? ORDER BY name", office.id);
+  const clients = await all<Pick<Client, "id" | "name" | "phone" | "kind">>("SELECT id, name, phone, kind FROM clients WHERE office_id = ? ORDER BY name", office.id);
   return (
     <Wizard
       properties={properties}

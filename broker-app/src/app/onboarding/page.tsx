@@ -7,7 +7,7 @@ import { OnboardingForm } from "./OnboardingForm";
 export default async function OnboardingPage() {
   const user = await currentUser();
   if (!user) redirect("/login");
-  const office = user.office_id ? get<Office>("SELECT * FROM offices WHERE id = ?", user.office_id) : undefined;
+  const office = user.office_id ? await get<Office>("SELECT * FROM offices WHERE id = ?", user.office_id) : undefined;
   return (
     <main className="page plain">
       <header className="hdr">

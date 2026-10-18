@@ -34,7 +34,7 @@ export default async function DocPage({ params, searchParams }: { params: Promis
   const { office, user } = await requireCtx();
   const { id } = await params;
   const sp = await searchParams;
-  const f = loadDoc(id);
+  const f = await loadDoc(id);
   if (!f || f.doc.office_id !== office.id) notFound();
   const t = getTemplate(f.doc.template)!;
   const { origin } = await requestMeta();

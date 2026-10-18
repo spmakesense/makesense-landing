@@ -6,7 +6,7 @@ import { PropertyForm } from "../PropertyForm";
 export default async function NewProperty({ searchParams }: { searchParams: Promise<{ back?: string; owner?: string }> }) {
   const { office } = await requireCtx();
   const { back } = await searchParams;
-  const owners = all<{ id: string; name: string }>("SELECT id, name FROM clients WHERE office_id = ? AND kind IN ('seller','landlord') ORDER BY name", office.id);
+  const owners = await all<{ id: string; name: string }>("SELECT id, name FROM clients WHERE office_id = ? AND kind IN ('seller','landlord') ORDER BY name", office.id);
   return (
     <main className="page">
       <Header title="נכס חדש" back={back ?? "/properties"} />

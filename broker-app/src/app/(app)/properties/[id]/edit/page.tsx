@@ -8,9 +8,9 @@ import { PropertyForm } from "../../PropertyForm";
 export default async function EditProperty({ params }: { params: Promise<{ id: string }> }) {
   const { office } = await requireCtx();
   const { id } = await params;
-  const p = get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", id, office.id);
+  const p = await get<Property>("SELECT * FROM properties WHERE id = ? AND office_id = ?", id, office.id);
   if (!p) notFound();
-  const owners = all<{ id: string; name: string }>("SELECT id, name FROM clients WHERE office_id = ? AND (kind IN ('seller','landlord') OR id = ?) ORDER BY name", office.id, p.owner_client_id);
+  const owners = await all<{ id: string; name: string }>("SELECT id, name FROM clients WHERE office_id = ? AND (kind IN ('seller','landlord') OR id = ?) ORDER BY name", office.id, p.owner_client_id);
   return (
     <main className="page">
       <Header title="עריכת נכס" back={`/properties/${id}`} />

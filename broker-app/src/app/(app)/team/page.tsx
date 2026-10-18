@@ -15,23 +15,23 @@ export default async function Team({ searchParams }: { searchParams: Promise<{ p
   since.setHours(0, 0, 0, 0);
   const t0 = since.getTime();
 
-  const members = all<User>("SELECT * FROM users WHERE office_id = ? ORDER BY role, name", office.id);
-  const stats = members.map((m) => ({
+  const members = await all<User>("SELECT * FROM users WHERE office_id = ? ORDER BY role, name", office.id);
+  const stats = await Promise.all(members.map(async (m) => ({
     m,
-    signed: get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND status = 'signed' AND completed_at >= ?", m.id, t0)!.n,
-    showings: get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND template = 'showing_form' AND created_at >= ?", m.id, t0)!.n,
-    stale: get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND status IN ('sent','partial') AND created_at < ?", m.id, Date.now() - 48 * 3600_000)!.n,
-    commission: get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE agent_id = ? AND stage = 'paid' AND paid_at >= ?", m.id, t0)!.s ?? 0,
-  }));
+    signed: (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND status = 'signed' AND completed_at >= ?", m.id, t0))!.n,
+    showings: (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND template = 'showing_form' AND created_at >= ?", m.id, t0))!.n,
+    stale: (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE agent_id = ? AND status IN ('sent','partial') AND created_at < ?", m.id, Date.now() - 48 * 3600_000))!.n,
+    commission: (await get<{ s: number | null }>("SELECT SUM(commission) AS s FROM deals WHERE agent_id = ? AND stage = 'paid' AND paid_at >= ?", m.id, t0))!.s ?? 0,
+  })));
   const totals = {
     signed: stats.reduce((a, s) => a + s.signed, 0),
-    deals: get<{ n: number }>("SELECT COUNT(*) AS n FROM deals WHERE office_id = ? AND stage = 'paid' AND paid_at >= ?", office.id, t0)!.n,
+    deals: (await get<{ n: number }>("SELECT COUNT(*) AS n FROM deals WHERE office_id = ? AND stage = 'paid' AND paid_at >= ?", office.id, t0))!.n,
     commission: stats.reduce((a, s) => a + s.commission, 0),
   };
-  const weeks = [3, 2, 1, 0].map((w) => {
+  const weeks = await Promise.all([3, 2, 1, 0].map(async (w) => {
     const end = Date.now() - w * 7 * 86_400_000;
-    return get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND status = 'signed' AND completed_at >= ? AND completed_at < ?", office.id, end - 7 * 86_400_000, end)!.n;
-  });
+    return (await get<{ n: number }>("SELECT COUNT(*) AS n FROM documents WHERE office_id = ? AND status = 'signed' AND completed_at >= ? AND completed_at < ?", office.id, end - 7 * 86_400_000, end))!.n;
+  }));
   const maxW = Math.max(1, ...weeks);
   const top = [...stats].sort((a, b) => b.commission - a.commission || b.signed - a.signed)[0];
 
