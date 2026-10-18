@@ -265,7 +265,7 @@ function renderStudio() {
   const c = p.studio;
   $('#view').innerHTML = `
   <div class="card-head"><div><h1>סטודיו גרפיקה</h1><div class="muted">גרפיקות מוכנות לפייסבוק, אינסטגרם, סטטוס וואטסאפ ופורטלים — עם הלוגו והפרטים שלכם</div></div>
-    <div class="row"><button class="btn" id="st-all">⤓ כל הפורמטים</button><button class="btn primary" id="st-dl">⤓ הורדת PNG</button></div></div>
+    <div class="row"><button class="btn" id="st-all">⤓ כל הפורמטים</button><button class="btn" id="st-view">🔍 תצוגה לשמירה</button><button class="btn primary" id="st-dl">⤓ הורדת PNG</button></div></div>
   <div class="split">
     <div class="card sticky" style="max-height:calc(100vh - 96px);overflow:auto">
       <h3>תבנית</h3><div class="tpl-grid" id="st-tpl">${TEMPLATES.map(([k, t]) => `<button data-v="${k}" class="${c.tpl === k ? 'on' : ''}">${t}</button>`).join('')}</div>
@@ -303,6 +303,7 @@ function renderStudio() {
   $$('#st-ph button').forEach(b => b.onclick = () => { c.photo = +b.dataset.v; touch(); $$('#st-ph button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
   v.querySelectorAll('[data-s]').forEach(el => el.addEventListener('input', () => { c[el.dataset.s] = el.type === 'checkbox' ? el.checked : el.value; touch(); draw(); }));
   const fname = (cfg) => `${shortAddr(p.q).replace(/[\s,]+/g, '_')}_${cfg.tpl}_${cfg.fmt}.png`;
+  $('#st-view').onclick = () => showImage(cv.toDataURL('image/png'), 'לחיצה ארוכה (בטלפון) או לחצן ימני ← ״שמירת תמונה״');
   $('#st-dl').onclick = () => cv.toBlob(b => download(fname(c), b), 'image/png');
   $('#st-all').onclick = async () => {
     for (const fmt of Object.keys(FORMATS)) {

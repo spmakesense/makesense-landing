@@ -366,7 +366,7 @@ function bindCMA(p) {
   const addRow = kind => { p.comps.push({ id: uid(), on: true, kind, cond: 'same', address: p.q.street ? `${p.q.street} ` : '', date: kind === 'listing' ? todayISO() : '', price: '', sqm: '', rooms: '', floor: '', adj: '', source: 'ידני' }); touch(); renderCMA(); };
   $('#comp-add').onclick = () => addRow('sold');
   $('#comp-add-l').onclick = () => addRow('listing');
-  const clr = $('#comp-clear'); if (clr) clr.onclick = () => { if (confirm('למחוק את כל הנכסים להשוואה?')) { p.comps = []; touch(); renderCMA(); } };
+  const clr = $('#comp-clear'); if (clr) clr.onclick = async () => { if (await confirmUI('למחוק את כל הנכסים להשוואה?', 'מחיקה', true)) { p.comps = []; touch(); renderCMA(); } };
   const rerender = debounce(() => { const a = document.activeElement, sel = a?.dataset?.c, id = a?.closest?.('tr')?.dataset.id; renderCMA(); if (sel && id) { const el = $(`tr[data-id="${id}"] [data-c="${sel}"]`); el?.focus(); } }, 60);
   v.querySelectorAll('tr[data-id]').forEach(tr => {
     const cp = p.comps.find(x => x.id === tr.dataset.id);

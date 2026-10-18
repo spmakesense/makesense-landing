@@ -219,19 +219,22 @@ function bindPlan(p) {
   v.querySelectorAll('[data-tabgo]').forEach(b => b.onclick = () => go(b.dataset.tabgo));
   const regen = (o = {}) => { p.plan = buildPlan(p, { days: o.days ?? pl.days, level: o.level ?? pl.level, start: o.start ?? pl.start }); touch(); renderPlan(); };
   const changed = () => pl.events.some(e => e.done) || pl.custom;
-  const ask = () => !changed() || confirm('בניית התכנית מחדש תמחק שינויים וסימוני ״בוצע״. להמשיך?');
+  const ask = async () => !changed() || await confirmUI('בניית התכנית מחדש תמחק שינויים וסימוני ״בוצע״. להמשיך?', 'בנייה מחדש', true);
   $('#pl-start').onchange = e => { pl.start = e.target.value || todayISO(); touch(); renderPlan(); };
-  $$('#pl-days button').forEach(b => b.onclick = () => ask() && regen({ days: +b.dataset.v }));
-  $$('#pl-lvl button').forEach(b => b.onclick = () => ask() && regen({ level: +b.dataset.v }));
-  $('#pl-regen').onclick = () => ask() && regen();
+  $$('#pl-days button').forEach(b => b.onclick = async () => (await ask()) && regen({ days: +b.dataset.v }));
+  $$('#pl-lvl button').forEach(b => b.onclick = async () => (await ask()) && regen({ level: +b.dataset.v }));
+  $('#pl-regen').onclick = async () => (await ask()) && regen();
   $('#pl-rec').onchange = e => { planShowRec = e.target.checked; renderPlan(); };
   $$('#pl-view button').forEach(b => b.onclick = () => { planView = b.dataset.v; renderPlan(); });
   $('#ics').onclick = () => download(`marketing-plan-${shortAddr(p.q).replace(/\s+/g, '_')}.ics`, planToICS(p), 'text/calendar');
-  $('#pl-add').onclick = () => {
-    const title = prompt('שם המשימה / האירוע:'); if (!title) return;
-    const day = clamp(Math.round(num(prompt(`באיזה יום בקמפיין? (1–${pl.days})`, '14')) || 1), 1, pl.days);
-    const cats = Object.entries(CATS); const ci = num(prompt('קטגוריה:\n' + cats.map(([, c], i) => `${i + 1}. ${c.t}`).join('\n'), '5'));
-    pl.events.push({ id: uid(), day, cat: cats[(ci || 5) - 1]?.[0] || 'event', title, desc: '', cost: 0, done: false });
+  $('#pl-add').onclick = async () => {
+    const r = await dialog({ title: 'משימה / אירוע חדש', ok: 'הוספה', fields: [
+      { k: 'title', label: 'שם המשימה' },
+      { k: 'day', label: `יום בקמפיין (1–${pl.days})`, type: 'number', value: 14, min: 1, max: pl.days },
+      { k: 'cat', label: 'קטגוריה', value: 'event', opts: Object.entries(CATS).map(([k, c]) => [k, c.t]) },
+      { k: 'cost', label: 'עלות (₪)', type: 'number', value: 0 }] });
+    if (!r || !r.title.trim()) return;
+    pl.events.push({ id: uid(), day: clamp(Math.round(num(r.day)) || 1, 1, pl.days), cat: r.cat, title: r.title.trim(), desc: '', cost: num(r.cost) || 0, done: false });
     pl.events.sort((a, b) => a.day - b.day); pl.custom = true; touch(); renderPlan();
   };
   v.querySelectorAll('[data-jump]').forEach(d => d.onclick = () => { planView = 'list'; renderPlan(); const el = $('#ev-' + d.dataset.jump); el?.scrollIntoView({ behavior: 'smooth', block: 'center' }); el && (el.style.background = 'var(--chip)'); });

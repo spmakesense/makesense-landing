@@ -53,7 +53,7 @@ function renderDashboard() {
   $('#demo').onclick = () => { loadDemo(); go('cma'); };
   $$('[data-open]').forEach(c => c.onclick = e => { if (e.target.closest('button')) return; S.currentId = c.dataset.open; saveNow(); go('questionnaire'); });
   $$('[data-dup]').forEach(b => b.onclick = () => { const src = S.projects.find(p => p.id === b.dataset.dup); const cp = JSON.parse(JSON.stringify(src)); cp.id = uid(); cp.createdAt = cp.updatedAt = Date.now(); cp.q.street = (cp.q.street || '') + ' (עותק)'; S.projects.unshift(cp); saveNow(); renderDashboard(); });
-  $$('[data-rm]').forEach(b => b.onclick = () => { if (!confirm('למחוק את הנכס וכל הנתונים שלו?')) return; S.projects = S.projects.filter(p => p.id !== b.dataset.rm); if (S.currentId === b.dataset.rm) S.currentId = null; saveNow(); updateHeader(); renderDashboard(); });
+  $$('[data-rm]').forEach(b => b.onclick = async () => { if (!await confirmUI('למחוק את הנכס וכל הנתונים שלו?', 'מחיקה', true)) return; S.projects = S.projects.filter(p => p.id !== b.dataset.rm); if (S.currentId === b.dataset.rm) S.currentId = null; saveNow(); updateHeader(); renderDashboard(); });
 }
 
 function renderSettings() {
@@ -85,10 +85,10 @@ function renderSettings() {
   $('#bk-exp').onclick = () => download(`nadlan-studio-backup-${todayISO()}.json`, JSON.stringify(S), 'application/json');
   $('#bk-imp').onclick = async () => {
     const [f] = await pickFiles('.json,application/json', false); if (!f) return;
-    try { const d = JSON.parse(await f.text()); if (!Array.isArray(d.projects)) throw 0; if (!confirm(`לשחזר ${d.projects.length} נכסים? הנתונים הנוכחיים יוחלפו.`)) return; S = { ...S, ...d, settings: { ...DEFAULT_SETTINGS, ...d.settings } }; saveNow(); applyBrand(); go('dashboard'); toast('הגיבוי שוחזר ✓', 'ok'); }
+    try { const d = JSON.parse(await f.text()); if (!Array.isArray(d.projects)) throw 0; if (!await confirmUI(`לשחזר ${d.projects.length} נכסים? הנתונים הנוכחיים יוחלפו.`, 'שחזור')) return; S = { ...S, ...d, settings: { ...DEFAULT_SETTINGS, ...d.settings } }; saveNow(); applyBrand(); go('dashboard'); toast('הגיבוי שוחזר ✓', 'ok'); }
     catch { toast('קובץ גיבוי לא תקין', 'err'); }
   };
-  $('#bk-wipe').onclick = () => { if (confirm('למחוק את כל הנכסים וההגדרות? לא ניתן לבטל.')) { S = { settings: { ...DEFAULT_SETTINGS }, projects: [], currentId: null }; saveNow(); applyBrand(); go('dashboard'); } };
+  $('#bk-wipe').onclick = async () => { if (await confirmUI('למחוק את כל הנכסים וההגדרות? לא ניתן לבטל.', 'מחיקת הכל', true)) { S = { settings: { ...DEFAULT_SETTINGS }, projects: [], currentId: null }; saveNow(); applyBrand(); go('dashboard'); } };
 }
 
 /* Demo property — clearly marked sample data for exploring the app */
@@ -117,6 +117,7 @@ function loadDemo() {
 
 /* boot */
 loadState(); applyBrand();
+if (!S.projects.length && !S.demoSeen) { S.demoSeen = true; loadDemo(); S.currentId = null; saveNow(); }
 $$('.tabs button').forEach(b => b.onclick = () => go(b.dataset.tab));
 $('#brand').onclick = () => go('dashboard');
 go((location.hash || '').slice(1) in RENDER ? location.hash.slice(1) : (P() ? 'questionnaire' : 'dashboard'));

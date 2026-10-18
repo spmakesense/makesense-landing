@@ -199,3 +199,38 @@ function applyBrand() {
   r.style.setProperty('--accent', S.settings.accent || DEFAULT_SETTINGS.accent);
   if (S.settings.theme === 'light' || S.settings.theme === 'dark') r.dataset.theme = S.settings.theme; else delete r.dataset.theme;
 }
+
+/* In-page dialogs (native confirm/prompt are unavailable in sandboxed viewers) */
+function dialog({ title = '', msg = '', fields = [], ok = 'אישור', cancel = 'ביטול', danger = false } = {}) {
+  return new Promise(res => {
+    const el = document.createElement('div');
+    el.className = 'modal';
+    el.innerHTML = `<form class="modal-box" role="dialog" aria-modal="true">
+      ${title ? `<h3>${esc(title)}</h3>` : ''}${msg ? `<p>${esc(msg)}</p>` : ''}
+      ${fields.map((f, i) => `<label class="f"><span class="lbl">${esc(f.label)}</span>${f.opts
+        ? `<select id="dlg-${i}">${f.opts.map(([v, t]) => `<option value="${esc(v)}" ${v === f.value ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>`
+        : `<input id="dlg-${i}" type="${f.type || 'text'}" value="${esc(f.value ?? '')}" ${f.min != null ? `min="${f.min}"` : ''} ${f.max != null ? `max="${f.max}"` : ''}>`}</label>`).join('')}
+      <div class="row" style="justify-content:flex-end;margin-top:6px"><button type="button" class="btn" data-x>${esc(cancel)}</button><button class="btn ${danger ? 'danger-fill' : 'primary'}">${esc(ok)}</button></div></form>`;
+    const done = v => { el.remove(); removeEventListener('keydown', key); res(v); };
+    const key = e => { if (e.key === 'Escape') done(null); };
+    el.querySelector('[data-x]').onclick = () => done(null);
+    el.onclick = e => { if (e.target === el) done(null); };
+    el.querySelector('form').onsubmit = e => {
+      e.preventDefault();
+      done(fields.length ? Object.fromEntries(fields.map((f, i) => [f.k, el.querySelector('#dlg-' + i).value])) : true);
+    };
+    addEventListener('keydown', key);
+    document.body.appendChild(el);
+    (el.querySelector('input,select') || el.querySelector('.btn.primary,.danger-fill'))?.focus();
+  });
+}
+const confirmUI = (msg, ok = 'אישור', danger = false) => dialog({ msg, ok, danger });
+
+/* Show an image full-size so it can be saved with long-press / right-click (downloads may be blocked) */
+function showImage(src, caption = '') {
+  const el = document.createElement('div');
+  el.className = 'modal';
+  el.innerHTML = `<div class="modal-box" style="max-width:min(92vw,720px);text-align:center"><img src="${src}" style="max-height:70vh;border-radius:8px"><p class="muted">${esc(caption)}</p><button class="btn primary" type="button">סגירה</button></div>`;
+  el.onclick = e => { if (e.target === el || e.target.tagName === 'BUTTON') el.remove(); };
+  document.body.appendChild(el);
+}
