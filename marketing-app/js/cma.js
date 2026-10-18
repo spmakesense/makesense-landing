@@ -227,6 +227,18 @@ function renderCMA() {
           <textarea id="idx-paste" rows="4" placeholder="01-2024, 512.3&#10;03-2024, 516.8"></textarea>
           <button class="btn sm" id="idx-apply" style="margin-top:6px">החל סדרה</button></details>
         <hr style="border:0;border-top:1px solid var(--border)">
+        <div class="s-card" style="background:var(--chip);border-radius:12px;padding:12px">
+          <div class="row between"><b>⚡ שאיבה אוטומטית — עסקאות אמת מרשות המסים (GovMap)</b>${p.market.govFetchedAt ? `<small>עודכן ${fmtDate(new Date(p.market.govFetchedAt).toISOString())}</small>` : ''}</div>
+          <div class="fields" style="margin-top:8px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+            <label class="f"><span class="lbl">כתובת לחיפוש</span><input id="gv-addr" value="${esc(p.market.govAddr || [q.street, q.houseNo, q.city].filter(Boolean).join(' '))}" placeholder="רחוב ומספר, עיר"></label>
+            <label class="f"><span class="lbl">תקופה</span><select id="gv-years">${[1, 2, 3, 5].map(y => `<option value="${y}" ${y === (p.market.govYears || 2) ? 'selected' : ''}>${y === 1 ? 'שנה' : y + ' שנים'}</option>`).join('')}</select></label>
+            <label class="f"><span class="lbl">רדיוס</span><select id="gv-rad">${[[50, '50 מ׳'], [100, '100 מ׳'], [250, '250 מ׳'], [500, '500 מ׳']].map(([v, t]) => `<option value="${v}" ${v === (p.market.govRadius || 100) ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+            <label class="f"><span class="lbl">סוג</span><select id="gv-type"><option value="2">יד שנייה</option><option value="1" ${p.market.govType === 1 ? 'selected' : ''}>חדש מקבלן</option></select></label>
+          </div>
+          <div class="row" style="margin-top:8px"><button class="btn primary" id="gv-fetch" ${R ? 'title="המאגר כולל עסקאות מכירה בלבד — שימושי להערכת שווי ותשואה"' : ''}>⤓ שאיבת עסקאות</button>
+            <small class="muted">${R ? 'המאגר כולל עסקאות מכירה בלבד (לא שכירות).' : 'עסקאות דומות (±1 חדר, ±30% שטח) מסומנות אוטומטית; השאר נשמרות כבויות.'}</small></div>
+          ${p.market.govError ? `<div class="note warn" style="margin-top:8px">${esc(p.market.govError)}</div>` : ''}
+        </div>
         <b>עסקאות ומודעות להשוואה</b>
         <div class="row">
           <a class="btn sm" href="https://www.nadlan.gov.il/" target="_blank" rel="noopener">🏛 עסקאות בנדל״ן — nadlan.gov.il</a>
@@ -348,6 +360,7 @@ function bindCMA(p) {
     if (!rows.length) return toast('לא זוהו שורות עם מחיר ושטח. ודאו שהשורה הראשונה כוללת כותרות.', 'err');
     p.comps.push(...rows); touch(); toast(`יובאו ${rows.length} נכסים ✓`, 'ok'); renderCMA();
   };
+  $('#gv-fetch').onclick = () => fetchGovDeals(p);
   $('#comp-import').onclick = () => doImport($('#comp-paste').value);
   $('#comp-file').onclick = async () => { const [f] = await pickFiles('.csv,.tsv,.txt,.xlsx,.xls', false); if (f) { try { doImport(await fileToText(f)); } catch (e) { toast(e.message, 'err'); } } };
   const addRow = kind => { p.comps.push({ id: uid(), on: true, kind, cond: 'same', address: p.q.street ? `${p.q.street} ` : '', date: kind === 'listing' ? todayISO() : '', price: '', sqm: '', rooms: '', floor: '', adj: '', source: 'ידני' }); touch(); renderCMA(); };
@@ -370,4 +383,39 @@ function bindCMA(p) {
   v.querySelectorAll('[data-m]').forEach(el => el.addEventListener('input', () => { (p.market.manual ||= {})[el.dataset.m] = el.value; touch(); }));
   v.querySelectorAll('[data-tier]').forEach(b => b.onclick = () => { p.cma.finalPrice = b.dataset.tier; touch(); renderCMA(); toast('מחיר השיווק עודכן ✓', 'ok'); });
   const fp = $('#final-price'); if (fp) fp.addEventListener('change', () => { p.cma.finalPrice = fp.value; touch(); renderCMA(); });
+}
+
+/* ── GovMap deals (Tax Authority register) ── */
+async function fetchGovDeals(p) {
+  const m = p.market, q = p.q;
+  m.govAddr = $('#gv-addr').value.trim(); m.govYears = +$('#gv-years').value; m.govRadius = +$('#gv-rad').value; m.govType = +$('#gv-type').value;
+  if (!m.govAddr) return toast('הזינו כתובת לחיפוש', 'err');
+  const btn = $('#gv-fetch'); btn.disabled = true; btn.textContent = 'שואב עסקאות…';
+  try {
+    let out;
+    if (await detectServer()) {
+      const r = await fetch(`api/deals?address=${encodeURIComponent(m.govAddr)}&years=${m.govYears}&radius=${m.govRadius}&dealType=${m.govType}`);
+      out = await r.json(); if (!r.ok) throw new Error(out.error || 'HTTP ' + r.status);
+    } else {
+      const http = async (url, { method = 'GET', body } = {}) => {
+        const r = await fetch(url, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
+        if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
+      };
+      try { out = await Govmap.findDeals(m.govAddr, { http, years: m.govYears, radius: m.govRadius, dealType: m.govType }); }
+      catch (e) { throw new Error(`הדפדפן לא הצליח לגשת ישירות ל-GovMap (${e.message}). הפעילו את האפליקציה דרך node server.js — השרת ניגש למאגר בשמכם.`); }
+    }
+    const have = new Set(p.comps.map(c => c.govId).filter(Boolean));
+    const sqm = num(q.sqm), rooms = num(q.rooms), aptOnly = !/קוטג|בית|דו-משפחתי|טורי|מגרש|משרד|חנות/.test(q.propertyType || '');
+    const fresh = out.deals.filter(d => d.price && d.sqm && !have.has(d.govId)).map(d => {
+      const similar = (isNaN(rooms) || !d.rooms || Math.abs(d.rooms - rooms) <= 1) && (isNaN(sqm) || Math.abs(d.sqm - sqm) / sqm <= 0.3) && (!aptOnly || !d.propType || /דיר|פנטהאוז|דופלקס|גג|גן/.test(d.propType));
+      return { id: uid(), govId: d.govId, on: similar, kind: 'sold', cond: 'same', adj: '', address: d.address, date: d.date, price: d.price, sqm: d.sqm, rooms: d.rooms, floor: d.floor, source: `GovMap · ${d.scope === 'street' ? 'רחוב' : 'שכונה'}${d.propType ? ' · ' + d.propType : ''}` };
+    });
+    p.comps.push(...fresh);
+    m.govFetchedAt = Date.now(); m.govError = '';
+    touch();
+    toast(out.deals.length ? `נמצאו ${out.deals.length} עסקאות סביב ״${out.matched}״ · נוספו ${fresh.length}, מתוכן ${fresh.filter(c => c.on).length} דומות` : `לא נמצאו עסקאות סביב ״${out.matched}״ — נסו רדיוס או תקופה גדולים יותר`, out.deals.length ? 'ok' : '');
+  } catch (e) {
+    m.govError = String(e.message || e); touch(); toast('שאיבת העסקאות נכשלה', 'err');
+  }
+  renderCMA();
 }
