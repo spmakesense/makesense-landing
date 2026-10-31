@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>MAKE SENSE · גרסה B · בגובה העיניים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Heebo:wght@300;400;500;600&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<style>
+/* Version B · "Eye level": warm, human, soft. 8 panels 160x90mm, 4 per side, accordion, 3mm bleed */
+@page { size: 166mm 366mm; margin: 0; }
+:root{ --blue:#004AAD; --sky:#E7F1FD; --sky2:#F5F9FF; --ink:#16202E; --teal:#1EC8C8; --tealbg:#E2F8F8; --grey:#5F6B7A;
+  --bleed:3mm; --side:12mm; --fold:8mm; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:'Heebo',sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1,h2{font-family:'Rubik',sans-serif;font-weight:600;letter-spacing:0}
+p,h1,h2{text-wrap:balance}
+bdi{unicode-bidi:isolate;direction:ltr}
+.sheet{width:166mm;height:366mm;position:relative;overflow:hidden;break-after:page}
+.sheet:last-child{break-after:auto}
+.inner{display:flex;flex-direction:column;width:166mm;height:366mm}
+.slide{position:relative;width:166mm;height:90mm;padding:var(--fold) calc(var(--bleed) + var(--side));overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.slide:first-child{height:93mm;padding-top:calc(var(--bleed) + var(--fold))}
+.slide:last-child{height:93mm;padding-bottom:calc(var(--bleed) + var(--fold))}
+.white{background:#fff} .sky{background:var(--sky2)} .blue{background:var(--blue);color:#fff}
+.b{color:var(--blue)} .t{color:var(--teal)}
+h2{font-size:20pt;line-height:1.22}
+.val{font-size:10.8pt;line-height:1.45;margin-top:3mm;color:#3A4656}
+.blue .val{color:#DCE8FA}
+.chips{display:flex;gap:2.4mm;justify-content:center;margin-top:5mm}
+.chips span{background:var(--tealbg);color:#0B5E66;border-radius:5mm;padding:1.4mm 4mm;font-size:9pt;font-weight:500;white-space:nowrap}
+.blue .chips span{background:rgba(255,255,255,.14);color:#fff}
+.cta{margin-top:5mm;display:inline-flex;gap:3mm;align-items:center;background:var(--blue);color:#fff;border-radius:6mm;padding:1.6mm 1.8mm 1.6mm 5mm;font-family:'Rubik';font-weight:500;font-size:9.6pt}
+.cta .ph{background:#fff;color:var(--blue);border-radius:5mm;padding:.8mm 3mm;font-weight:700}
+.blue .cta{background:#fff;color:var(--blue)} .blue .cta .ph{background:var(--blue);color:#fff}
+.quote{font-size:9.6pt;color:var(--blue);margin-top:3mm;font-weight:500;white-space:nowrap}
+.quote small{font-size:8pt;color:var(--grey);font-weight:400;margin-right:1.5mm}
+.photo{position:relative;overflow:hidden;border-radius:6mm;background:#fff}
+.photo img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%}
+/* P1 */
+#P1{flex-direction:row;gap:8mm;align-items:center;width:100%}
+#P1 .photo{width:50mm;height:68mm;flex:none;box-shadow:0 0 0 .4mm var(--sky)}
+#P1 .txt{flex:1}
+#P1 .logo{width:32mm;margin-bottom:5mm}
+#P1 h1{font-size:22pt;line-height:1.22}
+#P1 .fields{font-size:8.8pt;color:var(--grey);margin-top:3.4mm}
+#P1 .card{font-size:9.6pt;margin-top:2.4mm}
+#P1 .card .ph{color:var(--blue);font-weight:700}
+#P1 .slogan{font-family:'Amatic SC';font-weight:700;font-size:17pt;color:var(--blue);margin-top:3mm;line-height:1}
+/* P3 */
+#P3 h2{font-size:18pt}
+/* P5 */
+#P5 .open{font-size:10.6pt;color:#3A4656}
+#P5 .bub{display:flex;gap:3mm;justify-content:center;margin:3.4mm 0 4.4mm}
+#P5 .bub span{background:var(--sky);border-radius:4mm 4mm 4mm 1mm;padding:1.6mm 4mm;font-size:9.8pt;color:var(--blue);font-weight:500}
+#P5 .bub span:nth-child(2){border-radius:4mm 4mm 1mm 4mm}
+#P5 h2{font-size:26pt}
+#P5 .cases{margin-top:4mm;font-size:7.6pt;color:var(--grey);white-space:nowrap}
+#P5 .cases b{color:var(--ink);font-weight:600}
+/* P6 */
+#P6{flex-direction:row;gap:8mm;align-items:center;width:100%;text-align:right}
+#P6 .photo{width:46mm;height:64mm;flex:none}
+#P6 .photo img{height:112%}
+#P6 .txt{flex:1}
+#P6 h2{font-size:18pt}
+#P6 .creds{font-size:8.6pt;color:var(--grey);margin-top:2.4mm}
+#P6 .sign{font-family:'Amatic SC';font-weight:700;font-size:24pt;color:var(--blue);line-height:1;margin-top:2mm}
+/* P7 */
+#P7 .rows{margin-top:5mm;display:grid;gap:2mm}
+#P7 .row{display:grid;grid-template-columns:44mm 8mm 56mm;align-items:center;font-size:9.8pt}
+#P7 .row .a{background:#F1F3F6;color:#7C8796;border-radius:4mm;padding:1.4mm 3mm}
+#P7 .row .c{background:var(--sky);color:var(--blue);font-weight:600;border-radius:4mm;padding:1.4mm 3mm}
+#P7 .row .m{color:var(--teal);font-size:12pt}
+/* P8 */
+#P8{flex-direction:row;gap:7mm;align-items:center;width:100%}
+#P8 .txt{flex:1;min-width:0}
+#P8 .open{font-size:10.8pt;color:#DCE8FA;white-space:nowrap}
+#P8 .contact{font-size:8.6pt;margin-top:2.4mm;white-space:nowrap}
+#P8 .contact b{font-size:11pt;margin:0 1mm}
+#P8 .ref{font-size:8.6pt;color:#DCE8FA;margin-top:1.8mm;white-space:nowrap}
+#P8 h2{font-size:22pt;margin-top:5mm;white-space:nowrap}
+#P8 .qr{flex:none;background:#fff;border-radius:4mm;padding:2.6mm}
+#P8 .qr img{width:22mm;height:22mm;display:block}
+#P4 .fine{position:absolute;bottom:calc(var(--bleed) + var(--fold) - 1.6mm);right:calc(var(--bleed) + var(--side));font-size:7pt;color:var(--grey)}
+#P4 .logo-sm{position:absolute;bottom:calc(var(--bleed) + var(--fold) - 2mm);left:calc(var(--bleed) + var(--side));height:4.4mm}
+/* preview */
+body.preview .sheet{width:160mm;height:360mm;margin:0 auto 8mm}
+body.preview .inner{position:absolute;left:-3mm;top:-3mm}
+body.preview .sheet:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to bottom,transparent calc(90mm - .12mm),rgba(220,38,38,.7) calc(90mm - .12mm),rgba(220,38,38,.7) calc(90mm + .12mm),transparent calc(90mm + .12mm)),
+  linear-gradient(to bottom,transparent calc(180mm - .12mm),rgba(220,38,38,.7) calc(180mm - .12mm),rgba(220,38,38,.7) calc(180mm + .12mm),transparent calc(180mm + .12mm)),
+  linear-gradient(to bottom,transparent calc(270mm - .12mm),rgba(220,38,38,.7) calc(270mm - .12mm),rgba(220,38,38,.7) calc(270mm + .12mm),transparent calc(270mm + .12mm))}
+body.slides .sheet:after{display:none}
+</style>
+</head>
+<body>
+<section class="sheet" id="sideA"><div class="inner">
+
+  <div class="slide white" id="A1"><div id="P1" style="display:flex">
+    <div class="txt">
+      <img class="logo" src="assets/logo-mark-blue.png" alt="MAKE SENSE">
+      <h1>כסף לא צריך<br><span class="b">להדיר לכם שינה.</span></h1>
+      <div class="fields">משכנתאות · אשראי · נדל״ן · מימון לעסקים</div>
+      <div class="card"><b>שיראל פרגר</b>, יועץ פיננסי עצמאי · <span class="ph"><bdi>052-441-5395</bdi></span></div>
+      <div class="slogan">לתכנן. לצמוח. להגשים.</div>
+    </div>
+    <div class="photo"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
+  </div></div>
+
+  <div class="slide sky" id="A2">
+    <h2>מרגישים שהחודש נגמר<br><span class="b">לפני המשכורת?</span></h2>
+    <p class="val">יושבים, מסדרים את המשכנתה וההלוואות, ונושמים.</p>
+    <div class="chips"><span>תשלום אחד וברור</span><span>החזר שאפשר לחיות איתו</span><span>בדיקה מול כמה בנקים</span></div>
+    <div class="cta">שקט בסוף החודש, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+  </div>
+
+  <div class="slide white" id="A3"><div id="P3" style="display:contents">
+    <h2>חולמים על הדירה הבאה?<br><span class="b">בואו נוודא שהיא גם הגיונית.</span></h2>
+    <p class="val">קניתי 3 דירות עד גיל 30. אני יודע כמה זה מרגש, וכמה זה מלחיץ.</p>
+    <p class="quote">״ידע להנחות אותנו בצורה ברורה לאורך כל התהליך.״<small>בן, נכס להשקעה</small></p>
+    <div class="cta">הבית הבא, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+  </div></div>
+
+  <div class="slide sky" id="A4"><div id="P4" style="display:contents">
+    <h2>בניתם עסק מאפס.<br><span class="b">מגיע לו לנשום.</span></h2>
+    <p class="val">מוצאים לעסק מימון שמתאים לקצב שלו, ולא חונק את התזרים.</p>
+    <div class="chips"><span>כמה חלופות על השולחן</span><span>החזר לפי העונות שלכם</span><span>שקיפות בעלות</span></div>
+    <div class="cta">הצמיחה הבאה, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+    <img class="logo-sm" src="assets/logo-mark-blue.png" alt="MAKE SENSE">
+    <div class="fine">כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</div>
+  </div></div>
+
+</div></section>
+
+<section class="sheet" id="sideB"><div class="inner">
+
+  <div class="slide white" id="B1"><div id="P5" style="display:contents">
+    <p class="open">אם אמרתם פעם אחד מהמשפטים האלה, אתם לא לבד:</p>
+    <div class="bub"><span>״הבנק אמר לא.״</span><span>״ההחזר רק עולה.״</span><span>״העסק צריך אוויר.״</span></div>
+    <h2>הבנק דואג לבנק.<br><span class="b">מי דואג לכם?</span></h2>
+    <div class="cases"><b>מקרים שאני פוגש כל הזמן:</b> זוגות צעירים · משפרי דיור · מסורבי בנקים · עצמאים · בעלי עסקים · משקיעי נדל״ן · בני 55+</div>
+  </div></div>
+
+  <div class="slide sky" id="B2"><div id="P6" style="display:flex">
+    <div class="txt">
+      <h2>גדלתי בבית שהכסף<br>הכביד עליו.</h2>
+      <p class="val">לכן אני מסביר בפשטות, וזמין גם אחרי החתימה.</p>
+      <div class="creds">B.A כלכלה + M.B.A · חבר בהתאחדות יועצי המשכנתאות</div>
+      <p class="quote">״הגענו עם המון חששות ופחדים, ויצאנו מרוצים.״<small>חני</small></p>
+      <div class="sign">שיראל</div>
+    </div>
+    <div class="photo"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
+  </div></div>
+
+  <div class="slide white" id="B3"><div id="P7" style="display:contents">
+    <h2>אני לא עובד בשביל הבנק.<br><span class="b">אני עובד בשבילכם.</span></h2>
+    <div class="rows">
+      <div class="row"><span class="a">הצעה אחת</span><span class="m">←</span><span class="c">כמה הצעות על השולחן</span></div>
+      <div class="row"><span class="a">שפה של בנק</span><span class="m">←</span><span class="c">הסבר בגובה העיניים</span></div>
+      <div class="row"><span class="a">מגישים ומקווים</span><span class="m">←</span><span class="c">מגישים למקום הנכון</span></div>
+    </div>
+  </div></div>
+
+  <div class="slide blue" id="B4"><div id="P8" style="display:flex">
+    <div class="txt">
+      <p class="open">לא צריך להגיע מוכנים. רק להרים טלפון.</p>
+      <div class="contact">שיחת היכרות ללא עלות · <b><bdi>052-441-5395</bdi></b> · <bdi>sp.makesense@gmail.com</bdi></div>
+      <p class="ref">מכירים מישהו שזה בדיוק המצב שלו? תכירו לו אותי, ואעדכן אתכם.</p>
+      <h2>הצעד הראשון מבטיח<br><span class="t">שלא תישארו במקום.</span></h2>
+    </div>
+    <div class="qr"><img src="assets/qr-whatsapp.png" alt="QR לוואטסאפ"></div>
+  </div></div>
+
+</div></section>
+</body>
+</html>

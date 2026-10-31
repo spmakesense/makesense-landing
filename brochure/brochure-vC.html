@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>MAKE SENSE · גרסה C · חד וישיר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Version C · "Sharp & direct": high contrast, heavy type, numbers. 8 panels 160x90mm, 4 per side, accordion, 3mm bleed */
+@page { size: 166mm 366mm; margin: 0; }
+:root{ --blue:#004AAD; --ink:#0A0A0A; --teal:#1EC8C8; --grey:#6B7280; --line:#E3E7EE;
+  --bleed:3mm; --side:12mm; --fold:8mm; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:'Heebo',sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1,h2{font-family:'Rubik',sans-serif;font-weight:900;letter-spacing:0;line-height:1.12}
+p,h1,h2{text-wrap:balance}
+bdi{unicode-bidi:isolate;direction:ltr}
+.sheet{width:166mm;height:366mm;position:relative;overflow:hidden;break-after:page}
+.sheet:last-child{break-after:auto}
+.inner{display:flex;flex-direction:column;width:166mm;height:366mm}
+.slide{position:relative;width:166mm;height:90mm;padding:var(--fold) calc(var(--bleed) + var(--side));overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.slide:first-child{height:93mm;padding-top:calc(var(--bleed) + var(--fold))}
+.slide:last-child{height:93mm;padding-bottom:calc(var(--bleed) + var(--fold))}
+.white{background:#fff} .ink{background:var(--ink);color:#fff} .blue{background:var(--blue);color:#fff}
+.b{color:var(--blue)} .t{color:var(--teal)}
+.u{background:linear-gradient(transparent 72%,rgba(30,200,200,.55) 72%,rgba(30,200,200,.55) 92%,transparent 92%)}
+h2{font-size:24pt}
+.val{font-size:10.8pt;line-height:1.4;margin-top:3mm;font-weight:500;color:#2B2F36}
+.ink .val,.blue .val{color:#C9D3E3}
+.nums{display:flex;justify-content:center;gap:0;margin-top:5mm;border-top:.5mm solid var(--ink)}
+.ink .nums,.blue .nums{border-color:#fff}
+.nums div{padding:2.2mm 5mm 0;font-family:'Rubik';font-weight:700;font-size:9.4pt;white-space:nowrap}
+.nums div i{font-style:normal;color:var(--blue);margin-left:1.6mm}
+.ink .nums div i,.blue .nums div i{color:var(--teal)}
+.cta{margin-top:5mm;font-family:'Rubik';font-weight:800;font-size:10.4pt;display:flex;gap:3mm;justify-content:center;align-items:center}
+.cta .ph{background:var(--blue);color:#fff;padding:1mm 3.4mm}
+.ink .cta .ph,.blue .cta .ph{background:var(--teal);color:var(--ink)}
+.quote{font-size:9.4pt;font-weight:500;margin-top:3mm;color:var(--blue);white-space:nowrap}
+.quote small{font-size:8pt;color:var(--grey);margin-right:1.5mm}
+/* P1 */
+#P1{flex-direction:row;width:100%;height:100%;align-items:stretch}
+#P1 .txt{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:right;padding-left:6mm}
+#P1 .logo{height:7mm;margin-bottom:6mm}
+#P1 h1{font-size:25pt}
+#P1 .fields{font-family:'Rubik';font-weight:700;font-size:8.6pt;letter-spacing:.08em;color:var(--teal);margin-top:4mm}
+#P1 .card{font-size:9.6pt;margin-top:2.6mm;color:#C9D3E3}
+#P1 .card b{color:#fff}
+#P1 .card .ph{color:#fff;font-weight:700}
+#P1 .slogan{font-family:'Rubik';font-weight:800;font-size:10pt;margin-top:4mm}
+#P1 .pic{width:60mm;flex:none;position:relative;overflow:hidden;margin:calc(-1*(var(--bleed) + var(--fold))) 0 calc(-1*var(--fold)) calc(-1*(var(--bleed) + var(--side)));background:#fff}
+#P1 .pic img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:96%;filter:grayscale(1) contrast(1.15)}
+/* P3 */
+#P3{flex-direction:row;gap:8mm;width:100%;align-items:center}
+#P3 .big{font-family:'Rubik';font-weight:900;font-size:72pt;line-height:.9;color:var(--blue);flex:none;text-align:center}
+#P3 .big small{display:block;font-size:8.6pt;font-weight:700;color:var(--ink);letter-spacing:.06em;margin-top:2mm}
+#P3 .txt{flex:1;text-align:right}
+#P3 h2{font-size:19pt}
+#P3 .cta{justify-content:flex-start}
+/* P4 */
+#P4 .logo-sm{position:absolute;bottom:calc(var(--bleed) + var(--fold) - 2mm);left:calc(var(--bleed) + var(--side));height:4.4mm}
+#P4 .fine{position:absolute;bottom:calc(var(--bleed) + var(--fold) - 1.6mm);right:calc(var(--bleed) + var(--side));font-size:7pt;color:#9AA6B8}
+/* P5 */
+#P5 .open{font-family:'Rubik';font-weight:800;font-size:12pt}
+#P5 .voices{display:flex;gap:2.4mm;justify-content:center;margin:3.6mm 0 4.6mm}
+#P5 .voices span{border:.45mm solid var(--ink);padding:1.2mm 3.4mm;font-family:'Rubik';font-weight:700;font-size:9.6pt}
+#P5 h2{font-size:28pt}
+#P5 .cases{margin-top:4.4mm;font-size:7.6pt;color:var(--grey);white-space:nowrap}
+#P5 .cases b{color:var(--ink)}
+/* P6 */
+#P6{flex-direction:row;width:100%;height:100%;align-items:stretch;text-align:right}
+#P6 .pic{width:54mm;flex:none;position:relative;overflow:hidden;margin:calc(-1*var(--fold)) 0 calc(-1*var(--fold)) calc(-1*(var(--bleed) + var(--side)));background:#fff}
+#P6 .pic img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:108%;filter:grayscale(1) contrast(1.15)}
+#P6 .txt{flex:1;display:flex;flex-direction:column;justify-content:center;padding-left:8mm}
+#P6 h2{font-size:17pt;white-space:nowrap}
+#P6 .creds{font-size:8.6pt;color:#C9D3E3;margin-top:2.4mm}
+#P6 .quote{color:var(--teal)}
+#P6 .quote small{color:#9AA6B8}
+/* P7 */
+#P7 .cmp{margin-top:5mm;display:grid;grid-template-columns:48mm 56mm;border:.5mm solid var(--ink)}
+#P7 .cmp div{padding:1.8mm 3mm;font-size:9.8pt;font-weight:500;border-top:.25mm solid var(--line)}
+#P7 .cmp .h{font-family:'Rubik';font-weight:800;font-size:8pt;letter-spacing:.1em;border-top:0}
+#P7 .cmp .bank{color:#8A93A3}
+#P7 .cmp .me{background:var(--blue);color:#fff;font-weight:700;border-top-color:rgba(255,255,255,.25)}
+/* P8 */
+#P8{flex-direction:row;gap:7mm;width:100%;align-items:center}
+#P8 .txt{flex:1;min-width:0}
+#P8 .open{font-family:'Rubik';font-weight:800;font-size:13pt;white-space:nowrap}
+#P8 .contact{font-size:8.6pt;margin-top:2.4mm;white-space:nowrap}
+#P8 .contact b{font-size:11pt;margin:0 1mm}
+#P8 .ref{font-size:8.6pt;color:#C9D3E3;margin-top:1.8mm;white-space:nowrap}
+#P8 h2{font-size:23pt;margin-top:5mm;white-space:nowrap}
+#P8 .qr{flex:none;background:#fff;padding:2.4mm}
+#P8 .qr img{width:22mm;height:22mm;display:block}
+/* preview */
+body.preview .sheet{width:160mm;height:360mm;margin:0 auto 8mm}
+body.preview .inner{position:absolute;left:-3mm;top:-3mm}
+body.preview .sheet:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to bottom,transparent calc(90mm - .12mm),rgba(220,38,38,.7) calc(90mm - .12mm),rgba(220,38,38,.7) calc(90mm + .12mm),transparent calc(90mm + .12mm)),
+  linear-gradient(to bottom,transparent calc(180mm - .12mm),rgba(220,38,38,.7) calc(180mm - .12mm),rgba(220,38,38,.7) calc(180mm + .12mm),transparent calc(180mm + .12mm)),
+  linear-gradient(to bottom,transparent calc(270mm - .12mm),rgba(220,38,38,.7) calc(270mm - .12mm),rgba(220,38,38,.7) calc(270mm + .12mm),transparent calc(270mm + .12mm))}
+body.slides .sheet:after{display:none}
+</style>
+</head>
+<body>
+<section class="sheet" id="sideA"><div class="inner">
+
+  <div class="slide ink" id="A1"><div id="P1" style="display:flex">
+    <div class="txt">
+      <img class="logo" src="assets/logo-mark-white.png" alt="MAKE SENSE">
+      <h1>אני יודע לאן להגיש<br><span class="u">כדי לקבל ״כן״.</span></h1>
+      <div class="fields">משכנתאות · אשראי · נדל״ן · מימון לעסקים</div>
+      <div class="card"><b>שיראל פרגר</b> · יועץ פיננסי עצמאי · <span class="ph"><bdi>052-441-5395</bdi></span></div>
+      <div class="slogan">לתכנן. לצמוח. <span class="t">להגשים.</span></div>
+    </div>
+    <div class="pic"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
+  </div></div>
+
+  <div class="slide white" id="A2">
+    <h2>מינוס קבוע<br><span class="u">הוא לא גזירת גורל.</span></h2>
+    <p class="val">ממפים את כל ההלוואות, ובונים מבנה אחד שעובד.</p>
+    <div class="nums"><div><i>01</i>תשלום אחד ברור</div><div><i>02</i>כמה בנקים מתחרים</div><div><i>03</i>תמהיל לפי החיים</div></div>
+    <div class="cta">סדר בהלוואות, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+  </div>
+
+  <div class="slide white" id="A3"><div id="P3" style="display:flex">
+    <div class="txt">
+      <h2>לא כמה אפשר לקבל.<br><span class="b">כמה נכון לקחת.</span></h2>
+      <p class="val">בדיקת כדאיות, תזרים ותשואה, לפני שחותמים.</p>
+      <p class="quote">״ידע להנחות אותנו בצורה ברורה לאורך כל התהליך.״<small>בן, נכס להשקעה</small></p>
+      <div class="cta">הנכס הבא, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+    </div>
+    <div class="big">3<small>דירות עד גיל 30</small></div>
+  </div></div>
+
+  <div class="slide blue" id="A4"><div id="P4" style="display:contents">
+    <h2>אשראי יקר <span class="t">עוצר צמיחה.</span></h2>
+    <p class="val">מימון לעסק נמדד בעלות הכוללת, לא רק בריבית.</p>
+    <div class="nums"><div><i>01</i>חלופות מימון</div><div><i>02</i>החזר לפי התזרים</div><div><i>03</i>עלות כוללת</div></div>
+    <div class="cta">הצמיחה הבאה, במרחק שיחה <span class="ph"><bdi>052-441-5395</bdi></span></div>
+    <img class="logo-sm" src="assets/logo-mark-white.png" alt="MAKE SENSE">
+    <div class="fine">כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</div>
+  </div></div>
+
+</div></section>
+
+<section class="sheet" id="sideB"><div class="inner">
+
+  <div class="slide white" id="B1"><div id="P5" style="display:contents">
+    <p class="open">״לא״ מבנק אחד הוא לא סוף הדרך.</p>
+    <div class="voices"><span>״הבנק אמר לא.״</span><span>״ההחזר רק עולה.״</span><span>״העסק צריך אוויר.״</span></div>
+    <h2>הבנק מייצג את הבנק.<br><span class="u">מי מייצג אתכם?</span></h2>
+    <div class="cases"><b>מקרים שאני פוגש כל הזמן:</b> זוגות צעירים · משפרי דיור · מסורבי בנקים · עצמאים · בעלי עסקים · משקיעי נדל״ן · בני 55+</div>
+  </div></div>
+
+  <div class="slide ink" id="B2"><div id="P6" style="display:flex">
+    <div class="txt">
+      <h2>ראיתי מה טעות פיננסית עושה.<br><span class="t">מאז אני עובד אחרת.</span></h2>
+      <p class="val">ידע מקצועי. שקיפות מלאה. ליווי עד החתימה.</p>
+      <div class="creds">B.A כלכלה + M.B.A · חבר בהתאחדות יועצי המשכנתאות</div>
+      <p class="quote">״יש לו המון ידע, והמון סבלנות.״<small>יונתן, מצב מורכב מהסטנדרט</small></p>
+    </div>
+    <div class="pic"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
+  </div></div>
+
+  <div class="slide white" id="B3"><div id="P7" style="display:contents">
+    <h2>הבנק מוכר מוצר.<br><span class="b">אני בונה תוכנית.</span></h2>
+    <div class="cmp">
+      <div class="h bank">יועץ בבנק</div><div class="h me">MAKE SENSE</div>
+      <div class="bank">בנק אחד</div><div class="me">כמה גופים מממנים</div>
+      <div class="bank">המוצר של הבנק</div><div class="me">תוכנית לפי המטרות שלכם</div>
+      <div class="bank">מגישים לכל מקום</div><div class="me">מגישים למקום הנכון</div>
+    </div>
+  </div></div>
+
+  <div class="slide ink" id="B4"><div id="P8" style="display:flex">
+    <div class="txt">
+      <p class="open">שיחה אחת. תמונה ברורה.</p>
+      <div class="contact">שיחת היכרות ללא עלות · <b><bdi>052-441-5395</bdi></b> · <bdi>sp.makesense@gmail.com</bdi></div>
+      <p class="ref">מכירים מישהו שתקוע מול הבנק? תפנו אותו אליי, ואעדכן אתכם.</p>
+      <h2>הצעד הראשון מבטיח<br><span class="t">שלא תישארו במקום.</span></h2>
+    </div>
+    <div class="qr"><img src="assets/qr-whatsapp.png" alt="QR לוואטסאפ"></div>
+  </div></div>
+
+</div></section>
+</body>
+</html>
