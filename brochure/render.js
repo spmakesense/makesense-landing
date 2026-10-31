@@ -2,15 +2,15 @@
 //   out/makesense-brochure-print.pdf  - 2 pages (side A, side B), 166x366mm = 160x360 trim + 3mm bleed
 //   out/preview-sideA.png / sideB.png - trimmed sides with red fold guides
 //   out/slides/A1..B4.png             - each 160x90 (16:9) slide on its own
-// Usage (from repo root): node brochure/render.js
+// Usage (from repo root): node brochure/render.js [html=brochure.html] [outdir=out]
 const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');
 
 (async () => {
-  const dir = __dirname, out = path.join(dir, 'out');
+  const dir = __dirname, out = path.join(dir, process.argv[3] || 'out');
   fs.mkdirSync(path.join(out, 'slides'), { recursive: true });
-  const url = 'file://' + path.join(dir, 'brochure.html');
+  const url = 'file://' + path.join(dir, process.argv[2] || 'brochure.html');
   const browser = await chromium.launch();
 
   const page = await browser.newPage();
