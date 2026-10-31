@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>MAKE SENSE · ברושור</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&family=Heebo:wght@300;400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Rubik:wght@400;500;700;800;900&family=Heebo:wght@300;400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
 <style>
 /* PRINT SPEC: 8 panels 160x90mm (16:9), 4 stacked per side, accordion fold, 3mm bleed -> page 166x366mm */
 @page { size: 166mm 366mm; margin: 0; }
@@ -15,7 +15,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#fff}
 body{font-family:'Heebo',sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-h1,h2,.r{font-family:'Rubik',sans-serif}
+h1,h2{font-family:'Frank Ruhl Libre','Heebo',serif;letter-spacing:0!important;font-feature-settings:'kern','calt'}
+.r{font-family:'Rubik',sans-serif}
+bdi{unicode-bidi:isolate;direction:ltr}
 p,h1,h2{text-wrap:balance}
 .sheet{width:166mm;height:366mm;position:relative;overflow:hidden;break-after:page}
 .sheet:last-child{break-after:auto}
@@ -23,21 +25,22 @@ p,h1,h2{text-wrap:balance}
 .slide{position:relative;width:166mm;height:90mm;padding:var(--fold) calc(var(--bleed) + var(--side));overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
 .slide:first-child{height:93mm;padding-top:calc(var(--bleed) + var(--fold))}
 .slide:last-child{height:93mm;padding-bottom:calc(var(--bleed) + var(--fold))}
-.dark{background:linear-gradient(135deg,var(--blue2) 0%,var(--blue) 38%,var(--deep) 100%);color:#fff}
+.dark{background:var(--blue);color:#fff}
+.deep{background:var(--deep);color:#fff}
 .white{background:#fff}
 .light{background:var(--light)}
 .t{color:var(--teal)} .b{color:var(--blue)}
-.rule{width:12mm;height:.7mm;background:var(--teal);border-radius:1mm;margin:0 auto 3.2mm}
-h2{font-weight:800;font-size:21pt;line-height:1.12;letter-spacing:-.01em}
+.rule{width:10mm;height:.35mm;background:currentColor;opacity:.45;margin:0 auto 3.6mm}
+h2{font-weight:700;font-size:21pt;line-height:1.18}
 .val{font-size:11pt;line-height:1.4;margin-top:3mm;color:#2A2F3A}
-.dark .val{color:#DCE8FA}
+.dark .val,.deep .val{color:#DCE8FA}
 .cta{margin-top:5mm;font-family:'Rubik';font-weight:500;font-size:10.5pt;display:flex;align-items:center;gap:3mm;justify-content:center}
 .cta .ph{font-weight:700;color:var(--blue);direction:ltr;letter-spacing:.02em}
-.dark .cta .ph{color:#fff}
+.dark .cta .ph,.deep .cta .ph{color:#fff}
 .cta i{width:1.2mm;height:1.2mm;border-radius:50%;background:var(--teal);display:inline-block}
 .icons{display:flex;justify-content:center;gap:12mm;margin-top:5mm}
 .icons div{display:flex;flex-direction:column;align-items:center;gap:1.6mm;font-size:9.3pt;font-weight:500;color:#1D2433;max-width:30mm;line-height:1.25}
-.dark .icons div{color:#fff}
+.dark .icons div,.deep .icons div{color:#fff}
 .icons svg{width:8mm;height:8mm}
 .logo-sm{position:absolute;height:4.2mm;left:calc(var(--bleed) + var(--side));bottom:var(--fold)}
 .slide:last-child .logo-sm{bottom:calc(var(--bleed) + var(--fold))}
@@ -48,7 +51,7 @@ h2{font-weight:800;font-size:21pt;line-height:1.12;letter-spacing:-.01em}
 #P1{flex-direction:row;padding-left:0;align-items:stretch}
 #P1 .txt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-left:6mm}
 #P1 .logo{width:40mm;margin-bottom:6mm}
-#P1 h1{font-weight:900;font-size:22pt;white-space:nowrap;line-height:1.05;letter-spacing:-.015em}
+#P1 h1{font-weight:700;font-size:24pt;white-space:nowrap;line-height:1.18}
 #P1 .fields{font-size:9.5pt;letter-spacing:.02em;margin-top:4.5mm;color:#DCE8FA}
 #P1 .name{font-family:'Rubik';font-weight:500;font-size:10pt;margin-top:1.6mm}
 #P1 .slogan{font-family:'Rubik';font-weight:700;font-size:10.5pt;margin-top:6mm;letter-spacing:.04em}
@@ -61,17 +64,17 @@ h2{font-weight:800;font-size:21pt;line-height:1.12;letter-spacing:-.01em}
 #P3 h2{font-size:18pt;white-space:nowrap}
 /* ---- panel 4 ---- */
 #P4 .trend{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
-#P4 h2{font-size:23pt;font-weight:900}
+#P4 h2{font-size:23pt;font-weight:700}
 #P4 .icons div{max-width:44mm;white-space:nowrap}
 /* ---- panel 5 ---- */
 #P5 .open{font-size:12pt;color:#2A2F3A}
 #P5 .bubbles{display:flex;gap:4mm;justify-content:center;margin:4mm 0 5mm}
-#P5 .bubbles span{font-family:'Rubik';font-weight:500;font-size:10pt;color:var(--blue);border:.35mm solid var(--line);border-radius:4mm 4mm 4mm 1mm;padding:1.6mm 4mm;background:#fff}
-#P5 .bubbles span:nth-child(2){border-radius:4mm 4mm 1mm 4mm;transform:translateY(1.5mm)}
-#P5 h2{font-size:29pt;font-weight:900;line-height:1.05}
+#P5 .bubbles span{font-family:'Rubik';font-weight:500;font-size:10pt;color:var(--blue);border:.3mm solid var(--blue);border-radius:.6mm;padding:1.6mm 4mm;background:#fff}
+#P5 .bubbles span:nth-child(2){transform:none}
+#P5 h2{font-size:28pt;font-weight:700;line-height:1.15}
 #P5 .tags{display:flex;flex-wrap:nowrap;gap:1.1mm;justify-content:center;align-items:center;margin-top:6mm;font-size:7.6pt}
 #P5 .tags b{font-family:'Rubik';font-weight:500;color:var(--grey);margin-left:1mm;white-space:nowrap}
-#P5 .tags span{border:.3mm solid var(--line);border-radius:3mm;padding:.5mm 1.5mm;white-space:nowrap;color:#1D2433}
+#P5 .tags span{border:.3mm solid var(--line);border-radius:0;padding:.5mm 1.5mm;white-space:nowrap;color:#1D2433}
 /* ---- panel 6 ---- */
 #P6{flex-direction:row;padding-left:0;align-items:stretch;text-align:right}
 #P6 .txt{flex:1;display:flex;flex-direction:column;justify-content:center;padding-left:8mm}
@@ -99,8 +102,8 @@ h2{font-weight:800;font-size:21pt;line-height:1.12;letter-spacing:-.01em}
 #P8 .contact b{font-family:'Rubik';font-size:11.5pt;direction:ltr;display:inline-block;margin:0 1.5mm}
 #P8 .ref{font-size:8.6pt;color:#DCE8FA;margin-top:2mm;white-space:nowrap}
 #P8 .close{margin-top:6mm}
-#P8 .close h2{font-size:25pt;font-weight:900;line-height:1.08}
-#P8 .qr{flex:none;background:#fff;border-radius:3mm;padding:2.6mm}
+#P8 .close h2{font-size:24pt;font-weight:700;line-height:1.15}
+#P8 .qr{flex:none;background:#fff;border-radius:0;padding:2.6mm}
 #P8 .qr img{width:25mm;height:25mm;display:block}
 
 /* ---- preview mode: trim + fold guides ---- */
@@ -132,9 +135,9 @@ body.slides .sheet:after{display:none}
   <div class="slide dark" id="A1"><div id="P1" style="display:flex;width:100%;height:100%;flex-direction:row;align-items:stretch">
     <div class="txt">
       <img class="logo" src="assets/logo-mark-white.png" alt="MAKE SENSE">
-      <h1><span class="t">השליטה הכלכלית שלכם</span><br>מתחילה כאן</h1>
-      <div class="fields">משכנתאות · אשראי · השקעות נדל"ן · מימון לעסקים</div>
-      <div class="name">שיראל פרגר · יועץ פיננסי עצמאי</div>
+      <h1>השליטה הכלכלית שלכם<br>מתחילה כאן</h1>
+      <div class="fields">משכנתאות · אשראי · השקעות נדל״ן · מימון לעסקים</div>
+      <div class="name">שיראל פרגר · יועץ פיננסי עצמאי · <bdi>052-441-5395</bdi></div>
       <div class="slogan">לתכנן. לצמוח. <span class="t">להגשים.</span></div>
     </div>
     <div class="photo"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
@@ -150,7 +153,7 @@ body.slides .sheet:after{display:none}
       <div><svg><use href="#i-merge"/></svg>איחוד הלוואות</div>
       <div><svg><use href="#i-banks"/></svg>בדיקה מול כמה גופים</div>
     </div>
-    <div class="cta">סדר בהלוואות, במרחק שיחה <i></i> <span class="ph">052-441-5395</span></div>
+    <div class="cta">סדר בהלוואות, במרחק שיחה <i></i> <span class="ph"><bdi>052-441-5395</bdi></span></div>
   </div>
 
   <!-- PANEL 3 · REAL ESTATE -->
@@ -159,15 +162,14 @@ body.slides .sheet:after{display:none}
       <div class="rule"></div>
       <h2>לפני שקונים, מוכרים או משקיעים,<br><span class="b">בודקים את המספרים.</span></h2>
       <p class="val">קניתי 3 דירות עד גיל 30. השאלה היא תמיד כמה נכון לקחת.</p>
-      <p class="quote">"ידע להנחות אותנו בצורה ברורה לאורך כל התהליך." <small>· בן, נכס להשקעה</small></p>
-      <div class="cta">הנכס הבא, במרחק שיחה <i></i> <span class="ph">052-441-5395</span></div>
+      <p class="quote">״ידע להנחות אותנו בצורה ברורה לאורך כל התהליך.״ <small>· בן, נכס להשקעה</small></p>
+      <div class="cta">הנכס הבא, במרחק שיחה <i></i> <span class="ph"><bdi>052-441-5395</bdi></span></div>
     </div>
     <svg class="big"><use href="#i-calc-house"/></svg>
   </div></div>
 
   <!-- PANEL 4 · BUSINESS (back when folded) -->
-  <div class="slide dark" id="A4"><div id="P4" style="display:contents">
-    <svg class="trend" viewBox="0 0 160 90" preserveAspectRatio="none"><path d="M0 78 C40 76 55 70 75 58 S120 30 160 14" fill="none" stroke="#1EC8C8" stroke-width=".35"/></svg>
+  <div class="slide deep" id="A4"><div id="P4" style="display:contents">
     <h2 style="position:relative">העסק מוכן לצמוח. <span class="t">התזרים לא.</span></h2>
     <p class="val" style="position:relative">מימון נכון משרת את תוכנית הצמיחה,<br>ולא חונק את התזרים.</p>
     <div class="icons" style="position:relative;color:#fff">
@@ -175,7 +177,7 @@ body.slides .sheet:after{display:none}
       <div><svg><use href="#i-flow"/></svg>החזר לפי התזרים</div>
       <div><svg><use href="#i-total"/></svg>העלות הכוללת, לא רק הריבית</div>
     </div>
-    <div class="cta" style="position:relative">הצמיחה הבאה, במרחק שיחה <i></i> <span class="ph">052-441-5395</span></div>
+    <div class="cta" style="position:relative">הצמיחה הבאה, במרחק שיחה <i></i> <span class="ph"><bdi>052-441-5395</bdi></span></div>
     <img class="logo-sm" src="assets/logo-mark-white.png" alt="MAKE SENSE">
     <div class="fine">כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</div>
   </div></div>
@@ -188,9 +190,9 @@ body.slides .sheet:after{display:none}
   <!-- PANEL 5 · PAIN -->
   <div class="slide white" id="B1"><div id="P5" style="display:contents">
     <p class="open">כשזה מגיע לכסף גדול, קל להרגיש לבד מול המערכת.</p>
-    <div class="bubbles"><span>"הבנק אמר לא."</span><span>"ההחזר רק עולה."</span><span>"העסק צריך אוויר."</span></div>
+    <div class="bubbles"><span>״הבנק אמר לא.״</span><span>״ההחזר רק עולה.״</span><span>״העסק צריך אוויר.״</span></div>
     <h2>הבנק מייצג את הבנק.<br><span class="b">מי מייצג אתכם?</span></h2>
-    <div class="tags"><b>מקרים שאני פוגש כל הזמן:</b><span>זוגות צעירים</span><span>משפרי דיור</span><span>מסורבי בנקים</span><span>עצמאים</span><span>בעלי עסקים</span><span>משקיעי נדל"ן</span><span>בני 55+</span></div>
+    <div class="tags"><b>מקרים שאני פוגש כל הזמן:</b><span>זוגות צעירים</span><span>משפרי דיור</span><span>מסורבי בנקים</span><span>עצמאים</span><span>בעלי עסקים</span><span>משקיעי נדל״ן</span><span>בני 55+</span></div>
   </div></div>
 
   <!-- PANEL 6 · SHIREL -->
@@ -200,7 +202,7 @@ body.slides .sheet:after{display:none}
       <h2>ראיתי מקרוב מה טעות פיננסית<br>עושה למשפחה.</h2>
       <p class="val">למדתי את מה שאף אחד לא לימד אותנו.</p>
       <div class="creds">B.A כלכלה + M.B.A · חבר בהתאחדות יועצי המשכנתאות</div>
-      <p class="quote">"יש לו המון ידע, והמון סבלנות." <small>· יונתן, הגיע עם מצב מורכב מהסטנדרט</small></p>
+      <p class="quote">״יש לו המון ידע, והמון סבלנות.״ <small>· יונתן, הגיע עם מצב מורכב מהסטנדרט</small></p>
       <div class="sign">שיראל</div>
     </div>
     <div class="photo"><img src="assets/shirel.jpg" alt="שיראל פרגר"></div>
@@ -211,7 +213,7 @@ body.slides .sheet:after{display:none}
     <div class="rule"></div>
     <h2>אני לא מוכר לכם את מה שיש לבנק.<br><span class="b">אני בוחן מה נכון לכם.</span></h2>
     <div class="cmp">
-      <div class="h bank">יועץ בבנק</div><div class="h"></div><div class="h me">MAKE SENSE</div>
+      <div class="h bank">יועץ בבנק</div><div></div><div class="h me">MAKE SENSE</div>
       <div class="bank">בנק אחד</div><div class="arr">←</div><div class="me">כמה גופים מממנים</div>
       <div class="bank">המוצר של הבנק</div><div class="arr">←</div><div class="me">תוכנית לפי המטרות שלכם</div>
       <div class="bank">מגישים לכל מקום</div><div class="arr">←</div><div class="me">מגישים למקום הנכון</div>
@@ -222,7 +224,7 @@ body.slides .sheet:after{display:none}
   <div class="slide dark" id="B4"><div id="P8" style="display:flex;align-items:center;width:100%">
     <div class="txt">
       <p class="open">לא צריך לדעת מה הפתרון. מספיק להתחיל בשיחה.</p>
-      <div class="contact">שיחת היכרות ללא עלות · <b>052-441-5395</b> · sp.makesense@gmail.com</div>
+      <div class="contact">שיחת היכרות ללא עלות · <b><bdi>052-441-5395</bdi></b> · <bdi>sp.makesense@gmail.com</bdi></div>
       <p class="ref">מכירים מישהו שתקוע מול הבנק? תפנו אותו אליי, ואעדכן אתכם.</p>
       <div class="close"><div class="rule"></div><h2>הצעד הראשון מבטיח<br><span class="t">שלא תישארו במקום.</span></h2></div>
     </div>

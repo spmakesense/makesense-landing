@@ -289,12 +289,12 @@ children.push(h3('עקרונות'));
 
 // ---------- 5. design ----------
 children.push(h1('5. הנחיות עיצוב'));
-children.push(p('**סגנון:** Premium Editorial / Private Banking.'));
+children.push(p('**סגנון:** Premium Editorial / Private Banking, לפי מערכת העיצוב "בניין" (Bauhaus): שטוח, בלי גרדיאנטים ובלי צללים, צבע הדגשה אחד (טורקיז) שמשמש רק להנעה לפעולה ולמילת מפתח אחת, פינות ישרות, ומספרי טלפון ומיילים מבודדים בכיוון LTR.'));
 children.push(h3('צבעים'));
 children.push(table([
   ['תפקיד', 'צבע', 'HEX'],
   ['מותג ראשי', 'כחול רויאל', '#004AAD'],
-  ['רקע כהה', 'גרדיאנט כחול', '#1F8BF0 → #004AAD → #002C6B'],
+  ['רקע כהה', 'כחול רויאל שטוח / כחול עמוק שטוח', '#004AAD / #002C6B'],
   ['טקסט על רקע בהיר', 'שחור', '#0A0A0A'],
   ['הדגשה קטנה', 'טורקיז', '#1EC8C8'],
   ['רקע בהיר', 'לבן / תכלת', '#FFFFFF / #F4F8FF'],
@@ -303,7 +303,7 @@ children.push(p('**חלוקה:** 60% לבן ותכלת, 30% כחול, 10% טור
 children.push(h3('טיפוגרפיה'));
 children.push(table([
   ['שימוש', 'גופן', 'גודל'],
-  ['כותרת ראשית', 'Rubik ExtraBold/Black, או גופן עברי גאומטרי מקביל', '18–29pt (לפי אורך הכותרת)'],
+  ['כותרת ראשית', 'Frank Ruhl Libre Bold (סריף עברי), ריווח אותיות 0, גובה שורה 1.15 לפחות', '18–28pt (לפי אורך הכותרת)'],
   ['משפט ערך', 'Heebo Regular', '10.5–12pt'],
   ['מסרים, עדויות, תגיות', 'Heebo Medium / Rubik Medium', '7.6–10.5pt'],
   ['הנעה לפעולה', 'Rubik Medium', '10.5pt, טלפון Bold בכחול'],
@@ -320,7 +320,7 @@ children.push(h3('עושים'));
 children.push(h3('לא עושים'));
 ['תלת-ממד, מטבעות, חזירי חיסכון, תמונות סטוק ולחיצות ידיים.',
  'פאנל שנראה כמו אוסף של כרטיסיות.',
- 'יותר מגרדיאנט אחד בפאנל, וגרדיאנט על טקסט.',
+ 'גרדיאנטים, צללים ופינות מעוגלות (מקסימום 0.6 מ"מ).',
  'לוגואים של בנקים או של כרטיסי אשראי.',
  'רשימות שירותים ארוכות.'].forEach(t => children.push(bullet(t)));
 
@@ -390,8 +390,8 @@ const spec = {
   format: { panel_mm: [160, 90], aspect: '16:9', panels_per_side: 4, sheet_mm: [160, 360], fold: 'accordion, 3 horizontal folds', bleed_mm: 3, safe_margin_mm: 6, direction: 'rtl', language: 'he', folded: { front: 'panel_1', back: 'panel_4' } },
   style: {
     mood: 'Premium Editorial / Private Banking',
-    colors: { primary: '#004AAD', dark_gradient: ['#1F8BF0', '#004AAD', '#002C6B'], text: '#0A0A0A', accent: '#1EC8C8', light: ['#FFFFFF', '#F4F8FF'], ratio: '60% light / 30% blue / 10% turquoise' },
-    fonts: { headline: 'Rubik Black/Bold', body: 'Heebo', signature: 'Hebrew handwriting' },
+    colors: { primary: '#004AAD', dark: ['#004AAD', '#002C6B'], gradients: 'none (flat, Bauhaus system)', text: '#0A0A0A', accent: '#1EC8C8', light: ['#FFFFFF', '#F4F8FF'], ratio: '60% light / 30% blue / 10% turquoise' },
+    fonts: { headline: 'Frank Ruhl Libre Bold', body: 'Heebo', signature: 'Hebrew handwriting' },
     rules: ['max 5 visible text lines per panel', '40%+ white space', 'thin line icons (1.5pt) blue + turquoise dot, max 3 per panel', 'real photo of Shirel only', 'original MAKE SENSE logo only', 'thin turquoise rule (12x0.7mm) as recurring detail'],
     avoid: ['3D', 'coins', 'piggy banks', 'stock photos', 'handshakes', 'bank or card logos', 'card grids', 'long service lists'],
   },
@@ -399,7 +399,7 @@ const spec = {
     {
       side: 'outside', character: 'marketing, sharp, service-focused', order: 'top_to_bottom',
       panels: [
-        { id: 'panel_1', role: 'cover', background: 'dark_gradient', layout: 'text right two-thirds, photo left third',
+        { id: 'panel_1', role: 'cover', background: '#004AAD', layout: 'text right two-thirds, photo left third',
           text: [
             { role: 'headline', lines: 2, size_pt: 22, weight: 'black', color: '#FFFFFF', highlight: { phrase: 'השליטה הכלכלית שלכם', color: '#1EC8C8' }, value: 'השליטה הכלכלית שלכם מתחילה כאן' },
             { role: 'fields', size_pt: 9.5, value: 'משכנתאות · אשראי · השקעות נדל"ן · מימון לעסקים' },
@@ -419,7 +419,7 @@ const spec = {
             { role: 'testimonial', size_pt: 9.4, value: 'ידע להנחות אותנו בצורה ברורה לאורך כל התהליך.', by: 'בן, נכס להשקעה' },
             { role: 'cta', size_pt: 11, value: 'הנכס הבא, במרחק שיחה · 052-441-5395' } ],
           visuals: ['one large thin-line icon: calculator + house, left side'] },
-        { id: 'panel_4', role: 'service: business financing (back cover when folded)', audience: 'self-employed, companies, BNI members', background: 'dark_gradient',
+        { id: 'panel_4', role: 'service: business financing (back cover when folded)', audience: 'self-employed, companies, BNI members', background: '#004AAD',
           text: [
             { role: 'headline', lines: 1, size_pt: 23, weight: 'black', color: '#FFFFFF', highlight: { word: 'התזרים לא', color: '#1EC8C8' }, value: 'העסק מוכן לצמוח. התזרים לא.' },
             { role: 'value', lines: 2, size_pt: 11, value: 'מימון נכון משרת את תוכנית הצמיחה, ולא חונק את התזרים.' },
@@ -451,7 +451,7 @@ const spec = {
             { role: 'headline', lines: 2, size_pt: 21, highlight: { phrase: 'אני בוחן מה נכון לכם.', color: '#004AAD' }, value: 'אני לא מוכר לכם את מה שיש לבנק. אני בוחן מה נכון לכם.' },
             { role: 'comparison', size_pt: 10.5, columns: ['יועץ בבנק', 'MAKE SENSE'], rows: [['בנק אחד', 'כמה גופים מממנים'], ['המוצר של הבנק', 'תוכנית לפי המטרות שלכם'], ['מגישים לכל מקום', 'מגישים למקום הנכון']] } ],
           visuals: ['two-column comparison: bank in grey, MAKE SENSE in blue, thin turquoise arrows', 'one graphic idea only, no pyramid'] },
-        { id: 'panel_8', role: 'call to action', background: 'dark_gradient',
+        { id: 'panel_8', role: 'call to action', background: '#004AAD',
           text: [
             { role: 'opening', size_pt: 11, color: '#DCE8FA', value: 'לא צריך לדעת מה הפתרון. מספיק להתחיל בשיחה.' },
             { role: 'contact', size_pt: 8.8, phone_size_pt: 11.5, value: 'שיחת היכרות ללא עלות · 052-441-5395 · sp.makesense@gmail.com' },

@@ -32,11 +32,11 @@
     "mood": "Premium Editorial / Private Banking",
     "colors": {
       "primary": "#004AAD",
-      "dark_gradient": [
-        "#1F8BF0",
+      "dark": [
         "#004AAD",
         "#002C6B"
       ],
+      "gradients": "none (flat, Bauhaus system)",
       "text": "#0A0A0A",
       "accent": "#1EC8C8",
       "light": [
@@ -46,7 +46,7 @@
       "ratio": "60% light / 30% blue / 10% turquoise"
     },
     "fonts": {
-      "headline": "Rubik Black/Bold",
+      "headline": "Frank Ruhl Libre Bold",
       "body": "Heebo",
       "signature": "Hebrew handwriting"
     },
@@ -78,7 +78,7 @@
         {
           "id": "panel_1",
           "role": "cover",
-          "background": "dark_gradient",
+          "background": "#004AAD",
           "layout": "text right two-thirds, photo left third",
           "text": [
             {
@@ -201,7 +201,7 @@
           "id": "panel_4",
           "role": "service: business financing (back cover when folded)",
           "audience": "self-employed, companies, BNI members",
-          "background": "dark_gradient",
+          "background": "#004AAD",
           "text": [
             {
               "role": "headline",
@@ -382,7 +382,7 @@
         {
           "id": "panel_8",
           "role": "call to action",
-          "background": "dark_gradient",
+          "background": "#004AAD",
           "text": [
             {
               "role": "opening",
