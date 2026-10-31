@@ -1,0 +1,24 @@
+{
+  "slug": "mizrach",
+  "name_he": "מזרח",
+  "name_en": "Mizrach",
+  "tagline_he": "יפו אחר הצהריים. סיד לבן, סלי תבלינים, אינדיגו של רקמה.",
+  "tagline_en": "Whitewashed Jaffa walls, baskets of saffron. Warm without raising its voice.",
+  "mood": [
+    "cultural",
+    "layered",
+    "hospitable",
+    "calm"
+  ],
+  "category": "heritage",
+  "dark_capable": false,
+  "fonts_used": [
+    "David Libre",
+    "Heebo"
+  ],
+  "author": {
+    "name": "Agent Skills Israel",
+    "github": "skills-il"
+  },
+  "version": "0.1.0"
+}
