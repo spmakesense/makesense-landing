@@ -37,5 +37,5 @@ msg = "היי שיראל, קיבלתי את העלון שלך ב-BNI ואשמח 
 url = "https://wa.me/972524415395?text=" + urllib.parse.quote(msg)
 q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, border=0, box_size=20)
 q.add_data(url); q.make(fit=True)
-q.make_image(fill_color="#25264A", back_color="white").save(OUT + "qr-whatsapp.png")
+q.make_image(fill_color="#0A0A0A", back_color="white").save(OUT + "qr-whatsapp.png")
 print("qr url:", url)
