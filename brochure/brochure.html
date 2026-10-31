@@ -113,6 +113,9 @@ h2{font-weight:800;font-size:14.5pt;line-height:1.12;color:var(--navy)}
 .choose{font-size:7.6pt;color:var(--muted);margin:-1mm 0 1.6mm}
 .choose b{color:var(--navy)}
 
+.benefits .bi{position:relative;width:9mm;height:9mm;border-radius:50%;background:linear-gradient(140deg,#F0F6FF 0%,#D3E4FB 100%);display:grid;place-items:center;margin-bottom:.4mm}
+.benefits .bi svg{width:5.6mm;height:5.6mm}
+.benefits .bi i{position:absolute;top:-.6mm;right:-1mm;font-style:normal;font-family:'Rubik';font-weight:800;font-size:6.4pt;color:#fff;background:linear-gradient(135deg,var(--blue2),var(--deep));width:3.8mm;height:3.8mm;border-radius:50%;display:grid;place-items:center}
 /* ---------- A4 back ---------- */
 .back h2{font-size:14pt;margin-bottom:3mm}
 .back .cols{display:grid;grid-template-columns:1fr 30mm 1fr;gap:4mm;width:100%;align-items:center;margin-bottom:3mm}
@@ -158,6 +161,22 @@ body.slides .sheet:after{display:none}
   <symbol id="d-plan" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#004AAD"/><path d="M7.5 9h9M7.5 12.5h9M7.5 16h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="d-bank" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#004AAD"/><path d="M6 10l6-3.5 6 3.5M7.5 11v5M12 11v5M16.5 11v5M6 17.5h12" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="d-honest" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#004AAD"/><path d="M7 12.5l3 3 7-7" stroke="#1EC8C8" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="b-calc" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2.2"/><circle cx="9" cy="13" r=".6"/><circle cx="12" cy="13" r=".6"/><circle cx="15" cy="13" r=".6"/><circle cx="9" cy="17" r=".6"/><circle cx="12" cy="17" r=".6"/><circle cx="15" cy="17" r=".6"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="5.5" width="8" height="3.5" rx=".8"/></g></symbol>
+  <symbol id="b-mix" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 12V3.5"/><path d="M12 12l-6.5 5.5"/></g><path d="M12 12V3.5a8.5 8.5 0 0 1 8 5.7z" fill="#1EC8C8"/></symbol>
+  <symbol id="b-bank" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 4l9 5.5"/><path d="M6 11v6M10 11v6M14 11v6M18 11v6"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20h17"/></g></symbol>
+  <symbol id="b-sign" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.8h8.5l4 4V21H6z"/><path d="M14.5 2.8v4h4"/><path d="M9 9h5M9 12h7"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 17.5c1.4-2.2 2.3.8 3.7-1s1.8 1 3.8-.4"/></g></symbol>
+  <symbol id="b-search" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.7 15.7L21 21"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.4 12.6l4.2-4.2"/><circle cx="8.6" cy="8.6" r=".9"/><circle cx="12.4" cy="12.4" r=".9"/></g></symbol>
+  <symbol id="b-merge" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v2.5c0 3.2 3 5.5 7 6.5M19 3v2.5c0 3.2-3 5.5-7 6.5"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12v9M8.8 17.8L12 21l3.2-3.2"/></g></symbol>
+  <symbol id="b-calendar" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.5v6.5M9.3 15.4L12 18l2.7-2.6"/></g></symbol>
+  <symbol id="b-scale" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15.5M7.5 20h9M5 7.5h14"/><path d="M5 7.5L2.6 13a2.6 2.6 0 0 0 4.8 0zM19 7.5L16.6 13a2.6 2.6 0 0 0 4.8 0z"/></g><circle cx="12" cy="4" r="1.6" fill="#1EC8C8"/></symbol>
+  <symbol id="b-homeheart" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11L12 4.5l8.5 6.5"/><path d="M5.5 9.5V20h13V9.5"/></g><path d="M12 17.6s-3.3-2-3.3-4a1.7 1.7 0 0 1 3.3-.7 1.7 1.7 0 0 1 3.3.7c0 2-3.3 4-3.3 4z" fill="#1EC8C8"/></symbol>
+  <symbol id="b-bridge" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15.5h20"/><path d="M3.5 15.5C6 10 9 8 12 8s6 2 8.5 7.5"/><path d="M6 15.5V20M18 15.5V20"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11.3v4.2M12 8.2v7.3M16 11.3v4.2"/></g></symbol>
+  <symbol id="b-brief" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.2"/><path d="M9 7V4.8h6V7"/><path d="M3 12.5h18"/></g><rect x="10.3" y="11" width="3.4" height="3.2" rx=".6" fill="#1EC8C8"/></symbol>
+  <symbol id="b-target" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="8"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="4.3"/><path d="M11 13l8.5-8.5M16.5 4.5h3v3"/></g><circle cx="11" cy="13" r="1.4" fill="#004AAD"/></symbol>
+  <symbol id="b-advice" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 4.5h17v11.5H10l-4.5 4v-4h-2z"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.8 13.2V10L12 7.6l3.2 2.4v3.2z"/></g></symbol>
+  <symbol id="b-chart" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5V20.5h17"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15.5l4-4.5 3 3 5.5-6.5"/><path d="M16.3 7.5h3.2v3.2"/></g></symbol>
+  <symbol id="b-houses" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 20.5v-6l4-3.2 4 3.2v6z"/><path d="M10.5 20.5V11l5.5-4.5 5.5 4.5v9.5z"/></g><g fill="none" stroke="#1EC8C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3.5v5M3 6h5"/></g></symbol>
+  <symbol id="b-globe" viewBox="0 0 24 24"><g fill="none" stroke="#004AAD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/><path d="M12 3.2c2.6 2.4 3.8 5.4 3.8 8.8s-1.2 6.4-3.8 8.8c-2.6-2.4-3.8-5.4-3.8-8.8S9.4 5.6 12 3.2z"/></g><circle cx="17.6" cy="6.4" r="2.2" fill="#1EC8C8"/></symbol>
 </defs></svg>
 
 <!-- =====================================================================
@@ -257,10 +276,10 @@ body.slides .sheet:after{display:none}
       <div class="t"><div class="kicker">הבית הבא שלכם · דירה ראשונה, שיפור דיור או השקעה</div><h2>מצד אחד חלום. מצד שני התחייבות לשנים ארוכות.</h2></div></div>
     <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>קיבלנו אישור עקרוני, אבל אין לנו מושג אם זו ההצעה הנכונה.</q></div>
     <div class="benefits steps">
-      <div><i>1</i>בודקים יכולת החזר ובונים תוכנית</div>
-      <div><i>2</i>מתאימים תמהיל מסלולים לחיים שלכם</div>
-      <div><i>3</i>מכרז בין בנקים ואישור עקרוני</div>
-      <div><i>4</i>ביטחונות, מסמכים וליווי עד החתימה</div>
+      <div><span class="bi"><svg><use href="#b-calc"/></svg><i>1</i></span>בודקים יכולת החזר ובונים תוכנית</div>
+      <div><span class="bi"><svg><use href="#b-mix"/></svg><i>2</i></span>מתאימים תמהיל מסלולים לחיים שלכם</div>
+      <div><span class="bi"><svg><use href="#b-bank"/></svg><i>3</i></span>מכרז בין בנקים ואישור עקרוני</div>
+      <div><span class="bi"><svg><use href="#b-sign"/></svg><i>4</i></span>ביטחונות, מסמכים וליווי עד החתימה</div>
     </div>
     <p class="urge"><b>משכנתה לא לוקחים רק לפי ריבית.</b> לפני שחותמים, שווה לשמוע דעה נוספת. קיבלתם "לא" מהבנק? בודקים גם פתרונות נוספים.*<small>*כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</small></p>
     <div class="cta">בודקים את ההצעה שלכם <span class="num">052-441-5395</span></div>
@@ -272,10 +291,10 @@ body.slides .sheet:after{display:none}
       <div class="t"><div class="kicker">מחזור משכנתה ואיחוד הלוואות</div><h2>הגיע הזמן לבדוק מחדש.</h2></div></div>
     <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>בין המשכנתה להלוואות, כבר לא ברור לנו כמה אנחנו משלמים בחודש.</q></div>
     <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>בדיקת כדאיות למחזור המשכנתה</div>
-      <div><svg><use href="#i-check"/></svg>איחוד הלוואות יקרות לתשלום אחד</div>
-      <div><svg><use href="#i-check"/></svg>החזר חודשי נמוך ומסודר יותר</div>
-      <div><svg><use href="#i-check"/></svg>מכרז ריביות בין כמה בנקים</div>
+      <div><span class="bi"><svg><use href="#b-search"/></svg></span>בדיקת כדאיות למחזור המשכנתה</div>
+      <div><span class="bi"><svg><use href="#b-merge"/></svg></span>איחוד הלוואות יקרות לתשלום אחד</div>
+      <div><span class="bi"><svg><use href="#b-calendar"/></svg></span>החזר חודשי נמוך ומסודר יותר</div>
+      <div><span class="bi"><svg><use href="#b-scale"/></svg></span>מכרז ריביות בין כמה בנקים</div>
     </div>
     <p class="urge"><b>מה שהיה נכון לפני כמה שנים, אולי כבר לא משרת אתכם.</b> התוצאה: פחות עומס, יותר מרווח נשימה. ואם לא נמצא כדאיות? תקבלו ממני טיפים לשפר לבד.</p>
     <div class="cta">לבדיקה מחדש <span class="num">052-441-5395</span></div>
@@ -287,10 +306,10 @@ body.slides .sheet:after{display:none}
       <div class="t"><div class="kicker">משכנתה הפוכה · מימון לעסקים ולפרטיים</div><h2>פתרונות מימון לכל שלב בחיים.</h2></div></div>
     <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>ההורים רוצים לעזור לילדים בדירה, אבל כל הכסף שלהם בקירות.</q></div>
     <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>משכנתה הפוכה לבני 55+, בלי למכור את הבית*</div>
-      <div><svg><use href="#i-check"/></svg>הלוואות גישור עד שהכסף מגיע</div>
-      <div><svg><use href="#i-check"/></svg>אשראי עסקי לצמיחה ולתזרים</div>
-      <div><svg><use href="#i-check"/></svg>פתרונות ייעודיים לצורך אישי</div>
+      <div><span class="bi"><svg><use href="#b-homeheart"/></svg></span>משכנתה הפוכה לבני 55+, בלי למכור את הבית*</div>
+      <div><span class="bi"><svg><use href="#b-bridge"/></svg></span>הלוואות גישור עד שהכסף מגיע</div>
+      <div><span class="bi"><svg><use href="#b-brief"/></svg></span>אשראי עסקי לצמיחה ולתזרים</div>
+      <div><span class="bi"><svg><use href="#b-target"/></svg></span>פתרונות ייעודיים לצורך אישי</div>
     </div>
     <p class="urge"><b>בודקים קודם את כל החלופות, ובוחרים רק את מה שנכון לכם.</b> לצמיחה או לצורך אישי, עם תוכנית החזר ברורה.<small>*במשכנתה הפוכה ללא החזר חודשי, הריבית וההצמדה מצטברות ומקטינות את שווי הירושה. כל מקרה נבחן לגופו.</small></p>
     <div class="cta">לבדיקת פתרון מימון <span class="num">052-441-5395</span></div>
@@ -302,10 +321,10 @@ body.slides .sheet:after{display:none}
       <div class="t"><div class="kicker">ליווי רוכשים ומשקיעי נדל"ן</div><h2>לפני שקונים או מוכרים, בודקים את המספרים.</h2></div></div>
     <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>יש לי דירה, ואני רוצה לקנות עוד אחת. לא בטוח שזה נכון לי.</q></div>
     <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>ייעוץ לפני קנייה או מכירה</div>
-      <div><svg><use href="#i-check"/></svg>בדיקת כדאיות, תזרים ותשואה</div>
-      <div><svg><use href="#i-check"/></svg>מינוף הון קיים לנכס נוסף</div>
-      <div><svg><use href="#i-check"/></svg>מימון בארץ, בחו"ל ובהתחדשות עירונית</div>
+      <div><span class="bi"><svg><use href="#b-advice"/></svg></span>ייעוץ לפני קנייה או מכירה</div>
+      <div><span class="bi"><svg><use href="#b-chart"/></svg></span>בדיקת כדאיות, תזרים ותשואה</div>
+      <div><span class="bi"><svg><use href="#b-houses"/></svg></span>מינוף הון קיים לנכס נוסף</div>
+      <div><span class="bi"><svg><use href="#b-globe"/></svg></span>מימון בארץ, בחו"ל ובהתחדשות עירונית</div>
     </div>
     <p class="urge"><b>אני משקיע בעצמי, והשאלה החשובה היא כמה נכון לקחת.</b> בודקים לפני שחותמים, כשעוד אפשר לבחור.</p>
     <div class="cta">לבדיקת עסקה <span class="num">052-441-5395</span></div>
