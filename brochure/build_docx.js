@@ -380,6 +380,95 @@ children.push(h1('10. לאשר לפני עיצוב ודפוס'));
  'קישור ה-QR: wa.me/972524415395, עם הודעה כתובה מראש.', 'צילום של שיראל ברזולוציה גבוהה (300dpi בגודל ההדפסה).',
 ].forEach(t => children.push(bullet(t)));
 
+
+// ---------- 11. JSON spec ----------
+const spec = {
+  project: 'MAKE SENSE brochure',
+  advisor: { name: 'שיראל פרגר', title: 'יועץ פיננסי עצמאי', phone: '052-441-5395', email: 'sp.makesense@gmail.com', whatsapp_qr: 'https://wa.me/972524415395' },
+  format: { panel_mm: [160, 90], aspect: '16:9', panels_per_side: 4, sheet_mm: [160, 360], fold: 'accordion, 3 horizontal folds', bleed_mm: 3, safe_margin_mm: 6, direction: 'rtl', language: 'he', folded: { front: 'panel_1', back: 'panel_4' } },
+  style: {
+    mood: 'Premium Editorial / Private Banking',
+    colors: { primary: '#004AAD', dark_gradient: ['#1F8BF0', '#004AAD', '#002C6B'], text: '#0A0A0A', accent: '#1EC8C8', light: ['#FFFFFF', '#F4F8FF'], ratio: '60% light / 30% blue / 10% turquoise' },
+    fonts: { headline: 'Rubik Black/Bold', body: 'Heebo', signature: 'Hebrew handwriting' },
+    rules: ['max 5 visible text lines per panel', '40%+ white space', 'thin line icons (1.5pt) blue + turquoise dot, max 3 per panel', 'real photo of Shirel only', 'original MAKE SENSE logo only', 'thin turquoise rule (12x0.7mm) as recurring detail'],
+    avoid: ['3D', 'coins', 'piggy banks', 'stock photos', 'handshakes', 'bank or card logos', 'card grids', 'long service lists'],
+  },
+  sides: [
+    {
+      side: 'outside', character: 'marketing, sharp, service-focused', order: 'top_to_bottom',
+      panels: [
+        { id: 'panel_1', role: 'cover', background: 'dark_gradient', layout: 'text right two-thirds, photo left third',
+          text: [
+            { role: 'headline', lines: 2, size_pt: 28, weight: 'black', color: '#FFFFFF', highlight: { word: 'השליטה', color: '#1EC8C8' }, value: 'השליטה הכלכלית שלכם מתחילה כאן' },
+            { role: 'fields', size_pt: 10, value: 'משכנתאות · אשראי · השקעות נדל"ן · מימון לעסקים' },
+            { role: 'name', size_pt: 10, value: 'שיראל פרגר · יועץ פיננסי עצמאי' },
+            { role: 'slogan', size_pt: 11, highlight: { word: 'להגשים', color: '#1EC8C8' }, value: 'לתכנן. לצמוח. להגשים.' } ],
+          visuals: ['MAKE SENSE logo, white, small, above headline', 'real photo of Shirel, arms crossed, left third'] },
+        { id: 'panel_2', role: 'service: mortgages & credit', audience: 'families, couples, property owners', background: '#FFFFFF',
+          text: [
+            { role: 'headline', lines: 2, size_pt: 23, value: 'המשכורת נכנסת. ההלוואות יוצאות. והמינוס נשאר.' },
+            { role: 'value', size_pt: 11, value: 'בונים מחדש את המשכנתה וההלוואות, כך שאפשר לנשום.' },
+            { role: 'icon_row', size_pt: 9.5, items: ['משכנתה או מחזור', 'איחוד הלוואות', 'בדיקה מול כמה גופים'], icons: ['house', 'merging arrows', 'three buildings'] },
+            { role: 'cta', size_pt: 11, value: 'סדר בהלוואות, במרחק שיחה · 052-441-5395' } ] },
+        { id: 'panel_3', role: 'service: real-estate investment', audience: 'owners, upgraders, investors', background: '#F4F8FF',
+          text: [
+            { role: 'headline', lines: 2, size_pt: 23, value: 'לפני שקונים, מוכרים או משקיעים, בודקים את המספרים.' },
+            { role: 'value', size_pt: 11, value: 'קניתי 3 דירות עד גיל 30. השאלה היא תמיד כמה נכון לקחת.' },
+            { role: 'icon_row', optional: true, size_pt: 9.5, items: ['בדיקת כדאיות', 'הון עצמי מנכס קיים', 'תכנון המימון'] },
+            { role: 'cta', size_pt: 11, value: 'הנכס הבא, במרחק שיחה · 052-441-5395' } ],
+          visuals: ['one large thin-line icon: calculator + house, left side'] },
+        { id: 'panel_4', role: 'service: business financing (back cover when folded)', audience: 'self-employed, companies, BNI members', background: 'dark_gradient',
+          text: [
+            { role: 'headline', lines: 1, size_pt: 24, weight: 'black', color: '#FFFFFF', highlight: { word: 'התזרים לא', color: '#1EC8C8' }, value: 'העסק מוכן לצמוח. התזרים לא.' },
+            { role: 'value', lines: 2, size_pt: 11, value: 'מימון נכון משרת את תוכנית הצמיחה, ולא חונק את התזרים.' },
+            { role: 'icon_row', size_pt: 9.5, items: ['בחינת חלופות מימון', 'החזר לפי התזרים', 'העלות הכוללת, לא רק הריבית'] },
+            { role: 'cta', size_pt: 11, value: 'הצמיחה הבאה, במרחק שיחה · 052-441-5395' } ],
+          visuals: ['single thin turquoise rising line across panel', 'white logo in corner'],
+          fine_print: 'כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.' },
+      ],
+    },
+    {
+      side: 'inside', character: 'story, emotional, personal', order: 'top_to_bottom',
+      panels: [
+        { id: 'panel_5', role: 'pain & identification', background: '#FFFFFF', priority: 'most important panel',
+          text: [
+            { role: 'opening', size_pt: 12, value: 'כשזה מגיע לכסף גדול, קל להרגיש לבד מול המערכת.' },
+            { role: 'speech_bubbles', size_pt: 10, items: ['הבנק אמר לא.', 'ההחזר רק עולה.', 'העסק צריך אוויר.'] },
+            { role: 'headline', lines: 2, size_pt: 30, weight: 'black', highlight: { phrase: 'מי מייצג אתכם?', color: '#004AAD' }, value: 'הבנק מייצג את הבנק. מי מייצג אתכם?' },
+            { role: 'tags', size_pt: 8.5, label: 'מקרים שאני פוגש כל הזמן:', items: ['זוגות צעירים', 'משפרי דיור', 'מסורבי בנקים', 'עצמאים', 'בעלי עסקים', 'משקיעי נדל"ן', 'בני 55+'], drop_if_overflow: 'בני 55+' } ] },
+        { id: 'panel_6', role: 'Shirel story', background: '#F4F8FF', layout: 'photo half, text half',
+          text: [
+            { role: 'headline', lines: 2, size_pt: 23, value: 'ראיתי מקרוב מה טעות פיננסית עושה למשפחה.' },
+            { role: 'value', size_pt: 11, value: 'למדתי את מה שאף אחד לא לימד אותנו. היום אני עומד לצד מי שצריך.' },
+            { role: 'testimonial', size_pt: 10, value: '[עדות אמיתית: משפט אחד ושם פרטי]', fallback: 'B.A כלכלה + M.B.A · חבר בהתאחדות יועצי המשכנתאות' },
+            { role: 'signature', style: 'handwriting', color: '#004AAD', value: 'שיראל' } ],
+          visuals: ['real photo of Shirel looking at camera'] },
+        { id: 'panel_7', role: 'method & differentiation', background: '#FFFFFF',
+          text: [
+            { role: 'headline', lines: 2, size_pt: 23, highlight: { phrase: 'אני בוחן מה נכון לכם.', color: '#004AAD' }, value: 'אני לא מוכר לכם את מה שיש לבנק. אני בוחן מה נכון לכם.' },
+            { role: 'comparison', size_pt: 10.5, columns: ['יועץ בבנק', 'MAKE SENSE'], rows: [['בנק אחד', 'כמה גופים מממנים'], ['המוצר של הבנק', 'תוכנית לפי המטרות שלכם'], ['מגישים לכל מקום', 'מגישים למקום הנכון']] } ],
+          visuals: ['two-column comparison: bank in grey, MAKE SENSE in blue, thin turquoise arrows', 'one graphic idea only, no pyramid'] },
+        { id: 'panel_8', role: 'call to action', background: 'dark_gradient',
+          text: [
+            { role: 'opening', size_pt: 12, color: '#FFFFFF', value: 'לא צריך לדעת מה הפתרון. מספיק להתחיל בשיחה.' },
+            { role: 'contact', size_pt: 11, phone_size_pt: 14, value: 'שיחת היכרות ללא עלות · 052-441-5395 · sp.makesense@gmail.com' },
+            { role: 'referral', size_pt: 10, value: 'מכירים מישהו שתקוע מול הבנק? תפנו אותו אליי, ואעדכן אתכם בכל שלב.' },
+            { role: 'closing_headline', lines: 2, size_pt: 28, weight: 'black', highlight: { phrase: 'שלא תישארו במקום', color: '#1EC8C8' }, value: 'הצעד הראשון מבטיח שלא תישארו במקום.' } ],
+          visuals: ['large WhatsApp QR (min 25mm) on white rounded square, left, no caption', 'short turquoise rule above closing headline', 'small white logo'] },
+      ],
+    },
+  ],
+};
+fs.writeFileSync(path.join(__dirname, 'brochure-spec.json'), JSON.stringify(spec, null, 2));
+children.push(pageBreak());
+children.push(h1('11. מפרט JSON: שני צדי הברושור (דוגמה)'));
+children.push(p('מפרט מובנה של שני הצדדים, לשימוש בכלי עיצוב, בכלי AI או בקוד. הקובץ נשמר גם בנפרד: brochure-spec.json.'));
+JSON.stringify(spec, null, 2).split('\n').forEach(line => children.push(new Paragraph({
+  bidirectional: false, alignment: AlignmentType.LEFT, spacing: { after: 0, line: 230 },
+  shading: { type: ShadingType.CLEAR, color: 'auto', fill: 'F4F6FA' },
+  children: [new TextRun({ text: line.replace(/^ +/, m => ' '.repeat(m.length)), font: 'Consolas', size: 15, color: '1F2937' })],
+})));
+
 // ---------- document ----------
 const doc = new Document({
   creator: 'MAKE SENSE', title: 'ברושור MAKE SENSE: קופירייטינג והנחיות עיצוב',
