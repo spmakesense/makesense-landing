@@ -84,18 +84,18 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 28,
+              "size_pt": 22,
               "weight": "black",
               "color": "#FFFFFF",
               "highlight": {
-                "word": "השליטה",
+                "phrase": "השליטה הכלכלית שלכם",
                 "color": "#1EC8C8"
               },
               "value": "השליטה הכלכלית שלכם מתחילה כאן"
             },
             {
               "role": "fields",
-              "size_pt": 10,
+              "size_pt": 9.5,
               "value": "משכנתאות · אשראי · השקעות נדל\"ן · מימון לעסקים"
             },
             {
@@ -105,7 +105,7 @@
             },
             {
               "role": "slogan",
-              "size_pt": 11,
+              "size_pt": 10.5,
               "highlight": {
                 "word": "להגשים",
                 "color": "#1EC8C8"
@@ -127,7 +127,11 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 23,
+              "size_pt": 21,
+              "highlight": {
+                "phrase": "והמינוס נשאר.",
+                "color": "#004AAD"
+              },
               "value": "המשכורת נכנסת. ההלוואות יוצאות. והמינוס נשאר."
             },
             {
@@ -165,7 +169,11 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 23,
+              "size_pt": 18,
+              "highlight": {
+                "phrase": "בודקים את המספרים.",
+                "color": "#004AAD"
+              },
               "value": "לפני שקונים, מוכרים או משקיעים, בודקים את המספרים."
             },
             {
@@ -198,7 +206,7 @@
             {
               "role": "headline",
               "lines": 1,
-              "size_pt": 24,
+              "size_pt": 23,
               "weight": "black",
               "color": "#FFFFFF",
               "highlight": {
@@ -264,7 +272,7 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 30,
+              "size_pt": 29,
               "weight": "black",
               "highlight": {
                 "phrase": "מי מייצג אתכם?",
@@ -274,7 +282,7 @@
             },
             {
               "role": "tags",
-              "size_pt": 8.5,
+              "size_pt": 7.6,
               "label": "מקרים שאני פוגש כל הזמן:",
               "items": [
                 "זוגות צעירים",
@@ -298,12 +306,12 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 23,
+              "size_pt": 18,
               "value": "ראיתי מקרוב מה טעות פיננסית עושה למשפחה."
             },
             {
               "role": "value",
-              "size_pt": 11,
+              "size_pt": 10.5,
               "value": "למדתי את מה שאף אחד לא לימד אותנו."
             },
             {
@@ -336,7 +344,7 @@
             {
               "role": "headline",
               "lines": 2,
-              "size_pt": 23,
+              "size_pt": 21,
               "highlight": {
                 "phrase": "אני בוחן מה נכון לכם.",
                 "color": "#004AAD"
@@ -378,25 +386,25 @@
           "text": [
             {
               "role": "opening",
-              "size_pt": 12,
-              "color": "#FFFFFF",
+              "size_pt": 11,
+              "color": "#DCE8FA",
               "value": "לא צריך לדעת מה הפתרון. מספיק להתחיל בשיחה."
             },
             {
               "role": "contact",
-              "size_pt": 11,
-              "phone_size_pt": 14,
+              "size_pt": 8.8,
+              "phone_size_pt": 11.5,
               "value": "שיחת היכרות ללא עלות · 052-441-5395 · sp.makesense@gmail.com"
             },
             {
               "role": "referral",
-              "size_pt": 10,
-              "value": "מכירים מישהו שתקוע מול הבנק? תפנו אותו אליי, ואעדכן אתכם בכל שלב."
+              "size_pt": 8.6,
+              "value": "מכירים מישהו שתקוע מול הבנק? תפנו אותו אליי, ואעדכן אתכם."
             },
             {
               "role": "closing_headline",
               "lines": 2,
-              "size_pt": 28,
+              "size_pt": 25,
               "weight": "black",
               "highlight": {
                 "phrase": "שלא תישארו במקום",
