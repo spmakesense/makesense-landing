@@ -90,14 +90,28 @@ h2{font-weight:800;font-size:14.5pt;line-height:1.12;color:var(--navy)}
 .sign{font-family:'Amatic SC',cursive;font-weight:700;font-size:20pt;color:var(--blue);line-height:1}
 
 /* ---------- A3 why + pyramid ---------- */
-.why .cols{display:grid;grid-template-columns:1fr 64mm;gap:5mm;width:100%;align-items:center}
+.why .cols{display:grid;grid-template-columns:1fr 58mm;gap:5mm;width:100%;align-items:center}
 .diffs{display:grid;gap:1.8mm}
 .diffs div{background:#fff;border-radius:2mm;padding:1.8mm 2.4mm;display:flex;gap:2mm;align-items:center;text-align:right;font-size:7.9pt;line-height:1.3;box-shadow:0 .4mm 1.2mm rgba(11,37,89,.08)}
 .diffs svg{flex:none;width:4.6mm;height:4.6mm}
 .diffs b{color:var(--navy)}
 .pyr-title{font-family:'Rubik';font-weight:800;font-size:9pt;color:var(--navy)}
 .pyr-sub{font-size:6.8pt;color:var(--muted);margin-bottom:1mm}
-#pyramid{width:64mm;height:auto;display:block}
+#pyramid{width:58mm;height:auto;display:block}
+
+.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:7.3pt;line-height:1.25;background:#fff;border-radius:2mm;overflow:hidden;box-shadow:0 .4mm 1.2mm rgba(11,37,89,.08)}
+.cmp th{font-family:'Rubik';font-weight:700;font-size:7.4pt;padding:1.5mm 1.6mm;color:var(--muted);background:#F4F7FC}
+.cmp th.me{background:var(--blue);color:#fff}
+.cmp td{padding:1.25mm 1.6mm;border-top:.25mm solid #E3EBF7;text-align:center}
+.cmp td:first-child{font-weight:700;color:var(--navy);text-align:right;white-space:nowrap}
+.cmp td.me{background:#F1F6FE;color:var(--blue);font-weight:700}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:1.6mm;margin-top:1.8mm}
+.faq div{background:#fff;border-radius:1.6mm;padding:1.4mm 2mm;font-size:6.9pt;line-height:1.3;text-align:right}
+.faq b{display:block;font-family:'Rubik';font-size:7.2pt;color:var(--blue)}
+.steps div{position:relative}
+.steps i{font-style:normal;font-family:'Rubik';font-weight:800;font-size:8pt;color:#fff;background:var(--blue);width:4.6mm;height:4.6mm;border-radius:50%;display:grid;place-items:center}
+.choose{font-size:7.6pt;color:var(--muted);margin:-1mm 0 1.6mm}
+.choose b{color:var(--navy)}
 
 /* ---------- A4 back ---------- */
 .back h2{font-size:14pt;margin-bottom:3mm}
@@ -173,6 +187,7 @@ body.slides .sheet:after{display:none}
     <div class="head"><div class="ico"><svg><use href="#ic-heart"/></svg></div>
       <div class="t"><div class="kicker">נעים להכיר · שיראל פרגר</div><h2>ראיתי מקרוב מה טעות פיננסית עושה למשפחה</h2></div></div>
     <p class="lead">הלוואות רעות, התנהלות שגויה מול הבנקים, ואף אחד שיעמוד לצד ההורים שלי. <b>רוב האנשים פשוט לא קיבלו חינוך פיננסי.</b> בחרתי ללמוד, להשקיע בעצמי ולשנות את זה.</p>
+    <p class="choose"><b>איך בוחרים יועץ אמין?</b> בודקים השכלה, חברות בהתאחדות, ניסיון אמיתי ושקיפות מלאה.</p>
     <div class="benefits facts">
       <div><strong>B.A + M.B.A</strong>כלכלה וניהול, מנהל עסקים</div>
       <div><strong>חבר</strong>בהתאחדות יועצי המשכנתאות</div>
@@ -185,12 +200,20 @@ body.slides .sheet:after{display:none}
   <!-- A3 · WHY + PYRAMID -->
   <div class="slide sky why" id="A3">
     <div class="head"><div class="ico"><svg><use href="#ic-scale"/></svg></div>
-      <div class="t"><div class="kicker">למה יועץ? למה אני?</div><h2>הבנק מייצג את הבנק. <span class="blue">אני מייצג אתכם.</span></h2></div></div>
+      <div class="t"><div class="kicker">מה עושה יועץ משכנתאות פרטי?</div><h2>הבנק מייצג את הבנק. <span class="blue">אני מייצג אתכם.</span></h2></div></div>
     <div class="cols">
-      <div class="diffs">
-        <div><svg><use href="#d-plan"/></svg><span><b>תוכנית שלמה</b> שנבנית סביבכם ומתאימה לחיים שלכם</span></div>
-        <div><svg><use href="#d-bank"/></svg><span><b>משא ומתן</b> מול כמה בנקים וגופים מממנים, בשבילכם</span></div>
-        <div><svg><use href="#d-honest"/></svg><span><b>אין כדאיות?</b> תשמעו את זה ממני ראשונים</span></div>
+      <div>
+        <table class="cmp">
+          <tr><th></th><th>יועץ בבנק</th><th class="me">MAKE SENSE</th></tr>
+          <tr><td>מייצג את</td><td>הבנק</td><td class="me">אתכם בלבד</td></tr>
+          <tr><td>הצעות</td><td>של בנק אחד</td><td class="me">השוואה בין כמה בנקים</td></tr>
+          <tr><td>התמהיל</td><td>מה שהבנק מציע</td><td class="me">לפי החיים שלכם</td></tr>
+          <tr><td>ליווי</td><td>מול הפקיד</td><td class="me">מהתכנון ועד החתימה</td></tr>
+        </table>
+        <div class="faq">
+          <div><b>יש ייעוץ חינם בבנק?</b>הוא מציג הצעה של בנק אחד. השוואה בין בנקים יכולה לחסוך יותר מעלות הייעוץ.</div>
+          <div><b>כמה זה עולה?</b>פגישת ההיכרות בחינם, והמחיר נסגר מראש, לפני שמתחילים.</div>
+        </div>
       </div>
       <div>
         <div class="pyr-title">פירמידת הביטחון הכלכלי</div>
@@ -206,7 +229,7 @@ body.slides .sheet:after{display:none}
     <h2>נשארתם בפלוס? מעולה. <span class="hl">נתקעתם? הגיע הזמן שנדבר.</span></h2>
     <div class="cols">
       <div class="contact">
-        <div class="offer"><b>פגישת היכרות על כוס קפה</b>ללא עלות וללא התחייבות</div>
+        <div class="offer"><b>מספיקה שיחה אחת</b>כדי לדעת כמה אפשר לחסוך, או לשמוע דעה מקצועית. ללא עלות וללא התחייבות.</div>
         <div class="phone">052-441-5395</div>
         <div class="mail">sp.makesense@gmail.com</div>
       </div>
@@ -223,7 +246,7 @@ body.slides .sheet:after{display:none}
 </div></section>
 
 <!-- =====================================================================
-     SIDE B (inside, services) — top to bottom: B1 new mortgage | B2 refinance | B3 consolidation | B4 real estate
+     SIDE B (inside, services) — top to bottom: B1 buyers & upgraders | B2 refinance + consolidation | B3 reverse mortgage + financing | B4 real estate
      Every slide: headline + icon -> identification quote (client OR referrer) -> 4 benefits -> gentle urgency + objection -> CTA
      ===================================================================== -->
 <section class="sheet" id="sideB"><div class="inner">
@@ -231,46 +254,46 @@ body.slides .sheet:after{display:none}
   <!-- B1 · NEW MORTGAGE -->
   <div class="slide light" id="B1">
     <div class="head"><div class="ico"><svg><use href="#ic-house"/></svg></div>
-      <div class="t"><div class="kicker">משכנתה חדשה · משכנתה לכל מטרה</div><h2>מצד אחד חלום. מצד שני התחייבות לשנים ארוכות.</h2></div></div>
+      <div class="t"><div class="kicker">הבית הבא שלכם · דירה ראשונה, שיפור דיור או השקעה</div><h2>מצד אחד חלום. מצד שני התחייבות לשנים ארוכות.</h2></div></div>
     <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>קיבלנו אישור עקרוני, אבל אין לנו מושג אם זו ההצעה הנכונה.</q></div>
-    <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>תמהיל מסלולים שמתאים לחיים שלכם</div>
-      <div><svg><use href="#i-check"/></svg>משא ומתן מול כמה בנקים, בשבילכם</div>
-      <div><svg><use href="#i-check"/></svg>ליווי מלא עד יום החתימה</div>
-      <div><svg><use href="#i-check"/></svg>פתרונות גם כשהבנק אמר "לא"*</div>
+    <div class="benefits steps">
+      <div><i>1</i>בודקים יכולת החזר ובונים תוכנית</div>
+      <div><i>2</i>מתאימים תמהיל מסלולים לחיים שלכם</div>
+      <div><i>3</i>מכרז בין בנקים ואישור עקרוני</div>
+      <div><i>4</i>ביטחונות, מסמכים וליווי עד החתימה</div>
     </div>
-    <p class="urge"><b>משכנתה לא לוקחים רק לפי ריבית.</b> לפני שחותמים, שווה לשמוע דעה נוספת, והשיחה הראשונה לא עולה כלום.<small>*כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</small></p>
+    <p class="urge"><b>משכנתה לא לוקחים רק לפי ריבית.</b> לפני שחותמים, שווה לשמוע דעה נוספת. קיבלתם "לא" מהבנק? בודקים גם פתרונות נוספים.*<small>*כל מקרה נבחן לגופו ובכפוף לאישור הגוף המממן.</small></p>
     <div class="cta">בודקים את ההצעה שלכם <span class="num">052-441-5395</span></div>
   </div>
 
-  <!-- B2 · REFINANCE -->
+  <!-- B2 · REFINANCE + CONSOLIDATION -->
   <div class="slide sky" id="B2">
     <div class="head"><div class="ico"><svg><use href="#ic-refi"/></svg></div>
-      <div class="t"><div class="kicker">מחזור משכנתה</div><h2>המשכנתה שלכם בת 3 שנים ומעלה?</h2></div></div>
-    <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>אנחנו משלמים כבר שנים, והקרן כמעט לא יורדת.</q></div>
+      <div class="t"><div class="kicker">מחזור משכנתה ואיחוד הלוואות</div><h2>הגיע הזמן לבדוק מחדש.</h2></div></div>
+    <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>בין המשכנתה להלוואות, כבר לא ברור לנו כמה אנחנו משלמים בחודש.</q></div>
     <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>הוזלת עלות האשראי</div>
-      <div><svg><use href="#i-check"/></svg>התאמת ההחזר לצרכים של היום</div>
-      <div><svg><use href="#i-check"/></svg>תוספת כסף לכל מטרה</div>
+      <div><svg><use href="#i-check"/></svg>בדיקת כדאיות למחזור המשכנתה</div>
+      <div><svg><use href="#i-check"/></svg>איחוד הלוואות יקרות לתשלום אחד</div>
+      <div><svg><use href="#i-check"/></svg>החזר חודשי נמוך ומסודר יותר</div>
       <div><svg><use href="#i-check"/></svg>מכרז ריביות בין כמה בנקים</div>
     </div>
-    <p class="urge"><b>השוק משתנה כל הזמן, ובדיקה מוקדמת שווה כסף.</b> ואם לא נמצא כדאיות? תקבלו ממני טיפים לשפר את התנאים בעצמכם.</p>
-    <div class="cta">לבדיקת כדאיות מחזור <span class="num">052-441-5395</span></div>
+    <p class="urge"><b>מה שהיה נכון לפני כמה שנים, אולי כבר לא משרת אתכם.</b> התוצאה: פחות עומס, יותר מרווח נשימה. ואם לא נמצא כדאיות? תקבלו ממני טיפים לשפר לבד.</p>
+    <div class="cta">לבדיקה מחדש <span class="num">052-441-5395</span></div>
   </div>
 
-  <!-- B3 · CONSOLIDATION (families + businesses) -->
+  <!-- B3 · REVERSE MORTGAGE + FINANCING -->
   <div class="slide light" id="B3">
     <div class="head"><div class="ico"><svg><use href="#ic-shield"/></svg></div>
-      <div class="t"><div class="kicker">איחוד הלוואות · משפחות ועסקים</div><h2>המשכורת נכנסת, ההלוואות יורדות, והמינוס נשאר?</h2></div></div>
-    <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>יש לי כמה הלוואות, ואני כבר לא יודע כמה אני משלם בחודש.</q></div>
+      <div class="t"><div class="kicker">משכנתה הפוכה · מימון לעסקים ולפרטיים</div><h2>פתרונות מימון לכל שלב בחיים.</h2></div></div>
+    <div class="ident"><small>נשמע מוכר? או ששמעתם את זה מלקוח?</small><q>ההורים רוצים לעזור לילדים בדירה, אבל כל הכסף שלהם בקירות.</q></div>
     <div class="benefits">
-      <div><svg><use href="#i-check"/></svg>אבחון מלא, בלי שיפוטיות</div>
-      <div><svg><use href="#i-check"/></svg>איחוד לתשלום אחד נוח יותר</div>
-      <div><svg><use href="#i-check"/></svg>תקציב שאפשר לחיות איתו</div>
-      <div><svg><use href="#i-check"/></svg>אשראי לעסק בהחזר נמוך יותר</div>
+      <div><svg><use href="#i-check"/></svg>משכנתה הפוכה לבני 55+, בלי למכור את הבית*</div>
+      <div><svg><use href="#i-check"/></svg>הלוואות גישור עד שהכסף מגיע</div>
+      <div><svg><use href="#i-check"/></svg>אשראי עסקי לצמיחה ולתזרים</div>
+      <div><svg><use href="#i-check"/></svg>פתרונות ייעודיים לצורך אישי</div>
     </div>
-    <p class="urge"><b>ככל שמקדימים, יש יותר אפשרויות.</b> לא מחכים שהמצב יחריף או שהבנק ילחץ. הבדיקה עצמה לא מחייבת בכלום.</p>
-    <div class="cta">בואו נעשה סדר <span class="num">052-441-5395</span></div>
+    <p class="urge"><b>בודקים קודם את כל החלופות, ובוחרים רק את מה שנכון לכם.</b> לצמיחה או לצורך אישי, עם תוכנית החזר ברורה.<small>*במשכנתה הפוכה ללא החזר חודשי, הריבית וההצמדה מצטברות ומקטינות את שווי הירושה. כל מקרה נבחן לגופו.</small></p>
+    <div class="cta">לבדיקת פתרון מימון <span class="num">052-441-5395</span></div>
   </div>
 
   <!-- B4 · REAL-ESTATE BUYERS & INVESTORS -->
