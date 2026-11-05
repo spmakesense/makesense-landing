@@ -1,20 +1,34 @@
 {
   "show": {
-    "name_he": "עושים שכל",
-    "name_meaning": "Hebrew idiom for 'being smart' and a direct translation of the brand MAKE SENSE",
-    "tagline_he": "מה שהבנק לא מספר לכם",
-    "topics_he": ["משכנתאות", "נדל״ן", "כסף"],
+    "name_he": "שקל דעת",
+    "name_meaning": "Wordplay: 'שקל' (shekel, money) + 'דעת' (knowledge) sounds like 'שיקול דעת' (good judgment). Money handled wisely.",
+    "tagline_he": "כי כל שקל צריך שיקול דעת",
+    "topics_he": [
+      "משכנתאות",
+      "נדל״ן",
+      "כסף"
+    ],
     "host": {
       "name_he": "שיראל פרגר",
       "role_he": "יועץ משכנתאות ומימון",
       "brand": "MAKE SENSE"
     },
-    "platforms": ["Spotify", "YouTube Podcasts", "Apple Podcasts"]
+    "platforms": [
+      "Spotify",
+      "YouTube Podcasts",
+      "Apple Podcasts"
+    ]
   },
   "canvas": {
     "aspect_ratio": "1:1",
-    "export_px": [3000, 3000],
-    "min_px": [1400, 1400],
+    "export_px": [
+      3000,
+      3000
+    ],
+    "min_px": [
+      1400,
+      1400
+    ],
     "format": "JPG or PNG, RGB, under 512KB for Apple if required",
     "safe_margin_px_at_3000": 150,
     "direction": "RTL (Hebrew reads right to left)"
@@ -51,12 +65,12 @@
     "grid_reference": "1000x1000 units; multiply by 3 for the 3000px export",
     "left_half": {
       "house_frame": "solid brand_blue house silhouette (pentagon roof + walls) anchored to bottom-left, about 54% wide and 70% tall; an amber outline of the same house is offset ~22 units up-left; a darker blue band follows the roof slope",
-      "host": "waist-up cut-out of the host, arms crossed, slight smile, facing toward the title (right side), standing in front of the house, head breaking above the roof line, soft blue drop shadow, cropped by the bottom and left edges"
+      "host": "waist-up cut-out of the host from the reference photo: navy suit jacket, open-collar white shirt, small Star of David necklace, silver watch, arms crossed, warm smile, facing the viewer. Centered in front of the house so his head sits at the roof peak; soft blue drop shadow; cropped by the bottom edge"
     },
     "right_half": {
       "badge": "amber pill top-right with a black microphone icon and black text",
-      "title": "right-aligned stacked title. Show cover: 'עושים' black / 'שכל' blue, very large. Episode cover: 2 to 4 short lines, the punchline line(s) in blue",
-      "seagulls": "the two blue seagulls from the logo flying in the gap between the host's head and the title",
+      "title": "right-aligned stacked title. Show cover: 'שקל' in blue / 'דעת' in black, same very large size. Episode cover: 2 to 4 short lines, the punchline line(s) in blue",
+      "seagulls": "the two blue seagulls from the logo flying above the host's head, toward the title",
       "underline": "one hand-drawn amber swoosh under the title",
       "subline": "short Heebo line under the swoosh"
     },
@@ -69,7 +83,7 @@
       "EPISODE_NUMBER": "e.g. 07",
       "TITLE_LINES": "2-4 lines, max ~12 characters each, total under 6 words",
       "HIGHLIGHT_LINES": "the line(s) printed in brand_blue, usually the question or the number",
-      "BADGE_TEXT": "עושים שכל",
+      "BADGE_TEXT": "שקל דעת",
       "SUBLINE": "משכנתאות · נדל״ן · כסף"
     },
     "title_rules": [
@@ -79,7 +93,14 @@
       "One idea per cover"
     ]
   },
-  "mood": ["confident", "trustworthy", "clean", "bold", "Israeli", "financial clarity"],
+  "mood": [
+    "confident",
+    "trustworthy",
+    "clean",
+    "bold",
+    "Israeli",
+    "financial clarity"
+  ],
   "avoid": [
     "stock money imagery: piles of cash, gold coins, piggy banks",
     "dark or neon backgrounds",
