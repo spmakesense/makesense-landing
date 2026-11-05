@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>עושים שכל — תבנית פרק</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Heebo:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* MAKE SENSE podcast cover system. 1000x1000 canvas, exported at x3 = 3000x3000 */
+  :root{
+    --blue:#004AAD;      /* צבע המותג */
+    --blue-deep:#00337A; /* צל / עומק */
+    --amber:#FFBD59;     /* הדגשה מהמסמכים */
+    --ink:#0B0B0F;       /* טקסט כבד */
+    --paper:#FFFFFF;     /* רקע קלאסי */
+    --mist:#EEF3FB;      /* גריד שרטוט */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1000px;height:1000px;background:var(--paper)}
+  .cover{position:relative;width:1000px;height:1000px;overflow:hidden;background:var(--paper);font-family:'Heebo',Arial,sans-serif;color:var(--ink)}
+
+  /* blueprint grid: architectural plan feel, fades out */
+  .grid{position:absolute;inset:0;
+    background-image:linear-gradient(var(--mist) 2px,transparent 2px),linear-gradient(90deg,var(--mist) 2px,transparent 2px);
+    background-size:50px 50px;
+    -webkit-mask-image:radial-gradient(circle at 80% 30%,#000 0%,transparent 70%);mask-image:radial-gradient(circle at 80% 30%,#000 0%,transparent 70%)}
+
+  /* the house frame (signature element) */
+  .house{position:absolute;left:0;bottom:0;width:540px;height:700px}
+  .house svg{width:100%;height:100%;display:block}
+  .person{position:absolute;left:0;bottom:0;height:820px;transform:scaleX(-1);z-index:3;filter:drop-shadow(0 18px 30px rgba(0,30,80,.35))}
+
+  .wm{position:absolute;left:44px;top:46px;width:250px;z-index:4}
+
+  .pill{position:absolute;right:56px;top:58px;display:flex;align-items:center;gap:10px;
+    background:var(--amber);color:var(--ink);font:900 26px/1 'Heebo';padding:12px 22px 12px 18px;border-radius:999px;z-index:4}
+  .pill svg{width:24px;height:24px}
+
+  .title{position:absolute;right:52px;top:120px;width:470px;text-align:right;z-index:4;font-family:'Karantina','Heebo',sans-serif;font-weight:700}
+  .t1{display:block;font-size:250px;line-height:.78;color:var(--ink);letter-spacing:-2px}
+  .t2{display:block;font-size:390px;line-height:.74;color:var(--blue);letter-spacing:-4px;position:relative}
+  .birds{position:absolute;left:300px;top:150px;width:170px;z-index:4}
+  .swoosh{position:absolute;right:58px;top:575px;width:430px;z-index:4}
+
+  .sub{position:absolute;right:56px;top:640px;width:430px;text-align:right;z-index:4}
+  .sub .topics{font:900 38px/1.15 'Heebo';color:var(--ink)}
+  .sub .topics b{color:var(--blue)}
+  .sub .line{font:500 30px/1.3 'Heebo';color:#3a3f4a;margin-top:8px}
+
+  .band{position:absolute;right:0;bottom:0;width:620px;height:150px;background:var(--blue);z-index:2;
+    clip-path:polygon(70px 0,100% 0,100% 100%,0 100%)}
+  .host{position:absolute;right:56px;bottom:30px;z-index:4;text-align:right;color:#fff}
+  .host .name{font:700 74px/0.9 'Karantina';letter-spacing:.5px}
+  .host .name span{color:var(--amber)}
+  .host .role{font:500 24px/1.2 'Heebo';opacity:.95;margin-top:6px}
+  .ep{position:absolute;right:52px;top:140px;width:470px;text-align:right;z-index:4}
+  .eptag{display:inline-block;font:900 26px/1 'Heebo';color:#fff;background:var(--ink);padding:10px 18px;border-radius:8px;margin-bottom:14px}
+  .eph{font:700 128px/.86 'Karantina','Heebo',sans-serif;color:var(--ink);letter-spacing:-1px}
+  .eph em{font-style:normal;color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="cover" id="cover">
+  <div class="grid"></div>
+
+  <div class="house">
+    <svg viewBox="0 0 560 760" preserveAspectRatio="none" aria-hidden="true">
+      <!-- roof + walls; amber offset outline = the "frame" -->
+      <polygon points="40,300 300,90 560,300 560,760 40,760" fill="none" stroke="#FFBD59" stroke-width="14" stroke-linejoin="round" transform="translate(-22,-22)"/>
+      <polygon points="40,300 300,90 560,300 560,760 40,760" fill="#004AAD"/>
+      <polygon points="40,300 300,90 560,300 560,380 300,170 40,380" fill="#00337A" opacity=".35"/>
+    </svg>
+  </div>
+  <img class="person" src="assets/shirel_cut.png" alt="שיראל פרגר">
+  <img class="wm" src="assets/wm_blue.png" alt="MAKE SENSE">
+  <img class="birds" src="assets/birds_blue.png" alt="">
+
+  <div class="pill">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#0B0B0F" stroke-width="2.6" stroke-linecap="round"><rect x="8" y="2" width="8" height="13" rx="4" fill="#0B0B0F"/><path d="M4.5 11a7.5 7.5 0 0 0 15 0M12 18.5V22"/></svg>
+    עושים שכל
+  </div>
+
+  <div class="ep">
+    <div class="eptag">פרק 07</div>
+    <h1 class="eph">מיחזור<br>משכנתא:<br><em>מתי זה</em><br><em>שווה?</em></h1>
+  </div>
+  <svg class="swoosh" style="top:648px" viewBox="0 0 430 40" aria-hidden="true"><path d="M8 28 C 120 6, 300 4, 422 20" stroke="#FFBD59" stroke-width="14" fill="none" stroke-linecap="round"/></svg>
+
+  <div class="sub" style="top:700px">
+    <div class="line" style="font-size:27px">משכנתאות · נדל״ן · כסף</div>
+  </div>
+
+  <div class="band"></div>
+  <div class="host">
+    <div class="name">עם <span>שיראל פרגר</span></div>
+    <div class="role">יועץ משכנתאות ומימון · MAKE SENSE</div>
+  </div>
+</div>
+</body>
+</html>

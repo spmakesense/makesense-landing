@@ -1,0 +1,91 @@
+{
+  "show": {
+    "name_he": "עושים שכל",
+    "name_meaning": "Hebrew idiom for 'being smart' and a direct translation of the brand MAKE SENSE",
+    "tagline_he": "מה שהבנק לא מספר לכם",
+    "topics_he": ["משכנתאות", "נדל״ן", "כסף"],
+    "host": {
+      "name_he": "שיראל פרגר",
+      "role_he": "יועץ משכנתאות ומימון",
+      "brand": "MAKE SENSE"
+    },
+    "platforms": ["Spotify", "YouTube Podcasts", "Apple Podcasts"]
+  },
+  "canvas": {
+    "aspect_ratio": "1:1",
+    "export_px": [3000, 3000],
+    "min_px": [1400, 1400],
+    "format": "JPG or PNG, RGB, under 512KB for Apple if required",
+    "safe_margin_px_at_3000": 150,
+    "direction": "RTL (Hebrew reads right to left)"
+  },
+  "colors": {
+    "brand_blue": "#004AAD",
+    "deep_blue": "#00337A",
+    "amber_accent": "#FFBD59",
+    "ink_black": "#0B0B0F",
+    "paper_white": "#FFFFFF",
+    "grid_mist": "#EEF3FB",
+    "usage": {
+      "background": "paper_white, the classic MAKE SENSE look of blue on white",
+      "main_title_word_1": "ink_black",
+      "main_title_word_2_or_highlight": "brand_blue",
+      "accent_only": "amber_accent: badge pill, roof outline, underline swoosh, host name. Never more than ~8% of the image",
+      "house_shape_and_bottom_band": "brand_blue"
+    }
+  },
+  "typography": {
+    "display": {
+      "font": "Karantina Bold 700 (Google Fonts)",
+      "style": "ultra-condensed, heavy, poster-like Hebrew sans; the same style as the MAKE SENSE client documents",
+      "use": "show name, episode titles, host name",
+      "size_rule": "title fills ~45% of canvas width and is readable at 150px thumbnail size"
+    },
+    "body": {
+      "font": "Heebo 500/700/900 (Google Fonts)",
+      "use": "badge pill, topics line, host role line"
+    },
+    "logo": "MAKE SENSE wordmark and two-seagull mark, used as an image, never retyped"
+  },
+  "layout": {
+    "grid_reference": "1000x1000 units; multiply by 3 for the 3000px export",
+    "left_half": {
+      "house_frame": "solid brand_blue house silhouette (pentagon roof + walls) anchored to bottom-left, about 54% wide and 70% tall; an amber outline of the same house is offset ~22 units up-left; a darker blue band follows the roof slope",
+      "host": "waist-up cut-out of the host, arms crossed, slight smile, facing toward the title (right side), standing in front of the house, head breaking above the roof line, soft blue drop shadow, cropped by the bottom and left edges"
+    },
+    "right_half": {
+      "badge": "amber pill top-right with a black microphone icon and black text",
+      "title": "right-aligned stacked title. Show cover: 'עושים' black / 'שכל' blue, very large. Episode cover: 2 to 4 short lines, the punchline line(s) in blue",
+      "seagulls": "the two blue seagulls from the logo flying in the gap between the host's head and the title",
+      "underline": "one hand-drawn amber swoosh under the title",
+      "subline": "short Heebo line under the swoosh"
+    },
+    "top_left": "MAKE SENSE wordmark in brand_blue",
+    "bottom_band": "brand_blue band along the bottom right (~62% wide, 15% tall) with a slanted left edge; text: 'עם' white + 'שיראל פרגר' amber in Karantina, role line below in white Heebo",
+    "background_texture": "very faint light-blue architectural blueprint grid, fading out from the upper right"
+  },
+  "episode_template": {
+    "variables": {
+      "EPISODE_NUMBER": "e.g. 07",
+      "TITLE_LINES": "2-4 lines, max ~12 characters each, total under 6 words",
+      "HIGHLIGHT_LINES": "the line(s) printed in brand_blue, usually the question or the number",
+      "BADGE_TEXT": "עושים שכל",
+      "SUBLINE": "משכנתאות · נדל״ן · כסף"
+    },
+    "title_rules": [
+      "Lead with a tension, number or question: 'כמה עולה טעות במשכנתא?'",
+      "Use real numbers only when they come from the episode",
+      "No more than 6 words on the image; details go in the episode description",
+      "One idea per cover"
+    ]
+  },
+  "mood": ["confident", "trustworthy", "clean", "bold", "Israeli", "financial clarity"],
+  "avoid": [
+    "stock money imagery: piles of cash, gold coins, piggy banks",
+    "dark or neon backgrounds",
+    "more than 3 colors plus white",
+    "small text that cannot be read in a phone thumbnail",
+    "changing the host's face, hair or beard",
+    "re-drawing or misspelling the MAKE SENSE logo"
+  ]
+}
