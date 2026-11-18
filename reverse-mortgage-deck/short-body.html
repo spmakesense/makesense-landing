@@ -118,9 +118,9 @@
 .wall{position:relative;background:#fff;border-radius:16px;box-shadow:0 5px 16px rgba(0,74,173,.07);padding:4mm;display:flex;flex-direction:column}
 .wall h3{font-family:'Karantina';font-weight:700;font-size:21pt;color:var(--blue);line-height:1}
 .wall p.s{font-size:10pt;color:var(--teal);font-weight:700}
-.pols{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3mm;margin-top:3mm}
-.pol{background:#fff;padding:1.5mm 1.5mm 4mm;box-shadow:0 3px 10px rgba(0,0,0,.15);border-radius:3px;overflow:hidden}
-.pol div{width:100%;height:100%;background-size:cover;background-position:center 30%;border-radius:2px}
+.pols{flex:1;display:grid;grid-template-columns:repeat(2,50mm);grid-auto-rows:37.5mm;gap:3.5mm 6mm;justify-content:center;align-content:center;margin-top:2mm}
+.pol{background:#fff;padding:1.5mm 1.5mm 3.5mm;box-shadow:0 3px 10px rgba(0,0,0,.15);border-radius:3px;display:flex;align-items:center;justify-content:center}
+.pol img{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:2px}
 .pol:nth-child(odd){transform:rotate(-2deg)}.pol:nth-child(even){transform:rotate(1.6deg)}
 </style>
 
@@ -268,12 +268,12 @@
     <div class="wall">
       <h3>משפחות שכבר ליוויתי</h3><p class="s">רגעים אמיתיים מהשטח</p>
       <div class="pols">
-        <div class="pol"><div style="background-image:url(img/client-030.png)"></div></div>
-        <div class="pol"><div style="background-image:url(img/client-003.png)"></div></div>
-        <div class="pol"><div style="background-image:url(img/client-024.png)"></div></div>
-        <div class="pol"><div style="background-image:url(img/client-006.png)"></div></div>
-        <div class="pol"><div style="background-image:url(img/client-042.png)"></div></div>
-        <div class="pol"><div style="background-image:url(img/client-027.png)"></div></div>
+        <div class="pol"><img src="img/client-003.png" alt=""></div>
+        <div class="pol"><img src="img/client-024.png" alt=""></div>
+        <div class="pol"><img src="img/client-042.png" alt=""></div>
+        <div class="pol"><img src="img/client-015.png" alt=""></div>
+        <div class="pol"><img src="img/client-027.png" alt=""></div>
+        <div class="pol"><img src="img/client-006.png" alt=""></div>
       </div>
     </div>
   </div></div>
