@@ -119,7 +119,11 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .step{flex:1;position:relative;border-radius:12px 12px 0 0;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:5mm}
 .step:nth-child(odd){background:linear-gradient(180deg,var(--cyan),#159bb0)}
 .step:nth-child(even){background:linear-gradient(180deg,#1561c7,var(--blue))}
-.step .pct{font-family:'Karantina';font-weight:700;font-size:38pt;line-height:.9}
+.step .pct{position:relative;font-family:'Karantina';font-weight:700;font-size:31pt;line-height:.9;white-space:nowrap}
+.step .lbl{position:relative}
+.step .lo{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.16);border-top:1.5px dashed rgba(255,255,255,.7)}
+.legend{display:flex;gap:6mm;justify-content:center;margin-top:16mm;font-size:10pt;color:var(--muted);font-weight:600}
+.legend i{display:inline-block;width:5mm;height:3.5mm;border-radius:1mm;vertical-align:-1px;margin-left:1.5mm}
 .step .lbl{font-size:10pt;font-weight:600;opacity:.9}
 .step .age{position:absolute;bottom:-14mm;left:0;right:0;text-align:center;color:var(--blue);font-weight:800;font-size:13pt}
 .step .age small{display:block;font-weight:600;color:var(--muted);font-size:9pt}
@@ -127,7 +131,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .stairs-base{height:2px;background:var(--blue);margin-top:0}
 .trend{position:absolute;top:2mm;right:2mm;display:flex;align-items:center;gap:2mm;color:var(--teal);font-weight:800;font-size:11pt}
 .trend svg{font-size:16pt}
-.disclaimer-s{margin-top:19mm;display:flex;gap:3mm;align-items:center;background:#fff;border-radius:12px;padding:3mm 5mm;font-size:10pt;color:var(--muted);border-right:2mm solid var(--cyan)}
+.disclaimer-s{margin-top:4mm;display:flex;gap:3mm;align-items:center;background:#fff;border-radius:12px;padding:3mm 5mm;font-size:10pt;color:var(--muted);border-right:2mm solid var(--cyan)}
 .disclaimer-s svg{font-size:14pt;color:var(--cyan)}
 
 /* ---------- shields ---------- */
@@ -147,14 +151,14 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .why-top{display:flex;align-items:center;gap:6mm}
 .why-top .ph{width:46mm;height:46mm;border-radius:50%;overflow:hidden;background:#fff;border:2mm solid var(--cyan);flex:none}
 .why-top .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 8%}
-.adv{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:10mm}
-.ad{background:#fff;border-radius:18px;padding:8mm 4mm 8mm;text-align:center;box-shadow:0 6px 20px rgba(0,74,173,.08);border-top:2.5mm solid var(--blue)}
+.adv{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:5mm}
+.ad{background:#fff;border-radius:18px;padding:4mm 3mm 4mm;text-align:center;box-shadow:0 6px 20px rgba(0,74,173,.08);border-top:2.5mm solid var(--blue)}
 .ad:nth-child(2){border-top-color:var(--cyan)}
-.ad .ic{width:22mm;height:22mm;border-radius:50%;margin:0 auto;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30pt}
+.ad .ic{width:16mm;height:16mm;border-radius:50%;margin:0 auto;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22pt}
 .ad:nth-child(2) .ic{background:var(--cyan)}
 .ad h3{font-family:'Karantina';font-weight:700;font-size:24pt;color:var(--blue);line-height:1;margin-top:3mm}
 .ad p{font-size:10.5pt;color:var(--muted);margin-top:1.5mm;line-height:1.35}
-.cta{margin-top:12mm;background:linear-gradient(120deg,var(--blue) 0%,var(--blue-d) 100%);border-radius:20px;color:#fff;padding:6mm 7mm;display:flex;align-items:center;gap:6mm;position:relative;overflow:hidden}
+.cta{margin-top:5mm;background:linear-gradient(120deg,var(--blue) 0%,var(--blue-d) 100%);border-radius:20px;color:#fff;padding:6mm 7mm;display:flex;align-items:center;gap:6mm;position:relative;overflow:hidden}
 .cta::after{content:"";position:absolute;left:-12mm;top:-12mm;width:44mm;height:44mm;border-radius:50%;border:6mm solid rgba(31,179,200,.25)}
 .cta .ic{font-size:32pt;color:var(--cyan)}
 .cta h2{font-family:'Karantina';font-weight:700;font-size:30pt;line-height:1}
@@ -163,6 +167,34 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .contact span{display:flex;align-items:center;gap:1.5mm;background:rgba(255,255,255,.14);border-radius:99px;padding:1mm 4mm;font-weight:800;font-size:12.5pt;direction:ltr}
 .contact svg{color:var(--cyan)}
 
+
+/* why — expanded */
+.why-top .ph{width:40mm;height:40mm}
+.who{font-family:'Karantina';font-weight:700;font-size:30pt;color:var(--blue);line-height:1}
+.who-sub{font-size:11pt;font-weight:700;color:var(--teal);margin-top:.5mm}
+.creds{display:flex;flex-wrap:wrap;gap:1.6mm;margin-top:2.5mm}
+.creds span{display:flex;align-items:center;gap:1.3mm;background:#fff;border:1px solid var(--line);border-radius:99px;padding:.7mm 3mm;font-size:9.5pt;font-weight:700;color:var(--ink)}
+.creds svg{color:var(--cyan);font-size:11pt}
+.story{display:flex;gap:3mm;align-items:center;margin-top:5mm;background:var(--cyan-l);border-right:2mm solid var(--cyan);border-radius:12px;padding:3mm 5mm}
+.story svg{font-size:20pt;color:var(--teal)}
+.story p{font-size:11pt;color:var(--ink);line-height:1.4}
+.story b{color:var(--blue)}
+.get{margin-top:5mm;background:#fff;border-radius:16px;padding:4mm 5mm;box-shadow:0 6px 20px rgba(0,74,173,.08)}
+.get h3{font-family:'Karantina';font-weight:700;font-size:21pt;color:var(--blue);line-height:1}
+.get ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:2mm 5mm;margin-top:2.5mm}
+.get li{display:flex;align-items:center;gap:2mm;font-size:10.5pt;font-weight:600}
+.get li svg{flex:none;width:7mm;height:7mm;padding:1.3mm;border-radius:50%;background:var(--blue);color:#fff}
+.get li:nth-child(4n+2) svg,.get li:nth-child(4n+3) svg{background:var(--cyan)}
+
+
+.why-top .ph{width:36mm;height:36mm}
+.cta{padding:4mm 6mm}
+.cta h2{font-size:24pt}
+.cta .ic{font-size:26pt}
+.story{margin-top:4mm;padding:2.5mm 4mm}
+.adv{margin-top:4mm}
+.get{margin-top:4mm;padding:3.5mm 5mm}
+.cta{margin-top:4mm}
 /* ---------- FAQ landscape ---------- */
 .land .tab{top:7mm;right:8mm}
 .land .ltitle{position:absolute;top:7mm;left:10mm;right:110mm;text-align:left}
@@ -231,6 +263,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
     <symbol id="arrow-in" viewBox="0 0 24 24"><path d="M12 3v14M6 11l6 6 6-6"/><path d="M4 21h16"/></symbol>
     <symbol id="arrow-out" viewBox="0 0 24 24"><path d="M12 21V7M6 13l6-6 6 6"/><path d="M4 3h16"/></symbol>
     <symbol id="trend" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+    <symbol id="percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
     <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
     <symbol id="help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
     <symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
@@ -366,17 +399,19 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 <!-- ═════════ 5 · HOW MUCH ═════════ -->
 <section class="page">
   <div class="tab"><span class="n">05</span>כמה מגיע לכם?</div>
-  <div class="title"><h1>ככל שהגיל עולה, המימון עולה</h1><p>אחוז המימון המרבי משווי הנכס, לפי גיל הלווה הצעיר</p></div>
+  <div class="title"><h1>ככל שהגיל עולה, המימון עולה</h1><p>אחוז המימון המרבי משווי הנכס לפי גיל הלווה הצעיר, בכל הגופים המלווים</p></div>
   <div class="body">
     <div class="stairs">
-      <div class="trend"><svg class="i"><use href="#trend"/></svg>אחוז מימון</div>
-      <div class="step" style="height:25%"><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">10–15%</bdi></span><span class="lbl">משווי הנכס</span><span class="age"><bdi dir="ltr">55–60</bdi></span></div>
-      <div class="step" style="height:50%"><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">25–30%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">70</span></div>
-      <div class="step" style="height:67%"><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">35–40%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">80</span></div>
-      <div class="step" style="height:100%"><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">50–60%</bdi></span><span class="lbl">עד, משווי הנכס</span><span class="age"><bdi dir="ltr">90+</bdi></span></div>
+      <div class="trend"><svg class="i"><use href="#trend"/></svg>אחוז מימון מרבי</div>
+      <div class="step" style="height:58%"><i class="lo" style="height:43%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">15–35%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">55</bdi></span></div>
+      <div class="step" style="height:65%"><i class="lo" style="height:51%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">20–39%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">60</bdi></span></div>
+      <div class="step" style="height:80%"><i class="lo" style="height:62%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">30–48%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">70</bdi></span></div>
+      <div class="step" style="height:83%"><svg class="i person"><use href="#user"/></svg><span class="pct">עד <bdi dir="ltr">50%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">80</bdi></span></div>
+      <div class="step" style="height:100%"><i class="lo" style="height:83%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">50–60%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">90+</bdi></span></div>
     </div>
     <div class="stairs-base"></div>
-    <div class="disclaimer-s"><svg class="i"><use href="#info"/></svg>הנתונים להמחשה. שיעור המימון בפועל נקבע לפי הגוף המלווה, הנכס והשמאות.</div>
+    <div class="legend"><span><i style="background:#1561c7"></i>גובה העמודה: המימון המרבי בשוק</span><span><i style="background:#0d3b78"></i>החלק הכהה: המימון המינימלי בשוק</span></div>
+    <div class="disclaimer-s" style="margin-top:4mm"><svg class="i"><use href="#info"/></svg>טווחים לפי השוואת הגופים המלווים בשוק. השיעור בפועל נקבע לפי הגוף המלווה, הגיל, שווי הנכס והשמאות.</div>
   </div>
   <!--FOOT-->
 </section>
@@ -410,16 +445,38 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 <!-- ═════════ 7 · WHY ME ═════════ -->
 <section class="page">
   <div class="tab"><span class="n">07</span>למה איתי?</div>
-  <div class="title"><h1 style="font-size:44pt">למה לעשות את זה עם שיראל פרגר?</h1><p>MAKESENSE · ייעוץ משכנתאות ופתרונות מימון</p></div>
+  <div class="title"><h1 style="font-size:44pt">למה לעשות את זה עם שיראל פרגר?</h1><p>מומחיות, השוואה מול כל הגופים, וליווי אישי מהשיחה הראשונה</p></div>
   <div class="body">
     <div class="why-top">
       <div class="ph"><img src="shiral.png" alt="שיראל פרגר"></div>
-      <div style="font-size:12.5pt;color:var(--muted);line-height:1.5"><b style="color:var(--blue);font-size:14pt">יועץ משכנתאות בלתי תלוי</b><br>עובד מול כל הגופים הפיננסיים המורשים,<br>ובונה לכל משפחה את הפתרון שמתאים לה.</div>
+      <div>
+        <div class="who">שיראל פרגר</div>
+        <div class="who-sub">יועץ משכנתאות, מימון נדל"ן והתנהלות מול גופים פיננסיים</div>
+        <div class="creds">
+          <span><svg class="i"><use href="#grad"/></svg>B.A כלכלה וניהול</span>
+          <span><svg class="i"><use href="#grad"/></svg>M.B.A מנהל עסקים</span>
+          <span><svg class="i"><use href="#shield"/></svg>חבר בהתאחדות יועצי המשכנתאות</span>
+          <span><svg class="i"><use href="#key"/></svg>4 עסקאות נדל"ן אישיות</span>
+          <span><svg class="i"><use href="#family"/></svg>עשרות משפחות מלוות</span>
+        </div>
+      </div>
     </div>
+    <div class="story"><svg class="i"><use href="#heart"/></svg><p>ראיתי מקרוב את ההורים שלי מתמודדים עם החלטות כלכליות גדולות בלי איש מקצוע לצידם.<br><b>לכן אני מלווה כל משפחה כאילו היא המשפחה שלי.</b></p></div>
     <div class="adv">
       <div class="ad"><div class="ic"><svg class="i"><use href="#search"/></svg></div><h3>השוואה אובייקטיבית</h3><p>סקירת כל הגופים המלווים בשוק להתאמת התנאים הטובים ביותר</p></div>
       <div class="ad"><div class="ic"><svg class="i"><use href="#sliders"/></svg></div><h3>תמהיל חכם</h3><p>בניית תמהיל מסלולים ואופן משיכה מדויק, שמפחית עלויות ריבית</p></div>
       <div class="ad"><div class="ic"><svg class="i"><use href="#heart"/></svg></div><h3>ליווי משפחתי אישי</h3><p>שקיפות מלאה וביטחון שקט ללווים ולבני משפחתם</p></div>
+    </div>
+    <div class="get">
+      <h3>מה מקבלים בליווי שלי</h3>
+      <ul>
+        <li><svg class="i"><use href="#percent"/></svg>מיפוי אחוז המימון שלכם בכל הגופים</li>
+        <li><svg class="i"><use href="#doc"/></svg>בדיקת תנאי סף: גיל, שווי נכס, משיכה ראשונה</li>
+        <li><svg class="i"><use href="#cash"/></svg>השוואת ריביות, עמלות פתיחה ופירעון מוקדם</li>
+        <li><svg class="i"><use href="#family"/></svg>שיחה משותפת עם הילדים, כשנדרש יידוע</li>
+        <li><svg class="i"><use href="#pulse"/></svg>תיאום אישורים רפואיים ושמאות</li>
+        <li><svg class="i"><use href="#shield"/></svg>ליווי עד הכסף בחשבון, ואחריו</li>
+      </ul>
     </div>
     <div class="cta">
       <svg class="i ic"><use href="#phone"/></svg>
@@ -481,7 +538,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
         <li><span class="qn">4</span><span class="qq">יש לי משכנתה פתוחה. אפשר בכל זאת?</span><span class="aa">כן. סוגרים אותה מתוך הכסף של המשכנתה ההפוכה.</span></li>
         <li><span class="qn">5</span><span class="qq">חייבים לשלם החזר כל חודש?</span><span class="aa">לא. אפשר אפס החזר, ריבית בלבד, או החזר חודשי רגיל.</span></li>
         <li><span class="qn">6</span><span class="qq">החוב יכול לעלות על שווי הדירה?</span><span class="aa">לא. החוב לעולם לא יעלה על שווי הנכס במועד הפירעון.</span></li>
-        <li><span class="qn">7</span><span class="qq">אפשר לפרוע מוקדם או לשנות מסלול?</span><span class="aa">כן, בכל עת וללא עמלת פירעון מוקדם.</span></li>
+        <li><span class="qn">7</span><span class="qq">אפשר לפרוע מוקדם או לשנות מסלול?</span><span class="aa">כן. אצל חלק מהגופים ללא עמלה, ואצל אחרים רק בשנים הראשונות.</span></li>
         <li><span class="qn">8</span><span class="qq">מה קורה אחרי 120?</span><span class="aa">ליורשים יש שנה שלמה להסדיר את החוב או למכור את הנכס.</span></li>
         <li><span class="qn">9</span><span class="qq">אפשר לקבל גם קצבה וגם סכום חד-פעמי?</span><span class="aa">כן. אפשר לשלב חד-פעמי, קצבה חודשית ומשיכות לפי צורך.</span></li>
         <li><span class="qn">10</span><span class="qq">על מה אפשר להוציא את הכסף?</span><span class="aa">על כל מטרה: משפחה, בריאות, שיפוץ או השלמת הכנסה.</span></li>
