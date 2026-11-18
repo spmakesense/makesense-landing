@@ -8,9 +8,17 @@ const PHONE = '052-441-5395';
 let T = 0;                       // running scene start time (seconds)
 const scenes = [];
 // a(name, at, dur) → inline animation attr, `at` relative to scene start
-function scene(dur, build) {
-  const s = T;
-  const a = (name, at, d = 0.7) => `animation:${name} ${d}s cubic-bezier(.2,.8,.2,1) ${(s + at).toFixed(2)}s both`;
+// Voiceover: each scene is stretched to fit its narration clip (vo/durations.json),
+// and in-scene reveal times are scaled by the same factor so they follow the speech.
+const VO = fs.existsSync('vo/durations.json') ? JSON.parse(fs.readFileSync('vo/durations.json', 'utf8')) : [];
+const VO_LEAD = 0.4, VO_TAIL = 0.9;
+const voStarts = [];
+function scene(base, build) {
+  const s = T, i = scenes.length;
+  const dur = Math.max(base, VO[i] ? VO[i] + VO_LEAD + VO_TAIL : 0);
+  const k = dur / base;
+  voStarts.push(+(s + VO_LEAD).toFixed(2));
+  const a = (name, at, d = 0.7) => `animation:${name} ${d}s cubic-bezier(.2,.8,.2,1) ${(s + Math.min(at * k, dur - 1.5)).toFixed(2)}s both`;
   scenes.push(`<section class="scene" style="animation:sIn .5s ease ${s}s both, sOut .5s ease ${(s + dur - .5).toFixed(2)}s forwards">${build(a, s)}</section>`);
   T += dur;
 }
@@ -179,4 +187,5 @@ fs.writeFileSync('video.html', `<!doctype html><html lang="he" dir="rtl"><head><
 <style>${css}</style></head><body><div id="stage">${scenes.join('\n')}
 <div class="brand">${'MAKE SENSE'} · שיראל פרגר</div></div>
 <script>window.DURATION=${T};</script></body></html>`);
+fs.writeFileSync('vo/starts.json', JSON.stringify(voStarts));
 console.log('video.html written, duration', T, 's');
