@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>משכנתה הפוכה: המדריך ללקוח</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=block" rel="stylesheet">
+<style>
+:root{--royal:#0d21a1;--royal-d:#081478;--amber:#FF9D00;--amber-l:#fff4e0;--onyx:#1b1f2e;--muted:#565e78;--off:#f4f6fb;--line:#dfe3f0;--green:#15803d}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',sans-serif;color:var(--onyx);font-size:10.5pt;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;padding:16mm 16mm 22mm;page-break-after:always}
+.page:last-child{page-break-after:auto}
+b,strong{font-weight:700}
+h2{font-size:17pt;font-weight:900;color:var(--royal);line-height:1.25}
+h3{font-size:12pt;font-weight:800;color:var(--royal)}
+p+p{margin-top:5px}
+
+/* footer */
+.foot{position:absolute;bottom:0;left:0;right:0;height:13mm;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16mm;font-size:9pt}
+.foot b{color:var(--amber)}
+.pnum{opacity:.7}
+
+/* cover */
+.cover{padding:0}
+.cover .top{height:150mm;background:radial-gradient(circle at 20% 15%,#2440d8 0,var(--royal) 45%,var(--royal-d) 100%);color:#fff;padding:18mm 16mm 0;position:relative}
+.cover .logo-box{background:#fff;border-radius:14px;padding:6px 14px;display:inline-block}
+.cover .logo-box img{height:22mm;display:block}
+.cover .kick{margin-top:12mm;font-size:13pt;font-weight:500;opacity:.85}
+.cover h1{font-size:46pt;font-weight:900;line-height:1.02;margin-top:3mm}
+.cover h1 em{font-style:normal;color:var(--amber)}
+.cover .aka{font-size:14pt;opacity:.85;margin-top:3mm}
+.cover .tag{display:inline-block;margin-top:8mm;background:var(--amber);color:#fff;font-weight:800;font-size:13pt;padding:7px 18px;border-radius:99px}
+.cover .photo{position:absolute;left:-10mm;bottom:-47mm;width:118mm;height:118mm;border-radius:50%;background:#fff;overflow:hidden;border:5px solid var(--amber)}
+.cover .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 10%}
+.cover .bottom{padding:12mm 16mm 0}
+.cover .who{width:95mm}
+.cover .who .name{font-size:22pt;font-weight:900;color:var(--royal)}
+.cover .who .role{font-size:11pt;color:var(--muted);font-weight:500}
+.cover .who p.intro{margin-top:4mm;font-size:10.5pt}
+.facts{position:absolute;left:16mm;right:16mm;bottom:22mm;display:grid;grid-template-columns:repeat(4,1fr);gap:4mm}
+.fact{background:var(--off);border-radius:12px;padding:10px 12px;border-top:4px solid var(--amber)}
+.fact .big{font-size:18pt;font-weight:900;color:var(--royal);line-height:1.1}
+.fact .sm{font-size:9pt;color:var(--muted);margin-top:2px}
+
+/* sections */
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:4mm}
+.qn{flex:0 0 auto;background:var(--royal);color:#fff;font-weight:800;font-size:10pt;padding:3px 11px;border-radius:99px}
+.q{margin-bottom:7mm}
+.q:last-child{margin-bottom:0}
+ul.chk{list-style:none;margin-top:3mm;display:flex;flex-direction:column;gap:5px}
+ul.chk li{position:relative;padding-right:22px}
+ul.chk li::before{content:"";position:absolute;right:0;top:4px;width:14px;height:14px;border-radius:50%;background:var(--amber) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5 10 17.5 19 7'/%3E%3C/svg%3E") center/9px no-repeat}
+.box{background:var(--off);border-radius:12px;padding:10px 14px;margin-top:4mm}
+.box.warn{background:var(--amber-l);border-right:4px solid var(--amber)}
+.box.info{background:#e8ecff;border-right:4px solid var(--royal)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:4mm}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;border-top:4px solid var(--amber)}
+.card h3{font-size:11pt}
+.card p{font-size:9.5pt;color:var(--muted);margin-top:3px}
+.chips{display:flex;gap:4mm;margin-top:4mm}
+.chip{flex:1;border-radius:12px;padding:9px 14px;font-weight:700;font-size:11pt;display:flex;align-items:center;gap:8px}
+.chip.ok{border:2px solid var(--green);color:var(--green)}
+.chip.must{border:2px solid var(--amber);color:#b45309}
+.chip span{color:var(--onyx);font-weight:500}
+
+/* LTV chart */
+.chart{display:flex;align-items:flex-end;gap:7px;height:44mm;padding-top:8mm;margin-top:3mm}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar .v{width:100%;background:linear-gradient(var(--amber),#ffc35c);border-radius:6px 6px 2px 2px;position:relative}
+.bar .v span{position:absolute;top:-17px;left:0;right:0;text-align:center;font-weight:900;color:var(--royal);font-size:10pt}
+.bar label{font-size:9pt;color:var(--muted);font-weight:700;margin-top:3px}
+.cap{font-size:8.5pt;color:var(--muted);text-align:center;margin-top:2mm}
+table{width:100%;border-collapse:collapse;margin-top:3mm;font-size:10pt}
+th,td{padding:6px 8px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:var(--royal);color:#fff;font-weight:700}
+th:first-child{border-radius:0 8px 0 0}th:last-child{border-radius:8px 0 0 0}
+td.n{font-weight:800;color:var(--royal)}
+
+/* pros cons */
+.pc h3{display:flex;align-items:center;gap:6px}
+.pc ul{list-style:none;margin-top:2mm;display:flex;flex-direction:column;gap:4px}
+.pc li{padding-right:16px;position:relative;font-size:10pt}
+.pc .pro li::before{content:"+";position:absolute;right:0;color:var(--green);font-weight:900}
+.pc .con li::before{content:"–";position:absolute;right:0;color:#c2410c;font-weight:900}
+
+/* steps */
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:3mm;margin-top:4mm}
+.step{display:flex;gap:10px;align-items:flex-start}
+.step::before{counter-increment:s;content:counter(s);flex:0 0 24px;height:24px;border-radius:50%;background:var(--royal);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:10pt}
+.step b{color:var(--royal)}
+
+/* cta */
+.cta{position:absolute;left:16mm;right:16mm;bottom:31mm;background:radial-gradient(circle at 15% 20%,#2440d8 0,var(--royal) 55%,var(--royal-d) 100%);color:#fff;border-radius:18px;padding:9mm 10mm;display:flex;gap:8mm;align-items:center;overflow:hidden}
+.cta .ph{flex:0 0 38mm;height:38mm;border-radius:50%;overflow:hidden;background:#fff;border:3px solid var(--amber)}
+.cta .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 10%}
+.cta h2{color:#fff;font-size:18pt}
+.cta p{opacity:.9;margin-top:1mm}
+.phone{display:inline-block;margin-top:4mm;background:var(--amber);color:#fff;font-weight:900;font-size:17pt;padding:5px 18px;border-radius:99px;direction:ltr}
+.disc{font-size:7.5pt;color:var(--muted);line-height:1.45;margin-top:4mm}
+.member{height:11mm;margin-top:3mm}
+.why{margin-top:8mm}
+</style>
+</head>
+<body>
+
+<!-- ───── PAGE 1: COVER ───── -->
+<section class="page cover">
+  <div class="top">
+    <div class="logo-box"><img src="logo.png" alt="MAKE SENSE"></div>
+    <p class="kick">המדריך ללקוח</p>
+    <h1>משכנתה<br><em>הפוכה</em></h1>
+    <p class="aka">(משכנתה לגיל השלישי)</p>
+    <div class="tag">6 השאלות החשובות לפני שמחליטים</div>
+    <div class="photo"><img src="shiral.png" alt="שיראל פרגר"></div>
+  </div>
+  <div class="bottom">
+    <div class="who">
+      <div class="name">שיראל פרגר</div>
+      <div class="role">יועץ משכנתאות | MAKE SENSE</div>
+      <p class="intro">רבים מבני 55 ומעלה גרים בדירה ששווה מיליונים, אבל חסר להם כסף נזיל: כדי לעזור לילדים, לשפץ, לממן טיפול רפואי או פשוט לחיות בנוחות. משכנתה הפוכה מאפשרת להפוך חלק מהשווי של הדירה לכסף, בלי למכור אותה ובלי לעזוב את הבית.</p>
+      <p class="intro">במדריך הזה ריכזתי את מה שחשוב לדעת, כדי שתוכלו לקבל החלטה מושכלת יחד עם המשפחה.</p>
+    </div>
+  </div>
+  <div class="facts">
+    <div class="fact"><div class="big"><bdi dir="ltr">55+</bdi></div><div class="sm">גיל מינימלי לקבלת ההלוואה</div></div>
+    <div class="fact"><div class="big">עד 50%</div><div class="sm">משווי הנכס, לפי הגיל</div></div>
+    <div class="fact"><div class="big">3 אפשרויות</div><div class="sm">חד-פעמי, קצבה חודשית, או גם וגם</div></div>
+    <div class="fact"><div class="big">בבית</div><div class="sm">ממשיכים לגור, הדירה נשארת על שמכם</div></div>
+  </div>
+  <div class="foot"><span><b>MAKE SENSE</b> · יעוץ פיננסי וליווי לחופש כלכלי</span><span dir="ltr">052-441-5395</span></div>
+</section>
+
+<!-- ───── PAGE 2: Q1–Q3 ───── -->
+<section class="page">
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 1</span><h2>מה זו משכנתה הפוכה?</h2></div>
+    <p>משכנתה הפוכה היא הלוואה שניתנת בשעבוד דירה שבבעלותכם. בניגוד למשכנתה רגילה, שבה מקבלים כסף כדי לקנות דירה ומחזירים אותו כל חודש, כאן הדירה כבר שלכם, ואתם מקבלים כסף על בסיס השווי שלה.</p>
+    <ul class="chk">
+      <li>ממשיכים לגור בבית, <b>והדירה נשארת רשומה על שמכם</b>.</li>
+      <li>אין חובה להחזיר קרן כל חודש. ההלוואה נפרעת בסוף הדרך.</li>
+      <li>אפשר לקבל את הכסף כ<b>סכום חד-פעמי</b>, כ<b>קצבה חודשית</b>, או <b>בשילוב של שניהם</b>.</li>
+      <li>הכסף ניתן לכל מטרה: עזרה לילדים ולנכדים, שיפוץ, טיפול רפואי, סגירת חובות או השלמת הכנסה.</li>
+    </ul>
+  </div>
+
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 2</span><h2>מי יכול לקבל משכנתה הפוכה?</h2></div>
+    <div class="three">
+      <div class="card"><h3>גיל 55 ומעלה</h3><p>כשמדובר בזוג, הגיל של בן או בת הזוג הצעירים הוא הקובע.</p></div>
+      <div class="card"><h3>דירה בבעלותכם</h3><p>דירת מגורים שרשומה על שמכם, בטאבו או ברשות מקרקעי ישראל.</p></div>
+      <div class="card"><h3>משכנתה קיימת?</h3><p>לא בהכרח מונעת. בדרך כלל אפשר לסגור אותה מתוך ההלוואה החדשה.</p></div>
+    </div>
+    <div class="chips">
+      <div class="chip ok">✓ פטור <span>מביטוח חיים</span></div>
+      <div class="chip must">! חובה <span>ביטוח מבנה</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 3</span><h2>כמה כסף אפשר לקבל?</h2></div>
+    <div class="two">
+      <div>
+        <p>הסכום נקבע לפי שני נתונים עיקריים: <b>הגיל שלכם</b> ו<b>שווי הנכס</b> לפי שמאות. ככל שהגיל גבוה יותר, שיעור המימון עולה, <b>ויכול להגיע עד 50% משווי הנכס</b>.</p>
+        <table>
+          <tr><th>דוגמה</th><th>שווי הדירה</th><th>סכום משוער</th></tr>
+          <tr><td>גיל 60</td><td>2,500,000 ₪</td><td class="n">כ-500,000 ₪</td></tr>
+          <tr><td>גיל 70</td><td>3,000,000 ₪</td><td class="n">כ-900,000 ₪</td></tr>
+          <tr><td>גיל 80</td><td>2,000,000 ₪</td><td class="n">כ-1,000,000 ₪</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="chart">
+          <div class="bar"><div class="v" style="height:30%"><span>15%</span></div><label>55</label></div>
+          <div class="bar"><div class="v" style="height:40%"><span>20%</span></div><label>60</label></div>
+          <div class="bar"><div class="v" style="height:50%"><span>25%</span></div><label>65</label></div>
+          <div class="bar"><div class="v" style="height:60%"><span>30%</span></div><label>70</label></div>
+          <div class="bar"><div class="v" style="height:80%"><span>40%</span></div><label>75</label></div>
+          <div class="bar"><div class="v" style="height:100%"><span>50%</span></div><label><bdi dir="ltr">80+</bdi></label></div>
+        </div>
+        <p class="cap">שיעור מימון משוער לפי גיל, להמחשה בלבד</p>
+      </div>
+    </div>
+    <div class="box info">שיעורי המימון המדויקים משתנים בין הגופים המממנים ונקבעים לפי הגיל, הנכס ומיקומו. בבדיקה אישית נדע בדיוק כמה אתם יכולים לקבל.</div>
+  </div>
+  <div class="foot"><span><b>שיראל פרגר</b> · יועץ משכנתאות</span><span class="pnum">2</span></div>
+</section>
+
+<!-- ───── PAGE 3: Q4–Q6 ───── -->
+<section class="page">
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 4</span><h2>צריך להחזיר כל חודש?</h2></div>
+    <p><b>לא חובה.</b> במסלול הבסיסי לא משלמים החזר חודשי. הריבית מצטרפת לקרן ונצברת לאורך השנים, וההלוואה כולה נפרעת באחד המקרים הבאים:</p>
+    <ul class="chk">
+      <li>מכירת הדירה</li>
+      <li>מעבר קבוע לדיור מוגן או לבית אבות</li>
+      <li>לאחר פטירה (של בן הזוג האחרון), מתוך העיזבון</li>
+    </ul>
+    <div class="box warn"><b>חשוב להבין:</b> מדובר בריבית דריבית. בלי תשלומים שוטפים, יתרת החוב גדלה עם השנים. מי שרוצה לצמצם את הצבירה יכול לבחור לשלם את הריבית באופן שוטף, וכך החוב נשאר קרוב לסכום שהתקבל.</div>
+  </div>
+
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 5</span><h2>מה קורה עם הדירה והירושה?</h2></div>
+    <div class="three">
+      <div class="card"><h3>הדירה שלכם</h3><p>נשארת בבעלותכם, ואתם ממשיכים לגור בה כל החיים.</p></div>
+      <div class="card"><h3>היורשים בוחרים</h3><p>לפרוע את ההלוואה ולשמור על הדירה, או למכור ולפרוע מהתמורה.</p></div>
+      <div class="card"><h3>היתרה למשפחה</h3><p>כל מה שנשאר אחרי פירעון החוב עובר ליורשים.</p></div>
+    </div>
+    <div class="box info">בחלק מהמסלולים קיימת התחייבות שהחוב לא יעלה על שווי הנכס, כך שהיורשים לא יידרשו לשלם מכיסם. את זה בודקים מראש.</div>
+  </div>
+
+  <div class="q">
+    <div class="sec-head"><span class="qn">שאלה 6</span><h2>על מה חשוב לשים לב?</h2></div>
+    <div class="two">
+      <div class="card"><h3>ריבית ומסלול</h3><p>קבועה או משתנה, צמודה או לא צמודה. לאורך 15–20 שנה, ההבדל ביתרת החוב יכול להיות עצום.</p></div>
+      <div class="card"><h3>עמלות ועלויות</h3><p>עמלת פתיחת תיק, שמאות, ביטוח מבנה ועמלת פירעון מוקדם.</p></div>
+      <div class="card"><h3>ההשפעה על הירושה</h3><p>כמה יישאר לילדים בעוד 10 ו-20 שנה? כדאי לראות תחזית לפני שחותמים.</p></div>
+      <div class="card"><h3>שיתוף המשפחה</h3><p>החלטה כזו כדאי לקבל יחד עם הילדים, כדי למנוע הפתעות בהמשך.</p></div>
+    </div>
+  </div>
+
+  <div class="two pc" style="margin-top:2mm">
+    <div class="box"><h3>היתרונות</h3><ul class="pro">
+      <li>כסף נזיל בלי למכור את הבית ובלי לעבור דירה</li>
+      <li>ללא חובת החזר חודשי</li>
+      <li>גמישות: חד-פעמי, קצבה חודשית, או גם וגם</li>
+      <li>פטור מביטוח חיים</li>
+    </ul></div>
+    <div class="box"><h3>מה חשוב לשקול</h3><ul class="con">
+      <li>החוב גדל עם השנים (ריבית דריבית)</li>
+      <li>הירושה לילדים קטנה בהתאם</li>
+      <li>ריבית גבוהה בדרך כלל ממשכנתה רגילה</li>
+      <li>עלויות ועמלות שכדאי להשוות</li>
+    </ul></div>
+  </div>
+  <div class="foot"><span><b>שיראל פרגר</b> · יועץ משכנתאות</span><span class="pnum">3</span></div>
+</section>
+
+<!-- ───── PAGE 4: PROCESS + CTA ───── -->
+<section class="page">
+  <div class="q">
+    <div class="sec-head"><h2>למה לעשות את זה עם יועץ?</h2></div>
+    <p>התנאים של משכנתה הפוכה שונים מאוד בין הגופים המממנים: <b>בנקים, חברות ביטוח וגופים חוץ-בנקאיים</b>. ההבדלים בריבית, בשיעור המימון ובעמלות יכולים להסתכם בעשרות ואפילו מאות אלפי שקלים לאורך השנים. אני עובד מול כל הגופים, משווה ביניהם ובונה עבורכם את המסלול שמתאים למשפחה שלכם.</p>
+  </div>
+
+  <div class="two">
+    <div>
+      <h3>איך מתנהל התהליך?</h3>
+      <div class="steps">
+        <div class="step"><div><b>שיחת היכרות</b>: מבינים את הצורך, את המצב המשפחתי ואת המטרות.</div></div>
+        <div class="step"><div><b>בדיקת זכאות ראשונית</b>: הערכת הסכום שאפשר לקבל.</div></div>
+        <div class="step"><div><b>השוואת הצעות</b> מכל הגופים המממנים.</div></div>
+        <div class="step"><div><b>שמאות</b> לנכס והגשת הבקשה לגוף שנבחר.</div></div>
+        <div class="step"><div><b>חתימה ורישום</b> השעבוד, כולל ביטוח מבנה.</div></div>
+        <div class="step"><div><b>קבלת הכסף</b>: חד-פעמי, חודשי, או שניהם.</div></div>
+      </div>
+    </div>
+    <div>
+      <h3>מה כדאי להכין לפגישה?</h3>
+      <ul class="chk">
+        <li>תעודות זהות כולל ספח</li>
+        <li>נסח טאבו או אישור זכויות על הדירה</li>
+        <li>אישור יתרה לסילוק, אם יש משכנתה קיימת</li>
+        <li>פוליסת ביטוח מבנה, אם קיימת</li>
+        <li>הערכה של הסכום הדרוש ולמה הוא מיועד</li>
+      </ul>
+      <div class="box warn" style="margin-top:5mm"><b>טיפ:</b> הזמינו את הילדים לפגישה. כשכל המשפחה מבינה את התמונה, ההחלטה קלה ובטוחה יותר.</div>
+    </div>
+  </div>
+
+  <div class="three why">
+    <div class="card"><h3>מול כל הגופים</h3><p>השוואה בין בנקים, חברות ביטוח וגופים חוץ-בנקאיים, ולא רק מול גוף אחד.</p></div>
+    <div class="card"><h3>מסלול מותאם אישית</h3><p>חד-פעמי, קצבה או שילוב, לפי הצורך שלכם ולפי מה שתרצו להשאיר לילדים.</p></div>
+    <div class="card"><h3>ליווי עד הסוף</h3><p>מהשיחה הראשונה ועד שהכסף בחשבון. חבר בהתאחדות יועצי המשכנתאות.</p></div>
+  </div>
+
+  <div class="cta">
+    <div class="ph"><img src="shiral.png" alt=""></div>
+    <div>
+      <h2>רוצים לדעת כמה אתם יכולים לקבל?</h2>
+      <p>בדיקת התאמה ראשונית, ללא התחייבות.</p>
+      <div class="phone">052-441-5395</div>
+      <p style="margin-top:3mm"><b>שיראל פרגר</b> | יועץ משכנתאות | MAKE SENSE</p>
+    </div>
+  </div>
+  <p class="disc" style="position:absolute;left:16mm;right:16mm;bottom:15mm">המידע במדריך זה הוא כללי בלבד ואינו מהווה ייעוץ אישי, הצעה או התחייבות לקבלת הלוואה. הנתונים והדוגמאות מובאים להמחשה. תנאי ההלוואה, שיעורי המימון, הריביות והעמלות משתנים בין הגופים המממנים ונתונים לשיקול דעתם ולאישורם.</p>
+  <div class="foot"><span><b>MAKE SENSE</b> · חבר בהתאחדות יועצי המשכנתאות</span><span class="pnum">4</span></div>
+</section>
+</body>
+</html>
