@@ -195,6 +195,34 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .adv{margin-top:4mm}
 .get{margin-top:4mm;padding:3.5mm 5mm}
 .cta{margin-top:4mm}
+
+/* ---------- fees ---------- */
+.calm{position:absolute;top:24mm;right:9mm;left:9mm;display:flex;gap:3mm;justify-content:center}
+.calm span{display:flex;align-items:center;gap:1.5mm;background:var(--cyan-l);color:var(--teal);font-weight:800;font-size:10.5pt;border-radius:99px;padding:1.2mm 4.5mm}
+.calm svg{font-size:13pt}
+.fcols{position:absolute;top:35mm;right:9mm;left:9mm;bottom:34mm;display:grid;grid-template-columns:1fr 1.1fr .95fr;gap:5mm}
+.fcol{background:#fff;border-radius:16px;box-shadow:0 6px 20px rgba(0,74,173,.07);overflow:hidden;display:flex;flex-direction:column}
+.fh{display:flex;align-items:center;gap:3mm;padding:3mm 4mm;color:#fff}
+.fcol.a .fh{background:var(--blue)}.fcol.b .fh{background:var(--cyan)}.fcol.c .fh{background:var(--teal)}
+.fhi{width:10mm;height:10mm;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:15pt;flex:none}
+.fh h3{font-family:'Karantina';font-weight:700;font-size:21pt;line-height:1}
+.fh p{font-size:9pt;opacity:.9;font-weight:600}
+.ft{width:100%;border-collapse:collapse}
+.ft tr+tr td{border-top:1px solid #eef1f6}
+.ft td{padding:2.1mm 2mm;vertical-align:middle}
+.ft .ri{width:9mm;padding-right:4mm}
+.ft .ri svg{width:7mm;height:7mm;padding:1.3mm;border-radius:50%;background:#eef3fb;color:var(--blue);display:block}
+.fcol.b .ri svg{background:var(--cyan-l);color:var(--teal)}
+.ft .rn{font-size:10.3pt;font-weight:700;color:var(--ink);line-height:1.15}
+.ft .rn small{display:block;font-size:8.3pt;font-weight:600;color:var(--muted);margin-top:.3mm}
+.ft .rp{text-align:left;white-space:nowrap;font-weight:800;font-size:11pt;color:var(--blue);padding-left:4mm}
+.fcol.b .rp{color:var(--teal)}
+.fnote{position:absolute;bottom:25.5mm;right:9mm;left:9mm;display:flex;gap:2mm;align-items:center;font-size:8.5pt;color:var(--muted)}
+.fnote svg{font-size:12pt;color:var(--cyan)}
+.ex{margin:auto 4mm 4mm;background:linear-gradient(135deg,var(--cyan-l),#eaf1fb);border-radius:14px;padding:3.5mm 4mm;text-align:center}
+.ex b{color:var(--teal);font-weight:800;font-size:10pt}
+.ex p{font-size:9.5pt;color:var(--ink);line-height:1.3}
+.ex-num{font-family:'Karantina';font-weight:700;font-size:30pt;color:var(--blue);line-height:1;margin:1mm 0}
 /* ---------- FAQ landscape ---------- */
 .land .tab{top:7mm;right:8mm}
 .land .ltitle{position:absolute;top:7mm;left:10mm;right:110mm;text-align:left}
@@ -264,6 +292,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
     <symbol id="arrow-out" viewBox="0 0 24 24"><path d="M12 21V7M6 13l6-6 6 6"/><path d="M4 3h16"/></symbol>
     <symbol id="trend" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
     <symbol id="percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+    <symbol id="check2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></symbol>
     <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
     <symbol id="help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
     <symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
@@ -546,6 +575,32 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
       </ol>
     </div>
   </div>
+  <!--FOOT-->
+</section>
+
+<!-- ═════════ 9 · FEES (landscape) ═════════ -->
+<section class="page land">
+  <div class="tab"><span class="n">09</span>עלויות נלוות לתהליך</div>
+  <div class="ltitle"><h1>שקוף, פשוט, בלי הפתעות</h1><p>כמה זה עולה, מתי, ולמה</p></div>
+  <div class="calm">
+    <span><svg class="i"><use href="#check2"/></svg>רוב העלויות חד-פעמיות</span>
+    <span><svg class="i"><use href="#check2"/></svg>את עמלת פתיחת התיק אפשר לצרף להלוואה</span>
+    <span><svg class="i"><use href="#check2"/></svg>אני בודק ומציג לכם את כל העלויות מראש</span>
+  </div>
+  <div class="fcols">
+    <div class="fcol a"><div class="fh"><span class="fhi"><svg class="i"><use href="#home"/></svg></span><div><h3>בתחילת הדרך</h3><p>פעם אחת בלבד</p></div></div>
+      <table class="ft"><tr><td class="ri"><svg class="i"><use href="#doc"/></svg></td><td class="rn">פתיחת תיק<small>או 0.5% מההלוואה · אפשר לצרף לקרן</small></td><td class="rp"><bdi dir="ltr">1,000–5,900</bdi> ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#key"/></svg></td><td class="rn">רישום שעבוד</td><td class="rp">210 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#building"/></svg></td><td class="rn">ביטוח מבנה<small>חובה, גם פוליסה קיימת מתאימה</small></td><td class="rp">לפי פוליסה</td></tr><tr><td class="ri"><svg class="i"><use href="#search"/></svg></td><td class="rn">שמאות הנכס<small>משולם ישירות לשמאי</small></td><td class="rp">צד ג׳</td></tr><tr><td class="ri"><svg class="i"><use href="#pulse"/></svg></td><td class="rn">אישור רפואי<small>רק מגיל <bdi dir="ltr">75–80</bdi></small></td><td class="rp">צד ג׳</td></tr></table></div>
+    <div class="fcol b"><div class="fh"><span class="fhi"><svg class="i"><use href="#sliders"/></svg></span><div><h3>רק אם תבקשו שינוי</h3><p>במהלך ההלוואה, לפי בחירה</p></div></div>
+      <table class="ft"><tr><td class="ri"><svg class="i"><use href="#sliders"/></svg></td><td class="rn">שינוי תנאי ההלוואה<small>מסלול, תקופה, הרכב לווים</small></td><td class="rp">320 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#cal"/></svg></td><td class="rn">שינוי מועד תשלום הריבית</td><td class="rp">6.50 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#refresh"/></svg></td><td class="rn">שינוי או תיקון שעבוד</td><td class="rp">210 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#home"/></svg></td><td class="rn">מעבר עם ההלוואה לנכס אחר</td><td class="rp">750 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#doc"/></svg></td><td class="rn">אישור יתרות או דוח תשלומים</td><td class="rp">15 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#mail"/></svg></td><td class="rn">הפקת מסמך מהמערכת<small>+ 0.50 ₪ לעמוד</small></td><td class="rp">20 ₪</td></tr></table></div>
+    <div class="fcol c"><div class="fh"><span class="fhi"><svg class="i"><use href="#shield"/></svg></span><div><h3>בסוף הדרך</h3><p>בפירעון ההלוואה</p></div></div>
+      <table class="ft"><tr><td class="ri"><svg class="i"><use href="#card-ok"/></svg></td><td class="rn">טיפול בפירעון מוקדם<small>עמלה תפעולית</small></td><td class="rp">60 ₪</td></tr><tr><td class="ri"><svg class="i"><use href="#percent"/></svg></td><td class="rn">עמלת פירעון מוקדם<small>חלק מהגופים: ללא עמלה כלל.<br>אחרים: רק ב-<bdi dir="ltr">1–3</bdi> השנים הראשונות</small></td><td class="rp">0 ₪ / משתנה</td></tr><tr><td class="ri"><svg class="i"><use href="#shield"/></svg></td><td class="rn">מסמכי ביטול שעבוד<small>רק להנפקה חוזרת</small></td><td class="rp">20 ₪</td></tr></table>
+      <div class="ex"><b>לדוגמה</b>
+        <p>הלוואה של <bdi dir="ltr">500,000</bdi> ₪</p>
+        <div class="ex-num"><bdi dir="ltr">1,200–6,100</bdi> ₪</div>
+        <p>עלויות הגוף המלווה בפתיחה, כלומר רק <b><bdi dir="ltr">0.2%–1.2%</bdi></b> מסכום ההלוואה</p>
+      </div></div>
+  </div>
+  <p class="fnote"><svg class="i"><use href="#info"/></svg>התעריפים לדוגמה, לפי דף עמלות של גוף מלווה והשוואת השוק. הם משתנים בין הגופים ומתעדכנים מעת לעת. עלויות צד ג׳ (שמאי, רופא, עו״ד, יועץ) משולמות ישירות לנותן השירות ואינן כלולות.</p>
   <!--FOOT-->
 </section>
 </body>
