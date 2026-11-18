@@ -1,0 +1,281 @@
+<style>
+/* ===== 5-page landscape edition ===== */
+.L{page:land;width:297mm;height:210mm}
+.L .tab{top:8mm;right:9mm;font-size:13pt}
+.L .ttl{position:absolute;top:19mm;right:10mm;left:10mm}
+.L .ttl h1{font-family:'Karantina';font-weight:700;font-size:40pt;line-height:.95;color:var(--blue)}
+.L .ttl p{font-size:12pt;font-weight:700;color:var(--teal)}
+.L .bd{position:absolute;top:43mm;right:10mm;left:10mm;bottom:27mm}
+
+/* cover */
+.Lc{background:var(--blue-d)}
+.Lc .ph{position:absolute;top:0;bottom:0;left:0;width:47%;background:url(img/sunset-family.jpg) 40% 50%/cover}
+.Lc .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,var(--blue-d) 0%,rgba(0,51,122,.35) 30%,rgba(0,51,122,0) 60%)}
+.Lc .bar{position:absolute;top:0;bottom:0;left:47%;width:2.2mm;background:var(--cyan)}
+.Lc .side{position:absolute;top:0;bottom:0;right:0;width:53%;padding:16mm 14mm 0 12mm;color:#fff;background:radial-gradient(circle at 85% 15%,#0a5cc7 0,var(--blue) 40%,var(--blue-d) 100%)}
+.Lc .lg{background:#fff;border-radius:14px;padding:2mm 4mm;display:inline-block}
+.Lc .lg img{height:17mm;display:block}
+.Lc h1{font-family:'Karantina';font-weight:700;font-size:50pt;line-height:.92;margin-top:9mm}
+.Lc h1 em{font-style:normal;color:var(--cyan)}
+.Lc .sub{font-size:15pt;font-weight:600;color:#cfeff5;margin-top:4mm}
+.Lc .pills{display:flex;gap:3mm;margin-top:7mm;flex-wrap:wrap}
+.Lc .pill{display:flex;align-items:center;gap:2mm;border:1.5px solid var(--cyan);border-radius:99px;padding:1.3mm 4.5mm;font-weight:700;font-size:11pt;background:rgba(31,179,200,.12)}
+.Lc .pill svg{font-size:14pt;color:var(--cyan)}
+.Lc .credit{position:absolute;bottom:12mm;right:14mm;left:12mm;display:flex;justify-content:space-between;align-items:flex-end;font-size:11pt}
+.Lc .credit b{color:var(--cyan)}
+.Lc .credit small{display:block;font-size:8.5pt;color:#9fc6e8;margin-top:1mm}
+.Lc .credit img{height:11mm;filter:brightness(0) invert(1);opacity:.85}
+
+/* p2 */
+.g2{display:grid;grid-template-columns:.9fr 1.25fr;gap:6mm;height:100%}
+.pl{display:flex;flex-direction:column;gap:4mm}
+.pl .it{flex:1;display:flex;align-items:center;gap:4mm;background:#fff;border-radius:14px;padding:3mm 4mm;box-shadow:0 5px 16px rgba(0,74,173,.07);border-right:2.5mm solid var(--blue)}
+.pl .it:nth-child(2){border-right-color:var(--cyan)}
+.pl .ic{width:19mm;height:19mm;border-radius:14px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30pt;flex:none}
+.pl .it:nth-child(2) .ic{background:var(--cyan)}
+.pl h3{font-family:'Karantina';font-weight:700;font-size:22pt;color:var(--blue);line-height:1}
+.pl p{font-size:10.5pt;color:var(--muted);margin-top:.8mm;line-height:1.3}
+.ax{display:flex;flex-direction:column;gap:4mm}
+.ax .axis{flex:1;display:flex;flex-direction:column}
+.ax .opts{flex:1}
+.ax .opt{display:flex;flex-direction:column;justify-content:center}
+.ax .axis{padding:3.5mm 4mm 4mm}
+.ax .axis+.axis{margin-top:0}
+.ax .axis-h{margin-bottom:2.5mm}
+.ax .axis-h .badge{width:10mm;height:10mm;font-size:15pt}
+.ax .axis-h h2{font-size:21pt}
+.ax .opt{padding:2.5mm 2.5mm 2mm}
+.ax .opt svg.ch{height:24mm}
+.ax .opt h3{font-size:10.5pt;margin-top:1.2mm}
+.ax .opt p{font-size:8.5pt;margin-top:.3mm}
+
+/* p3 — uses, after the reference */
+.Lu .phs{position:absolute;top:0;bottom:0;left:0;width:36%;display:grid;grid-template-rows:1.15fr 1fr}
+.Lu .phs div{background-size:cover;background-position:center}
+.Lu .vbar{position:absolute;top:0;bottom:0;left:36%;width:2.2mm;background:var(--cyan)}
+.Lu .ttl,.Lu .bd{left:calc(36% + 10mm)}
+.Lu .ttl h1{font-size:46pt}
+.Lu .ttl p{font-size:16pt;font-weight:400;color:var(--blue)}
+.Lu .bd{top:52mm}
+.uses{list-style:none;display:flex;flex-direction:column;gap:4.2mm}
+.uses li{display:flex;align-items:center;gap:4mm;font-size:15.5pt;color:var(--blue-d);font-weight:600}
+.uses li span.u{width:17mm;height:11.5mm;flex:none;background:linear-gradient(90deg,#bfe9f1 0 55%,transparent 55%);display:flex;align-items:center;justify-content:flex-end;padding-left:1mm;color:var(--blue)}
+.uses li span.u svg{font-size:18pt;margin-left:3mm}
+.uses li b{color:var(--teal);font-weight:800}
+.Lu .tab{right:9mm}
+.Lu .corner.l,.Lu .member{display:none}
+.Lu .foot{left:calc(36% + 2.2mm);padding-left:12mm}
+
+/* p4 */
+.g4{display:grid;grid-template-columns:1.05fr 1fr;gap:7mm;height:100%}
+.st{position:relative;background:#fff;border-radius:16px;padding:4mm 4mm 0;box-shadow:0 5px 16px rgba(0,74,173,.07);display:flex;flex-direction:column}
+.st h3,.rc h3{font-family:'Karantina';font-weight:700;font-size:21pt;color:var(--blue);line-height:1}
+.st .stairs{height:auto;flex:1;margin-top:9mm;gap:2mm}
+.st .step .pct{font-size:20pt}
+.st .step .lbl{font-size:7.5pt}
+.st .step .person{top:-9mm;font-size:15pt}
+.st .step .age{bottom:-7mm;font-size:10pt}
+.st .step{padding-top:2mm}
+.st .cap{font-size:8pt;color:var(--muted);text-align:center;margin:8.5mm 0 2.5mm}
+.rc{display:flex;flex-direction:column;gap:3.5mm}
+.prot{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}
+.pr{background:#fff;border-radius:14px;padding:3mm;text-align:center;box-shadow:0 5px 16px rgba(0,74,173,.07)}
+.pr .pi{width:12mm;height:12mm;border-radius:50%;margin:0 auto;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17pt}
+.pr:nth-child(2) .pi{background:var(--cyan)}
+.pr b{display:block;font-size:11pt;color:var(--blue);margin-top:1.5mm;line-height:1.1}
+.pr span{display:block;font-size:8.6pt;color:var(--muted);line-height:1.25;margin-top:.8mm}
+.kf{display:flex;gap:2.5mm}
+.kf span{flex:1;display:flex;align-items:center;gap:1.8mm;background:var(--cyan-l);border-radius:10px;padding:2mm 2.5mm;font-size:9.5pt;font-weight:700;color:var(--teal)}
+.kf svg{font-size:13pt;flex:none}
+.costs{background:#fff;border-radius:14px;box-shadow:0 5px 16px rgba(0,74,173,.07);overflow:hidden;flex:1;display:flex;flex-direction:column}
+.costs .ch{background:var(--blue);color:#fff;padding:2mm 4mm;display:flex;align-items:center;gap:2mm;font-family:'Karantina';font-weight:700;font-size:17pt}
+.costs .ch small{font-family:'Assistant';font-size:9pt;font-weight:600;opacity:.85;margin-right:auto}
+.costs table{width:100%;border-collapse:collapse}
+.costs td{padding:1.5mm 4mm;font-size:9.8pt;border-top:1px solid #eef1f6}
+.costs tr:first-child td{border-top:0}
+.costs td:last-child{text-align:left;font-weight:800;color:var(--blue);white-space:nowrap}
+.costs td small{color:var(--muted);font-weight:600;font-size:8.3pt}
+
+/* p5 */
+.g5{display:grid;grid-template-columns:1.12fr 1fr;gap:7mm;height:100%}
+.me{display:flex;flex-direction:column;gap:3.5mm}
+.me .top{display:flex;gap:4mm;align-items:center}
+.me .ph{width:30mm;height:30mm;border-radius:50%;overflow:hidden;border:1.6mm solid var(--cyan);background:#fff;flex:none}
+.me .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 8%}
+.me .who{font-size:26pt}
+.me .creds span{font-size:8.8pt;padding:.5mm 2.5mm}
+.me .story{margin-top:0;padding:2mm 3.5mm}
+.me .story p{font-size:10pt}
+.me .adv{margin-top:0;gap:3mm}
+.me .ad{padding:3mm 2mm;border-top-width:2mm}
+.me .ad .ic{width:12mm;height:12mm;font-size:17pt}
+.me .ad h3{font-size:16pt;margin-top:1.5mm}
+.me .ad p{font-size:8.6pt}
+.me .cta{margin-top:auto;padding:3.5mm 5mm;border-radius:16px}
+.me .cta h2{font-size:21pt}
+.me .cta p{font-size:10pt}
+.me .contact span{font-size:11pt}
+.wall{position:relative;background:#fff;border-radius:16px;box-shadow:0 5px 16px rgba(0,74,173,.07);padding:4mm;display:flex;flex-direction:column}
+.wall h3{font-family:'Karantina';font-weight:700;font-size:21pt;color:var(--blue);line-height:1}
+.wall p.s{font-size:10pt;color:var(--teal);font-weight:700}
+.pols{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3mm;margin-top:3mm}
+.pol{background:#fff;padding:1.5mm 1.5mm 4mm;box-shadow:0 3px 10px rgba(0,0,0,.15);border-radius:3px;overflow:hidden}
+.pol div{width:100%;height:100%;background-size:cover;background-position:center 30%;border-radius:2px}
+.pol:nth-child(odd){transform:rotate(-2deg)}.pol:nth-child(even){transform:rotate(1.6deg)}
+</style>
+
+<!-- ═════════ S1 · COVER ═════════ -->
+<section class="page L Lc">
+  <div class="ph"></div><div class="bar"></div>
+  <div class="side">
+    <div class="lg"><img src="logo.png" alt="MAKE SENSE"></div>
+    <h1>משכנתה הפוכה<br><em>נזילות פיננסית</em><br>ונכס נשאר במשפחה</h1>
+    <p class="sub">פתרון מימון גמיש ומותאם אישית לבני <bdi dir="ltr">55+</bdi></p>
+    <div class="pills">
+      <span class="pill"><svg class="i"><use href="#home"/></svg>הבית נשאר שלכם</span>
+      <span class="pill"><svg class="i"><use href="#cash"/></svg>כסף נזיל</span>
+      <span class="pill"><svg class="i"><use href="#family"/></svg>שקט למשפחה</span>
+    </div>
+    <div class="credit"><div><b>שיראל פרגר</b> | ייעוץ משכנתאות ופתרונות מימון<small>שיראל פרגר – יועץ משכנתאות | MAKESENSE</small></div><img src="member.png" alt=""></div>
+  </div>
+</section>
+
+<!-- ═════════ S2 · WHAT & TRACKS ═════════ -->
+<section class="page L">
+  <div class="tab"><span class="n">01</span>מהי משכנתה הפוכה?</div>
+  <div class="ttl"><h1>הבית נשאר שלכם, הכסף אצלכם</h1><p>3 עמודי התווך, ושני צירים שמתאימים בדיוק לכם</p></div>
+  <div class="bd"><div class="g2">
+    <div class="pl">
+      <div class="it"><div class="ic"><svg class="i"><use href="#home"/></svg></div><div><h3>הנכס נשאר שלכם</h3><p>בעלות מלאה ומגורים בבית לכל החיים</p></div></div>
+      <div class="it"><div class="ic"><svg class="i"><use href="#cash"/></svg></div><div><h3>גמישות בקבלת הכסף</h3><p>חד-פעמי, קצבה חודשית או משיכה בפעימות לפי צורך</p></div></div>
+      <div class="it"><div class="ic"><svg class="i"><use href="#scale"/></svg></div><div><h3>החזר לפי הצרכים</h3><p>אפס החזר, ריבית בלבד, או החזר חודשי רגיל</p></div></div>
+    </div>
+    <div class="ax">
+      <div class="axis in">
+        <div class="axis-h"><span class="badge"><svg class="i"><use href="#arrow-in"/></svg></span><h2>איך מקבלים?</h2></div>
+        <div class="opts">
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#137897"/><rect x="74" y="6" width="14" height="40" rx="2" fill="#1fb3c8"/></svg><h3>סכום חד-פעמי</h3><p>מראש</p></div>
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#137897"/><g fill="#1fb3c8"><rect x="80" y="30" width="8" height="16" rx="1.5"/><rect x="68" y="30" width="8" height="16" rx="1.5"/><rect x="56" y="30" width="8" height="16" rx="1.5"/><rect x="44" y="30" width="8" height="16" rx="1.5"/><rect x="32" y="30" width="8" height="16" rx="1.5"/><rect x="20" y="30" width="8" height="16" rx="1.5"/><rect x="8" y="30" width="8" height="16" rx="1.5"/></g></svg><h3>קצבה חודשית</h3><p>להגדלת ההכנסה</p></div>
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#137897"/><g fill="#1fb3c8"><rect x="78" y="22" width="10" height="24" rx="1.5"/><rect x="50" y="12" width="10" height="34" rx="1.5"/><rect x="14" y="28" width="10" height="18" rx="1.5"/></g></svg><h3>משיכות לפי צורך</h3><p>בפעימות</p></div>
+        </div>
+      </div>
+      <div class="axis out">
+        <div class="axis-h"><span class="badge"><svg class="i"><use href="#arrow-out"/></svg></span><h2>איך מחזירים?</h2></div>
+        <div class="opts">
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#004aad"/><path d="M88 44 L14 44" stroke="#9db5dc" stroke-width="1.5" stroke-dasharray="2 2"/><rect x="6" y="4" width="12" height="42" rx="2" fill="#004aad"/></svg><h3>ללא החזר חודשי</h3><p>בלון מלא</p></div>
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#004aad"/><g fill="#5f8fd6"><rect x="82" y="40" width="6" height="6" rx="1"/><rect x="72" y="40" width="6" height="6" rx="1"/><rect x="62" y="40" width="6" height="6" rx="1"/><rect x="52" y="40" width="6" height="6" rx="1"/><rect x="42" y="40" width="6" height="6" rx="1"/><rect x="32" y="40" width="6" height="6" rx="1"/><rect x="22" y="40" width="6" height="6" rx="1"/></g><rect x="6" y="14" width="12" height="32" rx="2" fill="#004aad"/></svg><h3>ריבית בלבד</h3><p>בלון חלקי</p></div>
+          <div class="opt"><svg class="ch" viewBox="0 0 100 50"><line x1="4" y1="46" x2="96" y2="46" stroke="#004aad"/><g fill="#004aad"><rect x="84" y="28" width="7" height="18" rx="1.2"/><rect x="74" y="28" width="7" height="18" rx="1.2"/><rect x="64" y="28" width="7" height="18" rx="1.2"/><rect x="54" y="28" width="7" height="18" rx="1.2"/><rect x="44" y="28" width="7" height="18" rx="1.2"/><rect x="34" y="28" width="7" height="18" rx="1.2"/><rect x="24" y="28" width="7" height="18" rx="1.2"/><rect x="14" y="28" width="7" height="18" rx="1.2"/></g></svg><h3>החזר חודשי קבוע</h3><p>שפיצר</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <!--FOOT-->
+</section>
+
+<!-- ═════════ S3 · USES (photo) ═════════ -->
+<section class="page L Lu">
+  <div class="phs"><div style="background-image:url(img/senior-smile.jpg);background-position:30% 40%"></div><div style="background-image:url(img/beach-family.jpg);background-position:50% 70%"></div></div>
+  <div class="vbar"></div>
+  <div class="tab"><span class="n">02</span>למי ולמה?</div>
+  <div class="ttl"><h1>מה אפשר לעשות עם הכסף?</h1><p>הנה כמה רעיונות</p></div>
+  <div class="bd">
+    <ul class="uses">
+      <li><span class="u"><svg class="i"><use href="#family"/></svg></span>לעזור לילדים ולנכדים: <b>דירה, חתונה, לימודים</b></li>
+      <li><span class="u"><svg class="i"><use href="#card-ok"/></svg></span>לסגור משכנתה קיימת או הלוואות יקרות</li>
+      <li><span class="u"><svg class="i"><use href="#hand-coin"/></svg></span>להגדיל את ההכנסה החודשית בפרישה</li>
+      <li><span class="u"><svg class="i"><use href="#pulse"/></svg></span>לממן טיפולים רפואיים או סיעוד</li>
+      <li><span class="u"><svg class="i"><use href="#roller"/></svg></span>לשפץ ולהנגיש את הבית</li>
+      <li><span class="u"><svg class="i"><use href="#plane"/></svg></span>ליהנות: טיולים, תחביבים ואיכות חיים</li>
+      <li><span class="u"><svg class="i"><use href="#sun"/></svg></span>לשמור על רמת החיים, בשקט ובביטחון</li>
+    </ul>
+  </div>
+  <!--FOOT-->
+</section>
+
+<!-- ═════════ S4 · HOW MUCH, SAFETY, COSTS ═════════ -->
+<section class="page L">
+  <div class="tab"><span class="n">03</span>כמה, באיזה ביטחון, ובכמה</div>
+  <div class="ttl"><h1>ככל שהגיל עולה, המימון עולה</h1><p>אחוז המימון המרבי משווי הנכס לפי גיל הלווה הצעיר, בכל הגופים המלווים</p></div>
+  <div class="bd"><div class="g4">
+    <div class="st">
+      <h3>טווח המימון בשוק לפי גיל</h3>
+      <div class="stairs">
+        <div class="step" style="height:58%"><i class="lo" style="height:43%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">15–35%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל 55</span></div>
+        <div class="step" style="height:65%"><i class="lo" style="height:51%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">20–39%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל 60</span></div>
+        <div class="step" style="height:80%"><i class="lo" style="height:63%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">30–48%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל 70</span></div>
+        <div class="step" style="height:83%"><svg class="i person"><use href="#user"/></svg><span class="pct">עד <bdi dir="ltr">50%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל 80</span></div>
+        <div class="step" style="height:100%"><i class="lo" style="height:83%"></i><svg class="i person"><use href="#user"/></svg><span class="pct"><bdi dir="ltr">50–60%</bdi></span><span class="lbl">משווי הנכס</span><span class="age">גיל <bdi dir="ltr">90+</bdi></span></div>
+      </div>
+      <div class="stairs-base"></div>
+      <p class="cap">גובה העמודה: המימון המרבי בשוק · החלק הכהה: המינימלי. השיעור בפועל נקבע לפי הגוף המלווה והשמאות.</p>
+    </div>
+    <div class="rc">
+      <div class="prot">
+        <div class="pr"><div class="pi"><svg class="i"><use href="#shield"/></svg></div><b>הגנת חוב</b><span>החוב לא יעלה על שווי הנכס במועד הפירעון</span></div>
+        <div class="pr"><div class="pi"><svg class="i"><use href="#refresh"/></svg></div><b>גמישות</b><span>פירעון או שינוי מסלול בכל עת</span></div>
+        <div class="pr"><div class="pi"><svg class="i"><use href="#cal"/></svg></div><b>זכויות היורשים</b><span>שנה שלמה להסדיר את החוב או למכור</span></div>
+      </div>
+      <div class="kf">
+        <span><svg class="i"><use href="#user"/></svg>מגיל <bdi dir="ltr">55</bdi></span>
+        <span><svg class="i"><use href="#umbrella"/></svg>פטור מביטוח חיים</span>
+        <span><svg class="i"><use href="#building"/></svg>ביטוח מבנה חובה</span>
+      </div>
+      <div class="costs">
+        <div class="ch"><svg class="i"><use href="#doc"/></svg>עלויות עיקריות, בלי הפתעות<small>רוב העלויות חד-פעמיות</small></div>
+        <table>
+          <tr><td>פתיחת תיק <small>· אפשר לצרף להלוואה</small></td><td><bdi dir="ltr">1,000–5,900</bdi> ₪</td></tr>
+          <tr><td>רישום שעבוד</td><td>210 ₪</td></tr>
+          <tr><td>שמאות, ואישור רפואי מגיל <bdi dir="ltr">75–80</bdi> <small>· צד ג׳</small></td><td>לפי הצעת מחיר</td></tr>
+          <tr><td>שינוי תנאים במהלך ההלוואה <small>· רק אם תבקשו</small></td><td>320 ₪</td></tr>
+          <tr><td>עמלת פירעון מוקדם <small>· חלק מהגופים ללא, אחרים רק בשנים הראשונות</small></td><td>0 ₪ / משתנה</td></tr>
+        </table>
+      </div>
+    </div>
+  </div></div>
+  <!--FOOT-->
+</section>
+
+<!-- ═════════ S5 · WHY ME ═════════ -->
+<section class="page L">
+  <div class="tab"><span class="n">04</span>למה איתי?</div>
+  <div class="ttl"><h1>למה לעשות את זה עם שיראל פרגר?</h1><p>מומחיות, השוואה מול כל הגופים, וליווי אישי מהשיחה הראשונה</p></div>
+  <div class="bd"><div class="g5">
+    <div class="me">
+      <div class="top">
+        <div class="ph"><img src="shiral.png" alt="שיראל פרגר"></div>
+        <div>
+          <div class="who">שיראל פרגר</div>
+          <div class="creds">
+            <span><svg class="i"><use href="#grad"/></svg>B.A כלכלה וניהול</span>
+            <span><svg class="i"><use href="#grad"/></svg>M.B.A מנהל עסקים</span>
+            <span><svg class="i"><use href="#shield"/></svg>חבר בהתאחדות יועצי המשכנתאות</span>
+            <span><svg class="i"><use href="#family"/></svg>עשרות משפחות מלוות</span>
+          </div>
+        </div>
+      </div>
+      <div class="story"><svg class="i"><use href="#heart"/></svg><p>ראיתי מקרוב את ההורים שלי מתמודדים בלי איש מקצוע לצידם. <b>לכן אני מלווה כל משפחה כאילו היא שלי.</b></p></div>
+      <div class="adv">
+        <div class="ad"><div class="ic"><svg class="i"><use href="#search"/></svg></div><h3>השוואה אובייקטיבית</h3><p>כל הגופים המלווים בשוק</p></div>
+        <div class="ad"><div class="ic"><svg class="i"><use href="#sliders"/></svg></div><h3>תמהיל חכם</h3><p>מסלולים ומשיכה שמפחיתים ריבית</p></div>
+        <div class="ad"><div class="ic"><svg class="i"><use href="#heart"/></svg></div><h3>ליווי משפחתי</h3><p>שקיפות וביטחון לכל המשפחה</p></div>
+      </div>
+      <div class="cta">
+        <svg class="i ic"><use href="#phone"/></svg>
+        <div><h2>צרו קשר לפגישת ייעוץ</h2><p>ושיקוף אפשרויות, ללא התחייבות</p>
+          <div class="contact"><span><svg class="i"><use href="#phone"/></svg>052-441-5395</span><span><svg class="i"><use href="#mail"/></svg>sp.makesense@gmail.com</span></div></div>
+      </div>
+    </div>
+    <div class="wall">
+      <h3>משפחות שכבר ליוויתי</h3><p class="s">רגעים אמיתיים מהשטח</p>
+      <div class="pols">
+        <div class="pol"><div style="background-image:url(img/client-030.png)"></div></div>
+        <div class="pol"><div style="background-image:url(img/client-003.png)"></div></div>
+        <div class="pol"><div style="background-image:url(img/client-024.png)"></div></div>
+        <div class="pol"><div style="background-image:url(img/client-006.png)"></div></div>
+        <div class="pol"><div style="background-image:url(img/client-042.png)"></div></div>
+        <div class="pol"><div style="background-image:url(img/client-027.png)"></div></div>
+      </div>
+    </div>
+  </div></div>
+  <!--FOOT-->
+</section>
