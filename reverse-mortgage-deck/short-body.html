@@ -165,6 +165,27 @@
 .vt td.no span{background:#b0b7c4}.vt td.yes span{background:var(--teal)}
 .L.vs .bd{top:40mm}
 .L.vs .paths .pathv{height:14mm}
+
+.life{display:grid;grid-template-columns:1fr 9mm 1.12fr;align-items:stretch}
+.lc{border-radius:14px;padding:2.5mm 4mm 3mm;position:relative;overflow:hidden}
+.lc.no{background:#eef0f4;color:#6b7386}
+.lc.yes{background:linear-gradient(120deg,var(--blue),#0b5ccc);color:#fff;padding-left:30mm}
+.lph{position:absolute;left:0;top:0;bottom:0;width:27mm;background-size:cover;background-position:40% 50%;border-right:1.5mm solid var(--cyan)}
+.lh{display:flex;align-items:center;gap:2mm;font-family:'Karantina';font-weight:700;font-size:18pt;line-height:1}
+.lc.no .lh{color:#7a8396}
+.lh span{font-family:'Assistant';font-size:10pt;width:6mm;height:6mm;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.lc.no .lh span{background:#a3abba}.lc.yes .lh span{background:var(--cyan)}
+.lc ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1.6mm 3mm;margin-top:2.2mm}
+.lc li{display:flex;align-items:center;gap:1.6mm;font-size:10pt;font-weight:700;line-height:1.15}
+.lc li svg{font-size:12pt;flex:none}
+.lc.yes li svg{color:var(--cyan)}
+.larr{display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:18pt}
+.larr svg{transform:rotate(-90deg)}
+.L.vs .vsb{gap:2.5mm}
+.L.vs .paths .pathv{height:8mm;margin:.3mm 0}
+.L.vs .pc{padding:1.5mm 3mm}.L.vs .ph2{font-size:15pt}.L.vs .pc p{font-size:8.5pt}
+.L.vs .vt{border-spacing:0 .9mm}.L.vs .vt th{font-size:14pt}
+.L.vs .vt td{padding:1.15mm 3mm;font-size:9.4pt}
 </style>
 
 <!-- ═════════ S1 · COVER ═════════ -->
@@ -229,7 +250,7 @@
       <li><span class="u"><svg class="i"><use href="#card-ok"/></svg></span>לסגור משכנתה קיימת או הלוואות יקרות</li>
       <li><span class="u"><svg class="i"><use href="#hand-coin"/></svg></span>להגדיל את ההכנסה החודשית בפרישה</li>
       <li><span class="u"><svg class="i"><use href="#pulse"/></svg></span>לממן טיפולים רפואיים או סיעוד</li>
-      <li><span class="u"><svg class="i"><use href="#roller"/></svg></span>לשפץ ולהנגיש את הבית</li>
+      <li><span class="u"><svg class="i"><use href="#roller"/></svg></span>לשפץ, להרחיב, להוסיף ממ״ד או להנגיש את הבית</li>
       <li><span class="u"><svg class="i"><use href="#plane"/></svg></span>ליהנות: טיולים, תחביבים ואיכות חיים</li>
       <li><span class="u"><svg class="i"><use href="#sun"/></svg></span>לשמור על רמת החיים, בשקט ובביטחון</li>
     </ul>
@@ -283,9 +304,16 @@
 
 <!-- ═════════ WITH vs WITHOUT ADVISOR ═════════ -->
 <section class="page L vs">
-  <div class="tab"><span class="n">04</span>עם יועץ או בלי?</div>
-  <div class="ttl"><h1>התהליך בלי יועץ, מול התהליך איתי</h1><p>אותה מטרה. דרך אחרת לגמרי</p></div>
+  <div class="tab"><span class="n">04</span>עם או בלי?</div>
+  <div class="ttl"><h1>עם או בלי? ההבדל מורגש</h1><p>באיכות החיים, ובדרך להגיע אליה</p></div>
   <div class="bd vsb">
+    <div class="life">
+      <div class="lc no"><div class="lh"><span>✕</span>הגיל השלישי בלי משכנתה הפוכה</div>
+        <ul><li><svg class="i"><use href="#cash"/></svg>מחיה מקצבה דלה</li><li><svg class="i"><use href="#family"/></svg>נשענים על הילדים</li><li><svg class="i"><use href="#home"/></svg>בית שלא מותאם לגיל</li><li><svg class="i"><use href="#card-ok"/></svg>החזרים חודשיים גבוהים</li></ul></div>
+      <div class="larr"><svg class="i"><use href="#arrow-out"/></svg></div>
+      <div class="lc yes"><div class="lph" style="background-image:url(img/sunset-family.jpg)"></div><div class="lh"><span>✓</span>עם משכנתה הפוכה</div>
+        <ul><li><svg class="i"><use href="#hand-coin"/></svg>הכנסה נוספת ועצמאות כלכלית</li><li><svg class="i"><use href="#heart"/></svg>עוזרים לילדים, במקום להישען עליהם</li><li><svg class="i"><use href="#roller"/></svg>שיפוץ, הרחבה או ממ״ד בבית</li><li><svg class="i"><use href="#sun"/></svg>שמחה ואיכות חיים, כבר עכשיו</li></ul></div>
+    </div>
     <div class="paths">
       <div class="pc no"><div class="ph2"><span>✕</span>בלי יועץ</div><svg viewBox="0 0 200 46" class="pathv"><path d="M192 23 C175 2,160 44,148 22 S128 4,122 26 S104 44,96 20 S78 2,70 28 S52 42,46 18 S28 6,22 30 S12 34,8 23" fill="none" stroke="#b9c1cf" stroke-width="3.2" stroke-dasharray="5 3.5" stroke-linecap="round"/>
 <g font-family="Assistant" font-weight="800" font-size="8" fill="#8a93a6" text-anchor="middle"><circle cx="148" cy="22" r="6" fill="#fff" stroke="#b9c1cf"/><text x="148" y="25">?</text><circle cx="96" cy="20" r="6" fill="#fff" stroke="#b9c1cf"/><text x="96" y="23">?</text><circle cx="46" cy="18" r="6" fill="#fff" stroke="#b9c1cf"/><text x="46" y="21">?</text></g>
