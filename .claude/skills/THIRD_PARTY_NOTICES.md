@@ -12,3 +12,4 @@ Eval fixtures and optimization logs were removed; skill content is otherwise unc
 | frontend-design, canvas-design, theme-factory | https://github.com/anthropics/skills | see LICENSE.txt in each folder |
 | humanize | https://github.com/finestructure-ai/humanizer-multilingual | MIT © Fine Structure |
 | marketing-research | https://github.com/ishwarjha/claude-marketing-research-skill | Apache-2.0 |
+| hebrew-hr-resume-expert (Hebrew/Israeli adaptation, rewritten — not a verbatim copy) | https://github.com/Paramchoudhary/ResumeSkills | MIT © Resume Skills (see LICENSE-ResumeSkills) |
