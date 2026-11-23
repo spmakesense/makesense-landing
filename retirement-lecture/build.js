@@ -141,7 +141,7 @@ async function ic(name, hex) {
   [[11.9, '67', 'פרישה'], [6.55, '76', ''], [1.0, '85+', '']].forEach(([x, n, l], i) => { s.addShape(pres.shapes.OVAL, { x: x - 0.2 + (i === 2 ? 0.2 : 0), y: 4.87, w: 0.5, h: 0.5, fill: { color: i === 0 ? HEX.blue : HEX.teal }, line: { color: HEX.white, width: 3 }, objectName: 'tick ' + (i + 1) }); big(s, n, x - 0.6, 5.45, 1.4, 0.5, HEX.blue, 22); if (l) T(s, l, { x: x - 0.6, y: 5.9, w: 1.4, h: 0.4, fontSize: 14, color: C.accent4, align: 'center' }); });
   T(s, '≈ 20 שנה שצריך לממן', { x: 3.5, y: 4.2, w: 6.3, h: 0.6, fontSize: 26, bold: true, color: C.accent3, align: 'center' });
   await bubble(s, 0.9, 1.9, 1.9, HEX.ice, 'LuHourglass', HEX.blue);
-  src(s, 'מקור: OECD Health Statistics 2025; הלמ״ס, לוחות תמותה');
+  src(s, 'מקור: OECD, Health at a Glance 2025 (נתוני 2023); Globes');
   s.addNotes('תוחלת החיים בישראל היא 83.8 שנים, הרביעית בגובהה ב-OECD. נשים כ-85.7, גברים כ-81.7. פרישה היא לא סוף הדרך, היא עוד 20 שנה שצריך לממן.');
 
   s = content('גיל הפרישה של נשים עולה ל-65', 'המציאות במספרים', 'המציאות במספרים', 'את הגיל המדויק של אמא בודקים במחשבון של ביטוח לאומי');
@@ -175,9 +175,9 @@ async function ic(name, hex) {
     showLegend: true, legendPos: 'b', legendFontSize: 14, legendFontFace: '+mn-lt', legendColor: HEX.muted, showTitle: false, objectName: 'pension doughnut', altText: '44% מבני גיל הפנסיה שאינם עובדים מקבלים פנסיה',
   });
   big(s, '44%', 8.45, 3.15, 3.0, 1.0, HEX.blue, 40);
-  const pstat = [['≈ 6,700 ₪', 'פנסיה ממוצעת בקרב המקבלים', HEX.blue], ['⅓ פחות', 'הפנסיה של נשים', HEX.teal]];
+  const pstat = [['≈ 6,700 ₪', 'פנסיה ממוצעת בקרב המקבלים', HEX.blue], ['5,481 ₪', 'פנסיה ממוצעת לנשים, מול 8,184 ₪ לגברים', HEX.teal]];
   pstat.forEach(([n, l, c], i) => { const y = 1.8 + i * 2.3; card(s, 0.6, y, 6.2, 2.0, C.background1, 'stat ' + (i + 1)); big(s, n, 0.6, y + 0.2, 6.2, 1.1, c, 50); T(s, l, { x: 0.8, y: y + 1.3, w: 5.8, h: 0.5, fontSize: 18, color: C.accent4, align: 'center' }); });
-  src(s, 'מקור: נתוני הכנסות פנסיונרים לשנת 2024, כפי שפורסמו בביזפורטל');
+  src(s, 'מקור: הלמ״ס, פרסום לחודש האזרח הוותיק 2026 (נתוני 2024): נשים 63+ וגברים 67+ שאינם עובדים');
   s.addNotes('פחות ממחצית מבני גיל הפנסיה שלא עובדים מקבלים פנסיה. הממוצע בקרב המקבלים כ-6,700 ₪, ולנשים בכשליש פחות. לרבים יש הפקדות חלקיות, קרנות ישנות או כספים אבודים.');
 
   s = content('לזוג טיפוסי חסרים כ-2,300 ₪ בכל חודש', 'המציאות במספרים', 'המציאות במספרים', 'מי מכם משלים את הפער הזה היום?');
@@ -210,7 +210,7 @@ async function ic(name, hex) {
     big(s, num, x, 3.95, 3.9, 1.0, HEX.white, 40);
     T(s, fact, { x: x + 0.25, y: 5.0, w: 3.4, h: 1.25, fontSize: 16, color: C.background2, align: 'center', valign: 'top' });
   }
-  src(s, 'מקור: נתוני פנסיונרים 2024 (ביזפורטל); ביטוח לאומי 2026; השוואת גופים מלווים 2026 (הדוגמה להמחשה)');
+  src(s, 'מקור: הלמ״ס 2026 (נתוני 2024); ביטוח לאומי 2026; השוואת גופים מלווים 2026 (הדוגמה להמחשה)');
   s.addNotes('שלוש הנחות ששומעים כמעט בכל בית. יש להם פנסיה? 56% מבני גיל הפרישה שלא עובדים לא מקבלים פנסיה בכלל. המדינה תדאג? הקצבה הבסיסית היא כמחצית מקו העוני. בבית לא נוגעים? בגיל 70 דירה של 3 מיליון יכולה לשחרר כ-900 אלף ₪, והיתרה עדיין עוברת לילדים.');
 
   // ════ ג. תכנון פרישה ════
@@ -246,7 +246,7 @@ async function ic(name, hex) {
   card(s, 8.4, 4.3, 4.33, 2.0, C.background1, 'warning');
   await bubble(s, 11.8, 4.5, 0.7, 'FDECE8', 'LuTriangleAlert', HEX.warn);
   T(s, [{ text: 'טופס 161ח', options: { bold: true, color: 'C2410C', breakLine: true } }, { text: 'סוגר את הפטור על 22.5% בלבד', options: {} }], { x: 8.6, y: 4.45, w: 3.1, h: 1.7, fontSize: 18, valign: 'middle' });
-  src(s, 'מקור: רשות המסים; פקודת מס הכנסה (קיבוע זכויות); ביזפורטל ו-Funder, 2026');
+  src(s, 'מקור: כל זכות, הטבות מס בפרישה (טופס 161ד); ביזפורטל ו-Funder, 2026');
   s.addNotes('קיבוע זכויות בטופס 161ד מול פקיד השומה. הפטור ב-2026 הוא 57.5%, עד כ-5,422 ₪ בחודש, ועולה ל-67% ב-2028. הטופס המקוצר 161ח סוגר את הסל על 22.5% בלבד, טעות נפוצה. פריסת מענקים נכונה חוסכת אלפי שקלים.');
 
   s = content('מנוף 3: כסף שאף אחד לא יודע עליו', 'תכנון פרישה', 'תכנון פרישה', 'קרנות ישנות וחסכונות שנשכחו מחכים ב"הר הכסף"');
@@ -490,7 +490,39 @@ async function ic(name, hex) {
   T(s, 'התחלה', { x: 11.85, y: RY1 + 0.3, w: 0.9, h: 0.3, fontSize: 12, bold: true, color: C.accent3, align: 'center' });
   s.addNotes('לפני שנפרדים: מפת הדרך הביתה. שמונה תחנות, כל אחת היא טיפ מההרצאה: שיחה פתוחה, הכנסות וזכויות, מס, חיסכון, הוצאות, הבית, צוואה וייפוי כוח, וסיעוד ובריאות. מי שרוצה לעבור את המסלול איתי, מגיע לבדיקה משפחתית.');
 
+
+  // ════ נספח: מקורות (שקופית מוסתרת) ════
+  s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'סיכום', hidden: true });
+  s.addText('מקורות הנתונים', { placeholder: 'title', ...he });
+  tag(s, 'נספח');
+  const refs = [
+    ['תוחלת חיים 83.8', 'OECD, Health at a Glance 2025: Israel', 'https://www.oecd.org/en/publications/health-at-a-glance-2025_15a55280-en/israel_b3600fbc-en.html'],
+    ['דירוג רביעי ב-OECD', 'Globes, Israel life expectancy fourth highest in OECD', 'https://en.globes.co.il/en/article-1001524081'],
+    ['סכומי קצבת זקנה 2026', 'המוסד לביטוח לאומי, גובה הקצבאות לשנת 2026', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/hadasaidkonkitzva2026.aspx'],
+    ['קו העוני 3,547 ₪', 'המוסד לביטוח לאומי, דוח העוני 2024', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/dohoni2024hadasa.aspx'],
+    ['השלמת הכנסה', 'כל זכות, תוספת השלמת הכנסה לקצבת זיקנה', 'https://www.kolzchut.org.il/he/%D7%AA%D7%95%D7%A1%D7%A4%D7%AA_%D7%94%D7%A9%D7%9C%D7%9E%D7%AA_%D7%94%D7%9B%D7%A0%D7%A1%D7%94_%D7%9C%D7%A7%D7%A6%D7%91%D7%AA_%D7%96%D7%99%D7%A7%D7%A0%D7%94'],
+    ['גיל פרישה', 'כל זכות, גיל פרישה מעבודה', 'https://www.kolzchut.org.il/he/%D7%92%D7%99%D7%9C_%D7%A4%D7%A8%D7%99%D7%A9%D7%94_%D7%9E%D7%A2%D7%91%D7%95%D7%93%D7%94'],
+    ['פנסיה: 44%, 6,678 ₪, נשים מול גברים', 'הלמ״ס, חודש האזרח הוותיק 2026 (כפי שפורסם בביזפורטל)', 'https://www.bizportal.co.il/general/news/article/20046899'],
+    ['פטור ממס 57.5%, 5,422 ₪', 'ביזפורטל, פטור על קצבה וקיבוע זכויות 2026', 'https://www.bizportal.co.il/longtermsavings/news/article/20035682'],
+    ['קיבוע זכויות (161ד)', 'כל זכות, הטבות מס בפרישה לפנסיה', 'https://www.kolzchut.org.il/he/%D7%94%D7%98%D7%91%D7%95%D7%AA_%D7%9E%D7%A1_%D7%91%D7%A4%D7%A8%D7%99%D7%A9%D7%94_%D7%9C%D7%A4%D7%A0%D7%A1%D7%99%D7%94_(%D7%98%D7%95%D7%A4%D7%A1_161%D7%93_%22%D7%A7%D7%99%D7%91%D7%95%D7%A2_%D7%96%D7%9B%D7%95%D7%99%D7%95%D7%AA%22)'],
+    ['קצבה מזערית להיוון', 'ביזפורטל, מחשבון ומדריך קצבאות 2026', 'https://www.bizportal.co.il/additives/320/old-age-allowance-ca.html'],
+    ['משכנתה הפוכה: אחוזי מימון ועמלות', 'השוואת תנאי גופים מלווים ודפי עמלות, 2026 (חומר מקצועי פנימי)', ''],
+  ];
+  refs.forEach(([what, name, url], i) => {
+    const col = i < 6 ? 0 : 1, row = i < 6 ? i : i - 6, x = col === 0 ? 6.75 : 0.6, y = 1.45 + row * 0.86;
+    T(s, what, { x, y, w: 5.98, h: 0.34, fontSize: 14, bold: true, color: C.accent1 });
+    T(s, url ? [{ text: name, options: { hyperlink: { url, tooltip: url }, color: C.accent3 } }] : name, { x, y: y + 0.34, w: 5.98, h: 0.4, fontSize: 12, color: C.accent3 });
+  });
+  s.addNotes('שקופית נספח מוסתרת: מקורות מלאים לכל הנתונים במצגת. אפשר להציג אותה אם נשאלת שאלה על מקור נתון.');
+
   await pres.writeFile({ fileName: OUT });
   await applyTheme(OUT, THEME);
+  // hide the sources appendix (last slide) in slideshow; pptxgenjs has no 'hidden' option
+  const JSZip = require('jszip'), fs = require('fs');
+  const z = await JSZip.loadAsync(fs.readFileSync(OUT));
+  const n = Object.keys(z.files).filter(f => /^ppt\/slides\/slide\d+\.xml$/.test(f)).length;
+  const p = `ppt/slides/slide${n}.xml`;
+  z.file(p, (await z.file(p).async('string')).replace('<p:sld ', '<p:sld show="0" '));
+  fs.writeFileSync(OUT, await z.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }));
   console.log('wrote', OUT);
 })().catch(e => { console.error(e); process.exit(1); });
