@@ -1,4 +1,4 @@
-# Builds checklist.html (A4, 2 pages) in the MAKE SENSE guide style; make-pdf.js prints it.
+# Builds checklist.html (A4, 3 pages) in the MAKE SENSE guide style; make-pdf.js prints it.
 import re, pathlib
 deck = pathlib.Path('../../reverse-mortgage-deck/deck.html').read_text(encoding='utf8')
 a = deck.index('<svg width="0" height="0" style="position:absolute">'); b = deck.index('</svg>', deck.index('<symbol id="corner"')) + 6
@@ -29,16 +29,20 @@ cases = [
    'ייפוי כוח מתמשך שנחתם מראש בפני עורך דין שהוסמך לכך. ההורים בוחרים בעצמם מי יחליט בשבילם, ובדיוק לפי רצונם.'),
   ('steth', 'ביטוח סיעודי',
    'אבא עבר אירוע מוחי והפך סיעודי. מטפלת צמודה עולה אלפי שקלים בחודש, והחסכונות של ההורים נגמרו תוך שנה.',
-   'בודקים מראש את הביטוח הסיעודי בקופת החולים ואת הפוליסות הקיימות, ומממשים את גמלת הסיעוד. משכנתה הפוכה יכולה לשמש גיבוי.'),
+   'בודקים מראש איזה ביטוח סיעודי יש ולכמה שנים (בקופת החולים, הרובד הבסיסי משלם עד 5 שנים), ומגישים בזמן לגמלת סיעוד. משכנתה הפוכה יכולה לשמש גיבוי.'),
   ('hospital', 'ביטוחי בריאות',
    'אמא נזקקה לניתוח, ואז התברר שהביטוח הפרטי שלה בוטל לפני שנים, כי הוראת קבע נפלה ואף אחד לא שם לב.',
    'ממפים את כל הביטוחים באתר "הר הביטוח", מבטלים כפילויות ושומרים על מה שחשוב באמת.'),
 ]
+questions = ['מה הייתם רוצים לעשות בשנים הקרובות?', 'כמה נכנס וכמה יוצא בכל חודש?', 'איפה נמצאים החסכונות, הפנסיות והביטוחים?', 'יש צוואה וייפוי כוח מתמשך? איפה הם?', 'ממה אתם הכי חוששים?']
+folder = ['פרטי חשבונות הבנק ואיש קשר בסניף', 'פוליסות: בריאות, סיעוד, חיים ומבנה', 'דוחות שנתיים מהפנסיה ומקופות הגמל', 'נסח טאבו ומסמכי הדירה', 'צוואה וייפוי כוח מתמשך, או איפה הם מופקדים', 'אישורים מביטוח לאומי', 'רשימת תרופות, רופאים וקופת החולים', 'סיסמאות לאתרים, שמורות במקום בטוח']
 ic = lambda n: f'<svg class="i"><use href="#{n}"/></svg>'
 rows = ''.join(f'''<div class="row"><span class="box"></span><span class="ic">{ic(i)}</span><div class="tx"><h3><span class="num">{k+1}</span>{t}</h3><p>{d}</p><small>{ic("info")}איך בודקים: {how}</small></div></div>''' for k,(i,t,d,how) in enumerate(money))
 cs = ''.join(f'''<div class="case"><div class="ch"><span class="box"></span><span class="ic">{ic(i)}</span><h3><span class="num">{k+7}</span>{t}</h3></div>
   <div class="pair"><div class="bad">{ic("alert")}<div><b>לא תרצו שזה יקרה…</b><p>{bad}</p></div></div>
   <div class="fix">{ic("ok")}<div><b>הפתרון</b><p>{fix}</p></div></div></div></div>''' for k,(i,t,bad,fix) in enumerate(cases))
+qs = ''.join(f'<div class="q"><span class="num">{k+1}</span><p>{q}</p></div>' for k, q in enumerate(questions))
+fl = ''.join(f'<div class="f"><span class="box"></span><p>{t}</p></div>' for t in folder)
 foot = '''<svg class="corner r"><use href="#corner"/></svg><svg class="corner l"><use href="#corner"/></svg>
 <div class="foot"><div class="brand"><img src="logo.png" alt="MAKE SENSE"><span>שיראל פרגר – יועץ משכנתאות | MAKESENSE</span></div>
 <img class="sig" src="signature.png" alt="איתכם לכל הדרך, שיראל"><img class="member" src="member.png" alt="חבר בהתאחדות יועצי המשכנתאות"></div>'''
@@ -90,6 +94,15 @@ svg.i{{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.9;strok
 .foot{{position:absolute;bottom:0;left:0;right:0;height:30mm;display:flex;align-items:flex-end;justify-content:space-between;padding:0 27mm 5mm}}
 .brand{{display:flex;flex-direction:column;align-items:center;gap:1mm}}.brand img{{height:12mm}}.brand span{{font-size:7.5pt;font-weight:700;color:var(--blue)}}
 .sig{{height:15mm}}.member{{height:10mm}}
+.talk{{position:absolute;top:24mm;right:13mm;left:13mm}}
+.q{{display:flex;align-items:center;gap:4mm;background:#fff;border-radius:14px;padding:3.6mm 5mm;margin-bottom:3mm;box-shadow:0 4px 14px rgba(0,74,173,.07)}}
+.q .num{{font-size:22pt}}.q p{{font-size:14pt;font-weight:700;color:var(--blue)}}
+.tips{{display:flex;gap:2mm;flex-wrap:wrap;margin:1mm 0 7mm}}
+.tips span{{background:var(--ice);color:var(--teal);font-weight:800;font-size:10.5pt;border-radius:99px;padding:1mm 4mm}}
+.grid{{display:grid;grid-template-columns:1fr 1fr;gap:2.6mm}}
+.f{{display:flex;align-items:center;gap:3mm;background:#fff;border-radius:12px;padding:3mm 4mm;box-shadow:0 4px 14px rgba(0,74,173,.07)}}
+.f .box{{margin-top:0;width:6mm;height:6mm}}.f p{{font-size:11.5pt;font-weight:600}}
+.lead{{font-size:11.5pt;color:var(--muted);margin:-1mm 0 3.5mm;font-weight:600}}
 .corner{{position:absolute;bottom:0;width:20mm;height:38mm}}.corner.r{{right:0}}.corner.l{{left:0;transform:scaleX(-1)}}
 </style></head><body>{defs}
 <section class="page">
@@ -105,7 +118,17 @@ svg.i{{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.9;strok
   <div class="cases"><div class="sec">4 מקרים שלא תרצו שיקרו <span class="pill">מקרים להמחשה</span></div>{cs}</div>
   <div class="cta"><div class="qr"><img src="qr-wa.png" alt="QR לוואטסאפ"></div>
     <div><h2>רוצים לעבור על הרשימה יחד?</h2><p>בדיקה משפחתית: שעה אחת, כל המשפחה, תוכנית ברורה. ללא התחייבות.</p><span class="ph">{ic("phone")}052-441-5395</span></div></div>
-  <p class="disc">המידע כללי ואינו מהווה ייעוץ אישי, משפטי או ביטוחי. בענייני צוואה, ייפוי כוח וביטוח מומלץ להיעזר בעורך דין ובבעל רישיון מתאים. המקרים להמחשה בלבד.</p>
+  {foot}
+</section>
+<section class="page">
+  <div class="tab">חלק ג׳: השיחה והתיק</div>
+  <div class="talk"><div class="sec">השיחה של השבת הקרובה <span class="pill">5 שאלות</span></div>
+    <div class="tips"><span>מתחילים מהחלומות, לא מהחובות</span><span>מזמינים את כל האחים</span><span>לא מחליטים בשיחה הראשונה</span></div>
+    {qs}
+    <div class="sec" style="margin-top:8mm">התיק המשפחתי <span class="pill">8 מסמכים</span></div>
+    <p class="lead">תיקייה אחת שכל הילדים יודעים איפה היא. ביום שצריך אותה, אין זמן לחפש.</p>
+    <div class="grid">{fl}</div></div>
+  <p class="disc">המידע כללי ואינו מהווה ייעוץ אישי, משפטי, פנסיוני או ביטוחי. בענייני צוואה, ייפוי כוח, פנסיה וביטוח מומלץ להיעזר בעורך דין ובבעל רישיון מתאים. המקרים להמחשה בלבד.</p>
   {foot}
 </section></body></html>'''
 pathlib.Path('checklist.html').write_text(html, encoding='utf8')

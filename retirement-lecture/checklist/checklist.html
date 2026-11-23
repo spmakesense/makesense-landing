@@ -46,6 +46,15 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.9;stroke
 .foot{position:absolute;bottom:0;left:0;right:0;height:30mm;display:flex;align-items:flex-end;justify-content:space-between;padding:0 27mm 5mm}
 .brand{display:flex;flex-direction:column;align-items:center;gap:1mm}.brand img{height:12mm}.brand span{font-size:7.5pt;font-weight:700;color:var(--blue)}
 .sig{height:15mm}.member{height:10mm}
+.talk{position:absolute;top:24mm;right:13mm;left:13mm}
+.q{display:flex;align-items:center;gap:4mm;background:#fff;border-radius:14px;padding:3.6mm 5mm;margin-bottom:3mm;box-shadow:0 4px 14px rgba(0,74,173,.07)}
+.q .num{font-size:22pt}.q p{font-size:14pt;font-weight:700;color:var(--blue)}
+.tips{display:flex;gap:2mm;flex-wrap:wrap;margin:1mm 0 7mm}
+.tips span{background:var(--ice);color:var(--teal);font-weight:800;font-size:10.5pt;border-radius:99px;padding:1mm 4mm}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2.6mm}
+.f{display:flex;align-items:center;gap:3mm;background:#fff;border-radius:12px;padding:3mm 4mm;box-shadow:0 4px 14px rgba(0,74,173,.07)}
+.f .box{margin-top:0;width:6mm;height:6mm}.f p{font-size:11.5pt;font-weight:600}
+.lead{font-size:11.5pt;color:var(--muted);margin:-1mm 0 3.5mm;font-weight:600}
 .corner{position:absolute;bottom:0;width:20mm;height:38mm}.corner.r{right:0}.corner.l{left:0;transform:scaleX(-1)}
 </style></head><body><svg width="0" height="0" style="position:absolute">
   <defs>
@@ -121,12 +130,24 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.9;stroke
   <div class="pair"><div class="bad"><svg class="i"><use href="#alert"/></svg><div><b>לא תרצו שזה יקרה…</b><p>אמא אובחנה בדמנציה, ואף אחד לא יכול לפעול בחשבון הבנק שלה. הילדים נאלצו לפנות לבית משפט כדי להתמנות לאפוטרופוסים, תהליך של חודשים.</p></div></div>
   <div class="fix"><svg class="i"><use href="#ok"/></svg><div><b>הפתרון</b><p>ייפוי כוח מתמשך שנחתם מראש בפני עורך דין שהוסמך לכך. ההורים בוחרים בעצמם מי יחליט בשבילם, ובדיוק לפי רצונם.</p></div></div></div></div><div class="case"><div class="ch"><span class="box"></span><span class="ic"><svg class="i"><use href="#steth"/></svg></span><h3><span class="num">9</span>ביטוח סיעודי</h3></div>
   <div class="pair"><div class="bad"><svg class="i"><use href="#alert"/></svg><div><b>לא תרצו שזה יקרה…</b><p>אבא עבר אירוע מוחי והפך סיעודי. מטפלת צמודה עולה אלפי שקלים בחודש, והחסכונות של ההורים נגמרו תוך שנה.</p></div></div>
-  <div class="fix"><svg class="i"><use href="#ok"/></svg><div><b>הפתרון</b><p>בודקים מראש את הביטוח הסיעודי בקופת החולים ואת הפוליסות הקיימות, ומממשים את גמלת הסיעוד. משכנתה הפוכה יכולה לשמש גיבוי.</p></div></div></div></div><div class="case"><div class="ch"><span class="box"></span><span class="ic"><svg class="i"><use href="#hospital"/></svg></span><h3><span class="num">10</span>ביטוחי בריאות</h3></div>
+  <div class="fix"><svg class="i"><use href="#ok"/></svg><div><b>הפתרון</b><p>בודקים מראש איזה ביטוח סיעודי יש ולכמה שנים (בקופת החולים, הרובד הבסיסי משלם עד 5 שנים), ומגישים בזמן לגמלת סיעוד. משכנתה הפוכה יכולה לשמש גיבוי.</p></div></div></div></div><div class="case"><div class="ch"><span class="box"></span><span class="ic"><svg class="i"><use href="#hospital"/></svg></span><h3><span class="num">10</span>ביטוחי בריאות</h3></div>
   <div class="pair"><div class="bad"><svg class="i"><use href="#alert"/></svg><div><b>לא תרצו שזה יקרה…</b><p>אמא נזקקה לניתוח, ואז התברר שהביטוח הפרטי שלה בוטל לפני שנים, כי הוראת קבע נפלה ואף אחד לא שם לב.</p></div></div>
   <div class="fix"><svg class="i"><use href="#ok"/></svg><div><b>הפתרון</b><p>ממפים את כל הביטוחים באתר "הר הביטוח", מבטלים כפילויות ושומרים על מה שחשוב באמת.</p></div></div></div></div></div>
   <div class="cta"><div class="qr"><img src="qr-wa.png" alt="QR לוואטסאפ"></div>
     <div><h2>רוצים לעבור על הרשימה יחד?</h2><p>בדיקה משפחתית: שעה אחת, כל המשפחה, תוכנית ברורה. ללא התחייבות.</p><span class="ph"><svg class="i"><use href="#phone"/></svg>052-441-5395</span></div></div>
-  <p class="disc">המידע כללי ואינו מהווה ייעוץ אישי, משפטי או ביטוחי. בענייני צוואה, ייפוי כוח וביטוח מומלץ להיעזר בעורך דין ובבעל רישיון מתאים. המקרים להמחשה בלבד.</p>
+  <svg class="corner r"><use href="#corner"/></svg><svg class="corner l"><use href="#corner"/></svg>
+<div class="foot"><div class="brand"><img src="logo.png" alt="MAKE SENSE"><span>שיראל פרגר – יועץ משכנתאות | MAKESENSE</span></div>
+<img class="sig" src="signature.png" alt="איתכם לכל הדרך, שיראל"><img class="member" src="member.png" alt="חבר בהתאחדות יועצי המשכנתאות"></div>
+</section>
+<section class="page">
+  <div class="tab">חלק ג׳: השיחה והתיק</div>
+  <div class="talk"><div class="sec">השיחה של השבת הקרובה <span class="pill">5 שאלות</span></div>
+    <div class="tips"><span>מתחילים מהחלומות, לא מהחובות</span><span>מזמינים את כל האחים</span><span>לא מחליטים בשיחה הראשונה</span></div>
+    <div class="q"><span class="num">1</span><p>מה הייתם רוצים לעשות בשנים הקרובות?</p></div><div class="q"><span class="num">2</span><p>כמה נכנס וכמה יוצא בכל חודש?</p></div><div class="q"><span class="num">3</span><p>איפה נמצאים החסכונות, הפנסיות והביטוחים?</p></div><div class="q"><span class="num">4</span><p>יש צוואה וייפוי כוח מתמשך? איפה הם?</p></div><div class="q"><span class="num">5</span><p>ממה אתם הכי חוששים?</p></div>
+    <div class="sec" style="margin-top:8mm">התיק המשפחתי <span class="pill">8 מסמכים</span></div>
+    <p class="lead">תיקייה אחת שכל הילדים יודעים איפה היא. ביום שצריך אותה, אין זמן לחפש.</p>
+    <div class="grid"><div class="f"><span class="box"></span><p>פרטי חשבונות הבנק ואיש קשר בסניף</p></div><div class="f"><span class="box"></span><p>פוליסות: בריאות, סיעוד, חיים ומבנה</p></div><div class="f"><span class="box"></span><p>דוחות שנתיים מהפנסיה ומקופות הגמל</p></div><div class="f"><span class="box"></span><p>נסח טאבו ומסמכי הדירה</p></div><div class="f"><span class="box"></span><p>צוואה וייפוי כוח מתמשך, או איפה הם מופקדים</p></div><div class="f"><span class="box"></span><p>אישורים מביטוח לאומי</p></div><div class="f"><span class="box"></span><p>רשימת תרופות, רופאים וקופת החולים</p></div><div class="f"><span class="box"></span><p>סיסמאות לאתרים, שמורות במקום בטוח</p></div></div></div>
+  <p class="disc">המידע כללי ואינו מהווה ייעוץ אישי, משפטי, פנסיוני או ביטוחי. בענייני צוואה, ייפוי כוח, פנסיה וביטוח מומלץ להיעזר בעורך דין ובבעל רישיון מתאים. המקרים להמחשה בלבד.</p>
   <svg class="corner r"><use href="#corner"/></svg><svg class="corner l"><use href="#corner"/></svg>
 <div class="foot"><div class="brand"><img src="logo.png" alt="MAKE SENSE"><span>שיראל פרגר – יועץ משכנתאות | MAKESENSE</span></div>
 <img class="sig" src="signature.png" alt="איתכם לכל הדרך, שיראל"><img class="member" src="member.png" alt="חבר בהתאחדות יועצי המשכנתאות"></div>
