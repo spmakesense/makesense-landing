@@ -30,7 +30,7 @@ async function ic(name, hex) {
   pres.layout = 'LAYOUT_WIDE'; pres.rtlMode = true;
   pres.title = 'ההורים שלנו, הכסף שלהם, והשקט של כולנו'; pres.author = 'שיראל פרגר'; pres.company = 'MAKE SENSE';
   pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
-  let BACKUP = false; const _addSlide = pres.addSlide.bind(pres); pres.addSlide = o => _addSlide(BACKUP ? { ...o, sectionTitle: 'גיבוי' } : o);
+  let BACKUP = false; const _addSlide = pres.addSlide.bind(pres); let VIS = 0; pres.addSlide = o => { if (!BACKUP) VIS++; return _addSlide(BACKUP ? { ...o, sectionTitle: 'גיבוי' } : o); };
   const C = pres.SchemeColor, he = { rtlMode: true, lang: 'he-IL', align: 'right' };
 
   const corner = [
@@ -194,13 +194,45 @@ async function ic(name, hex) {
 
   // ════════════ 8–10. הבית ════════════
   pres.addSection({ title: 'הבית כנכס' });
-  s = content('הבית: משכנתה הפוכה, במשפט אחד', 'הבית כנכס', 'הבית כנכס');
+  s = content('משכנתה הפוכה: מה זה ואיך זה עובד', 'הבית כנכס', 'הבית כנכס');
   card(s, 0.6, 1.3, 12.13, 1.45, C.accent1, an(1));
-  T(s, [{ text: 'הלוואה לבני 55 ומעלה, כנגד הדירה שלהם: ', options: { color: C.accent2 } }, { text: 'ממשיכים לגור בבית, לא חייבים להחזיר כל חודש, והחוב נפרע בדרך כלל ממכירת הדירה בסוף הדרך.', options: {} }], { x: 0.95, y: 1.3, w: 11.43, h: 1.45, fontSize: 23, bold: true, color: C.background1, valign: 'middle', objectName: an(1) + 't' });
-  const pil = [['LuWallet', 'חיים בכבוד', 'תוספת קבועה לפנסיה, בלי לגעת בחסכונות'], ['LuHammer', 'שיפוץ וממ״ד', 'בית בטוח ונוח, שמתאים לגיל'], ['LuKey', 'עזרה לילדים בדירה', 'הון עצמי לילדים. מתעדים בכתב אם זו מתנה או הלוואה, ומתאמים עם הצוואה']];
-  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; card(s, x, 2.95, 3.9, 2.95, C.background1, an(2 + i)); await bubble(s, x + 1.5, 3.15, 0.9, i === 1 ? HEX.cyan : HEX.blue, pil[i][0], HEX.white, an(2 + i) + 'b'); T(s, pil[i][1], { x, y: 4.15, w: 3.9, h: 0.6, fontSize: 23, bold: true, color: C.accent1, align: 'center', objectName: an(2 + i) + 't' }); T(s, pil[i][2], { x: x + 0.25, y: 4.8, w: 3.4, h: 0.95, fontSize: 16, color: C.accent4, align: 'center', valign: 'top', objectName: an(2 + i) + 's' }); }
-  plain(s, 'התנאים: גיל 55 ומעלה, דירה בבעלות ההורים וביטוח מבנה. לא צריך ביטוח חיים. הכסף מגיע כסכום אחד, כתשלום חודשי או במשיכות לפי הצורך.', 6.05, 0.55);
-  notes(s, 'משכנתה הפוכה במשפט אחד: הלוואה לבני 55 ומעלה כנגד הדירה. ממשיכים לגור בבית, לא חייבים להחזיר כל חודש, והחוב נפרע בדרך כלל ממכירת הדירה בסוף הדרך. הבית נשאר רשום על שמם, עם שעבוד לטובת הגוף המלווה. שלוש מטרות נפוצות: תוספת למחיה, שיפוץ וממ״ד, ועזרה לילדים בהון עצמי לדירה. כשעוזרים לילד אחד, מתעדים בכתב אם זו מתנה או הלוואה ומתאמים עם הצוואה, כדי לשמור על הוגנות בין האחים.');
+  T(s, [{ text: 'הלוואה לבני 60 ומעלה (בחלק מהגופים מ-55), כנגד הדירה שלהם: ', options: { color: C.accent2 } }, { text: 'ממשיכים לגור בבית, לא חייבים להחזיר כל חודש, והחוב נפרע בדרך כלל ממכירת הדירה בסוף הדרך.', options: {} }], { x: 0.95, y: 1.3, w: 11.43, h: 1.45, fontSize: 21, bold: true, color: C.background1, valign: 'middle', objectName: an(1) + 't' });
+  const steps = [['בודקים התאמה', 'גיל 60 ומעלה (בחלק מהגופים 55), דירה בבעלות ההורים וביטוח מבנה. בלי החזר חודשי, בדרך כלל אין בדיקת הכנסה.'], ['שמאות וסכום', 'שמאי קובע כמה שווה הדירה. הגיל קובע איזה אחוז ממנה אפשר לקבל: ככל שמבוגרים יותר, יותר.'], ['מקבלים את הכסף', 'סכום אחד, תשלום חודשי או משיכות לפי הצורך. בדרך כלל אפשר להשתמש בו לכל מטרה.'], ['גרים בבית, ובסוף מחזירים', 'בדרך כלל ממכירת הדירה. ליורשים יש בדרך כלל עד 12 חודשים, ואפשר גם להחזיר ולשמור אותה.']];
+  for (let i = 0; i < 4; i++) { const x = 9.83 - i * 3.07;
+    card(s, x, 3.0, 2.9, 2.85, C.background1, an(2 + i));
+    s.addShape(pres.shapes.OVAL, { x: x + 2.2, y: 3.15, w: 0.52, h: 0.52, fill: { color: i % 2 ? HEX.cyan : HEX.blue }, line: { type: 'none' }, objectName: an(2 + i) + 'o' });
+    T(s, String(i + 1), { x: x + 2.2, y: 3.15, w: 0.52, h: 0.52, fontSize: 17, bold: true, color: C.background1, align: 'center', valign: 'middle', rtlMode: false, objectName: an(2 + i) + 'k' });
+    T(s, steps[i][0], { x: x + 0.15, y: 3.15, w: 2.0, h: 0.6, fontSize: 17, bold: true, color: C.accent1, valign: 'middle', objectName: an(2 + i) + 't' });
+    T(s, steps[i][1], { x: x + 0.18, y: 3.85, w: 2.54, h: 1.9, fontSize: 14, color: C.text1, valign: 'top', objectName: an(2 + i) + 's' }); }
+  plain(s, 'הבית נשאר רשום על שם ההורים, עם שעבוד לטובת הגוף המלווה, כמו במשכנתה רגילה. לא צריך ביטוח חיים. הריבית בדרך כלל גבוהה יותר מבמשכנתה רגילה.', 6.0, 0.5);
+  src(s, 'מקור: מדריכי משכנתה הפוכה ותנאי גופים מלווים, 2026. התנאים משתנים בין הגופים ומפורטים בהסכם');
+  notes(s, 'משכנתה הפוכה במשפט אחד: הלוואה כנגד הדירה, לבני 60 ומעלה (בחלק מהגופים כבר מ-55). ממשיכים לגור בבית, לא חייבים להחזיר כל חודש, והחוב נפרע בדרך כלל ממכירת הדירה בסוף הדרך. ארבעה שלבים: בדיקת התאמה (גיל, בעלות, ביטוח מבנה; בחלק מהגופים יש גם שווי מינימלי לנכס), שמאות שקובעת את שווי הדירה ואחוז מימון לפי הגיל, קבלת הכסף בצורה שמתאימה, ופירעון בסוף: בדרך כלל ממכירת הדירה, והיורשים מקבלים בדרך כלל עד 12 חודשים מפטירת הלווה האחרון. בחלק מהגופים החוב מוגבל לשווי הנכס. מעבר דירה, למשל לדיור מוגן, מטופל לפי ההסכם; בודקים מראש.');
+
+  s = content('למה לוקחים משכנתה הפוכה? 6 שימושים', 'הבית כנכס', 'הבית כנכס', 'הכסף מהבית, לחיים עכשיו');
+  const uses = [['LuWallet', 'תוספת קבועה למחיה', 'משיכה חודשית שסוגרת את הפער בין הקצבה להוצאות'], ['LuReceipt', 'סגירת משכנתה והלוואות', 'מחליפים החזרים חודשיים כבדים בהלוואה בלי החזר חודשי'], ['LuHammer', 'שיפוץ, ממ״ד ונגישות', 'בית בטוח שמתאים לגיל: ממ״ד, מקלחת נגישה, מעלון'], ['LuKey', 'עזרה לילדים בדירה', 'הון עצמי לילדים כשהם צריכים אותו, ולא בירושה'], ['LuHeartHandshake', 'מימון סיעוד', 'מטפל צמוד או עזרה בבית, בלי למכור את הדירה'], ['LuPlane', 'חלומות שנדחו', 'טיול, אירוע משפחתי, עזרה לנכדים. החיים עכשיו']];
+  for (let i = 0; i < 6; i++) { const col = i % 3, row = Math.floor(i / 3), x = 8.83 - col * 4.1, y = 1.65 + row * 2.1;
+    card(s, x, y, 3.9, 1.9, C.background1, an(1 + i));
+    await bubble(s, x + 2.95, y + 0.25, 0.75, (i + row) % 2 ? HEX.cyan : HEX.blue, uses[i][0], HEX.white, an(1 + i) + 'b');
+    T(s, uses[i][1], { x: x + 0.2, y: y + 0.25, w: 2.65, h: 0.75, fontSize: 18, bold: true, color: C.accent1, valign: 'middle', objectName: an(1 + i) + 't' });
+    T(s, uses[i][2], { x: x + 0.2, y: y + 1.05, w: 3.5, h: 0.75, fontSize: 14, color: C.text1, valign: 'top', objectName: an(1 + i) + 's' }); }
+  card(s, 0.6, 5.95, 12.13, 0.5, C.background2, an(7));
+  T(s, 'בדרך כלל אין הגבלה על השימוש בכסף. הכלל החשוב: לוקחים רק מה שצריך, כי הריבית נצברת', { x: 0.85, y: 5.95, w: 11.63, h: 0.5, fontSize: 16, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(7) + 't' });
+  notes(s, 'שישה שימושים נפוצים: 1) תוספת קבועה למחיה. 2) סגירת משכנתה קיימת והלוואות, כך שההחזר החודשי נעלם. 3) שיפוץ, ממ״ד והתאמת הבית לגיל. 4) עזרה לילדים בהון עצמי, ואז מתעדים בכתב אם זו מתנה או הלוואה ומתאמים עם הצוואה. 5) מימון סיעוד ומטפל בבית. 6) חלומות שנדחו. בדרך כלל אין הגבלה על השימוש, אבל כל שקל שנמשך צובר ריבית.');
+
+  s = content('איך מחזירים? 3 דרכים, ואתם בוחרים', 'הבית כנכס', 'הבית כנכס', 'הדוגמה: 300 אלף ₪ בריבית של 5% לשנה, על דירה ששווה 2 מיליון. יש גם מסלול ביניים: משלמים חלק מהריבית');
+  { const rl = ['היום', '5 שנים', '10 שנים', '15 שנים'], hv = [2000, 2000, 2000, 2000];
+    const rt = [['לא מחזירים כלום', '0 ₪ בחודש', 'החוב גדל: כ-620 אלף אחרי 15 שנה', [300, 383, 489, 624]], ['משלמים רק ריבית', 'כ-1,250 ₪ בחודש', 'החוב נשאר 300 אלף', [300, 300, 300, 300]], ['משלמים כל חודש', 'כ-2,370 ₪ בחודש', 'החוב נגמר אחרי 15 שנה', [300, 224, 126, 0]]];
+    for (let i = 0; i < 3; i++) { const x = 8.75 - i * 4.07, [t, pay, cap, d] = rt[i];
+      card(s, x, 1.65, 3.95, 4.15, C.background1, an(1 + i));
+      T(s, t, { x, y: 1.75, w: 3.95, h: 0.45, fontSize: 20, bold: true, color: C.accent1, align: 'center', objectName: an(1 + i) + 't' });
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: x + 0.75, y: 2.25, w: 2.45, h: 0.45, rectRadius: 0.22, fill: { color: i === 0 ? HEX.cyan : HEX.blue }, line: { type: 'none' }, objectName: an(1 + i) + 'p' });
+      T(s, pay, { x: x + 0.75, y: 2.25, w: 2.45, h: 0.45, fontSize: 15, bold: true, color: C.background1, align: 'center', valign: 'middle', objectName: an(1 + i) + 'pt' });
+      s.addChart(pres.charts.LINE, [{ name: 'שווי הדירה', labels: rl, values: hv }, { name: 'החוב', labels: rl, values: d }], { x: x + 0.1, y: 2.75, w: 3.75, h: 2.55, chartColors: [HEX.cyan, HEX.blue], lineSize: 4, lineDataSymbol: 'none', showLegend: true, legendPos: 'b', legendFontSize: 11, legendFontFace: '+mn-lt', legendColor: HEX.muted, catAxisLabelColor: HEX.muted, catAxisLabelFontSize: 10, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 2200, valGridLine: { color: HEX.line, size: 0.5 }, catGridLine: { style: 'none' }, objectName: an(1 + i) + 'c', altText: t + ': ' + cap });
+      T(s, cap, { x, y: 5.3, w: 3.95, h: 0.45, fontSize: 15, bold: true, color: i === 2 ? C.accent3 : C.accent1, align: 'center', objectName: an(1 + i) + 'k' }); } }
+  card(s, 0.6, 5.95, 12.13, 0.5, C.background2, an(4));
+  T(s, 'ובסוף: מוכרים ומחזירים, או שהיורשים מחזירים ושומרים את הדירה. אפשר גם להחזיר מוקדם; בודקים בהסכם אם יש עמלה', { x: 0.85, y: 5.95, w: 11.63, h: 0.5, fontSize: 15, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(4) + 't' });
+  src(s, 'חישוב להמחשה: ריבית 5% לשנה, בלי הצמדה ובלי עליית ערך הדירה; שפיצר ל-15 שנה. התנאים בפועל משתנים בין הגופים');
+  notes(s, 'שלוש דרכים להחזיר, על 300 אלף ₪ בריבית 5%. 1) לא מחזירים כלום (בלון מלא): 0 ₪ בחודש, והריבית מצטרפת לחוב: 300 אלף × 1.05 בחזקת 15 = כ-620 אלף. 2) רק ריבית: 300 אלף × 5% ÷ 12 = 1,250 ₪ בחודש, והחוב נשאר 300 אלף (בהלוואה צמודה הוא יגדל עם המדד). 3) קרן וריבית כל חודש (שפיצר) ל-15 שנה: כ-2,372 ₪ בחודש, והחוב נגמר. יש גם בלון חלקי: משלמים חלק מהריבית. בכל המסלולים, בדוגמה, הדירה שווה הרבה יותר מהחוב. בסוף: מוכרים, או שהיורשים מחזירים ושומרים את הדירה.');
 
   s = content('3 פחדים, 3 תשובות', 'הבית כנכס', 'הבית כנכס', 'מה ההורים אומרים, ומה קורה בפועל');
   const fears = [
@@ -228,6 +260,43 @@ async function ic(name, hex) {
   T(s, [{ text: 'מתי זה לא מתאים', options: { breakLine: true, bold: true, color: HEX.warnD, fontSize: 16 } }, { text: 'כשמתכננים למכור בקרוב, כשצריך סכום קטן, או כשחשוב להוריש דירה מלאה.', options: { fontSize: 14 } }], { x: 7.4, y: 4.8, w: 4.93, h: 1.4, color: C.text1, valign: 'middle', objectName: an(4) + 't' });
   src(s, 'מקור: השוואת תנאי גופים מלווים בשוק, 2026; החישוב להמחשה, בלי הצמדה למדד');
   notes(s, 'אחוז המימון המרבי בשוק עולה עם הגיל: 35% בגיל 55 ועד 60% מגיל 90. בגיל 70 על דירה של 3 מיליון זה עד כ-1.4 מיליון ₪, וההורים של נועה לקחו רק 900 אלף, כי הריבית נצברת על כל שקל. חישוב: 900,000 × 1.05 בחזקת 15 = כ-1.87 מיליון; × 1.04 בחזקת 15 = כ-1.62 מיליון; הפרש כ-250 אלף ₪. מתי לא מתאים: כשמתכננים למכור בקרוב (העלויות לא משתלמות), כשצריך סכום קטן (יש דרכים זולות יותר), או כשלהורים חשוב להוריש דירה מלאה. חלופות: מעבר לדירה קטנה, השכרת יחידה, מחזור משכנתה קיימת. השוואת ביטוח מול בנק בשקף גיבוי.');
+
+  // ── 3 reverse-mortgage case studies ──
+  const rmCase = async (file, focus, title, profile, challenge, solution, big1, cap1, note) => {
+    const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'הבית כנכס' });
+    await img(s, A('ai/' + file + '.jpg'), 0, 0, 4.9, 6.75, title, 'photo', focus);
+    s.addShape(pres.shapes.RECTANGLE, { x: 4.9, y: 0, w: 0.07, h: 6.75, fill: { color: HEX.cyan }, line: { type: 'none' }, objectName: 'rule' });
+    s.addText(title, { placeholder: 'title', ...he });
+    tag(s, 'משכנתה הפוכה בפועל');
+    T(s, profile, { x: 5.3, y: 1.15, w: 7.43, h: 0.4, fontSize: 15, bold: true, color: C.accent3, objectName: an(1) });
+    const beats = [['LuCircleAlert', 'האתגר', challenge, 'EEF0F4', HEX.gray2, C.accent4], ['LuLightbulb', 'הפתרון', solution, C.background1, HEX.blue, C.accent1]];
+    for (let k = 0; k < 2; k++) { const y = 1.7 + k * 1.6, [icn, h, body, fill, icHex, hc] = beats[k];
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.3, y, w: 7.43, h: 1.45, rectRadius: 0.14, fill: { color: fill }, line: { type: 'none' }, shadow: shadow(), objectName: an(2 + k) });
+      s.addImage({ data: await ic(icn, icHex), x: 12.1, y: y + 0.18, w: 0.42, h: 0.42, altText: '', objectName: an(2 + k) + 'i' });
+      T(s, h, { x: 9.0, y: y + 0.15, w: 3.0, h: 0.45, fontSize: 16, bold: true, color: hc, objectName: an(2 + k) + 'h' });
+      T(s, body, { x: 5.55, y: y + 0.58, w: 6.95, h: 0.82, fontSize: 15, color: C.text1, valign: 'top', objectName: an(2 + k) + 'b' }); }
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.3, y: 4.95, w: 7.43, h: 1.35, rectRadius: 0.14, fill: { color: C.accent1 }, line: { type: 'none' }, shadow: shadow(), objectName: an(4) });
+    T(s, 'התוצאה', { x: 9.0, y: 5.05, w: 3.5, h: 0.4, fontSize: 15, bold: true, color: C.accent2, objectName: an(4) + 'h' });
+    T(s, big1, { x: 9.0, y: 5.4, w: 3.5, h: 0.8, fontSize: 34, bold: true, color: C.background1, rtlMode: /^[0-9]/.test(big1) ? false : true, align: 'right', valign: 'middle', objectName: an(4) + 'n' });
+    T(s, cap1, { x: 5.5, y: 5.05, w: 3.4, h: 1.2, fontSize: 13, color: C.background2, valign: 'middle', objectName: an(4) + 'c' });
+    T(s, 'מקרה מורכב, שמות בדויים. חישוב להמחשה: ריבית 5% לשנה, בלי הצמדה ובלי עליית ערך', { x: 5.3, y: 6.38, w: 7.0, h: 0.3, fontSize: 10, italic: true, color: C.accent4 });
+    notes(s, note);
+  };
+  await rmCase('rm-debts', 0.45, 'משפחת אברהם: נגמרו ההחזרים', 'בני 70 ו-68 · דירה ששווה 2.5 מיליון ₪ · הכנסה של 8,600 ₪ בחודש',
+    'נשארו להם משכנתה של 280 אלף ₪ והלוואה של 70 אלף. ההחזרים, 4,100 ₪ בחודש, אוכלים כמעט חצי מההכנסה.',
+    'משכנתה הפוכה של 350 אלף ₪, בלי החזר חודשי. סוגרים את המשכנתה ואת ההלוואה ביום אחד.',
+    '4,100 ₪', 'נשארים בכיס כל חודש. אחרי 10 שנים החוב כ-570 אלף ₪, והדירה עדיין שווה 2.5 מיליון.',
+    'משפחת אברהם (מקרה מורכב). ההחזרים על משכנתה ישנה והלוואה, 4,100 ₪ בחודש, הכבידו על הכנסה של 8,600 ₪. משכנתה הפוכה של 350 אלף ₪ (14% משווי הדירה, הרבה מתחת למימון המרבי בגילם) סגרה את שתיהן. בלי החזר חודשי, החוב גדל: 350 אלף × 1.05 בחזקת 10 = כ-570 אלף ₪. הדירה, גם בלי עליית ערך, שווה פי ארבעה מהחוב. התזרים החודשי השתפר ב-4,100 ₪.');
+  await rmCase('rm-mamad', 0.55, 'רינה: ממ״ד ושיפוץ, והחוב לא גדל', 'בת 68, אלמנה · דירה ששווה 1.8 מיליון ₪ · פנסיה של 6,500 ₪',
+    'הדירה ישנה, אין בה ממ״ד, והמקלחת לא בטוחה. החסכונות לא מספיקים לשיפוץ.',
+    'משכנתה הפוכה של 300 אלף ₪ לממ״ד, לשיפוץ ולמקלחת נגישה. רינה משלמת רק את הריבית מהפנסיה.',
+    '1,250 ₪', 'בחודש, רק ריבית. החוב נשאר 300 אלף ₪ ולא גדל, הירושה נשמרת, והבית בטוח ומתאים לגיל.',
+    'רינה (מקרה מורכב). 300 אלף ₪ לממ״ד, לשיפוץ ולמקלחת נגישה. במסלול ריבית בלבד: 300 אלף × 5% ÷ 12 = 1,250 ₪ בחודש, כ-19% מהפנסיה שלה. החוב לא גדל (בהלוואה צמודה יגדל עם המדד), והילדים יירשו דירה ששווה 1.8 מיליון פחות 300 אלף. כשמשלמים ריבית, הגוף המלווה עשוי לבדוק יכולת החזר.');
+  await rmCase('rm-keys', 0.52, 'משפחת דהן: דירה ראשונה לבת', 'בני 66 ו-63 · דירה ששווה 3.2 מיליון ₪ · שלושה ילדים',
+    'הבת הצעירה צריכה 450 אלף ₪ הון עצמי לדירה. ההורים רוצים לעזור עכשיו, בלי לקפח את האחים.',
+    'משכנתה הפוכה של 450 אלף ₪, ומשלמים 1,000 ₪ בחודש מהריבית. בצוואה נכתב שהסכום יקוזז מהחלק של הבת בירושה.',
+    '580 אלף ₪', 'החוב אחרי 10 שנים, במקום כ-730 אלף בלי תשלום. הבת בדירה, והאחים יודעים שהכל הוגן.',
+    'משפחת דהן (מקרה מורכב). 450 אלף ₪ הון עצמי לבת, כ-14% משווי הדירה. משלמים 1,000 ₪ בחודש מתוך הריבית (בלון חלקי). חישוב שנתי: בלי תשלום, 450 אלף × 1.05 בחזקת 10 = כ-733 אלף; עם 12,000 ₪ בשנה, כ-582 אלף. ההוגנות: אצל עורך דין, בצוואה נכתב שהסכום יקוזז מחלקה של הבת, כך ששני האחים האחרים לא מקופחים.');
 
   // ════════════ 11–12. מקרים ════════════
   pres.addSection({ title: 'מקרים' });
@@ -405,10 +474,10 @@ async function ic(name, hex) {
 
   const caseSlide = async (i, file, title, what, law, fix, lawSrc, stat) => {
     const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'מקרים' });
-    await photo(s, file, 0, 0, 5.6, 7.5, title, '!!case' + i, caseFocus[i]);
+    await photo(s, file, 0, 0, 5.6, 6.75, title, '!!case' + i, caseFocus[i]);
     s.addText(title, { placeholder: 'title', ...he });
     tag(s, 'מקרה ' + (i + 1));
-    s.addShape(pres.shapes.RECTANGLE, { x: 5.6, y: 0, w: 0.07, h: 7.5, fill: { color: HEX.cyan }, line: { type: 'none' }, objectName: 'rule' });
+    s.addShape(pres.shapes.RECTANGLE, { x: 5.6, y: 0, w: 0.07, h: 6.75, fill: { color: HEX.cyan }, line: { type: 'none' }, objectName: 'rule' });
     const beats = [['LuMessageCircle', 'מה קרה', what, 'EEF0F4', C.text1, HEX.gray2], ['LuGavel', 'מה החוק אומר', law, C.background1, C.text1, HEX.blue], ['LuShieldCheck', 'מה היה מונע את זה', fix, C.accent1, C.background1, HEX.cyan]];
     for (let k = 0; k < 3; k++) { const y = 1.45 + k * 1.62, [icn, h, body, fill, col, icHex] = beats[k];
       s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.0, y, w: 6.73, h: 1.45, rectRadius: 0.14, fill: { color: fill }, line: { type: 'none' }, shadow: shadow(), objectName: an(1 + k) });
@@ -513,7 +582,7 @@ async function ic(name, hex) {
     x = x.replace('</p:clrMapOvr>', '</p:clrMapOvr>' + morph + timing);
     // safety net: any Hebrew paragraph that is not explicitly left-aligned (LTR phone/email/credit) is RTL
     x = x.replace(/<a:pPr(?![^>]*\brtl=)(?![^>]*algn="l")/g, '<a:pPr rtl="1"');
-    if (k >= 15) x = x.replace('<p:sld ', '<p:sld show="0" ');
+    if (k >= VIS) x = x.replace('<p:sld ', '<p:sld show="0" ');
     z.file(p, x);
   }
   Object.keys(z.files).filter(f => z.files[f].dir).forEach(f => { delete z.files[f]; });
