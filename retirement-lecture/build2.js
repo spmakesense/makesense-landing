@@ -1,0 +1,429 @@
+// v2 lecture deck — photo-led, low-text, story thread ("נועה"), law-based cases,
+// Morph transitions + timed entrance animations (PowerPoint 365 / 2019+).
+// Run: PPTX_SKILL=<pptx skill dir> NODE_PATH=<node_modules: pptxgenjs, react-icons, react, react-dom, sharp, jszip> node build2.js
+const path = require('path'), fs = require('fs');
+const pptxgen = require('pptxgenjs');
+const React = require('react');
+const { renderToStaticMarkup } = require('react-dom/server');
+const L = require('react-icons/lu');
+const sharp = require('sharp');
+const JSZip = require('jszip');
+const { applyTheme } = require(process.env.PPTX_SKILL + '/scripts/apply_theme.js');
+
+const A = f => path.join(__dirname, 'assets', f);
+const AI = f => A('ai/' + f + '.jpg');
+const OUT = path.join(__dirname, 'ההורים-שלנו-הכסף-שלהם-שיראל-פרגר.pptx');
+const HEX = { navy: '001A4D', blue: '004AAD', cyan: '1FB3C8', teal: '137897', ice: 'E8F8FB', ink: '14213D', muted: '5A6478', line: 'DDE3EF', gray: 'F1F3F7', white: 'FFFFFF', gray2: '8A93A6', warn: 'E5614A', warnD: 'C2410C' };
+const THEME = { name: 'MAKE SENSE', headFontFace: 'Arial', bodyFontFace: 'Arial',
+  colors: { dk1: HEX.ink, lt1: HEX.white, dk2: HEX.navy, lt2: HEX.ice, accent1: HEX.blue, accent2: HEX.cyan, accent3: HEX.teal, accent4: HEX.muted, accent5: HEX.line, accent6: HEX.gray, hlink: HEX.blue, folHlink: HEX.teal } };
+
+const cache = {};
+async function ic(name, hex) {
+  const k = name + hex; if (cache[k]) return cache[k];
+  const svg = renderToStaticMarkup(React.createElement(L[name], { size: 256, color: '#' + hex }));
+  return (cache[k] = 'image/png;base64,' + (await sharp(Buffer.from(svg)).png().toBuffer()).toString('base64'));
+}
+
+(async () => {
+  const pres = new pptxgen();
+  pres.layout = 'LAYOUT_WIDE'; pres.rtlMode = true;
+  pres.title = 'ההורים שלנו, הכסף שלהם, והשקט של כולנו'; pres.author = 'שיראל פרגר'; pres.company = 'MAKE SENSE';
+  pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
+  const C = pres.SchemeColor, he = { rtlMode: true, lang: 'he-IL', align: 'right' };
+
+  const corner = [
+    { rect: { x: 12.98, y: 6.55, w: 0.36, h: 0.95, fill: { color: HEX.blue } } },
+    { rect: { x: 12.66, y: 6.88, w: 0.32, h: 0.62, fill: { color: HEX.cyan } } },
+    { rect: { x: 12.4, y: 7.12, w: 0.26, h: 0.38, fill: { color: 'B9C1CF' } } },
+  ];
+  const credit = color => ({ text: { text: 'MAKESENSE | שיראל פרגר – יועץ משכנתאות', options: { x: 1.38, y: 6.92, w: 4.6, h: 0.36, fontSize: 10, color, align: 'left', rtlMode: false, lang: 'he-IL', margin: 0 } } });
+  pres.defineSlideMaster({ title: 'CONTENT', background: { color: 'F7F9FC' }, objects: [...corner, { image: { x: 0.45, y: 6.88, w: 0.86, h: 0.44, path: A('logo.png') } }, credit(HEX.muted),
+    { placeholder: { options: { name: 'title', type: 'title', x: 3.45, y: 0.36, w: 9.28, h: 0.78, fontSize: 30, bold: true, color: C.accent1, align: 'right', rtlMode: true, lang: 'he-IL', margin: 0, valign: 'middle' }, text: 'כותרת' } }],
+    slideNumber: { x: 11.75, y: 6.92, w: 0.5, h: 0.36, fontSize: 10, color: C.accent4, align: 'right' } });
+  pres.defineSlideMaster({ title: 'DARK', background: { color: C.text2 }, objects: [...corner, { image: { x: 0.45, y: 6.88, w: 0.86, h: 0.44, path: A('logo-white.png') } }, credit('CFEFF5')] });
+  pres.defineSlideMaster({ title: 'PHOTO', background: { color: C.text2 }, objects: [] });
+
+  // ── helpers ──
+  let seq = 0; const an = (n) => `a${String(n).padStart(2, '0')}_` + (++seq); // animation order tag
+  const T = (s, text, o) => s.addText(text, { isTextBox: true, ...he, fontSize: 18, color: C.text1, margin: 0, ...o });
+  const shadow = () => ({ type: 'outer', color: '00337A', blur: 14, offset: 4, angle: 90, opacity: 0.14 });
+  const card = (s, x, y, w, h, fill, name) => s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, rectRadius: 0.16, fill: { color: fill || C.background1 }, line: { type: 'none' }, shadow: shadow(), objectName: name });
+  const bubble = async (s, x, y, d, fill, icon, iconHex = HEX.white, name = 'icon') => {
+    s.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fill }, line: { type: 'none' }, objectName: name });
+    s.addImage({ data: await ic(icon, iconHex), x: x + d * 0.23, y: y + d * 0.23, w: d * 0.54, h: d * 0.54, altText: '', objectName: name + ' glyph' });
+  };
+  const photo = (s, f, x, y, w, h, alt, name) => s.addImage({ path: AI(f), x, y, w, h, sizing: { type: 'cover', w, h }, altText: alt || '', objectName: name || 'photo' });
+  const veil = (s, x, y, w, h, t = 25, color = HEX.navy, name = 'veil') => s.addShape(pres.shapes.RECTANGLE, { x, y, w, h, fill: { color, transparency: t }, line: { type: 'none' }, objectName: name });
+  const brand = s => { s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.35, y: 6.82, w: 5.0, h: 0.52, rectRadius: 0.26, fill: { color: HEX.navy, transparency: 25 }, line: { type: 'none' }, objectName: 'brand pill' }); s.addImage({ path: A('logo-white.png'), x: 0.5, y: 6.86, w: 0.86, h: 0.44, altText: 'MAKE SENSE', objectName: 'brand logo' }); T(s, 'MAKESENSE | שיראל פרגר – יועץ משכנתאות', { x: 1.45, y: 6.82, w: 3.8, h: 0.52, fontSize: 10, color: 'E6F6FA', align: 'left', rtlMode: false, valign: 'middle' }); };
+  const tag = (s, t, darkBg) => { s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 0.52, w: 2.6, h: 0.42, rectRadius: 0.21, fill: { color: darkBg ? HEX.cyan : HEX.ice }, line: { type: 'none' }, objectName: 'section tag' }); T(s, t, { x: 0.7, y: 0.52, w: 2.4, h: 0.42, fontSize: 12, bold: true, color: darkBg ? C.background1 : C.accent3, align: 'center', valign: 'middle' }); };
+  const content = (title, section, sec, kicker) => { const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: sec }); s.addText(title, { placeholder: 'title', ...he }); if (section) tag(s, section); if (kicker) T(s, kicker, { x: 0.6, y: 1.12, w: 12.13, h: 0.4, fontSize: 17, color: C.accent3, bold: true }); return s; };
+  const big = (s, n, x, y, w, h, color, size = 66, o = {}) => T(s, n, { x, y, w, h, fontSize: size, bold: true, color, align: 'center', valign: 'middle', rtlMode: false, ...o });
+  const src = (s, t, dark) => T(s, t, { x: 0.6, y: 6.5, w: 11.6, h: 0.3, fontSize: 10, italic: true, color: dark ? 'CFEFF5' : C.accent4 });
+  const srcPhoto = (s, t) => T(s, t, { x: 5.6, y: 6.9, w: 6.7, h: 0.36, fontSize: 10, italic: true, color: 'E6F6FA', valign: 'middle' });
+  const chartTxt = { catAxisLabelColor: HEX.muted, catAxisLabelFontSize: 14, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true, catGridLine: { style: 'none' }, dataLabelFontFace: '+mn-lt', dataLabelFontSize: 14, dataLabelFontBold: true };
+  const notes = (s, t) => s.addNotes(t);
+
+  // ════════════ א. פתיחה ════════════
+  pres.addSection({ title: 'פתיחה' });
+  let s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'פתיחה' });
+  photo(s, 'cover', 0, 0, 13.333, 7.5, 'שלושה דורות סביב שולחן שישי', '!!hero');
+  veil(s, 6.2, 0, 7.133, 7.5, 12, HEX.navy, '!!veil');
+  s.addShape(pres.shapes.RECTANGLE, { x: 6.2, y: 0, w: 0.07, h: 7.5, fill: { color: HEX.cyan }, line: { type: 'none' }, objectName: '!!rule' });
+  T(s, [{ text: 'ההורים שלנו,', options: { breakLine: true } }, { text: 'הכסף שלהם,', options: { breakLine: true, color: C.accent2 } }, { text: 'והשקט של כולנו', options: {} }], { x: 6.8, y: 1.6, w: 6.0, h: 2.9, fontSize: 50, bold: true, color: C.background1, valign: 'top', objectName: an(1) });
+  T(s, 'פתרונות וליווי כלכלי לגיל השלישי', { x: 6.8, y: 4.6, w: 6.0, h: 0.6, fontSize: 24, color: 'CFEFF5', objectName: an(2) });
+  T(s, [{ text: 'שיראל פרגר', options: { bold: true, color: C.accent2 } }, { text: ' | יועץ משכנתאות ופתרונות מימון', options: {} }], { x: 6.8, y: 5.4, w: 6.0, h: 0.45, fontSize: 17, color: C.background1, objectName: an(3) });
+  brand(s);
+  notes(s, 'ההרצאה הזו היא על הכסף של ההורים שלכם, ועל השקט של כל המשפחה.');
+
+  s = content('הרימו יד אם אתם יודעים…', 'פתיחה', 'פתיחה', 'שלוש שאלות, וכנות מלאה');
+  const polls = [['LuPiggyBank', 'כמה פנסיה', 'ההורים יקבלו'], ['LuSignature', 'אם יש להם', 'ייפוי כוח מתמשך'], ['LuScrollText', 'מה כתוב', 'בצוואה שלהם']];
+  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; card(s, x, 1.75, 3.9, 4.55, C.background1, an(i + 1)); await bubble(s, x + 1.25, 2.1, 1.4, i === 1 ? HEX.cyan : HEX.blue, polls[i][0], HEX.white, an(i + 1) + 'b'); T(s, [{ text: polls[i][1], options: { breakLine: true, color: C.accent4 } }, { text: polls[i][2], options: { color: C.accent1 } }], { x: x + 0.25, y: 3.85, w: 3.4, h: 1.8, fontSize: 26, bold: true, align: 'center', valign: 'top', objectName: an(i + 1) + 'c' }); }
+  notes(s, 'מבקשים הצבעה לכל שאלה. ברוב הקהלים מעט ידיים עולות. "זה הפער שנסגור היום." (האמירה "רוב האולם" היא תחזית של הדובר; התאימו לפי ההצבעה בפועל)');
+
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'פתיחה' });
+  photo(s, 'noa', 0, 0, 13.333, 7.5, 'נועה, 38, בשיחת טלפון ליד חשבונות', '!!hero');
+  veil(s, 0, 0, 5.6, 7.5, 10, HEX.navy, '!!veil');
+  T(s, 'תכירו את נועה', { x: 0.6, y: 1.2, w: 4.6, h: 0.8, fontSize: 36, bold: true, color: C.accent2, objectName: an(1) });
+  T(s, [{ text: 'בת 38, שני ילדים ומשכנתה.', options: { breakLine: true } }, { text: 'מהחודש, גם 1,500 ₪ להורים.', options: { color: C.accent2 } }], { x: 0.6, y: 2.2, w: 4.6, h: 1.8, fontSize: 26, bold: true, color: C.background1, valign: 'top', objectName: an(2) });
+  T(s, 'נלווה אותה ואת ההורים שלה לאורך כל ההרצאה', { x: 0.6, y: 4.3, w: 4.6, h: 1.0, fontSize: 18, color: 'CFEFF5', valign: 'top', objectName: an(3) });
+  brand(s);
+  notes(s, 'נועה היא דמות מורכבת, שמבוססת על משפחות רבות שאני פוגש. נעקוב אחריה ואחרי ההורים שלה עד הסוף.');
+
+  s = content('שיראל פרגר: ליווי כלכלי לכל המשפחה', 'פתיחה', 'פתיחה', 'יועץ משכנתאות ופתרונות מימון | MAKE SENSE');
+  s.addShape(pres.shapes.OVAL, { x: 8.75, y: 1.65, w: 3.9, h: 3.9, fill: { color: C.background1 }, line: { color: HEX.cyan, width: 5 }, objectName: an(1) });
+  s.addImage({ path: A('shiral.jpg'), x: 8.87, y: 1.77, w: 3.66, h: 3.66, sizing: { type: 'cover', w: 3.66, h: 3.66 }, rounding: true, altText: 'שיראל פרגר', objectName: an(1) + 'p' });
+  const creds = [['LuGraduationCap', 'B.A כלכלה · M.B.A'], ['LuBadgeCheck', 'חבר בהתאחדות יועצי המשכנתאות'], ['LuUsers', 'עשרות משפחות מלוות']];
+  for (let i = 0; i < 3; i++) { const y = 1.85 + i * 0.85; await bubble(s, 7.75, y, 0.62, HEX.ice, creds[i][0], HEX.teal, an(2 + i)); T(s, creds[i][1], { x: 2.4, y, w: 5.2, h: 0.62, fontSize: 20, bold: true, valign: 'middle', objectName: an(2 + i) + 't' }); }
+  const cl = ['client-003.jpg', 'client-024.jpg', 'client-042.jpg', 'client-027.jpg'];
+  for (let i = 0; i < 4; i++) s.addImage({ path: A(cl[i]), x: 6.0 - i * 1.8, y: 4.6, w: 1.6, h: 1.2, sizing: { type: 'cover', w: 1.6, h: 1.2 }, altText: 'לקוחות שליוויתי', objectName: an(5) + i });
+  notes(s, 'ראיתי את ההורים שלי מתמודדים עם החלטות כלכליות גדולות בלי איש מקצוע לצידם. זה מה שהביא אותי לתחום.');
+
+  // ════════════ ב. המציאות במספרים ════════════
+  pres.addSection({ title: 'המציאות במספרים' });
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'המציאות במספרים' });
+  photo(s, 'promenade', 0, 0, 13.333, 7.5, 'זוג מבוגר בטיילת בשקיעה', '!!hero');
+  veil(s, 6.6, 0, 6.733, 7.5, 18, HEX.navy, '!!veil');
+  T(s, 'הפרישה פותחת עוד 20 שנה של חיים', { x: 7.1, y: 0.8, w: 5.7, h: 1.4, fontSize: 32, bold: true, color: C.background1, valign: 'top', objectName: an(1) });
+  big(s, '1.2 מיליון', 7.1, 2.4, 5.7, 1.1, HEX.cyan, 60, { objectName: an(2) });
+  T(s, 'בני 65 ומעלה בישראל', { x: 7.1, y: 3.45, w: 5.7, h: 0.5, fontSize: 20, color: C.background1, align: 'center', objectName: an(2) + 't' });
+  big(s, '85 · 87.6', 7.1, 4.25, 5.7, 1.0, HEX.white, 54, { objectName: an(3) });
+  T(s, 'הגיל הצפוי לגבר ולאישה שהגיעו ל-65', { x: 7.1, y: 5.25, w: 5.7, h: 0.5, fontSize: 18, color: 'CFEFF5', align: 'center', objectName: an(3) + 't' });
+  srcPhoto(s, 'מקור: מבקר המדינה, היערכות להזדקנות האוכלוסייה, 2026');
+  brand(s);
+  notes(s, 'לפי דוח מבקר המדינה 2026, יותר מ-1.2 מיליון ישראלים בני 65 ומעלה. מי שהגיע ל-65 צפוי לחיות עד 85 (גבר) או 87.6 (אישה). כלומר, כ-20 שנה שצריך לממן.');
+
+  s = content('קצבת הזקנה נמוכה מקו העוני', 'המציאות במספרים', 'המציאות במספרים', 'גם עם תוספת ותק מלאה');
+  s.addChart(pres.charts.BAR, [{ name: '₪ בחודש', labels: ['קצבה בסיסית', 'עם ותק מלא', 'קו העוני'], values: [1838, 2757, 3547] }], {
+    x: 0.6, y: 1.6, w: 8.0, h: 4.85, barDir: 'col', barGapWidthPct: 60, chartColors: [HEX.blue, HEX.cyan, HEX.warn], ...chartTxt, showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0" ₪"', dataLabelColor: HEX.ink,
+    valAxisMinVal: 0, valAxisMaxVal: 4200, valGridLine: { style: 'none' }, showLegend: false, objectName: an(1), altText: 'קצבה בסיסית 1,838 ₪, עם ותק מלא 2,757 ₪, קו העוני ליחיד 3,547 ₪' });
+  card(s, 9.0, 1.9, 3.73, 4.3, C.accent1, an(2));
+  big(s, '−790 ₪', 9.0, 2.4, 3.73, 1.2, HEX.white, 48, { objectName: an(2) + 'n' });
+  T(s, 'חסרים כל חודש, גם במקרה הטוב', { x: 9.25, y: 3.75, w: 3.25, h: 1.2, fontSize: 21, bold: true, color: C.background2, align: 'center', valign: 'top', objectName: an(2) + 't' });
+  src(s, 'מקור: המוסד לביטוח לאומי, סכומי הקצבאות 2026; דוח העוני 2024 (קו העוני ליחיד)');
+  notes(s, 'קצבה בסיסית ליחיד 1,838 ₪, עם ותק מלא 2,757 ₪, וקו העוני ליחיד 3,547 ₪. גם במקרה הטוב חסרים כ-790 ₪ בחודש.');
+
+  s = content('רק 44% מקבלים פנסיה בכלל', 'המציאות במספרים', 'המציאות במספרים', 'בקרב בני גיל הפרישה שאינם עובדים');
+  s.addChart(pres.charts.DOUGHNUT, [{ name: 'פנסיה', labels: ['מקבלים פנסיה', 'לא מקבלים'], values: [44.2, 55.8] }], { x: 7.3, y: 1.6, w: 5.4, h: 4.85, holeSize: 64, chartColors: [HEX.blue, HEX.line], showPercent: false, showValue: false, showLegend: true, legendPos: 'b', legendFontSize: 14, legendFontFace: '+mn-lt', legendColor: HEX.muted, objectName: an(1), altText: '44.2% מקבלים פנסיה' });
+  big(s, '44%', 8.5, 3.25, 3.0, 1.0, HEX.blue, 44, { objectName: an(1) + 'n' });
+  s.addChart(pres.charts.BAR, [{ name: 'פנסיה ממוצעת', labels: ['נשים', 'גברים'], values: [5481, 8184] }], { x: 0.6, y: 1.6, w: 6.3, h: 4.85, barDir: 'bar', barGapWidthPct: 45, chartColors: [HEX.cyan, HEX.blue], ...chartTxt, catAxisLabelFontSize: 18, showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0" ₪"', dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 10000, valGridLine: { style: 'none' }, showLegend: false, showTitle: true, title: 'פנסיה ממוצעת בקרב המקבלים', titleColor: HEX.ink, titleFontSize: 14, titleFontFace: '+mn-lt', objectName: an(2), altText: 'נשים 5,481 ₪, גברים 8,184 ₪' });
+  src(s, 'מקור: הלמ״ס, חודש האזרח הוותיק 2026 (נתוני 2024): נשים 63+ וגברים 67+ שאינם עובדים');
+  notes(s, '44.2% מבני גיל הפרישה שאינם עובדים מקבלים פנסיה. הממוצע בקרב המקבלים 6,678 ₪, ולנשים 5,481 ₪ מול 8,184 ₪ לגברים, כשליש פחות.');
+
+  s = content('3 הנחות שעולות להורים כסף', 'המציאות במספרים', 'המציאות במספרים', 'כמה מהן שמעתם בבית?');
+  const myths = [['"יש להם פנסיה, הם יסתדרו"', '56%', 'לא מקבלים פנסיה בכלל'], ['"המדינה תדאג להם"', '1,838 ₪', 'קצבה בסיסית, כמחצית מקו העוני'], ['"בבית לא נוגעים"', '≈ 900K ₪', 'נזילים מדירה של 3 מ׳ בגיל 70']];
+  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1, [m, n, f] = myths[i];
+    card(s, x, 1.75, 3.9, 1.4, 'EEF0F4', an(1 + i * 2)); T(s, m, { x: x + 0.2, y: 1.8, w: 3.5, h: 1.3, fontSize: 19, bold: true, color: C.accent4, align: 'center', valign: 'middle', strike: 'sngStrike', objectName: an(1 + i * 2) + 't' });
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 3.35, w: 3.9, h: 3.0, rectRadius: 0.16, fill: { color: C.accent1 }, line: { type: 'none' }, shadow: shadow(), objectName: an(2 + i * 2) });
+    T(s, 'בפועל', { x: x + 0.2, y: 3.5, w: 3.5, h: 0.4, fontSize: 15, bold: true, color: C.accent2, objectName: an(2 + i * 2) + 'h' });
+    big(s, n, x, 3.95, 3.9, 1.1, HEX.white, 44, { objectName: an(2 + i * 2) + 'n' });
+    T(s, f, { x: x + 0.25, y: 5.1, w: 3.4, h: 1.0, fontSize: 17, color: C.background2, align: 'center', valign: 'top', objectName: an(2 + i * 2) + 'f' }); }
+  src(s, 'מקור: הלמ״ס 2026 (נתוני 2024); ביטוח לאומי 2026; השוואת גופים מלווים 2026 (הדוגמה להמחשה)');
+  notes(s, 'יש להם פנסיה? 56% מבני גיל הפרישה שלא עובדים לא מקבלים פנסיה. המדינה תדאג? הקצבה הבסיסית היא כמחצית מקו העוני. בבית לא נוגעים? בגיל 70 דירה של 3 מיליון יכולה לשחרר כ-900 אלף ₪.');
+
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'המציאות במספרים' });
+  photo(s, 'parents-home', 0, 0, 13.333, 7.5, 'ההורים של נועה בסלון', '!!hero');
+  veil(s, 0, 0, 6.3, 7.5, 8, HEX.navy, '!!veil');
+  T(s, 'ההורים של נועה', { x: 0.6, y: 0.7, w: 5.3, h: 0.7, fontSize: 32, bold: true, color: C.accent2, objectName: an(1) });
+  const gap = [['נכנס', '7,200 ₪', HEX.white], ['יוצא', '9,500 ₪', 'F4A28C'], ['חסר', '2,300 ₪', HEX.cyan]];
+  gap.forEach(([l, n, c], i) => { const y = 1.65 + i * 1.35; T(s, l, { x: 3.9, y, w: 2.0, h: 1.1, fontSize: 22, color: 'CFEFF5', valign: 'middle', objectName: an(2 + i) + 'l' }); big(s, n, 0.6, y, 3.3, 1.1, c, 46, { objectName: an(2 + i), align: 'left' }); });
+  T(s, [{ text: 'נועה משלימה 1,500 ₪ בחודש', options: { breakLine: true } }, { text: 'והשאר יוצא מהחסכונות', options: { color: C.accent2 } }], { x: 0.6, y: 5.85, w: 5.3, h: 0.9, fontSize: 20, bold: true, color: C.background1, valign: 'top', objectName: an(5) });
+  srcPhoto(s, 'דמויות מורכבות, להמחשה; על בסיס קצבאות ביטוח לאומי 2026');
+  brand(s);
+  notes(s, 'יוסי ורחל, ההורים של נועה, בני 71 ו-68. קצבאות וותק כ-3,700 ₪ ופנסיה כ-3,500 ₪. הוצאות כ-9,500 ₪. חסרים 2,300 ₪ בחודש. נועה משלימה 1,500, והשאר נשחק מהחסכונות.');
+
+  // ════════════ ג. תכנון פרישה — 4 levers with Morph ════════════
+  pres.addSection({ title: 'תכנון פרישה' });
+  const levers = [['LuBadgeCheck', 'זכויות'], ['LuPercent', 'מס'], ['LuSearch', 'חיסכון'], ['LuHouse', 'הבית']];
+  const leverStrip = async (s, active) => {
+    for (let i = 0; i < 4; i++) {
+      const on = i === active, big4 = active < 0;
+      const w = big4 ? 2.8 : (on ? 2.3 : 1.8), h = big4 ? 3.6 : 0.95;
+      const x = big4 ? 9.93 - i * 3.11 : 12.73 - (i + 1) * 1.75 - (active >= 0 && i > active ? 0.75 : 0) - (on ? 0 : 0);
+      const xx = big4 ? x : (12.73 - [0, 1, 2, 3].slice(0, i + 1).reduce((a, k) => a + (k === active ? 2.3 : 1.8) + 0.2, 0) + 0.2);
+      const y = big4 ? 1.8 : 1.6;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: xx, y, w, h, rectRadius: 0.14, fill: { color: on || big4 ? (i === 3 ? HEX.cyan : HEX.blue) : 'E3E8F2' }, line: { type: 'none' }, shadow: shadow(), objectName: '!!lev' + i });
+      const d = big4 ? 1.3 : 0.5;
+      s.addImage({ data: await ic(levers[i][0], on || big4 ? HEX.white : HEX.gray2), x: big4 ? xx + (w - d) / 2 : xx + w - d - 0.2, y: big4 ? y + 0.5 : y + 0.22, w: d, h: d, altText: '', objectName: '!!levi' + i });
+      T(s, levers[i][1], { x: big4 ? xx + 0.1 : xx + 0.1, y: big4 ? y + 2.0 : y, w: big4 ? w - 0.2 : w - d - 0.35, h: big4 ? 0.9 : h, fontSize: big4 ? 30 : 17, bold: true, color: on || big4 ? C.background1 : C.accent4, align: big4 ? 'center' : 'right', valign: 'middle', objectName: '!!levt' + i });
+    }
+  };
+  s = content('4 מנופים שסוגרים את הפער', 'תכנון פרישה', 'תכנון פרישה', 'מתחילים מהפשוט, ומסיימים בבית');
+  await leverStrip(s, -1);
+  card(s, 0.6, 5.75, 12.13, 0.75, C.background2, an(1));
+  T(s, 'נעבור עליהם אחד אחד, עם ההורים של נועה', { x: 0.9, y: 5.75, w: 11.5, h: 0.75, fontSize: 20, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(1) + 't' });
+  notes(s, 'ארבעה מנופים: זכויות, מס, חיסכון והבית. נראה כמה כל אחד מכניס להורים של נועה.');
+
+  s = content('מנוף 1: זכויות שלא מבקשים, לא מקבלים', 'תכנון פרישה', 'תכנון פרישה');
+  await leverStrip(s, 0);
+  const rights = [['LuTrendingUp', 'תוספת ותק', 'עד 50% על הקצבה'], ['LuHandCoins', 'השלמת הכנסה', 'להכנסה נמוכה'], ['LuLandmark', 'הנחות', 'ארנונה, תחבורה, תרופות']];
+  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; card(s, x, 2.9, 3.9, 2.85, C.background1, an(1 + i)); await bubble(s, x + 1.45, 3.1, 1.0, i === 1 ? HEX.cyan : HEX.blue, rights[i][0], HEX.white, an(1 + i) + 'b'); T(s, rights[i][1], { x, y: 4.2, w: 3.9, h: 0.6, fontSize: 24, bold: true, color: C.accent1, align: 'center', objectName: an(1 + i) + 't' }); T(s, rights[i][2], { x, y: 4.85, w: 3.9, h: 0.5, fontSize: 17, color: C.accent4, align: 'center', objectName: an(1 + i) + 's' }); }
+  card(s, 0.6, 5.95, 12.13, 0.5, C.background2, an(4));
+  T(s, 'ההורים של נועה: +300 ₪ בחודש', { x: 0.9, y: 5.95, w: 11.5, h: 0.5, fontSize: 18, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(4) + 't' });
+  src(s, 'מקור: המוסד לביטוח לאומי; כל זכות, תוספת השלמת הכנסה 2026. סכום ההמחשה מעוגל');
+  notes(s, 'תוספת ותק עד 50%, השלמת הכנסה למי שהכנסתו נמוכה, והנחות לאזרח ותיק. חלק מהזכויות דורשות הגשת בקשה. אצל ההורים של נועה, כ-300 ₪ בחודש (להמחשה).');
+
+  s = content('מנוף 2: טופס שגוי עולה אלפי שקלים', 'תכנון פרישה', 'תכנון פרישה');
+  await leverStrip(s, 1);
+  card(s, 6.95, 2.9, 5.78, 2.85, C.accent1, an(1));
+  big(s, '5,422 ₪', 6.95, 3.1, 5.78, 1.3, HEX.white, 56, { objectName: an(1) + 'n' });
+  T(s, 'מהקצבה פטורים ממס בכל חודש (2026)', { x: 7.1, y: 4.45, w: 5.48, h: 0.9, fontSize: 19, color: C.background2, align: 'center', valign: 'top', objectName: an(1) + 't' });
+  card(s, 0.6, 2.9, 6.05, 2.85, C.background1, an(2));
+  await bubble(s, 5.6, 3.15, 0.85, 'FDECE8', 'LuTriangleAlert', HEX.warn, an(2) + 'b');
+  T(s, [{ text: 'טופס 161ח המקוצר', options: { breakLine: true, color: C.accent1 } }, { text: 'סוגר את הפטור על 22.5% בלבד, במקום 57.5%', options: { color: C.text1, bold: false } }], { x: 0.85, y: 3.15, w: 4.6, h: 2.3, fontSize: 21, bold: true, valign: 'top', objectName: an(2) + 't' });
+  card(s, 0.6, 5.95, 12.13, 0.5, C.background2, an(3));
+  T(s, 'ההורים של נועה: +300 ₪ בחודש', { x: 0.9, y: 5.95, w: 11.5, h: 0.5, fontSize: 18, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(3) + 't' });
+  src(s, 'מקור: כל זכות, הטבות מס בפרישה (161ד); ביזפורטל 2026. סכום ההמחשה מעוגל');
+  notes(s, 'קיבוע זכויות בטופס 161ד מנצל את הפטור, עד כ-5,422 ₪ בחודש ב-2026. הטופס המקוצר 161ח סוגר את הסל על 22.5% בלבד. אצל ההורים של נועה, כ-300 ₪ בחודש (להמחשה).');
+
+  s = content('מנוף 3: כסף שאף אחד לא יודע עליו', 'תכנון פרישה', 'תכנון פרישה');
+  await leverStrip(s, 2);
+  const sav = [['LuSearch', 'הר הכסף', 'קרנות וחסכונות שנשכחו'], ['LuClipboardList', 'מסלקה פנסיונית', 'כל הקופות במקום אחד'], ['LuScissors', 'הוצאות', 'הלוואות וביטוחים כפולים']];
+  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; card(s, x, 2.9, 3.9, 2.85, C.background1, an(1 + i)); await bubble(s, x + 1.45, 3.1, 1.0, i === 1 ? HEX.cyan : HEX.blue, sav[i][0], HEX.white, an(1 + i) + 'b'); T(s, sav[i][1], { x, y: 4.2, w: 3.9, h: 0.6, fontSize: 24, bold: true, color: C.accent1, align: 'center', objectName: an(1 + i) + 't' }); T(s, sav[i][2], { x, y: 4.85, w: 3.9, h: 0.5, fontSize: 17, color: C.accent4, align: 'center', objectName: an(1 + i) + 's' }); }
+  card(s, 0.6, 5.95, 12.13, 0.5, C.background2, an(4));
+  T(s, 'ההורים של נועה: +500 ₪ בחודש פחות הוצאות', { x: 0.9, y: 5.95, w: 11.5, h: 0.5, fontSize: 18, bold: true, color: C.accent3, align: 'center', valign: 'middle', objectName: an(4) + 't' });
+  src(s, 'מקור: משרד האוצר, "הר הכסף"; המסלקה הפנסיונית. סכום ההמחשה מעוגל');
+  notes(s, 'הר הכסף לאיתור כספים אבודים, המסלקה לתמונה מלאה, ובדיקת הוצאות קבועות. אצל ההורים של נועה, כ-500 ₪ בחודש פחות הוצאות (להמחשה). ועדיין חסרים 1,200 ₪.');
+
+  // ════════════ ד. הבית כנכס ════════════
+  pres.addSection({ title: 'הבית כנכס' });
+  s = content('מנוף 4: הבית', 'הבית כנכס', 'הבית כנכס', 'ועדיין חסרים 1,200 ₪ בחודש');
+  await leverStrip(s, 3);
+  card(s, 6.95, 2.9, 5.78, 3.55, C.accent1, an(1));
+  big(s, '3,000,000 ₪', 6.95, 3.4, 5.78, 1.3, HEX.white, 46, { objectName: an(1) + 'n' });
+  T(s, 'בקירות', { x: 6.95, y: 4.75, w: 5.78, h: 0.6, fontSize: 24, color: C.background2, align: 'center', objectName: an(1) + 't' });
+  card(s, 0.6, 2.9, 6.05, 3.55, C.background1, an(2));
+  big(s, '0 ₪', 0.6, 3.4, 6.05, 1.3, HEX.warn, 60, { objectName: an(2) + 'n' });
+  T(s, 'בכיס', { x: 0.6, y: 4.75, w: 6.05, h: 0.6, fontSize: 24, color: C.accent4, align: 'center', objectName: an(2) + 't' });
+  notes(s, 'רוב העושר של דור ההורים נמצא בדירה. עשירים בקירות, עניים בכיס. השאלה: איך להשתמש בו בלי למכור ובלי לעזוב.');
+
+  s = content('משכנתה הפוכה: הבית נשאר, הכסף זורם', 'הבית כנכס', 'הבית כנכס', 'מגיל 55 · פטור מביטוח חיים · ביטוח מבנה חובה');
+  const pil = [['LuHouse', 'הבית שלהם', 'מגורים לכל החיים'], ['LuBanknote', 'הכסף בגמישות', 'חד-פעמי, קצבה או משיכות'], ['LuScale', 'ההחזר לפי הצורך', 'גם בלי החזר חודשי']];
+  for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; card(s, x, 1.75, 3.9, 4.6, i === 0 ? C.accent1 : C.background1, an(1 + i)); await bubble(s, x + 1.25, 2.1, 1.4, i === 0 ? HEX.cyan : (i === 1 ? HEX.cyan : HEX.blue), pil[i][0], HEX.white, an(1 + i) + 'b'); T(s, pil[i][1], { x, y: 3.85, w: 3.9, h: 0.7, fontSize: 26, bold: true, color: i === 0 ? C.background1 : C.accent1, align: 'center', objectName: an(1 + i) + 't' }); T(s, pil[i][2], { x: x + 0.2, y: 4.6, w: 3.5, h: 1.0, fontSize: 18, color: i === 0 ? C.background2 : C.accent4, align: 'center', valign: 'top', objectName: an(1 + i) + 's' }); }
+  notes(s, 'הלוואה בשעבוד הדירה, מגיל 55. הבית נשאר בבעלותם, הכסף מגיע בצורה שמתאימה להם, וההחזר גמיש, גם בלי החזר חודשי בכלל.');
+
+  s = content('"לא יישאר לנו כלום?" בואו נבדוק', 'הבית כנכס', 'הבית כנכס', 'בכל המסלולים, שווי הנכס נשאר מעל יתרת החוב');
+  const labels = ['היום', '+5', '+10', '+15', 'עד 120'], value = [100, 108, 117, 126, 136];
+  const debts = [['ללא החזר', 'גדל מהר יותר', [30, 38, 48, 60, 75]], ['ריבית בלבד', 'גדל לאט', [30, 31, 32, 33, 34]], ['שפיצר', 'הולך וקטן', [30, 23, 15, 7, 0]]];
+  debts.forEach(([t, cap, d], i) => { const x = 8.75 - i * 4.07; card(s, x, 1.65, 3.95, 4.8, C.background1, an(1 + i));
+    T(s, t, { x, y: 1.8, w: 3.95, h: 0.5, fontSize: 22, bold: true, color: C.accent1, align: 'center', objectName: an(1 + i) + 't' });
+    s.addChart(pres.charts.LINE, [{ name: 'שווי הנכס', labels, values: value }, { name: 'יתרת החוב', labels, values: d }], { x: x + 0.1, y: 2.3, w: 3.75, h: 3.4, chartColors: [HEX.cyan, HEX.blue], lineSize: 4, lineDataSymbol: 'none', showLegend: true, legendPos: 'b', legendFontSize: 12, legendFontFace: '+mn-lt', legendColor: HEX.muted, catAxisLabelColor: HEX.muted, catAxisLabelFontSize: 11, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 140, valGridLine: { color: HEX.line, size: 0.5 }, catGridLine: { style: 'none' }, objectName: an(1 + i) + 'c', altText: `${t}: החוב ${cap}` });
+    T(s, 'החוב ' + cap, { x, y: 5.8, w: 3.95, h: 0.5, fontSize: 18, bold: true, color: i === 2 ? C.accent3 : C.accent1, align: 'center', objectName: an(1 + i) + 'k' }); });
+  src(s, 'המחשה בלבד; ההתפתחות בפועל תלויה בריבית, בהצמדה ובשווי הנכס');
+  notes(s, 'החשש הראשון של הילדים. בשפיצר החוב יורד, בריבית בלבד גדל לאט, וללא החזר גדל מהר יותר בגלל ריבית דריבית. בכל המסלולים, שווי הנכס נשאר גבוה מהחוב. להמחשה.');
+
+  s = content('בגיל 70: כ-900 אלף ₪ מדירה של 3 מ׳', 'הבית כנכס', 'הבית כנכס', 'ככל שהגיל עולה, אחוז המימון עולה');
+  s.addChart(pres.charts.BAR, [{ name: 'מימון מרבי', labels: ['55', '60', '70', '80', '90+'], values: [35, 39, 48, 50, 60] }], { x: 0.6, y: 1.6, w: 7.6, h: 4.85, barDir: 'col', barGapWidthPct: 45, chartColors: [HEX.blue], ...chartTxt, showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '0"%"', dataLabelColor: HEX.blue, valAxisMinVal: 0, valAxisMaxVal: 70, valGridLine: { style: 'none' }, showLegend: false, showCatAxisTitle: true, catAxisTitle: 'גיל הלווה הצעיר', catAxisTitleColor: HEX.muted, catAxisTitleFontSize: 12, catAxisTitleFontFace: '+mn-lt', objectName: an(1), altText: 'מימון מרבי בשוק לפי גיל' });
+  card(s, 8.6, 1.75, 4.13, 4.7, C.accent1, an(2));
+  await bubble(s, 10.07, 2.0, 1.2, HEX.cyan, 'LuHouse', HEX.white, an(2) + 'b');
+  T(s, 'ההורים של נועה', { x: 8.75, y: 3.35, w: 3.83, h: 0.5, fontSize: 18, color: C.background2, align: 'center', objectName: an(2) + 't' });
+  big(s, '≈ 900K ₪', 8.6, 3.9, 4.13, 1.2, HEX.white, 46, { objectName: an(2) + 'n' });
+  T(s, 'דירה של 3 מ׳ ₪, גיל 70', { x: 8.75, y: 5.15, w: 3.83, h: 0.5, fontSize: 15, color: C.background2, align: 'center', objectName: an(2) + 's' });
+  src(s, 'מקור: השוואת תנאי גופים מלווים בשוק, 2026; הדוגמה להמחשה');
+  notes(s, 'אחוז המימון המרבי בשוק עולה עם הגיל: 35% בגיל 55 ועד 60% מגיל 90. להורים של נועה, בגיל 70 על דירה של 3 מיליון, כ-900 אלף ₪.');
+
+  s = content('חברת ביטוח או בנק?', 'הבית כנכס', 'הבית כנכס', 'שני מוצרים דומים, עם הבדלים שחשוב להכיר');
+  const hd = (t, f, c) => ({ text: t, options: { bold: true, fontSize: 19, color: c, fill: { color: f }, align: 'center', valign: 'middle', rtlMode: true, lang: 'he-IL' } });
+  const cell = (t, o = {}) => ({ text: t, options: { fontSize: 17, color: HEX.ink, align: 'right', valign: 'middle', rtlMode: true, lang: 'he-IL', ...o } });
+  const topic = t => cell(t, { bold: true, color: HEX.blue, fill: { color: HEX.ice } });
+  const rows = [['פיקוח', 'רשות שוק ההון', 'בנק ישראל'], ['תקופה', 'ללא מועד פירעון קבוע', 'תקופה מוגדרת מראש'], ['החזר', 'בלון מלא, חלקי או שפיצר', 'בלון מלא, חלקי או קרן וריבית'], ['שם המוצר', 'משכנתה הפוכה', 'משכנתה לגיל השלישי / פנסיונית']];
+  const tbl = [[hd('בנקים', HEX.blue, HEX.white), hd('חברות ביטוח', HEX.teal, HEX.white), hd('', HEX.ice, HEX.blue)]];
+  rows.forEach(([a, i, b]) => tbl.push([cell(b), cell(i), topic(a)]));
+  s.addTable(tbl, { x: 0.6, y: 1.75, w: 12.13, colW: [4.6, 4.6, 2.93], rowH: 0.82, border: { type: 'solid', color: HEX.white, pt: 2 }, fill: { color: HEX.white }, fontFace: THEME.bodyFontFace, margin: [0.05, 0.15, 0.05, 0.15], objectName: an(1) });
+  src(s, 'מקור: אתרי הגופים ומסמכי מוצר, 2026; השוואה כללית, התנאים משתנים בין הגופים');
+  notes(s, 'שני העולמות מציעים מסלולים דומים, גם בבנקים יש בלון מלא. ההבדלים: גוף מפקח, ותקופה, כשבחברות הביטוח אין מועד פירעון קבוע. משווים 2–3 גופים רלוונטיים.');
+
+  // ════════════ ה. 4 מקרים ════════════
+  pres.addSection({ title: 'מקרים' });
+  s = pres.addSlide({ masterName: 'DARK', sectionTitle: 'מקרים' });
+  T(s, 'לא תרצו שזה יקרה…', { x: 0.6, y: 0.7, w: 12.13, h: 1.0, fontSize: 46, bold: true, color: C.background1, align: 'center', objectName: an(1) });
+  T(s, '4 מקרים לפי החוק. 4 פתרונות שמונעים אותם.', { x: 0.6, y: 1.7, w: 12.13, h: 0.6, fontSize: 22, color: C.accent2, align: 'center', objectName: an(2) });
+  const caseThumbs = [['case-inheritance', 'צוואה וירושה'], ['case-dementia', 'ייפוי כוח מתמשך'], ['case-nursing', 'סיעוד'], ['case-health', 'ביטוחי בריאות']];
+  caseThumbs.forEach(([f, t], i) => { const x = 9.95 - i * 3.05; s.addImage({ path: AI(f), x, y: 2.75, w: 2.8, h: 2.6, sizing: { type: 'cover', w: 2.8, h: 2.6 }, altText: t, objectName: '!!case' + i }); T(s, t, { x, y: 5.45, w: 2.8, h: 0.5, fontSize: 20, bold: true, color: C.background1, align: 'center', objectName: an(3 + i) }); });
+  notes(s, 'ארבעה מקרים שבנויים לפי מה שהחוק קובע. השמות בדויים, הכללים אמיתיים.');
+
+  const caseSlide = async (i, file, title, what, law, fix, lawSrc, stat) => {
+    const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'מקרים' });
+    s.addImage({ path: AI(file), x: 0, y: 0, w: 5.6, h: 7.5, sizing: { type: 'cover', w: 5.6, h: 7.5 }, altText: title, objectName: '!!case' + i });
+    s.addText(title, { placeholder: 'title', ...he });
+    tag(s, 'מקרה ' + (i + 1));
+    s.addShape(pres.shapes.RECTANGLE, { x: 5.6, y: 0, w: 0.07, h: 7.5, fill: { color: HEX.cyan }, line: { type: 'none' }, objectName: 'rule' });
+    const beats = [['LuMessageCircle', 'מה קרה', what, 'EEF0F4', C.text1, HEX.gray2], ['LuGavel', 'מה החוק אומר', law, C.background1, C.text1, HEX.blue], ['LuShieldCheck', 'מה היה מונע את זה', fix, C.accent1, C.background1, HEX.cyan]];
+    for (let k = 0; k < 3; k++) { const y = 1.45 + k * 1.62, [icn, h, body, fill, col, icHex] = beats[k];
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.0, y, w: 6.73, h: 1.45, rectRadius: 0.14, fill: { color: fill }, line: { type: 'none' }, shadow: shadow(), objectName: an(1 + k) });
+      s.addImage({ data: await ic(icn, k === 2 ? HEX.cyan : icHex), x: 12.1, y: y + 0.2, w: 0.45, h: 0.45, altText: '', objectName: an(1 + k) + 'i' });
+      T(s, h, { x: 8.0, y: y + 0.15, w: 4.0, h: 0.4, fontSize: 15, bold: true, color: k === 2 ? C.accent2 : (k === 1 ? C.accent1 : C.accent4), objectName: an(1 + k) + 'h' });
+      T(s, body, { x: 6.25, y: y + 0.6, w: 5.75, h: 0.8, fontSize: 17, bold: k === 2, color: col, valign: 'top', objectName: an(1 + k) + 'b' }); }
+    if (stat) { s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.4, y: 5.55, w: 4.8, h: 1.0, rectRadius: 0.14, fill: { color: HEX.navy, transparency: 15 }, line: { type: 'none' }, objectName: an(4) }); T(s, stat, { x: 0.55, y: 5.55, w: 4.5, h: 1.0, fontSize: 15, bold: true, color: C.background1, align: 'center', valign: 'middle', objectName: an(4) + 't' }); }
+    T(s, lawSrc, { x: 6.0, y: 6.4, w: 6.3, h: 0.3, fontSize: 10, italic: true, color: C.accent4 });
+    return s;
+  };
+  s = await caseSlide(0, 'case-inheritance', 'משפחת לוין: הדירה נתקעה',
+    'אבא נפטר בלי צוואה. אמא רוצה למכור ולעבור לדיור מוגן, ובן אחד מסרב.',
+    'בלי צוואה: מחצית לאלמנה, מחצית לשלושת הילדים. בלי הסכמת כולם, המכירה עוברת לבית משפט.',
+    'צוואה בזמן. לבני זוג: צוואה הדדית שקובעת מה מותר לבן הזוג שנשאר.',
+    'מקור: חוק הירושה, התשכ״ה-1965, סעיפים 8א ו-11; כל זכות, ירושה על פי דין. מקרה מורכב, שמות בדויים', null);
+  notes(s, 'לפי סעיף 11 לחוק הירושה, כשאין צוואה, בן הזוג מקבל מחצית מהעיזבון (וגם את הרכב ואת מטלטלי הבית), והילדים מתחלקים במחצית השנייה. כל אחד הוא שותף בדירה. כשאחד מסרב, נשאר רק הליך פירוק שיתוף בבית משפט. צוואה הדדית (סעיף 8א) מאפשרת לבני זוג להסדיר את זה מראש.');
+  s = await caseSlide(1, 'case-dementia', 'משפחת שגיא: החשבון קפוא',
+    'אמא אובחנה בדמנציה. הבנק לא מאפשר לילדים לשלם בשבילה אפילו את הארנונה.',
+    'בלי ייפוי כוח: בקשה למינוי אפוטרופוס בבית המשפט לענייני משפחה, הליך ארוך ובפיקוח.',
+    'ייפוי כוח מתמשך, שנחתם בפני עו״ד שהוסמך לכך והופקד אצל האפוטרופוס הכללי.',
+    'מקור: משרד המשפטים, האפוטרופוס הכללי; כל זכות, אפוטרופסות. מקרה מורכב, שמות בדויים', 'כ-150–200 אלף ישראלים חיים עם דמנציה (אומדנים)');
+  notes(s, 'בלי ייפוי כוח מתמשך, המשפחה צריכה לבקש מינוי אפוטרופוס מבית המשפט לענייני משפחה. זה הליך שכולל אגרה, עמדות של בני המשפחה ופיקוח. ייפוי כוח מתמשך נערך מראש בפני עורך דין שעבר הכשרה של האפוטרופוס הכללי, ומופקד אצלו. אומדני ההיקף: 150–200 אלף חולי דמנציה בישראל, לפי משרד הבריאות ועמותת עמדא.');
+  s = await caseSlide(2, 'case-nursing', 'משפחת מזרחי: מטפל צמוד',
+    'אבא עבר אירוע מוחי וזקוק למטפל צמוד. החסכונות מתחילים להיגמר.',
+    'מטפל זר: לפחות שכר מינימום (6,444 ₪) ועוד פיקדון, ביטוח ומגורים. גמלת סיעוד: 1,659–7,238 ₪, לפי רמה.',
+    'בדיקת ביטוח סיעודי ופוליסות מראש, ומקור מימון מתוכנן, כמו משכנתה הפוכה.',
+    'מקור: ביטוח לאומי, גמלת סיעוד 2026; שכר מינימום 2026; כל זכות, העסקת עובד זר בסיעוד. מקרה מורכב', null);
+  notes(s, 'מטפל זר זכאי לשכר מינימום, 6,443.85 ₪ ב-2026, ובנוסף פיקדון, ביטוח בריאות ומגורים. גמלת הסיעוד נעה בין 1,659 ₪ ברמה 1 ל-7,238 ₪ ברמה 6 (לפני עדכון אפריל 2026). הפער נופל על המשפחה.');
+  s = await caseSlide(3, 'case-health', 'משפחת כהן: הפוליסה שנעלמה',
+    'אמא צריכה ניתוח. מתברר שהביטוח הפרטי שלה בוטל לפני שנים, כשהוראת הקבע נפלה.',
+    'פוליסה שלא משולמת מתבטלת. אחרי גיל מסוים, קשה או בלתי אפשרי להצטרף מחדש.',
+    'מיפוי כל הביטוחים ב"הר הביטוח" פעם בשנה, וביטול כפילויות.',
+    'מקור: משרד האוצר, רשות שוק ההון, "הר הביטוח". מקרה מורכב, שמות בדויים', null);
+  notes(s, 'ביטוח שלא משולם מתבטל, ולעיתים איש במשפחה לא שם לב. "הר הביטוח" של רשות שוק ההון מראה את כל הפוליסות. פעם בשנה, 10 דקות.');
+
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'מקרים' });
+  photo(s, 'signing', 0, 0, 13.333, 7.5, 'חתימה על מסמכים עם עורך דין', '!!hero');
+  veil(s, 6.6, 0, 6.733, 7.5, 12, HEX.navy, '!!veil');
+  T(s, 'מסדרים הכל בשולחן אחד', { x: 7.1, y: 0.8, w: 5.7, h: 0.9, fontSize: 34, bold: true, color: C.background1, objectName: an(1) });
+  const fixes = [['LuScrollText', 'צוואה'], ['LuSignature', 'ייפוי כוח מתמשך'], ['LuStethoscope', 'ביטוח סיעודי'], ['LuHospital', 'ביטוחי בריאות']];
+  for (let i = 0; i < 4; i++) { const y = 2.0 + i * 1.05; await bubble(s, 12.0, y, 0.8, HEX.cyan, fixes[i][0], HEX.white, an(2 + i)); T(s, fixes[i][1], { x: 7.1, y, w: 4.7, h: 0.8, fontSize: 24, bold: true, color: C.background1, valign: 'middle', objectName: an(2 + i) + 't' }); }
+  T(s, 'עם עו״ד ובעל רישיון מתאים, בתיאום עם התוכנית הכלכלית', { x: 7.1, y: 6.2, w: 5.7, h: 0.5, fontSize: 15, color: 'CFEFF5', objectName: an(6) });
+  brand(s);
+  notes(s, 'הפתרון לכל ארבעת המקרים: לסדר הכל מראש, יחד. אני מתאם בין התוכנית הכלכלית לבין עורך הדין ובעל הרישיון המתאים.');
+
+  // ════════════ ו. נועה, אחרי ════════════
+  pres.addSection({ title: 'סוף הסיפור' });
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'סוף הסיפור' });
+  photo(s, 'happy-after', 0, 0, 13.333, 7.5, 'סבים מחבקים נכדים בבית המשופץ', '!!hero');
+  veil(s, 0, 0, 6.0, 7.5, 10, HEX.navy, '!!veil');
+  T(s, 'חצי שנה אחרי', { x: 0.6, y: 0.7, w: 5.0, h: 0.8, fontSize: 36, bold: true, color: C.accent2, objectName: an(1) });
+  const after = [['+600 ₪', 'זכויות ומס'], ['+500 ₪', 'פחות הוצאות'], ['+2,500 ₪', 'משיכות ממשכנתה הפוכה']];
+  after.forEach(([n, l], i) => { const y = 1.75 + i * 1.15; big(s, n, 0.6, y, 2.6, 0.95, HEX.white, 36, { objectName: an(2 + i), align: 'left' }); T(s, l, { x: 3.2, y, w: 2.5, h: 0.95, fontSize: 18, color: 'CFEFF5', valign: 'middle', objectName: an(2 + i) + 't' }); });
+  T(s, [{ text: 'וגם: שיפוץ, ממ״ד ועזרה לנכדים', options: { breakLine: true } }, { text: 'ונועה מפסיקה לשלם', options: { color: C.accent2 } }], { x: 0.6, y: 5.3, w: 5.0, h: 1.2, fontSize: 22, bold: true, color: C.background1, valign: 'top', objectName: an(5) });
+  srcPhoto(s, 'המחשה: משכנתה הפוכה של כ-900 אלף ₪, 300 אלף לשיפוץ ולעזרה, והשאר משיכות');
+  brand(s);
+  notes(s, 'חצי שנה אחרי: כ-600 ₪ מזכויות ומס, כ-500 ₪ פחות הוצאות, ומשכנתה הפוכה של כ-900 אלף ₪, מתוכם 300 אלף לשיפוץ, ממ״ד ועזרה לנכד, והשאר משיכות של כ-2,500 ₪ בחודש. הפער נסגר, ונועה מפסיקה לשלם. להמחשה.');
+
+  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'סוף הסיפור' });
+  photo(s, 'kitchen-talk', 0, 0, 13.333, 7.5, 'בת ושני הורים סביב שולחן המטבח', '!!hero');
+  veil(s, 7.0, 0, 6.333, 7.5, 10, HEX.navy, '!!veil');
+  T(s, 'השיחה של השבת הקרובה', { x: 7.4, y: 0.7, w: 5.4, h: 0.8, fontSize: 32, bold: true, color: C.background1, objectName: an(1) });
+  const qs = ['מה הייתם רוצים לעשות?', 'כמה נכנס בחודש?', 'איפה כל החסכונות?', 'יש ייפוי כוח וצוואה?', 'ממה אתם הכי חוששים?'];
+  qs.forEach((q, i) => { const y = 1.8 + i * 0.88; s.addShape(pres.shapes.OVAL, { x: 12.15, y: y + 0.12, w: 0.5, h: 0.5, fill: { color: i === 0 ? HEX.cyan : HEX.white }, line: { type: 'none' }, objectName: an(2 + i) }); T(s, String(i + 1), { x: 12.15, y: y + 0.12, w: 0.5, h: 0.5, fontSize: 15, bold: true, color: i === 0 ? C.background1 : C.accent1, align: 'center', valign: 'middle', rtlMode: false, objectName: an(2 + i) + 'n' }); T(s, q, { x: 7.4, y, w: 4.6, h: 0.75, fontSize: 22, bold: i === 0, color: i === 0 ? C.accent2 : C.background1, valign: 'middle', objectName: an(2 + i) + 't' }); });
+  T(s, 'מתחילים מהחלומות, לא מהחובות', { x: 7.4, y: 6.3, w: 5.4, h: 0.4, fontSize: 16, italic: true, color: 'CFEFF5', objectName: an(7) });
+  brand(s);
+  notes(s, 'חמש שאלות לשבת הקרובה. מתחילים מהחלומות, לא מהחובות, ומזמינים את כל האחים.');
+
+  // roadmap
+  s = content('מפת הדרך: 8 תחנות לבדוק עם ההורים', 'קחו הביתה', 'סוף הסיפור', 'סמנו V על כל תחנה שסגרתם');
+  const RY1 = 3.15, RY2 = 5.0, band = 0.46, roadC = 'D6E6FB';
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY1 - band / 2, w: 11.55, h: band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road1' });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY2 - band / 2, w: 10.9, h: band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road2' });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY1 - band / 2, w: band, h: RY2 - RY1 + band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road3' });
+  const stops = [['LuMessageCircle', 'שיחה פתוחה', 'מתחילים מהחלומות'], ['LuBanknote', 'הכנסות וזכויות', 'ותק · השלמת הכנסה'], ['LuPercent', 'מס', 'קיבוע זכויות 161ד'], ['LuSearch', 'חיסכון', 'הר הכסף · מסלקה'], ['LuScissors', 'הוצאות', 'הלוואות · ביטוחים'], ['LuHouse', 'הבית', 'משכנתה הפוכה?'], ['LuScrollText', 'צוואה וייפוי כוח', 'אצל עו״ד מוסמך'], ['LuStethoscope', 'סיעוד ובריאות', '"הר הביטוח"']];
+  const xsTop = [11.25, 8.75, 6.25, 3.75], xsBot = [2.3, 4.75, 7.2, 9.65];
+  for (let i = 0; i < 8; i++) { const top = i < 4, cx = top ? xsTop[i] : xsBot[i - 4], cy = top ? RY1 : RY2, d = 0.95;
+    await bubble(s, cx - d / 2, cy - d / 2, d, i % 2 ? HEX.cyan : HEX.blue, stops[i][0], HEX.white, an(1 + i));
+    const ly = top ? cy - 1.55 : cy + 0.6;
+    T(s, stops[i][1], { x: cx - 1.15, y: ly, w: 2.3, h: 0.42, fontSize: 17, bold: true, color: C.accent1, align: 'center', valign: top ? 'bottom' : 'top', objectName: an(1 + i) + 't' });
+    T(s, stops[i][2], { x: cx - 1.15, y: ly + 0.42, w: 2.3, h: 0.38, fontSize: 13, color: C.accent4, align: 'center', valign: 'top', objectName: an(1 + i) + 's' }); }
+  await bubble(s, 11.35, RY2 - 0.55, 1.1, HEX.teal, 'LuFlag', HEX.white, an(9));
+  T(s, 'בדיקה משפחתית', { x: 10.95, y: RY2 + 0.6, w: 1.85, h: 0.42, fontSize: 14, bold: true, color: C.accent3, align: 'center', objectName: an(9) + 't' });
+  notes(s, 'מפת הדרך הביתה: שמונה תחנות, כל אחת טיפ מההרצאה. מי שרוצה לעבור את המסלול איתי, מגיע לבדיקה משפחתית.');
+
+  // ════════════ ז. סיום ════════════
+  pres.addSection({ title: 'סיום' });
+  s = pres.addSlide({ masterName: 'DARK', sectionTitle: 'סיום' });
+  s.addShape(pres.shapes.OVAL, { x: 0.9, y: 1.0, w: 3.9, h: 3.9, fill: { color: C.background1 }, line: { color: HEX.cyan, width: 5 }, objectName: an(1) });
+  s.addImage({ path: A('shiral.jpg'), x: 1.02, y: 1.12, w: 3.66, h: 3.66, sizing: { type: 'cover', w: 3.66, h: 3.66 }, rounding: true, altText: 'שיראל פרגר', objectName: an(1) + 'p' });
+  T(s, 'קבעו בדיקה משפחתית השבוע', { x: 5.4, y: 0.9, w: 7.33, h: 0.9, fontSize: 38, bold: true, color: C.background1, objectName: an(2) });
+  T(s, 'שעה אחת, כל המשפחה, תוכנית ברורה. ללא התחייבות', { x: 5.4, y: 1.8, w: 7.33, h: 0.6, fontSize: 21, color: C.accent2, objectName: an(3) });
+  const ct = [['LuPhone', '052-441-5395'], ['LuMail', 'sp.makesense@gmail.com']];
+  for (let i = 0; i < 2; i++) { const y = 3.0 + i * 0.9; s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 7.6, y, w: 5.13, h: 0.7, rectRadius: 0.35, fill: { color: C.accent2, transparency: 80 }, line: { color: HEX.cyan, width: 1 }, objectName: an(4 + i) }); s.addImage({ data: await ic(ct[i][0], HEX.white), x: 12.15, y: y + 0.16, w: 0.38, h: 0.38, altText: '', objectName: an(4 + i) + 'i' }); T(s, ct[i][1], { x: 7.8, y, w: 4.2, h: 0.7, fontSize: 21, bold: true, color: C.background1, valign: 'middle', align: 'left', rtlMode: false, objectName: an(4 + i) + 't' }); }
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.2, y: 5.2, w: 3.3, h: 1.45, rectRadius: 0.12, fill: { color: C.background1 }, line: { type: 'none' }, objectName: an(6) });
+  s.addImage({ path: A('qr-wa.png'), x: 1.3, y: 5.28, w: 1.3, h: 1.3, altText: 'QR לוואטסאפ', objectName: an(6) + 'q' });
+  T(s, 'סרקו לוואטסאפ', { x: 2.65, y: 5.2, w: 1.75, h: 1.45, fontSize: 15, bold: true, color: C.accent1, align: 'center', valign: 'middle', objectName: an(6) + 't' });
+  notes(s, 'הצעד הבא: בדיקה משפחתית ללא התחייבות. סרקו את הקוד או התקשרו.');
+
+  s = pres.addSlide({ masterName: 'DARK', sectionTitle: 'סיום' });
+  T(s, 'שאלות?', { x: 0.6, y: 1.2, w: 12.13, h: 1.6, fontSize: 84, bold: true, color: C.background1, align: 'center', objectName: an(1) });
+  T(s, 'תודה! · שיראל פרגר | MAKE SENSE', { x: 0.6, y: 3.4, w: 12.13, h: 0.6, fontSize: 24, color: C.accent2, align: 'center', objectName: an(2) });
+  T(s, 'המידע במצגת כללי ואינו מהווה ייעוץ אישי, משפטי או ביטוחי. המקרים מורכבים ובשמות בדויים. הנתונים נכונים ל-2026.', { x: 0.6, y: 6.1, w: 12.13, h: 0.4, fontSize: 11, color: 'CFEFF5', align: 'center' });
+  notes(s, 'שאלות ותשובות. מחלקים את הצ׳קליסט.');
+
+  // hidden appendix: sources
+  s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'סיום' });
+  s.addText('מקורות הנתונים', { placeholder: 'title', ...he }); tag(s, 'נספח');
+  const refs = [
+    ['בני 65+, תוחלת חיים בגיל 65', 'מבקר המדינה, היערכות להזדקנות האוכלוסייה, 2026', 'https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2026/Population-Aging/2026-Population-Aging-101-Taktzir.pdf'],
+    ['קצבאות 2026', 'המוסד לביטוח לאומי, גובה הקצבאות לשנת 2026', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/hadasaidkonkitzva2026.aspx'],
+    ['קו העוני', 'המוסד לביטוח לאומי, דוח העוני 2024', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/dohoni2024hadasa.aspx'],
+    ['פנסיה: 44%, נשים מול גברים', 'הלמ״ס, חודש האזרח הוותיק 2026 (ביזפורטל)', 'https://www.bizportal.co.il/general/news/article/20046899'],
+    ['פטור ממס על קצבה', 'כל זכות, הטבות מס בפרישה (161ד)', 'https://www.kolzchut.org.il/he/%D7%94%D7%98%D7%91%D7%95%D7%AA_%D7%9E%D7%A1_%D7%91%D7%A4%D7%A8%D7%99%D7%A9%D7%94_%D7%9C%D7%A4%D7%A0%D7%A1%D7%99%D7%94_(%D7%98%D7%95%D7%A4%D7%A1_161%D7%93_%22%D7%A7%D7%99%D7%91%D7%95%D7%A2_%D7%96%D7%9B%D7%95%D7%99%D7%95%D7%AA%22)'],
+    ['ירושה על פי דין', 'כל זכות, ירושה על פי דין (חוק הירושה, סעיף 11)', 'https://www.kolzchut.org.il/he/%D7%99%D7%A8%D7%95%D7%A9%D7%94_%D7%A2%D7%9C_%D7%A4%D7%99_%D7%93%D7%99%D7%9F'],
+    ['ייפוי כוח מתמשך', 'משרד המשפטים, עריכה והפקדה של ייפוי כוח מתמשך', 'https://www.gov.il/he/service/edit_and_deposit_continuous_power_of_attorney'],
+    ['מינוי אפוטרופוס', 'gov.il, בקשה למינוי אפוטרופוס לבגירים', 'https://www.gov.il/he/service/request_to_appoint_guardian'],
+    ['גמלת סיעוד', 'ביטוח לאומי, קצבה בכסף בגמלת סיעוד', 'https://www.btl.gov.il/benefits/Long_Term_Care/Pages/money.aspx'],
+    ['העסקת עובד זר בסיעוד', 'כל זכות, מדריך להעסקת עובד זר בסיעוד', 'https://www.kolzchut.org.il/he/%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%A2%D7%A1%D7%A7%D7%AA_%D7%A2%D7%95%D7%91%D7%93_%D7%96%D7%A8_%D7%91%D7%A1%D7%99%D7%A2%D7%95%D7%93'],
+    ['משכנתה הפוכה', 'השוואת תנאי גופים מלווים ודפי עמלות 2026 (חומר מקצועי)', ''],
+  ];
+  refs.forEach(([what, name, url], i) => { const col = i < 6 ? 0 : 1, row = i < 6 ? i : i - 6, x = col === 0 ? 6.75 : 0.6, y = 1.45 + row * 0.86;
+    T(s, what, { x, y, w: 5.98, h: 0.34, fontSize: 14, bold: true, color: C.accent1 });
+    T(s, url ? [{ text: name, options: { hyperlink: { url, tooltip: url }, color: C.accent3 } }] : name, { x, y: y + 0.34, w: 5.98, h: 0.4, fontSize: 12, color: C.accent3 }); });
+  notes(s, 'נספח מוסתר: מקורות מלאים.');
+
+  await pres.writeFile({ fileName: OUT });
+  await applyTheme(OUT, THEME);
+
+  // ── post-process: Morph transitions + timed entrance animations + hidden appendix ──
+  const z = await JSZip.loadAsync(fs.readFileSync(OUT));
+  const slides = Object.keys(z.files).filter(f => /^ppt\/slides\/slide\d+\.xml$/.test(f)).sort((a, b) => +a.match(/(\d+)/)[1] - +b.match(/(\d+)/)[1]);
+  const morph = '<mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><mc:Choice xmlns:p159="http://schemas.microsoft.com/office/powerpoint/2015/09/main" Requires="p159"><p:transition spd="slow" xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" p14:dur="1200"><p159:morph option="byObject"/></p:transition></mc:Choice><mc:Fallback><p:transition spd="slow"><p:fade/></p:transition></mc:Fallback></mc:AlternateContent>';
+  for (let k = 0; k < slides.length; k++) {
+    const p = slides[k]; let x = await z.file(p).async('string');
+    // collect animated shapes: name a<NN>_<seq>...
+    const groups = {};
+    for (const m of x.matchAll(/<p:cNvPr id="(\d+)" name="a(\d\d)_[^"]*"/g)) (groups[+m[2]] = groups[+m[2]] || []).push(m[1]);
+    const order = Object.keys(groups).map(Number).sort((a, b) => a - b);
+    let timing = '';
+    if (order.length) {
+      let id = 3; const pars = [];
+      order.forEach((g, gi) => {
+        const delay = 300 + gi * 450;
+        const effects = groups[g].map((spid, j) => {
+          const a = ++id, b = ++id, c = ++id;
+          return `<p:par><p:cTn id="${a}" presetID="10" presetClass="entr" presetSubtype="0" fill="hold" nodeType="${gi === 0 && j === 0 ? 'afterEffect' : 'withEffect'}"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst><p:set><p:cBhvr><p:cTn id="${b}" dur="1" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst></p:cTn><p:tgtEl><p:spTgt spid="${spid}"/></p:tgtEl><p:attrNameLst><p:attrName>style.visibility</p:attrName></p:attrNameLst></p:cBhvr><p:to><p:strVal val="visible"/></p:to></p:set><p:animEffect transition="in" filter="fade"><p:cBhvr><p:cTn id="${c}" dur="600"/><p:tgtEl><p:spTgt spid="${spid}"/></p:tgtEl></p:cBhvr></p:animEffect></p:childTnLst></p:cTn></p:par>`;
+        }).join('');
+        pars.push(`<p:par><p:cTn id="${++id}" fill="hold"><p:stCondLst><p:cond delay="${delay}"/></p:stCondLst><p:childTnLst>${effects}</p:childTnLst></p:cTn></p:par>`);
+      });
+      timing = `<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst><p:seq concurrent="1" nextAc="seek"><p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst><p:par><p:cTn id="${++id}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/><p:cond evt="onBegin" delay="0"><p:tn val="2"/></p:cond></p:stCondLst><p:childTnLst>${pars.join('')}</p:childTnLst></p:cTn></p:par></p:childTnLst></p:cTn><p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq></p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>`;
+    }
+    x = x.replace('</p:clrMapOvr>', '</p:clrMapOvr>' + morph + timing);
+    if (k === slides.length - 1) x = x.replace('<p:sld ', '<p:sld show="0" ');
+    z.file(p, x);
+  }
+  Object.keys(z.files).filter(f => z.files[f].dir).forEach(f => { delete z.files[f]; });
+  fs.writeFileSync(OUT, await z.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }));
+  console.log('wrote', OUT, slides.length, 'slides');
+})().catch(e => { console.error(e); process.exit(1); });
