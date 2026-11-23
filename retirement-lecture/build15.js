@@ -117,17 +117,20 @@ async function ic(name, hex) {
 
   // ════════════ 3–4. המציאות ════════════
   pres.addSection({ title: 'המציאות במספרים' });
-  s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'המציאות במספרים' });
-  await photo(s, 'promenade', 0, 0, 13.333, 7.5, 'זוג מבוגר בטיילת בשקיעה', '!!hero');
-  veil(s, 5.4, 0, 7.933, 7.5, 14, HEX.navy, '!!veil');
-  T(s, 'עוד 20 שנה של חיים, ומעט מאוד כסף', { x: 5.9, y: 0.6, w: 6.9, h: 0.9, fontSize: 32, bold: true, color: C.background1, objectName: an(1) });
-  const facts = [['כ-20 שנה', true, 'זה כמה חי בממוצע מי שהגיע היום לגיל 65'], ['1,838 ₪', false, 'קצבת הזקנה הבסיסית בחודש. בערך מחצית מקו העוני (3,547 ₪)'], ['44%', false, 'מבני גיל הפרישה שלא עובדים מקבלים פנסיה מעבודה. כל השאר, לא']];
-  facts.forEach(([n, heb, l], i) => { const y = 1.75 + i * 1.6;
-    T(s, n, { x: 5.9, y, w: 6.9, h: 0.8, fontSize: 46, bold: true, color: C.accent2, rtlMode: heb, align: 'right', valign: 'middle', objectName: an(2 + i) });
-    T(s, l, { x: 5.9, y: y + 0.8, w: 6.9, h: 0.6, fontSize: 18, color: C.background1, valign: 'top', objectName: an(2 + i) + 't' }); });
-  srcPhoto(s, 'מקור: מבקר המדינה 2026; ביטוח לאומי 2026; הלמ״ס 2026 (נתוני 2024)');
-  brand(s);
-  notes(s, 'שלושה מספרים. מי שהגיע ל-65 חי בממוצע עד 85 (גבר) או 87.6 (אישה), כלומר כ-20 שנה שצריך לממן (מבקר המדינה 2026). קצבת הזקנה הבסיסית ליחיד 1,838 ₪, וגם עם תוספת ותק מלאה 2,757 ₪, מתחת לקו העוני ליחיד, 3,547 ₪. מי שאין לו הכנסה אחרת יכול לבקש השלמת הכנסה. רק 44.2% מבני גיל הפרישה שאינם עובדים מקבלים פנסיה (הלמ״ס), והממוצע לנשים 5,481 ₪ מול 8,184 ₪ לגברים. הגרפים המלאים בשקפי הגיבוי.');
+  s = content('עוד 20 שנה של חיים, ומעט מאוד כסף', 'המציאות במספרים', 'המציאות במספרים', 'כמה עולה לחיות בישראל, מול מה שההורים מקבלים מהמדינה');
+  { const cats = ['דיור', 'תחבורה ותקשורת', 'מזון', 'קצבת זקנה מלאה', 'קצבה בסיסית'];
+    s.addChart(pres.charts.BAR, [{ name: 'הוצאה חודשית של משק בית ממוצע', labels: cats, values: [4674, 3440, 3346, 0, 0] }, { name: 'קצבת זקנה ליחיד', labels: cats, values: [0, 0, 0, 2757, 1838] }], {
+      x: 0.6, y: 1.6, w: 6.9, h: 4.15, barDir: 'bar', barGrouping: 'stacked', barGapWidthPct: 40, chartColors: [HEX.blue, HEX.warn], ...chartTxt, catAxisLabelFontSize: 15, catAxisOrientation: 'maxMin', valAxisMinVal: 0, valAxisMaxVal: 5600, valGridLine: { style: 'none' },
+      showValue: true, dataLabelPosition: 'inEnd', dataLabelFormatCode: '#,##0" ₪";;', dataLabelColor: HEX.white, showLegend: true, legendPos: 'b', legendFontSize: 12, legendFontFace: '+mn-lt', legendColor: HEX.muted,
+      objectName: an(1), altText: 'משק בית ממוצע: דיור כ-4,674 ₪, תחבורה ותקשורת כ-3,440 ₪, מזון כ-3,346 ₪. קצבת זקנה מלאה ליחיד 2,757 ₪, בסיסית 1,838 ₪' }); }
+  const facts3 = [['18,695 ₪', 'ההוצאה החודשית של משק בית ממוצע בישראל. רבע ממנה על דיור'], ['2,757 ₪', 'קצבת זקנה מלאה ליחיד. לא מכסה אפילו את הדיור של משק בית ממוצע'], ['כ-20 שנה', 'כמה חי בממוצע מי שהגיע היום לגיל 65. הכסף צריך להספיק לכל התקופה']];
+  facts3.forEach(([n, l], i) => { const y = 1.6 + i * 1.42;
+    card(s, 7.8, y, 4.93, 1.28, i === 1 ? C.accent1 : C.background1, an(2 + i));
+    T(s, n, { x: 8.0, y: y + 0.08, w: 4.53, h: 0.6, fontSize: 30, bold: true, color: i === 1 ? C.background1 : C.accent1, rtlMode: i === 2, align: 'right', valign: 'middle', objectName: an(2 + i) + 'n' });
+    T(s, l, { x: 8.0, y: y + 0.66, w: 4.53, h: 0.58, fontSize: 13, color: i === 1 ? C.background2 : C.text1, valign: 'top', objectName: an(2 + i) + 't' }); });
+  plain(s, 'אלה הוצאות של משק בית ממוצע, כל המשפחה ולא אדם אחד. אצל בני 65 ומעלה הבית קטן יותר, אבל חלק גדול יותר מהתקציב הולך לדיור ולבריאות. ורק 44% מבני גיל הפרישה שלא עובדים מקבלים פנסיה.', 5.85, 0.6);
+  src(s, 'מקור: הלמ״ס, סקר הוצאות משק הבית 2024 (דיור 25%, תחבורה ותקשורת 18.4%, מזון 17.9%; הסכומים בשקלים מחושבים מהאחוזים); ביטוח לאומי 2026; מבקר המדינה 2026');
+  notes(s, 'לפי סקר הוצאות משק הבית של הלמ״ס לשנת 2024, משק בית ממוצע מוציא 18,695 ₪ בחודש על תצרוכת (כולל אומדן לשירותי דיור בדירה בבעלות; ההוצאה הכספית בפועל 15,370 ₪). רבע מזה, כ-4,670 ₪, על דיור; 18.4%, כ-3,440 ₪, על תחבורה ותקשורת; 17.9%, כ-3,350 ₪, על מזון. מול זה: קצבת זקנה בסיסית ליחיד 1,838 ₪, ועם תוספת ותק מלאה 2,757 ₪. חשוב להגיד: זו השוואה בין משק בית שלם לבין קצבה של אדם אחד. משקי בית של בני 65 ומעלה קטנים יותר ומוציאים פחות בסך הכל, אבל חלק גדול יותר מהתקציב שלהם הולך לדיור ולבריאות. ועוד: מי שהגיע ל-65 חי בממוצע עד 85 (גבר) או 87.6 (אישה), ורק 44.2% מבני גיל הפרישה שאינם עובדים מקבלים פנסיה (הלמ״ס). קו העוני ליחיד: 3,547 ₪.');
 
   s = pres.addSlide({ masterName: 'PHOTO', sectionTitle: 'המציאות במספרים' });
   await photo(s, 'parents-home', 0, 0, 13.333, 7.5, 'ההורים של נועה בסלון', '!!hero');
@@ -464,6 +467,7 @@ async function ic(name, hex) {
   const refs = [
     ['בני 65+, תוחלת חיים בגיל 65', 'מבקר המדינה, היערכות להזדקנות האוכלוסייה, 2026', 'https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2026/Population-Aging/2026-Population-Aging-101-Taktzir.pdf'],
     ['קצבאות 2026', 'המוסד לביטוח לאומי, גובה הקצבאות לשנת 2026', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/hadasaidkonkitzva2026.aspx'],
+    ['הוצאות משק הבית', 'הלמ״ס, סקר הוצאות משק הבית 2024 (ביזפורטל, 2026)', 'https://www.bizportal.co.il/financialconsumerism/news/article/20044646'],
     ['קו העוני', 'המוסד לביטוח לאומי, דוח העוני 2024', 'https://www.btl.gov.il/About/news/Pages/ArchiveFolder/2026/dohoni2024hadasa.aspx'],
     ['פנסיה: 44%, נשים מול גברים', 'הלמ״ס, חודש האזרח הוותיק 2026 (ביזפורטל)', 'https://www.bizportal.co.il/general/news/article/20046899'],
     ['פטור ממס על קצבה', 'כל זכות, הטבות מס בפרישה, טופס 161ד', 'https://www.kolzchut.org.il/he/%D7%94%D7%98%D7%91%D7%95%D7%AA_%D7%9E%D7%A1_%D7%91%D7%A4%D7%A8%D7%99%D7%A9%D7%94_%D7%9C%D7%A4%D7%A0%D7%A1%D7%99%D7%94_(%D7%98%D7%95%D7%A4%D7%A1_161%D7%93_%22%D7%A7%D7%99%D7%91%D7%95%D7%A2_%D7%96%D7%9B%D7%95%D7%99%D7%95%D7%AA%22)'],
@@ -475,7 +479,7 @@ async function ic(name, hex) {
     ['העסקת עובד זר בסיעוד', 'כל זכות, מדריך להעסקת עובד זר בסיעוד', 'https://www.kolzchut.org.il/he/%D7%9E%D7%93%D7%A8%D7%99%D7%9A_%D7%9C%D7%94%D7%A2%D7%A1%D7%A7%D7%AA_%D7%A2%D7%95%D7%91%D7%93_%D7%96%D7%A8_%D7%91%D7%A1%D7%99%D7%A2%D7%95%D7%93'],
     ['משכנתה הפוכה', 'השוואת תנאי גופים מלווים ודפי עמלות 2026 (חומר מקצועי)', ''],
   ];
-  refs.forEach(([what, name, url], i) => { const col = i < 6 ? 0 : 1, row = i < 6 ? i : i - 6, x = col === 0 ? 6.75 : 0.6, y = 1.45 + row * 0.86;
+  refs.forEach(([what, name, url], i) => { const col = i < 7 ? 0 : 1, row = i < 7 ? i : i - 7, x = col === 0 ? 6.75 : 0.6, y = 1.4 + row * 0.75;
     T(s, what, { x, y, w: 5.98, h: 0.34, fontSize: 14, bold: true, color: C.accent1 });
     T(s, url ? [{ text: name, options: { hyperlink: { url, tooltip: url }, color: C.accent3 } }] : name, { x, y: y + 0.34, w: 5.98, h: 0.4, fontSize: 12, color: C.accent3 }); });
   notes(s, 'נספח מוסתר: מקורות מלאים.');
