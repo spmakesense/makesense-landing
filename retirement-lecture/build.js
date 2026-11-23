@@ -48,7 +48,7 @@ async function ic(name, hex) {
       ...corner,
       { image: { x: 0.45, y: 6.88, w: 0.86, h: 0.44, path: A('logo.png') } },
       credit(HEX.muted),
-      { placeholder: { options: { name: 'title', type: 'title', x: 0.6, y: 0.4, w: 12.13, h: 0.8, fontSize: 34, bold: true, color: C.accent1, align: 'right', rtlMode: true, lang: 'he-IL', margin: 0, valign: 'middle' }, text: 'כותרת' } },
+      { placeholder: { options: { name: 'title', type: 'title', x: 3.45, y: 0.36, w: 9.28, h: 0.78, fontSize: 30, bold: true, color: C.accent1, align: 'right', rtlMode: true, lang: 'he-IL', margin: 0, valign: 'middle' }, text: 'כותרת' } },
     ],
     slideNumber: { x: 11.75, y: 6.92, w: 0.5, h: 0.36, fontSize: 10, color: C.accent4, align: 'right' },
   });
@@ -67,7 +67,7 @@ async function ic(name, hex) {
   };
   const img = (s, f, x, y, w, h, o = {}) => s.addImage({ path: A(f), x, y, w, h, sizing: { type: 'cover', w, h }, altText: o.alt || '', rounding: !!o.round });
   const tag = (s, t) => { s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 0.52, w: 2.6, h: 0.42, rectRadius: 0.21, fill: { color: C.background2 }, line: { type: 'none' }, objectName: 'section tag' }); T(s, t, { x: 0.7, y: 0.52, w: 2.4, h: 0.42, fontSize: 12, bold: true, color: C.accent3, align: 'center', valign: 'middle' }); };
-  const content = (title, section, sec) => { const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: sec }); s.addText(title, { placeholder: 'title', ...he }); if (section) tag(s, section); return s; };
+  const content = (title, section, sec, kicker) => { const s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: sec }); s.addText(title, { placeholder: 'title', ...he }); if (section) tag(s, section); if (kicker) T(s, kicker, { x: 0.6, y: 1.12, w: 12.13, h: 0.4, fontSize: 17, color: C.accent3, bold: true }); return s; };
   const dark = sec => pres.addSlide({ masterName: 'DARK', sectionTitle: sec });
   const big = (s, n, x, y, w, h, color, size = 66, o = {}) => T(s, n, { x, y, w, h, fontSize: size, bold: true, color, align: 'center', valign: 'middle', rtlMode: false, ...o });
   // row of icon tiles (right→left), label under each
@@ -97,7 +97,7 @@ async function ic(name, hex) {
   T(s, [{ text: 'שיראל פרגר', options: { bold: true, color: C.accent2 } }, { text: ' | יועץ משכנתאות ופתרונות מימון', options: { color: C.background1 } }], { x: 6.2, y: 5.85, w: 6.55, h: 0.45, fontSize: 16 });
   s.addNotes('תודה שבאתם. ההרצאה הזו היא לא על הכסף שלכם, היא על הכסף של ההורים שלכם, ועל מה שיקרה לכם אם לא נדבר עליו.');
 
-  s = content('הרימו יד…', 'פתיחה', 'פתיחה');
+  s = content('כמה מכם באמת יודעים איפה ההורים עומדים?', 'פתיחה', 'פתיחה', 'שלוש שאלות. הרימו יד אם התשובה היא כן');
   const polls = [['LuPiggyBank', 'מי יודע כמה פנסיה ההורים שלו יקבלו?'], ['LuScrollText', 'מי יודע אם יש להם ייפוי כוח מתמשך?'], ['LuHandCoins', 'מי כבר עוזר להם כלכלית היום?']];
   for (let i = 0; i < 3; i++) {
     const x = 8.83 - i * 4.1;
@@ -108,7 +108,7 @@ async function ic(name, hex) {
   }
   s.addNotes('מבקשים הצבעה. ברוב הקהלים מעט ידיים יורמו בשתי השאלות הראשונות, והרבה בשלישית. "זה הפער שאנחנו סוגרים היום."');
 
-  s = content('דור הסנדוויץ\'', 'פתיחה', 'פתיחה');
+  s = content('אתם מממנים שני דורות במקביל', 'פתיחה', 'פתיחה', 'הילדים מלמטה, ההורים מלמעלה, והלחץ באמצע');
   const layers = [['LuUsers', 'ההורים', '55+', HEX.teal], ['LuUser', 'אנחנו', '30–40', HEX.blue], ['LuBaby', 'הילדים', '', HEX.cyan]];
   for (let i = 0; i < 3; i++) {
     const y = 1.75 + i * 1.55;
@@ -121,7 +121,7 @@ async function ic(name, hex) {
   T(s, 'משכנתה, גן, חוגים… ועכשיו גם ההורים', { x: 0.6, y: 4.3, w: 5.9, h: 0.6, fontSize: 20, color: C.accent4 });
   s.addNotes('משכנתה, גן, חוגים, ועכשיו גם ההורים. הלחץ אמיתי, והוא מגיע בדרך כלל ברגע הכי פחות מתאים.');
 
-  s = content('נעים להכיר: שיראל פרגר', 'פתיחה', 'פתיחה');
+  s = content('שיראל פרגר: ליווי כלכלי לכל המשפחה', 'פתיחה', 'פתיחה', 'יועץ משכנתאות ופתרונות מימון | MAKE SENSE');
   s.addShape(pres.shapes.OVAL, { x: 8.75, y: 1.6, w: 3.9, h: 3.9, fill: { color: C.background1 }, line: { color: HEX.cyan, width: 5 }, objectName: 'photo ring' });
   img(s, 'shiral.jpg', 8.87, 1.72, 3.66, 3.66, { round: true, alt: 'שיראל פרגר' });
   const creds = [['LuGraduationCap', 'B.A כלכלה · M.B.A'], ['LuBadgeCheck', 'חבר בהתאחדות יועצי המשכנתאות'], ['LuUsers', 'עשרות משפחות מלוות']];
@@ -133,7 +133,7 @@ async function ic(name, hex) {
 
   // ════ ב. המציאות במספרים ════
   pres.addSection({ title: 'המציאות במספרים' });
-  s = content('חיים ארוכים יותר', 'המציאות במספרים', 'המציאות במספרים');
+  s = content('ההורים שלכם יחיו כ-20 שנה אחרי הפרישה', 'המציאות במספרים', 'המציאות במספרים', 'השאלה היא ממה הם יחיו');
   big(s, '83.8', 7.3, 1.7, 5.4, 1.9, HEX.blue, 110);
   T(s, 'שנות תוחלת חיים בישראל · 4 ב-OECD', { x: 7.3, y: 3.6, w: 5.4, h: 0.5, fontSize: 18, color: C.accent4, align: 'center' });
   s.addShape(pres.shapes.RECTANGLE, { x: 1.0, y: 5.05, w: 11.3, h: 0.14, fill: { color: HEX.line }, line: { type: 'none' }, objectName: 'timeline' });
@@ -144,7 +144,7 @@ async function ic(name, hex) {
   src(s, 'מקור: OECD Health Statistics 2025; הלמ״ס, לוחות תמותה');
   s.addNotes('תוחלת החיים בישראל היא 83.8 שנים, הרביעית בגובהה ב-OECD. נשים כ-85.7, גברים כ-81.7. פרישה היא לא סוף הדרך, היא עוד 20 שנה שצריך לממן.');
 
-  s = content('גיל הפרישה', 'המציאות במספרים', 'המציאות במספרים');
+  s = content('גיל הפרישה של נשים עולה ל-65', 'המציאות במספרים', 'המציאות במספרים', 'את הגיל המדויק של אמא בודקים במחשבון של ביטוח לאומי');
   card(s, 6.95, 1.7, 5.78, 4.6, C.background1, 'men');
   await bubble(s, 9.05, 2.0, 1.6, HEX.blue, 'LuPersonStanding');
   big(s, '67', 6.95, 3.7, 5.78, 1.4, HEX.blue, 88);
@@ -156,7 +156,7 @@ async function ic(name, hex) {
   src(s, 'מקור: חוק גיל פרישה; המוסד לביטוח לאומי');
   s.addNotes('גברים 67. נשים: עולה בהדרגה מ-62 ל-65 עד 2032. אמא שלכם אולי עדיין עובדת. כדאי לבדוק את הגיל המדויק במחשבון של ביטוח לאומי.');
 
-  s = content('כמה מקבלים מהמדינה?', 'המציאות במספרים', 'המציאות במספרים');
+  s = content('קצבת הזקנה נמוכה מקו העוני', 'המציאות במספרים', 'המציאות במספרים', 'גם עם תוספת ותק מלאה: 2,757 ₪ מול קו עוני של 3,547 ₪');
   s.addChart(pres.charts.BAR, [{ name: '₪ בחודש', labels: ['קצבה בסיסית', 'עם ותק מלא', 'קו העוני'], values: [1838, 2757, 3547] }], {
     x: 0.6, y: 1.6, w: 8.0, h: 4.9, barDir: 'col', barGapWidthPct: 60, chartColors: [HEX.blue, HEX.cyan, HEX.warn], invertedColors: [HEX.blue], ...chartTxt,
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0" ₪"', dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 4200, valGridLine: { style: 'none' }, showLegend: false,
@@ -169,7 +169,7 @@ async function ic(name, hex) {
   src(s, 'מקור: המוסד לביטוח לאומי, סכומי הקצבאות 2026; דוח העוני 2024 (קו העוני ליחיד)');
   s.addNotes('קצבת אזרח ותיק ב-2026: 1,838 ₪ ליחיד, עם תוספת ותק מלאה כ-2,757 ₪, ולבן או בת זוג מתווספים 924 ₪. קו העוני ליחיד הוא 3,547 ₪. הקצבה מהמדינה לבד לא מגיעה לקו העוני.');
 
-  s = content('ומהפנסיה?', 'המציאות במספרים', 'המציאות במספרים');
+  s = content('רק 44% מקבלים פנסיה בכלל', 'המציאות במספרים', 'המציאות במספרים', 'מבני גיל הפרישה שאינם עובדים. ומי שמקבל, מקבל בממוצע כ-6,700 ₪');
   s.addChart(pres.charts.DOUGHNUT, [{ name: 'פנסיה', labels: ['מקבלים פנסיה', 'לא מקבלים'], values: [44, 56] }], {
     x: 7.2, y: 1.55, w: 5.5, h: 4.9, holeSize: 62, chartColors: [HEX.blue, HEX.line], showPercent: true, showValue: false, dataLabelColor: HEX.ink, dataLabelFontSize: 16, dataLabelFontBold: true, dataLabelFontFace: '+mn-lt',
     showLegend: true, legendPos: 'b', legendFontSize: 14, legendFontFace: '+mn-lt', legendColor: HEX.muted, showTitle: false, objectName: 'pension doughnut', altText: '44% מבני גיל הפנסיה שאינם עובדים מקבלים פנסיה',
@@ -180,7 +180,7 @@ async function ic(name, hex) {
   src(s, 'מקור: נתוני הכנסות פנסיונרים לשנת 2024, כפי שפורסמו בביזפורטל');
   s.addNotes('פחות ממחצית מבני גיל הפנסיה שלא עובדים מקבלים פנסיה. הממוצע בקרב המקבלים כ-6,700 ₪, ולנשים בכשליש פחות. לרבים יש הפקדות חלקיות, קרנות ישנות או כספים אבודים.');
 
-  s = content('הפער', 'המציאות במספרים', 'המציאות במספרים');
+  s = content('לזוג טיפוסי חסרים כ-2,300 ₪ בכל חודש', 'המציאות במספרים', 'המציאות במספרים', 'מי מכם משלים את הפער הזה היום?');
   s.addChart(pres.charts.BAR, [{ name: '₪ בחודש', labels: ['הכנסה', 'הוצאה'], values: [7200, 9500] }], {
     x: 6.6, y: 1.55, w: 6.1, h: 4.95, barDir: 'col', barGapWidthPct: 55, chartColors: [HEX.cyan, HEX.blue], ...chartTxt, catAxisLabelFontSize: 18,
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0" ₪"', dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 11000, valGridLine: { style: 'none' }, showLegend: false,
@@ -189,32 +189,52 @@ async function ic(name, hex) {
   big(s, '−2,300 ₪', 0.6, 1.9, 5.7, 1.5, HEX.warn, 72);
   T(s, 'פער בכל חודש', { x: 0.6, y: 3.4, w: 5.7, h: 0.5, fontSize: 22, color: C.accent4, align: 'center' });
   card(s, 0.9, 4.35, 5.1, 1.6, C.accent1, 'who pays');
-  T(s, [{ text: 'מי סוגר את הפער?', options: { breakLine: true } }, { text: 'לרוב, אתם.', options: { color: C.accent2 } }], { x: 1.1, y: 4.45, w: 4.7, h: 1.4, fontSize: 26, bold: true, color: C.background1, align: 'center', valign: 'middle' });
+  T(s, [{ text: 'כ-27,600 ₪', options: { breakLine: true, color: C.accent2 } }, { text: 'חסרים בכל שנה', options: {} }], { x: 1.1, y: 4.45, w: 4.7, h: 1.4, fontSize: 26, bold: true, color: C.background1, align: 'center', valign: 'middle' });
   src(s, 'המחשה: על בסיס קצבאות ביטוח לאומי 2026 ופנסיה משוערת');
   s.addNotes('הכנסה של כ-7,200 ₪ מול הוצאה של כ-9,500 ₪. פער של כ-2,300 ₪ בחודש. מי סוגר את הפער? לרוב, אתם. אבל יש דרכים אחרות.');
 
+
+  s = content('3 הנחות שעולות להורים כסף', 'המציאות במספרים', 'המציאות במספרים', 'כמה מהן שמעתם בבית?');
+  const myths = [
+    ['"יש להם פנסיה, הם יסתדרו"', '56%', 'מבני גיל הפרישה שלא עובדים לא מקבלים פנסיה בכלל'],
+    ['"המדינה תדאג להם"', '1,838 ₪', 'קצבת זקנה בסיסית: כמחצית מקו העוני'],
+    ['"בבית לא נוגעים, זה לירושה"', '≈ 900K ₪', 'נזילים מדירה של 3 מ׳ בגיל 70, והיתרה עדיין עוברת לילדים'],
+  ];
+  for (let i = 0; i < 3; i++) {
+    const x = 8.83 - i * 4.1, [myth, num, fact] = myths[i];
+    card(s, x, 1.75, 3.9, 1.55, 'EEF0F4', 'myth ' + (i + 1));
+    s.addImage({ data: await ic('LuCircleX', HEX.gray2), x: x + 3.35, y: 1.88, w: 0.4, h: 0.4, altText: '' });
+    T(s, myth, { x: x + 0.2, y: 1.85, w: 3.1, h: 1.35, fontSize: 19, bold: true, color: C.accent4, valign: 'middle', strike: 'sngStrike' });
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 3.5, w: 3.9, h: 2.9, rectRadius: 0.16, fill: { color: C.accent1 }, line: { type: 'none' }, shadow: shadow(), objectName: 'fact ' + (i + 1) });
+    T(s, 'בפועל', { x: x + 0.2, y: 3.62, w: 3.5, h: 0.4, fontSize: 15, bold: true, color: C.accent2 });
+    big(s, num, x, 3.95, 3.9, 1.0, HEX.white, 40);
+    T(s, fact, { x: x + 0.25, y: 5.0, w: 3.4, h: 1.25, fontSize: 16, color: C.background2, align: 'center', valign: 'top' });
+  }
+  src(s, 'מקור: נתוני פנסיונרים 2024 (ביזפורטל); ביטוח לאומי 2026; השוואת גופים מלווים 2026 (הדוגמה להמחשה)');
+  s.addNotes('שלוש הנחות ששומעים כמעט בכל בית. יש להם פנסיה? 56% מבני גיל הפרישה שלא עובדים לא מקבלים פנסיה בכלל. המדינה תדאג? הקצבה הבסיסית היא כמחצית מקו העוני. בבית לא נוגעים? בגיל 70 דירה של 3 מיליון יכולה לשחרר כ-900 אלף ₪, והיתרה עדיין עוברת לילדים.');
+
   // ════ ג. תכנון פרישה ════
   pres.addSection({ title: 'תכנון פרישה' });
-  s = content('4 מנופים לכבוד כלכלי', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('4 מנופים שסוגרים את הפער', 'תכנון פרישה', 'תכנון פרישה', 'מתחילים מהפשוט, ומסיימים בבית');
   await tiles(s, [['LuBadgeCheck', 'מיצוי זכויות'], ['LuPercent', 'מיסוי חכם'], ['LuSearch', 'ארגון החיסכון'], ['LuHouse', 'הבית כנכס', '', true]], 1.75, 3.4, { fs: 26 });
   card(s, 0.6, 5.5, 12.13, 0.95, C.background2, 'levers note');
   T(s, 'מנוף אחרי מנוף, סוגרים את הפער', { x: 0.9, y: 5.5, w: 11.5, h: 0.95, fontSize: 24, bold: true, color: C.accent3, align: 'center', valign: 'middle' });
   s.addNotes('ארבעה מנופים, זו מפת ההמשך: מיצוי זכויות, מיסוי חכם, ארגון החיסכון, והבית כנכס.');
 
-  s = content('מנוף 1: מיצוי זכויות', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('מנוף 1: זכויות שלא מבקשים, לא מקבלים', 'תכנון פרישה', 'תכנון פרישה', 'חלק מהתוספות בביטוח לאומי דורשות הגשת בקשה');
   await tiles(s, [['LuTrendingUp', 'תוספת ותק', 'עד +50%'], ['LuHandCoins', 'השלמת הכנסה', 'להכנסה נמוכה'], ['LuClock', 'דחיית קצבה', 'קצבה גדולה יותר'], ['LuHeart', 'גיל 80+', 'קצבה מוגדלת']], 1.75, 3.6);
   card(s, 0.6, 5.6, 12.13, 0.85, C.background2, 'tip');
   T(s, 'הרבה זכאים פשוט לא מגישים בקשה', { x: 0.9, y: 5.6, w: 11.5, h: 0.85, fontSize: 22, bold: true, color: C.accent3, align: 'center', valign: 'middle' });
   src(s, 'מקור: המוסד לביטוח לאומי; כל זכות, תוספת השלמת הכנסה 2026');
   s.addNotes('תוספת ותק: 2% לכל שנת ביטוח, עד 50%. השלמת הכנסה: כשהפנסיה של יחיד לא עולה על כ-1,790 ₪, ולזוג כ-2,823 ₪. דחיית קצבה מגדילה אותה. מגיל 80 הקצבה מוגדלת. השלמת הכנסה פותחת גם הנחות נוספות.');
 
-  s = content('הנחות שמצטברות למאות שקלים', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('הנחות קטנות, סכום גדול', 'תכנון פרישה', 'תכנון פרישה', 'ארנונה, תחבורה ותרופות מצטברות למאות שקלים בחודש');
   const perks = [['LuLandmark', 'ארנונה'], ['LuBus', 'תחבורה'], ['LuPill', 'תרופות'], ['LuZap', 'חשמל'], ['LuDroplet', 'מים'], ['LuTicket', 'תרבות']];
   for (let i = 0; i < 6; i++) { const col = i % 3, row = Math.floor(i / 3); const x = 8.83 - col * 4.1, y = 1.75 + row * 2.4; card(s, x, y, 3.9, 2.15, C.background1, 'perk ' + (i + 1)); await bubble(s, x + 1.4, y + 0.25, 1.1, i % 2 ? HEX.cyan : HEX.blue, perks[i][0]); T(s, perks[i][1], { x, y: y + 1.45, w: 3.9, h: 0.55, fontSize: 22, bold: true, color: C.accent1, align: 'center' }); }
   src(s, 'מקור: כל זכות, זכויות והטבות לאזרחים ותיקים');
   s.addNotes('ארנונה, תחבורה ציבורית, תרופות, חשמל ומים, תרבות. כל הנחה נשמעת קטנה, ביחד מדובר במאות שקלים בחודש. מפנים לאתר כל זכות.');
 
-  s = content('מנוף 2: מיסוי חכם', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('מנוף 2: טופס שגוי עולה אלפי שקלים', 'תכנון פרישה', 'תכנון פרישה', 'קיבוע זכויות נכון מגדיל את הקצבה נטו, בכל חודש');
   s.addChart(pres.charts.BAR, [{ name: 'פטור ממס על קצבה', labels: ['2025', '2026', '2027', '2028'], values: [57, 57.5, 62.5, 67] }], {
     x: 0.6, y: 1.55, w: 7.4, h: 4.95, barDir: 'col', barGapWidthPct: 50, chartColors: [HEX.cyan, HEX.blue, HEX.cyan, HEX.cyan], invertedColors: [HEX.cyan], ...chartTxt, catAxisLabelFontSize: 16,
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '0.0"%"', dataLabelColor: HEX.ink, valAxisMinVal: 0, valAxisMaxVal: 80, valGridLine: { style: 'none' }, showLegend: false,
@@ -229,14 +249,14 @@ async function ic(name, hex) {
   src(s, 'מקור: רשות המסים; פקודת מס הכנסה (קיבוע זכויות); ביזפורטל ו-Funder, 2026');
   s.addNotes('קיבוע זכויות בטופס 161ד מול פקיד השומה. הפטור ב-2026 הוא 57.5%, עד כ-5,422 ₪ בחודש, ועולה ל-67% ב-2028. הטופס המקוצר 161ח סוגר את הסל על 22.5% בלבד, טעות נפוצה. פריסת מענקים נכונה חוסכת אלפי שקלים.');
 
-  s = content('מנוף 3: למצוא ולארגן את החיסכון', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('מנוף 3: כסף שאף אחד לא יודע עליו', 'תכנון פרישה', 'תכנון פרישה', 'קרנות ישנות וחסכונות שנשכחו מחכים ב"הר הכסף"');
   await tiles(s, [['LuSearch', 'הר הכסף', 'כספים אבודים'], ['LuClipboardList', 'מסלקה פנסיונית', 'תמונה מלאה'], ['LuPercent', 'דמי ניהול', 'בדיקה והורדה'], ['LuLayers', 'איחוד קופות', 'פחות פיצול']], 1.75, 3.6);
   card(s, 0.6, 5.6, 12.13, 0.85, C.accent1, 'homework');
   T(s, 'משימה להערב: 10 דקות עם ההורים מול "הר הכסף"', { x: 0.9, y: 5.6, w: 11.5, h: 0.85, fontSize: 22, bold: true, color: C.background1, align: 'center', valign: 'middle' });
   src(s, 'מקור: משרד האוצר, אתר "הר הכסף"; המסלקה הפנסיונית');
   s.addNotes('הר הכסף לאיתור כספים אבודים, המסלקה הפנסיונית לתמונה מלאה, בדיקת דמי ניהול ואיחוד קופות. תרגיל: הערב, שבו עם ההורים 10 דקות מול אתר הר הכסף.');
 
-  s = content('קצבה או סכום חד-פעמי?', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('קצבה או היוון: החלטה לכל החיים', 'תכנון פרישה', 'תכנון פרישה', 'אחרי החתימה אין דרך חזרה');
   const ann = [[6.95, HEX.blue, 'LuShieldCheck', 'קצבה', 'ביטחון לכל החיים'], [0.6, HEX.cyan, 'LuWallet', 'היוון', 'גמישות עכשיו']];
   for (const [x, col, icn, t, d] of ann) { card(s, x, 1.75, 5.78, 3.6, C.background1, t); await bubble(s, x + 2.14, 2.0, 1.5, col, icn); T(s, t, { x, y: 3.65, w: 5.78, h: 0.7, fontSize: 32, bold: true, color: C.accent1, align: 'center' }); T(s, d, { x, y: 4.35, w: 5.78, h: 0.6, fontSize: 20, color: C.accent4, align: 'center' }); }
   await bubble(s, 6.14, 2.85, 1.05, HEX.navy, 'LuScale');
@@ -245,16 +265,16 @@ async function ic(name, hex) {
   src(s, 'מקור: ביזפורטל, קצבה מזערית 2026');
   s.addNotes('קצבה נותנת ביטחון לכל החיים, היוון נותן גמישות. להיוון נדרשת קודם קצבה מזערית של כ-5,306 ₪ ב-2026. גם בחירת מסלול הפנסיה, שארים ותקופת הבטחה, היא החלטה בלתי הפיכה.');
 
-  s = content('גם צד ההוצאות', 'תכנון פרישה', 'תכנון פרישה');
+  s = content('500 ₪ בחודש הם 120,000 ₪ ב-20 שנה', 'תכנון פרישה', 'תכנון פרישה', 'גם צד ההוצאות הוא מנוף');
   await tiles(s, [['LuLayers', 'איחוד הלוואות'], ['LuShieldCheck', 'ביטוחים כפולים'], ['LuWifi', 'תקשורת וחשבונות'], ['LuCalculator', 'תקציב פשוט']], 1.75, 2.9);
   card(s, 0.6, 4.9, 12.13, 1.55, C.accent1, 'savings stat');
-  T(s, [{ text: 'חוסכים 500 ₪ בחודש?', options: { breakLine: true } }, { text: 'זה 120,000 ₪ ב-20 שנה', options: { color: C.accent2 } }], { x: 0.9, y: 4.9, w: 11.5, h: 1.55, fontSize: 32, bold: true, color: C.background1, align: 'center', valign: 'middle' });
+  T(s, [{ text: 'כל הוצאה קבועה שווה בדיקה', options: { breakLine: true } }, { text: 'פעם אחת בודקים, 20 שנה נהנים', options: { color: C.accent2 } }], { x: 0.9, y: 4.9, w: 11.5, h: 1.55, fontSize: 30, bold: true, color: C.background1, align: 'center', valign: 'middle' });
   src(s, 'חישוב: 500 ₪ × 12 חודשים × 20 שנה, ללא תשואה');
   s.addNotes('איחוד הלוואות יקרות, בדיקת ביטוחים כפולים, הוזלת תקשורת וחשבונות, ותקציב חודשי פשוט. כל 500 ₪ שחוסכים בחודש הם 120,000 ₪ על פני 20 שנה.');
 
   s = dark('תכנון פרישה');
   await bubble(s, 5.67, 1.1, 2.0, HEX.cyan, 'LuHouse');
-  T(s, 'גם אחרי כל זה, לרוב נשאר פער…', { x: 0.6, y: 3.4, w: 12.13, h: 0.8, fontSize: 30, color: C.background2, align: 'center' });
+  T(s, 'גם אחרי שמיצינו הכל, נשאר פער?', { x: 0.6, y: 3.4, w: 12.13, h: 0.8, fontSize: 30, color: C.background2, align: 'center' });
   T(s, [{ text: 'אבל לרוב ההורים יש נכס אחד גדול', options: { breakLine: true } }, { text: 'שעוד לא עבד בשבילם', options: { color: C.accent2 } }], { x: 0.6, y: 4.25, w: 12.13, h: 1.7, fontSize: 40, bold: true, color: C.background1, align: 'center', valign: 'top' });
   s.addNotes('גם אחרי שמיצינו את כל הזכויות, לרוב נשאר פער. אבל לרוב ההורים יש נכס אחד גדול, שעוד לא עבד בשבילם.');
 
@@ -271,17 +291,17 @@ async function ic(name, hex) {
   T(s, 'בחשבון הבנק', { x: 0.6, y: 5.15, w: 5.78, h: 0.6, fontSize: 22, color: C.accent4, align: 'center' });
   s.addNotes('רוב העושר של דור ההורים נמצא בדירה. השאלה היא איך להשתמש בו בלי למכור ובלי לעזוב.');
 
-  s = content('מה אפשר לעשות עם הבית?', 'הבית כנכס', 'הבית כנכס');
+  s = content('4 דרכים להפוך את הבית לכסף', 'הבית כנכס', 'הבית כנכס', 'רק אחת מהן משאירה את ההורים בבית');
   await tiles(s, [['LuArrowRightLeft', 'למכור ולעבור', 'לדירה קטנה'], ['LuKeyRound', 'להשכיר', 'ולעבור לגור אחרת'], ['LuHotel', 'דיור מוגן', 'מכירה ומעבר'], ['LuHeart', 'משכנתה הפוכה', 'נשארים בבית', true]], 1.75, 4.6);
   s.addNotes('ארבע אפשרויות עם הבית. לשלוש הראשונות יש מחיר: לעזוב את הבית. רוב ההורים לא רוצים לעזוב, ולכן משכנתה הפוכה.');
 
-  s = content('מהי משכנתה הפוכה?', 'הבית כנכס', 'הבית כנכס');
+  s = content('הבית נשאר שלהם, הכסף אצלם', 'הבית כנכס', 'הבית כנכס', 'משכנתה הפוכה בשלושה משפטים');
   await tiles(s, [['LuHouse', 'הבית נשאר שלהם', 'מגורים לכל החיים'], ['LuBanknote', 'כסף בגמישות', 'חד-פעמי, קצבה או משיכות'], ['LuScale', 'החזר לפי הצורך', 'גם אפס החזר']], 1.75, 3.9);
   const chips = [['LuUserCheck', 'מגיל 55'], ['LuUmbrella', 'פטור מביטוח חיים'], ['LuBuilding2', 'ביטוח מבנה חובה']];
   for (let i = 0; i < 3; i++) { const x = 8.83 - i * 4.1; s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 5.85, w: 3.9, h: 0.62, rectRadius: 0.31, fill: { color: C.background2 }, line: { type: 'none' }, objectName: 'chip ' + (i + 1) }); s.addImage({ data: await ic(chips[i][0], HEX.teal), x: x + 3.3, y: 5.96, w: 0.4, h: 0.4, altText: '' }); T(s, chips[i][1], { x: x + 0.2, y: 5.85, w: 3.0, h: 0.62, fontSize: 17, bold: true, color: C.accent3, valign: 'middle' }); }
   s.addNotes('הלוואה בשעבוד הדירה, מגיל 55. הבית נשאר שלהם, מקבלים כסף בגמישות, ובוחרים איך להחזיר, גם בלי החזר חודשי בכלל.');
 
-  s = content('איך מקבלים ואיך מחזירים', 'הבית כנכס', 'הבית כנכס');
+  s = content('ההורים בוחרים איך לקבל ואיך להחזיר', 'הבית כנכס', 'הבית כנכס', 'שני צירים, תמהיל אחד שמתאים להם');
   const axes = [['מקבלים', 'LuArrowDownToLine', HEX.cyan, ['חד-פעמי', 'קצבה חודשית', 'משיכות לפי צורך']], ['מחזירים', 'LuArrowUpFromLine', HEX.blue, ['אפס החזר', 'ריבית בלבד', 'שפיצר']]];
   for (let r = 0; r < 2; r++) {
     const y = 1.75 + r * 2.4; const [lab, icn, col, opts] = axes[r];
@@ -292,7 +312,7 @@ async function ic(name, hex) {
   }
   s.addNotes('שני צירים: איך מקבלים, חד-פעמי, קצבה או משיכות. ואיך מחזירים: אפס החזר, ריבית בלבד, או שפיצר. משלבים לפי מה שמתאים להורים.');
 
-  s = content('שווי הנכס תמיד מעל החוב', 'הבית כנכס', 'הבית כנכס');
+  s = content('"לא יישאר לנו כלום?" בואו נבדוק', 'הבית כנכס', 'הבית כנכס', 'בכל המסלולים, שווי הנכס נשאר מעל יתרת החוב');
   const labels = ['היום', '+5', '+10', '+15', 'עד 120'], value = [100, 108, 117, 126, 136];
   const debts = [['ללא החזר', 'גדל מהר יותר', [30, 38, 48, 60, 75]], ['ריבית בלבד', 'גדל לאט', [30, 31, 32, 33, 34]], ['שפיצר', 'הולך וקטן', [30, 23, 15, 7, 0]]];
   debts.forEach(([t, cap, d], i) => {
@@ -307,7 +327,7 @@ async function ic(name, hex) {
   src(s, 'המחשה בלבד; ההתפתחות בפועל תלויה בריבית, בהצמדה ובשווי הנכס');
   s.addNotes('זה החשש הראשון של הילדים: לא יישאר לנו כלום? בשפיצר החוב יורד, בריבית בלבד גדל לאט, וללא החזר גדל מהר יותר, בגלל ריבית דריבית. אבל בכל המסלולים שווי הנכס נשאר גבוה מהחוב. להמחשה.');
 
-  s = content('כמה אפשר לקבל?', 'הבית כנכס', 'הבית כנכס');
+  s = content('בגיל 70: כ-900 אלף ₪ מדירה של 3 מ׳', 'הבית כנכס', 'הבית כנכס', 'ככל שהגיל עולה, אחוז המימון עולה');
   s.addChart(pres.charts.BAR, [{ name: 'מימון מרבי', labels: ['55', '60', '70', '80', '90+'], values: [35, 39, 48, 50, 60] }], {
     x: 0.6, y: 1.55, w: 7.6, h: 4.95, barDir: 'col', barGapWidthPct: 45, chartColors: [HEX.blue], ...chartTxt, showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '0"%"', dataLabelColor: HEX.blue,
     valAxisMinVal: 0, valAxisMaxVal: 70, valGridLine: { style: 'none' }, showLegend: false, showCatAxisTitle: true, catAxisTitle: 'גיל הלווה הצעיר', catAxisTitleColor: HEX.muted, catAxisTitleFontSize: 12, catAxisTitleFontFace: '+mn-lt',
@@ -321,7 +341,7 @@ async function ic(name, hex) {
   src(s, 'מקור: השוואת תנאי גופים מלווים בשוק, 2026; הדוגמה להמחשה');
   s.addNotes('ככל שהגיל עולה, שיעור המימון עולה: בגיל 55 בין 15 ל-35 אחוז, ובגיל 90 עד 50–60 אחוז. בדירה של 3 מיליון ₪ בגיל 70, מדובר בכ-900 אלף ₪.');
 
-  s = content('חברות ביטוח מול בנקים', 'הבית כנכס', 'הבית כנכס');
+  s = content('חברת ביטוח או בנק? ההבדל מתחיל בהכנסות', 'הבית כנכס', 'הבית כנכס', 'מי שאין לו הכנסה לבדיקה, צריך מסלול אחר');
   const hd = (t, f, c) => ({ text: t, options: { bold: true, fontSize: 18, color: c, fill: { color: f }, align: 'center', valign: 'middle', rtlMode: true, lang: 'he-IL' } });
   const cell = (t, o = {}) => ({ text: t, options: { fontSize: 16, color: HEX.ink, align: 'right', valign: 'middle', rtlMode: true, lang: 'he-IL', ...o } });
   const topic = t => cell(t, { bold: true, color: HEX.blue, fill: { color: HEX.ice } });
@@ -332,14 +352,14 @@ async function ic(name, hex) {
   src(s, 'מקור: השוואה כללית של מוצרי הגופים המלווים; התנאים משתנים ומתעדכנים');
   s.addNotes('בלי הכנסה לבדיקה, חברת ביטוח. עם פנסיה יציבה, אולי בנק. ההשוואה כללית, והתנאים משתנים בין הגופים.');
 
-  s = content('"ומה איתנו? הירושה?"', 'הבית כנכס', 'הבית כנכס');
+  s = content('"ומה איתנו? הירושה?"', 'הבית כנכס', 'הבית כנכס', 'היורשים בוחרים מה לעשות, ויש להם שנה להחליט');
   await tiles(s, [['LuKeyRound', 'לפרוע', 'ולשמור על הדירה'], ['LuHandCoins', 'למכור', 'ולקבל את היתרה'], ['LuCalendarHeart', 'שנה שלמה', 'להחליט בשקט']], 1.75, 3.5);
   card(s, 0.6, 5.5, 12.13, 0.95, C.accent1, 'quote');
   T(s, 'ירושה היא גם הורים מאושרים עכשיו, בלי שתצטרכו לממן אותם', { x: 0.9, y: 5.5, w: 11.5, h: 0.95, fontSize: 22, bold: true, italic: true, color: C.background1, align: 'center', valign: 'middle' });
   src(s, 'מקור: תנאי הגופים המלווים; יש לבדוק את הסעיפים בחוזה');
   s.addNotes('אחרי 120 היורשים בוחרים: לפרוע ולשמור על הדירה, או למכור ולקבל את היתרה, ויש להם שנה להחליט. ירושה היא לא רק כסף אחרי, היא גם הורים מאושרים עכשיו.');
 
-  s = content('עם או בלי משכנתה הפוכה', 'הבית כנכס', 'הבית כנכס');
+  s = content('אותו בית, שני סיפורי פרישה', 'הבית כנכס', 'הבית כנכס', 'קצבה דלה מול עצמאות');
   card(s, 6.95, 1.7, 5.78, 4.8, C.background1, 'without');
   T(s, 'בלי', { x: 6.95, y: 1.85, w: 5.78, h: 0.7, fontSize: 30, bold: true, color: C.accent4, align: 'center' });
   const wo = [['LuBanknote', 'קצבה דלה'], ['LuUsers', 'נשענים על הילדים'], ['LuHouse', 'בית לא מותאם'], ['LuCreditCard', 'החזרים גבוהים']];
@@ -368,7 +388,7 @@ async function ic(name, hex) {
   ];
   for (let i = 0; i < 4; i++) {
     const [t, icn, bad, fix] = caseData[i];
-    s = content(`מקרה ${i + 1}: ${t}`, 'ההגנות', 'ההגנות');
+    s = content(`מקרה ${i + 1}: ${t}`, 'ההגנות', 'ההגנות', 'מה הייתם עושים במקומם?');
     card(s, 0.6, 1.65, 12.13, 2.25, 'EEF0F4', 'bad');
     await bubble(s, 11.45, 1.95, 1.0, 'FDECE8', 'LuTriangleAlert', HEX.warn);
     T(s, 'לא תרצו שזה יקרה…', { x: 6.5, y: 1.85, w: 4.8, h: 0.55, fontSize: 20, bold: true, color: 'C2410C' });
@@ -384,7 +404,7 @@ async function ic(name, hex) {
 
   // ════ ו. מקרה בוחן ════
   pres.addSection({ title: 'מקרה בוחן' });
-  s = content('משפחת לוי (להמחשה)', 'מקרה בוחן', 'מקרה בוחן');
+  s = content('משפחת לוי: הילדים משלמים 1,500 ₪ בחודש', 'מקרה בוחן', 'מקרה בוחן', 'נשמע מוכר?');
   const lev = [['LuUsers', '70 + 68', 'גילאי ההורים'], ['LuBanknote', '7,200 ₪', 'הכנסה חודשית'], ['LuReceipt', '9,500 ₪', 'הוצאה חודשית'], ['LuHouse', '3 מ׳ ₪', 'שווי הדירה']];
   for (let i = 0; i < 4; i++) { const x = 9.75 - i * 3.05; card(s, x, 1.7, 2.85, 3.2, C.background1, 'fact ' + (i + 1)); await bubble(s, x + 0.85, 1.95, 1.15, i === 2 ? 'FDECE8' : HEX.ice, lev[i][0], i === 2 ? HEX.warn : HEX.blue); big(s, lev[i][1], x, 3.2, 2.85, 0.8, i === 2 ? HEX.warn : HEX.blue, 32); T(s, lev[i][2], { x, y: 4.05, w: 2.85, h: 0.5, fontSize: 16, color: C.accent4, align: 'center' }); }
   card(s, 0.6, 5.2, 12.13, 1.25, 'FDECE8', 'kids pay');
@@ -392,7 +412,7 @@ async function ic(name, hex) {
   src(s, 'מקרה להמחשה; המספרים מעוגלים');
   s.addNotes('הורים בני 70 ו-68. קצבת זקנה וותק כ-3,700 ₪ ופנסיה כ-3,500 ₪, ביחד כ-7,200 ₪. הוצאות כ-9,500 ₪. דירה בשווי 3 מיליון ₪. הילדים מעבירים 1,500 ₪ בחודש.');
 
-  s = content('משפחת לוי: אחרי התכנון', 'מקרה בוחן', 'מקרה בוחן');
+  s = content('אחרי התכנון: הילדים מפסיקים לשלם', 'מקרה בוחן', 'מקרה בוחן', 'שלושה מנופים סגרו את הפער');
   s.addChart(pres.charts.BAR, [{ name: 'קצבאות ופנסיה', labels: ['לפני', 'אחרי'], values: [7200, 7800] }, { name: 'חיסכון בהוצאות', labels: ['לפני', 'אחרי'], values: [0, 500] }, { name: 'משכנתה הפוכה', labels: ['לפני', 'אחרי'], values: [0, 2500] }, { name: 'עזרה מהילדים', labels: ['לפני', 'אחרי'], values: [1500, 0] }], {
     x: 0.6, y: 1.55, w: 7.2, h: 4.95, barDir: 'col', barGrouping: 'stacked', barGapWidthPct: 55, chartColors: [HEX.blue, HEX.teal, HEX.cyan, 'F4A28C'], ...chartTxt, catAxisLabelFontSize: 18,
     showValue: false, valAxisMinVal: 0, valAxisMaxVal: 11500, valGridLine: { color: HEX.line, size: 0.5 }, showLegend: true, legendPos: 'b', legendFontSize: 13, legendFontFace: '+mn-lt', legendColor: HEX.muted,
@@ -405,7 +425,7 @@ async function ic(name, hex) {
   src(s, 'מקרה להמחשה; המספרים מעוגלים');
   s.addNotes('אחרי: כ-600 ₪ ממיצוי זכויות ומס, כ-500 ₪ מצמצום הוצאות, ומשכנתה הפוכה של כ-900 אלף ₪: 300 אלף לשיפוץ ולעזרה לנכד, והשאר משיכות של כ-2,500 ₪ בחודש. הפער נסגר, והילדים כבר לא משלמים. להמחשה בלבד.');
 
-  s = content('איך מדברים עם ההורים על כסף?', 'מקרה בוחן', 'מקרה בוחן');
+  s = content('השיחה שכדאי לקיים השבת', 'מקרה בוחן', 'מקרה בוחן', 'חמש שאלות שפותחות את הנושא בלי ויכוח');
   const qs = [['LuSparkles', 'מה הייתם רוצים לעשות?'], ['LuBanknote', 'כמה נכנס בחודש?'], ['LuSearch', 'איפה החסכונות?'], ['LuScrollText', 'יש ייפוי כוח?'], ['LuMessageCircle', 'ממה אתם הכי חוששים?']];
   for (let i = 0; i < 5; i++) {
     const col = i < 3 ? i : i - 3, row = i < 3 ? 0 : 1; const w = 3.85;
@@ -422,8 +442,8 @@ async function ic(name, hex) {
   s = dark('סיכום');
   s.addShape(pres.shapes.OVAL, { x: 0.9, y: 1.1, w: 3.9, h: 3.9, fill: { color: C.background1 }, line: { color: HEX.cyan, width: 5 }, objectName: 'photo ring' });
   img(s, 'shiral.jpg', 1.02, 1.22, 3.66, 3.66, { round: true, alt: 'שיראל פרגר' });
-  T(s, 'בדיקה משפחתית', { x: 5.4, y: 0.9, w: 7.33, h: 0.9, fontSize: 44, bold: true, color: C.background1 });
-  T(s, 'ללא התחייבות', { x: 5.4, y: 1.75, w: 7.33, h: 0.6, fontSize: 26, color: C.accent2 });
+  T(s, 'קבעו בדיקה משפחתית השבוע', { x: 5.4, y: 0.9, w: 7.33, h: 0.9, fontSize: 38, bold: true, color: C.background1 });
+  T(s, 'שעה אחת, כל המשפחה, תוכנית ברורה. ללא התחייבות', { x: 5.4, y: 1.75, w: 7.33, h: 0.6, fontSize: 22, color: C.accent2 });
   const inc = [['LuBadgeCheck', 'מיפוי זכויות'], ['LuHouse', 'אפשרויות הבית'], ['LuClipboardList', 'תוכנית ברורה']];
   for (let i = 0; i < 3; i++) { const x = 10.55 - i * 2.6; await bubble(s, x + 0.65, 2.7, 1.0, HEX.cyan, inc[i][0]); T(s, inc[i][1], { x, y: 3.8, w: 2.3, h: 0.5, fontSize: 17, bold: true, color: C.background1, align: 'center' }); }
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.2, y: 5.25, w: 3.3, h: 1.45, rectRadius: 0.12, fill: { color: C.background1 }, line: { type: 'none' }, objectName: 'qr card' });
@@ -443,8 +463,8 @@ async function ic(name, hex) {
 
 
   // ════ מפת הדרך הביתה (שקופית אחרונה) ════
-  s = content('מפת הדרך: בודקים עם ההורים', 'קחו הביתה', 'סיכום');
-  const RY1 = 2.9, RY2 = 5.0, band = 0.46, roadC = 'D6E6FB';
+  s = content('מפת הדרך: 8 תחנות לבדוק עם ההורים', 'קחו הביתה', 'סיכום', 'סמנו V על כל תחנה שסגרתם');
+  const RY1 = 3.15, RY2 = 5.0, band = 0.46, roadC = 'D6E6FB';
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY1 - band / 2, w: 11.55, h: band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road top' });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY2 - band / 2, w: 10.9, h: band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road bottom' });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 1.0, y: RY1 - band / 2, w: band, h: RY2 - RY1 + band, rectRadius: 0.23, fill: { color: roadC }, line: { type: 'none' }, objectName: 'road turn' });
