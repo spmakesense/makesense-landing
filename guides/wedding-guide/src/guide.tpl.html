@@ -47,17 +47,17 @@ h1 em{font-style:normal;color:var(--royal)}
 .tl-st.s1 .verb{color:var(--orange)} .tl-st.s2 .verb{color:var(--sky)} .tl-st.s3 .verb{color:#1d9bb2}
 
 /* cards */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:2.8mm;margin-top:3.4mm;flex:1;align-content:start}
-.card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:2.6mm 3.4mm;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(13,33,161,.06)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:3.6mm;margin-top:4.6mm;flex:1;align-content:start}
+.card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:3.4mm 3.8mm;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(13,33,161,.06)}
 .card::after{content:'';position:absolute;top:0;bottom:0;right:0;width:4px;background:var(--gc)}
 .g-sky{--gc:var(--sky);--gl:var(--sky-l)} .g-lime{--gc:var(--lime);--gl:var(--lime-l)} .g-or{--gc:var(--orange);--gl:var(--orange-l)} .g-teal{--gc:var(--teal);--gl:var(--teal-l)}
-.ch{display:flex;align-items:center;gap:2.4mm;margin-bottom:1.2mm}
+.ch{display:flex;align-items:center;gap:2.4mm;margin-bottom:2mm}
 .num{width:7.4mm;height:7.4mm;border-radius:50%;background:var(--royal);color:#fff;font-family:'Rubik';font-weight:900;font-size:10.5pt;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ico{width:7.4mm;height:7.4mm;border-radius:8px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ico svg{width:4.6mm;height:4.6mm;stroke:var(--royal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ch h3{font-size:10.6pt;font-weight:800;line-height:1.15;color:var(--onyx)}
 .card ul{list-style:none;padding-right:.5mm}
-.card li{position:relative;padding-right:3.4mm;margin-bottom:.3mm;font-size:8.3pt;line-height:1.36}
+.card li{position:relative;padding-right:3.4mm;margin-bottom:.9mm;font-size:8.8pt;line-height:1.4}
 .card li::before{content:'';position:absolute;right:0;top:1.9mm;width:1.5mm;height:1.5mm;border-radius:50%;background:var(--gc)}
 .card li b{color:var(--royal)}
 
@@ -67,7 +67,7 @@ h1 em{font-style:normal;color:var(--royal)}
 .card li.do,.card li.dont{padding-right:4.4mm}
 .card li.dont{color:#7f1d1d}
 .card li.do+li.dont{margin-top:.9mm;padding-top:.9mm;border-top:1px dashed var(--g200)}
-.calc{background:var(--gl);border-radius:7px;padding:1.4mm 2.4mm;margin-bottom:1.4mm}
+.calc{background:var(--gl);border-radius:7px;padding:1.6mm 2.6mm;margin-bottom:1.8mm}
 .calc .f{font-size:8pt;font-weight:700;color:var(--royal)}
 .calc .ex{font-size:7.4pt;color:var(--g800);margin-top:.5mm;line-height:1.3}
 .tip{margin-top:1.4mm;background:var(--orange-l);border-radius:6px;padding:1.2mm 2.4mm;font-size:8pt;color:#7a4700}
@@ -177,6 +177,35 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
 .chart .why b{display:block;font-family:'Rubik';font-weight:800;font-size:9.6pt;color:var(--royal);margin-bottom:.8mm}
 .race tr.nat td{background:var(--sky-l)!important;font-weight:700}
 
+
+.sec-t.gap{margin-top:7mm}
+.p3 .race td{padding:2.4mm 2.6mm}
+.lottery{margin-top:5mm;display:flex;gap:4mm;align-items:center;background:var(--sky-l);border:1.5px solid var(--sky);border-radius:14px;padding:4mm 5mm}
+.lt-ico{font-size:22pt;line-height:1}
+.lottery b{font-family:'Rubik';font-weight:800;font-size:11pt;color:var(--royal)}
+.lottery p{font-size:9pt;margin-top:1mm;color:var(--g800)}
+.lottery p b{font-family:'Heebo';font-size:9pt;color:var(--onyx)}
+.lottery .warn{font-size:8pt;color:var(--g600)}
+.p4 .sg{padding:4mm 4mm}.p4 .grid4{gap:4.4mm;margin-top:5mm}.p4 .sg .what{font-size:8.8pt}.p4 .sg .exb{font-size:8.4pt}.p4 .card li{font-size:8.6pt}
+
+
+/* breathing room */
+.p2:not(.p3):not(.p4) .money{margin-top:5mm}
+.p2:not(.p3):not(.p4) .emerg{margin-top:4mm}
+.p2:not(.p3):not(.p4) .grid2{gap:4.4mm;margin-top:5.4mm}
+.p2:not(.p3):not(.p4) .grid2 .card{padding:3.4mm 3.8mm}
+.p2:not(.p3):not(.p4) .grid2 p{font-size:8.7pt;line-height:1.5}
+.p3 .stats{margin-top:5mm}.p3 .sx b{font-size:19pt}
+.p3 table.race{font-size:10pt}.p3 .race td{padding:3.2mm 3mm}.p3 .race th{font-size:8.8pt;padding:2.6mm 3mm}.p3 .race td.m{font-size:11pt}
+.p3 .race-note{font-size:8.8pt;margin-top:2.6mm}
+.p3 .sec-t{font-size:12pt}
+.p3 .chart .col .bar{max-width:28mm}
+.p3 .assume{font-size:8.6pt;padding:4mm}
+.p3 .chart .why{font-size:9pt}
+.p4 .ch h3{font-size:12pt}.p4 .sg .what{font-size:9.4pt;margin-bottom:2.6mm}.p4 .sg .exb{font-size:9pt;padding:2.2mm 3mm;margin-bottom:2.6mm}.p4 .card li{font-size:9.2pt;margin-bottom:1.2mm}.p4 .sg .meta{font-size:8.4pt;margin-top:2.4mm}
+.p4 .sg{padding:5mm 4.6mm}.p4 .grid4{gap:5mm;margin-top:6mm}
+.p4 .lottery{margin-top:7mm;padding:5mm 6mm}
+
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
 .p2{padding-top:8mm}.p2 .eyebrow{margin-bottom:1.6mm}.hdr2 h1{font-size:21pt}
@@ -260,36 +289,36 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
   <div class="grid">
     <div class="card g-sky">
       <div class="ch"><div class="num">1</div><div class="ico">{{I_CARD}}</div><h3>חשבון משותף: כן, אבל נכון</h3></div>
-      <ul><li class="do"><b>משווים עמלות:</b> פעולה, ערוץ ישיר, דמי כרטיס</li><li class="do"><b>מבקשים בכתב</b> פטור מעמלות והטבת פתיחה</li><li class="do">חשבון משותף לבית + סכום אישי קבוע לכל אחד</li><li class="dont">לא בוחרים בנק רק כי "ההורים שם"</li></ul>
+      <ul><li class="do">משווים עמלות ומבקשים פטור בכתב</li><li class="do">חשבון משותף לבית + סכום אישי לכל אחד</li><li class="dont">לא בוחרים בנק רק כי "ההורים שם"</li></ul>
     </div>
     <div class="card g-lime">
       <div class="ch"><div class="num">2</div><div class="ico">{{I_GIFT}}</div><h3>כסף החתונה: לא נותנים לו להתאדות</h3></div>
-      <ul><li class="do">סוגרים קודם ספקים, מינוס והלוואות של האירוע</li><li class="do">את היתרה מעבירים <b>מיד</b> לחיסכון לדירה</li><li class="dont">לא משאירים בעו"ש או בפיקדון בנקאי</li><li class="dont">לא קונים רכב או רהיטים מכסף המתנות לפני שיש תוכנית</li></ul>
+      <ul><li class="do">קודם סוגרים את חובות האירוע</li><li class="do">את היתרה מעבירים <b>מיד</b> לחיסכון לדירה</li><li class="dont">לא משאירים בעו"ש או בפיקדון</li></ul>
     </div>
     <div class="card g-or">
       <div class="ch"><div class="num">3</div><div class="ico">{{I_PIE}}</div><h3>תקציב משק בית: הבסיס של הכול</h3></div>
-      <ul><li class="do">רושמים כל הכנסה וכל הוצאה קבועה</li><li class="do">קובעים סכום חיסכון <b>בתחילת</b> החודש, בהוראת קבע</li><li class="do">20 דקות ביחד פעם בחודש</li><li class="dont">לא חוסכים "ממה שנשאר" בסוף החודש</li><li class="dont">לא מנהלים בראש, רק בטבלה או באפליקציה</li></ul>
+      <ul><li class="do">רושמים כל הכנסה וכל הוצאה קבועה</li><li class="do">חוסכים <b>בתחילת</b> החודש, בהוראת קבע</li><li class="dont">לא חוסכים "ממה שנשאר"</li></ul>
     </div>
     <div class="card g-lime">
       <div class="ch"><div class="num">4</div><div class="ico">{{I_HOME}}</div><h3>חיסכון לדירה: כמה חוסכים?</h3></div>
-      <div class="calc"><div class="f">כמה חוסכים בחודש? <b>יעד הון עצמי</b> (כ-<span dir="ltr">30%</span> ממחיר הדירה) פחות מה שכבר יש, חלקי <b>מספר החודשים</b> עד הקנייה</div><div class="ex">דוגמה: דירה ב-1.6 מיליון ₪, יעד של כ-480 אלף ₪. יש 80 אלף מהחתונה ונשארו 6 שנים: <b>כ-5,500 ₪ בחודש</b></div></div>
-      <ul><li class="do"><b>גמל להשקעה או פוליסת חיסכון</b>, מסלול לפי הזמן עד הדירה</li><li class="dont">לא בפיקדון בנקאי</li><li class="dont"><b>לא מושכים את קרן ההשתלמות לכל מטרה.</b> שומרים אותה לדירה</li></ul>
+      <div class="calc"><div class="f">יעד הון עצמי (כ-<span dir="ltr">30%</span> מהמחיר), פחות מה שיש, חלקי החודשים עד הקנייה</div><div class="ex">דירה ב-1.6 מיליון, 6 שנים: <b>כ-5,500 ₪ בחודש</b></div></div>
+      <ul><li class="do">גמל להשקעה או פוליסת חיסכון</li><li class="dont">לא מושכים את קרן ההשתלמות לכל מטרה</li></ul>
     </div>
     <div class="card g-lime">
       <div class="ch"><div class="num">5</div><div class="ico">{{I_USERS}}</div><h3>חיסכון משותף או נפרד?</h3></div>
-      <ul><li class="do"><b>משותף</b> ליעדים משותפים: דירה, ילדים, חירום</li><li class="do"><b>אישי:</b> פנסיה והשתלמות נשארות על שם כל אחד</li><li class="dont">לא מסתירים חסכונות או חובות אחד מהשני</li><li class="dont">לא מחליטים לבד על כסף משותף</li></ul>
+      <ul><li class="do"><b>משותף:</b> דירה, ילדים וחירום</li><li class="do"><b>אישי:</b> פנסיה והשתלמות</li><li class="dont">לא מסתירים חובות או חסכונות</li></ul>
     </div>
     <div class="card g-teal">
       <div class="ch"><div class="num">6</div><div class="ico">{{I_SHIELD}}</div><h3>ביטוחים: כנראה משלמים פעמיים</h3></div>
-      <ul><li class="do">מרכזים את כל הפוליסות של שניכם ב"הר הביטוח"</li><li class="do">מוותרים על כפילויות ומתאימים כיסוי לחיים המשותפים</li><li class="dont">לא מבטלים פוליסה לפני שבודקים מה היא מכסה</li><li class="dont">לא מצטרפים לביטוח חדש בשיחת מכירה</li></ul>
+      <ul><li class="do">בודקים הכול ב"הר הביטוח"</li><li class="do">מוותרים על כפילויות</li><li class="dont">לא מבטלים לפני שבודקים מה הפוליסה מכסה</li></ul>
     </div>
     <div class="card g-teal">
-      <div class="ch"><div class="num">7</div><div class="ico">{{I_SPROUT}}</div><h3>קרן פנסיה: בוחרים מסלולים במודע</h3></div>
-      <ul><li class="do">בוחרים <b>כיסוי שארים, אובדן כושר עבודה ומסלול השקעה</b></li><li class="do">מעדכנים מוטבים ומשווים דמי ניהול</li><li class="dont">לא משאירים ויתור על כיסוי שארים מתקופת הרווקות</li><li class="dont">לא נשארים בברירת מחדל רק כי "ככה נפתח בעבודה"</li></ul>
+      <div class="ch"><div class="num">7</div><div class="ico">{{I_SPROUT}}</div><h3>קרן פנסיה: בוחרים במודע</h3></div>
+      <ul><li class="do">בוחרים כיסוי שארים, אובדן כושר עבודה ומסלול</li><li class="do">מעדכנים מוטבים</li><li class="dont">לא נשארים בברירת מחדל</li></ul>
     </div>
     <div class="card g-teal">
       <div class="ch"><div class="num">8</div><div class="ico">{{I_UMB}}</div><h3>קרן חירום: הרשת שלכם</h3></div>
-      <ul><li class="do"><b><span dir="ltr">3–6</span> חודשי הוצאות</b> בקרן כספית או מסלול כספי</li><li class="do">ממלאים כל חודש בסכום קבוע עד שמגיעים ליעד</li><li class="dont">לא משקיעים אותה במניות</li><li class="dont">לא נוגעים בה לחופשה, מבצע או מתנה</li></ul>
+      <ul><li class="do"><span dir="ltr">3–6</span> חודשי הוצאות בקרן כספית</li><li class="do">ממלאים בסכום קבוע כל חודש</li><li class="dont">לא משקיעים במניות ולא נוגעים לחופשה</li></ul>
     </div>
   </div>
 
@@ -326,24 +355,20 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
       <div class="row"><span>בשביל מה</span><span>הוצאות שוטפות</span></div>
       <div class="row"><span>נזילות</span><span>מיידית</span></div>
       <div class="row"><span>תשואה</span><span>כמעט אפסית</span></div>
-      <div class="meter">סיכון <i></i><i></i><i></i><i></i></div>
     </div>
     <div class="mcol g-teal">
       <div class="mt"><div class="ico">{{I_UMB}}</div>קרן חירום</div>
       <div class="row"><span>איפה</span><span>קרן כספית / מסלול כספי</span></div>
       <div class="row"><span>נזילות</span><span>תוך <span dir="ltr">1–2</span> ימים</span></div>
       <div class="row"><span>כמה</span><span><span dir="ltr">3–6</span> חודשי הוצאות</span></div>
-      <div class="meter">סיכון <i class="on"></i><i></i><i></i><i></i></div>
     </div>
     <div class="mcol g-lime">
       <div class="mt"><div class="ico">{{I_HOME}}</div>חיסכון לדירה</div>
       <div class="row"><span>איפה</span><span>גמל להשקעה / פוליסה</span></div>
       <div class="row"><span>נזילות</span><span>בכל רגע, בלי קנס</span></div>
       <div class="row"><span>מסלול</span><span>לפי הזמן עד הדירה</span></div>
-      <div class="meter">סיכון <i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
     </div>
   </div>
-  <div class="money-cap"><span>כסף להיום</span><span class="arr"></span><span>כסף ליום סגריר</span><span class="arr"></span><span>כסף לעתיד</span></div>
 
   <div class="emerg">
     <div class="lbl"><b>מה זה חירום?</b><span>רק מה שלא צפוי והכרחי</span></div>
@@ -379,11 +404,6 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
     <div class="card g-teal">
       <div class="ch"><div class="box"></div><h3>סידרנו את הפנסיה: מסלולים ומוטבים</h3></div>
       <p>קובעים כמה כיסוי שארים ואובדן כושר עבודה אתם צריכים כזוג, באיזה מסלול הכסף מנוהל ומי רשום כמוטב בגמל, בהשתלמות ובביטוחים. כל שקל שהולך לביטוח לא נחסך לפנסיה, לכן צריך איזון ולא ברירת מחדל. <b>ויתרתם כרווקים על כיסוי שארים, או שההורים עדיין מוטבים? מתקנים קודם.</b></p>
-      <div class="dials">
-        <div class="dial">{{DIAL1}}שארים</div>
-        <div class="dial">{{DIAL2}}אובדן כושר עבודה</div>
-        <div class="dial">{{DIAL3}}מסלול השקעה</div>
-      </div>
     </div>
     <div class="card g-teal">
       <div class="ch"><div class="box"></div><h3>התחלנו לבנות קרן חירום</h3></div>
@@ -423,7 +443,7 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
   </div>
 
   <div class="stats">
-    <div class="sx"><span>דירה ממוצעת בישראל</span><b>כ-2.33 מיליון ₪</b><small>למ"ס, ממוצע שנתי 2025</small></div>
+    <div class="sx"><span>דירה ממוצעת בישראל (כל הגדלים)</span><b>כ-2.33 מיליון ₪</b><small>למ"ס, ממוצע שנתי 2025</small></div>
     <div class="sx"><span>עלייה של 3% בשנה</span><b><span dir="ltr">+69,900</span> ₪</b><small>בכל שנה שמחכים</small></div>
     <div class="sx hot"><span>כלומר, בכל חודש</span><b><span dir="ltr">+5,830</span> ₪</b><small>רק כדי לא להתרחק</small></div>
   </div>
@@ -431,24 +451,11 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
   <div class="sec-t">דירת <span dir="ltr">2.5–3</span> חדרים: כמה היא מתייקרת? <small>בהנחה של עלייה של 3% בשנה</small></div>
   <table class="race">
     <thead><tr><th>עיר</th><th>מחיר ממוצע 2025</th><th>התייקרות בשנה</th><th class="m">חיסכון חודשי רק כדי להדביק</th><th>אחרי 3 שנים</th></tr></thead>
-    <tbody><tr class=nat><td class="c">כל הארץ</td><td>1.79 מיליון</td><td><span dir="ltr">+53,800</span></td><td class="m"><span dir="ltr">+4,490</span> ₪</td><td><span dir="ltr">+166 אלף</span></td></tr><tr><td class="c">תל אביב</td><td>3.65 מיליון</td><td><span dir="ltr">+109,400</span></td><td class="m"><span dir="ltr">+9,120</span> ₪</td><td><span dir="ltr">+338 אלף</span></td></tr><tr><td class="c">ירושלים</td><td>2.60 מיליון</td><td><span dir="ltr">+77,900</span></td><td class="m"><span dir="ltr">+6,500</span> ₪</td><td><span dir="ltr">+241 אלף</span></td></tr><tr><td class="c">חיפה</td><td>1.25 מיליון</td><td><span dir="ltr">+37,600</span></td><td class="m"><span dir="ltr">+3,130</span> ₪</td><td><span dir="ltr">+116 אלף</span></td></tr><tr><td class="c">באר שבע</td><td>862 אלף</td><td><span dir="ltr">+25,900</span></td><td class="m"><span dir="ltr">+2,160</span> ₪</td><td><span dir="ltr">+80 אלף</span></td></tr><tr><td class="c">עפולה*</td><td>945 אלף</td><td><span dir="ltr">+28,350</span></td><td class="m"><span dir="ltr">+2,360</span> ₪</td><td><span dir="ltr">+88 אלף</span></td></tr></tbody>
+    <tbody><tr><td class="c">תל אביב</td><td>3.65 מיליון</td><td><span dir="ltr">+109,400</span></td><td class="m"><span dir="ltr">+9,120</span> ₪</td><td><span dir="ltr">+338 אלף</span></td></tr><tr><td class="c">ירושלים</td><td>2.60 מיליון</td><td><span dir="ltr">+77,900</span></td><td class="m"><span dir="ltr">+6,500</span> ₪</td><td><span dir="ltr">+241 אלף</span></td></tr><tr><td class="c">חיפה</td><td>1.25 מיליון</td><td><span dir="ltr">+37,600</span></td><td class="m"><span dir="ltr">+3,130</span> ₪</td><td><span dir="ltr">+116 אלף</span></td></tr><tr><td class="c">באר שבע</td><td>862 אלף</td><td><span dir="ltr">+25,900</span></td><td class="m"><span dir="ltr">+2,160</span> ₪</td><td><span dir="ltr">+80 אלף</span></td></tr><tr><td class="c">עפולה*</td><td>945 אלף</td><td><span dir="ltr">+28,350</span></td><td class="m"><span dir="ltr">+2,360</span> ₪</td><td><span dir="ltr">+88 אלף</span></td></tr></tbody>
   </table>
   <div class="race-note"><b>המשמעות:</b> אם אתם חוסכים פחות מהסכום בעמודה הכתומה, המרוץ נגדכם. החיסכון גדל, אבל הדירה מתרחקת מהר יותר. <span>מקור: הלמ"ס, לוח 2.2, ממוצע שנתי 2025 לדירות <span dir="ltr">2.5–3</span> חדרים (דירות חדשות ויד שנייה, ללא עסקאות בסבסוד ממשלתי). * עפולה: לפי נתוני רשות המסים, כי הלמ"ס מפרסמת רק ערים מעל 100 אלף תושבים. המחירים משתנים לפי שכונה ומצב הדירה.</span></div>
 
-  <div class="sec-t">איך מקדימים את המחירים? מינוף</div>
-  <div class="lev">
-    <div class="lv a">
-      <h4>בחיסכון: התשואה רק על הכסף שלכם</h4>
-      <div class="hb"><div class="base" style="width:22%">352 אלף</div><div class="ghost"></div></div>
-      <div class="gr"><div class="chip" style="width:12mm"><span dir="ltr">+11</span></div></div><div class="gcap">תשואה של 3% = <b>כ-11 אלף ₪</b></div>
-    </div>
-    <div class="lv r">
-      <h4>בנדל"ן: עליית הערך על כל הדירה</h4>
-      <div class="hb"><div class="base own" style="width:22%">352 אלף שלכם</div><div class="base loan" style="width:78%">+ 1.25 מיליון מימון = דירה ב-1.6 מיליון ₪</div></div>
-      <div class="gr"><div class="chip" style="width:52mm"><span dir="ltr">+48</span> אלף</div></div><div class="gcap">עליית ערך של 3% = <b>כ-48 אלף ₪</b>, על אותם 352 אלף שלכם</div>
-    </div>
-  </div>
-  <div class="sec-t">מה קורה ל-352 אלף ₪ תוך 3 שנים, ב-3% בשנה? <small>תרחיש להמחשה בלבד</small></div>
+  <div class="sec-t gap">איך מקדימים את המחירים? מה קורה ל-352 אלף ₪ תוך 3 שנים, ב-3% בשנה? <small>תרחיש להמחשה בלבד</small></div>
   <div class="scen">
     <ul class="assume">
       <li>דירה ראשונה מקבלן ב-<b>1.6 מיליון ₪</b>, בתשלום מדורג: <b>20% עכשיו</b>, 80% במסירה בעוד 3 שנים</li>
@@ -457,8 +464,8 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
       <li>בלי הצמדה, לפני עלויות מכירה ומס</li>
     </ul>
     <div class="chart two">
-      <div class="col sv"><div class="pc"><span dir="ltr">+9%</span></div><div class="v">385 אלף</div><div class="bar" style="height:28.2mm"></div><div class="lb">חיסכון בגמל<br>תשואה של 3% בשנה</div></div>
-      <div class="col c3"><div class="x2">פי 3.5 יותר רווח</div><div class="pc"><span dir="ltr">+33%</span></div><div class="v">468 אלף</div><div class="bar" style="height:34.3mm"></div><div class="lb">דירה מקבלן<br>עליית ערך של 3% בשנה</div></div>
+      <div class="col sv"><div class="pc"><span dir="ltr">+9%</span></div><div class="v">385 אלף</div><div class="bar" style="height:40mm"></div><div class="lb">חיסכון בגמל<br>תשואה של 3% בשנה</div></div>
+      <div class="col c3"><div class="x2">פי 3.5 יותר רווח</div><div class="pc"><span dir="ltr">+33%</span></div><div class="v">468 אלף</div><div class="bar" style="height:48.6mm"></div><div class="lb">דירה מקבלן<br>עליית ערך של 3% בשנה</div></div>
       <div class="why"><b>אותם 3%, תוצאה אחרת.</b> בחיסכון ה-3% מחושבים על 352 אלף ומוסיפים כ-33 אלף. בדירה הם מחושבים על 1.6 מיליון: כ-148 אלף עליית ערך, וכ-116 אלף נטו אחרי ההוצאות.</div>
     </div>
   </div>
@@ -501,40 +508,20 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
     </div>
     <div class="card sg g-or">
       <div class="ch"><div class="ico">{{I_HAMMER}}</div><h3>עסקת פליפ</h3></div>
-      <p class="what">קונים דירה מתחת למחיר השוק, משפצים ומוכרים ברווח.</p>
-      <div class="exb"><b>דוגמה:</b> דירה ישנה ב-900 אלף ₪, שיפוץ של 120 אלף, מכירה ב-1.15 מיליון ₪ אחרי כחצי שנה. רווח של כ-<span dir="ltr">80–100</span> אלף אחרי עלויות.</div>
-      <ul><li class="do">תוצאה מהירה, וערך שנוצר מהעבודה שלכם</li><li class="dont">חריגות בשיפוץ, מכירה איטית, ומיסוי אם זה הופך לעיסוק</li></ul>
-      <div class="meta"><span>⏱ <span dir="ltr">6–12</span> חודשים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></em></span></div>
+      <p class="what">קונים דירה מתחת למחיר השוק, משפצים, ומוכרים אחרי שנה וחצי לפחות.</p>
+      <div class="exb"><b>דוגמה:</b> דירה ישנה ב-900 אלף ₪, שיפוץ של 120 אלף, מכירה ב-1.15 מיליון ₪ אחרי שנה וחצי. רווח של כ-<span dir="ltr">80–100</span> אלף, פטור ממס שבח כדירה יחידה.</div>
+      <ul><li class="do">ערך שנוצר מהעבודה שלכם, ופטור ממס שבח אחרי 18 חודשים</li><li class="dont">מכירה לפני שנה וחצי = מס שבח. וחריגות בשיפוץ</li></ul>
+      <div class="meta"><span>⏱ <span dir="ltr">18–24</span> חודשים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></em></span></div>
     </div>
   </div>
 
-  <div class="fit">
-    <div class="lbl"><b>למי זה מתאים?</b><span>לא לכל זוג, וזה בסדר</span></div>
-    <div class="yn y"><div class="mk">✓</div><div>יש הון עצמי מהחתונה ומחיסכון</div></div>
-    <div class="yn y"><div class="mk">✓</div><div>הכנסה יציבה שתאפשר משכנתא</div></div>
-    <div class="yn y"><div class="mk">✓</div><div>גמישים לגור בשכירות עוד כמה שנים</div></div>
-  </div>
-
-  <div class="sec-t">4 צעדים לדירה הראשונה</div>
-  <div class="steps">
-    <div class="st"><div class="n">1</div><b>בודקים יכולת</b><p>אישור עקרוני למשכנתא לפני שמתחייבים, כולל ההחזר החודשי במסירה.</p></div>
-    <div class="st"><div class="n">2</div><b>בוחרים אזור</b><p>ביקוש אמיתי: תחבורה, תעסוקה ותוכניות פיתוח, ולא רק מחיר נמוך.</p></div>
-    <div class="st"><div class="n">3</div><b>בודקים את העסקה</b><p>יזם איתן, ליווי בנקאי וערבות חוק מכר, תנאי תשלום והצמדה.</p></div>
-    <div class="st"><div class="n">4</div><b>מחליטים במסירה</b><p>גרים בדירה, משכירים אותה, או מוכרים ומשדרגים.</p></div>
-  </div>
-
-  <div class="sec-t">מה עושים ומה לא</div>
-  <div class="dd">
-    <div class="card g-lime"><ul>
-      <li class="do">קרן החירום נשארת בצד, גם אחרי הקנייה</li>
-      <li class="do">משווים מחיר: בתשלום מדורג הקבלן לפעמים מעלה את המחיר</li>
-      <li class="do">מתייעצים עם יועץ משכנתאות ועו"ד מקרקעין לפני חתימה</li>
-    </ul></div>
-    <div class="card g-or"><ul>
-      <li class="dont">לא מניחים שהמחירים רק עולים. הם יכולים גם לעמוד או לרדת</li>
-      <li class="dont">לא שוכחים: הכסף לא נזיל עד המסירה, ויכולים להיות עיכובים</li>
-      <li class="dont">לא מתחייבים בלי לדעת מה ההחזר החודשי על 80% במסירה</li>
-    </ul></div>
+  <div class="lottery">
+    <div class="lt-ico">🎟️</div>
+    <div>
+      <b>לפני הכול: דירה בהנחה (מחיר למשתכן)</b>
+      <p>זוגות בלי דירה יכולים להשתתף בהגרלות. <b>מוציאים תעודת זכאות עכשיו</b>, לפני ההגרלות הבאות, כדי לא לפספס.</p>
+      <p class="warn">שימו לב: קניית דירה לפני כן עלולה לפגוע בזכאות. בודקים את הסדר הנכון.</p>
+    </div>
   </div>
 
   <div class="end">
