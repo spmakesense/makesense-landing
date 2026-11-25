@@ -21,7 +21,7 @@ def dial(angle):  # gauge with needle; angle in degrees from left (0) to right (
             f'<line x1="20" y1="18" x2="{x:.1f}" y2="{y:.1f}" stroke="#0D21A1" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="18" r="2.4" fill="#0D21A1"/></svg>')
 I.update(DIAL1=dial(70), DIAL2=dial(120), DIAL3=dial(95))
 I.update(LOGO=b64('logo_c.png'), FACE=b64('face.png'), QR=b64('qr.png'),
-         WA='https://wa.me/972524415395?text=%D7%9E%D7%96%D7%9C%20%D7%98%D7%95%D7%91')
+         WA='https://wa.me/972524415395?text=%D7%A1%D7%93%D7%A8%20%D7%90%D7%97%D7%A8%D7%99%20%D7%94%D7%97%D7%AA%D7%95%D7%A0%D7%94')
 html = open(os.path.join(D, 'guide.tpl.html'), encoding='utf-8').read()
 for k, v in I.items(): html = html.replace('{{' + k + '}}', v)
 assert '{{' not in html, html[html.index('{{'):html.index('{{')+30]
