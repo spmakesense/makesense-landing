@@ -214,6 +214,25 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
 .rules ol li::before{display:none}
 .rules ol li::marker{color:var(--royal);font-weight:800}
 
+
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:5mm}
+.hchart{border:1px solid var(--g200);border-radius:14px;padding:3.6mm 4mm 2.6mm;background:#fff;box-shadow:0 2px 10px rgba(13,33,161,.06)}
+.hchart .ht{font-family:'Rubik';font-weight:900;font-size:12pt;color:var(--onyx)}
+.hchart .hs{font-size:8pt;color:var(--g600);margin-bottom:2.6mm}
+.hr{display:grid;grid-template-columns:27mm 1fr;align-items:center;gap:2mm;margin-bottom:2.4mm}
+.hl{display:flex;align-items:center;gap:1.6mm;font-weight:800;font-size:8.6pt;color:var(--onyx)}
+.hl .ico{width:6.4mm;height:6.4mm;background:var(--gl)}
+.hl .ico svg{width:4mm;height:4mm}
+.tr{display:flex;align-items:center;gap:1.8mm;height:7mm}
+.hbar{height:7mm;border-radius:0 6px 6px 0;background:var(--gc);min-width:3mm;flex-shrink:0}
+.hv{font-family:'Rubik';font-weight:900;font-size:10pt;color:var(--onyx);white-space:nowrap}
+.tm{font-size:7.4pt;font-weight:700;color:var(--g600);white-space:nowrap;background:var(--g50);border-radius:20px;padding:.6mm 2mm}
+.cnote{font-size:7.2pt;color:var(--g600);line-height:1.45;margin-top:2mm}
+.cnote b{color:var(--g800)}
+.p4 .grid4{margin-top:4.4mm;gap:3.4mm}.p4 .sg{padding:3.4mm 4mm}.p4 .sg .what{margin-bottom:1.8mm}
+
+.tm2{display:block;font-size:7pt;font-weight:700;color:var(--g600);margin-top:.2mm}
+.hl div{line-height:1.15}
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
 .p2{padding-top:8mm}.p2 .eyebrow{margin-bottom:1.6mm}.hdr2 h1{font-size:21pt}
@@ -491,37 +510,51 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
     <div>
       <div class="eyebrow">🔑 הדרך המהירה לדירה</div>
       <h1>4 דרכים לגרום לכסף <em>לרוץ איתכם</em></h1>
-      <p class="lead">לכל דרך יש קצב, סיכון והתאמה אחרים. הדוגמאות להמחשה, וכל עסקה נבדקת לגופה.</p>
+      <p class="lead">לכל דרך יש קצב, סיכון והתאמה אחרים. המספרים להמחשה, וכל עסקה נבדקת לגופה.</p>
     </div>
     <img class="logo" src="{{LOGO}}" alt="MAKE SENSE">
   </div>
+
+  <div class="charts">
+    <div class="hchart">
+      <div class="ht">כמה הון עצמי צריך?</div><div class="hs">כולל הוצאות נלוות</div>
+      <div class="hr g-sky"><div class="hl"><div class="ico">{{I_KEY}}</div>נכס מניב</div><div class="tr"><div class="hbar" style="width:32.4%"></div><span class="hv">230 אלף ₪</span></div></div>
+      <div class="hr g-teal"><div class="hl"><div class="ico">{{I_BUILD}}</div>פינוי בינוי</div><div class="tr"><div class="hbar" style="width:42.3%"></div><span class="hv">300 אלף ₪</span></div></div>
+      <div class="hr g-lime"><div class="hl"><div class="ico">{{I_HOME}}</div>דירה על הנייר</div><div class="tr"><div class="hbar" style="width:49.6%"></div><span class="hv">352 אלף ₪</span></div></div>
+      <div class="hr g-or"><div class="hl"><div class="ico">{{I_HAMMER}}</div>עסקת פליפ</div><div class="tr"><div class="hbar" style="width:62.0%"></div><span class="hv">440 אלף ₪</span></div></div>
+    </div>
+    <div class="hchart">
+      <div class="ht">כמה אפשר להרוויח?</div><div class="hs">ותוך כמה זמן</div>
+      <div class="hr g-sky"><div class="hl"><div class="ico">{{I_KEY}}</div><div>נכס מניב<small class="tm2">⏱ 3 שנים</small></div></div><div class="tr"><div class="hbar" style="width:8.0%"></div><span class="hv">80 אלף ₪</span></div></div>
+      <div class="hr g-teal"><div class="hl"><div class="ico">{{I_BUILD}}</div><div>פינוי בינוי<small class="tm2">⏱ <span dir="ltr">5–10</span> שנים</small></div></div><div class="tr"><div class="hbar" style="width:60.0%"></div><span class="hv">600 אלף ₪*</span></div></div>
+      <div class="hr g-lime"><div class="hl"><div class="ico">{{I_HOME}}</div><div>דירה על הנייר<small class="tm2">⏱ 3 שנים</small></div></div><div class="tr"><div class="hbar" style="width:11.6%"></div><span class="hv">116 אלף ₪</span></div></div>
+      <div class="hr g-or"><div class="hl"><div class="ico">{{I_HAMMER}}</div><div>עסקת פליפ<small class="tm2">⏱ שנה וחצי</small></div></div><div class="tr"><div class="hbar" style="width:21.0%"></div><span class="hv">210 אלף ₪</span></div></div>
+    </div>
+  </div>
+  <div class="cnote"><b>ההנחות:</b> נכס מניב: דירת 3 חדרים בבאר שבע ב-860 אלף, עליית ערך של 3% בשנה. פינוי בינוי: דירה ישנה בחיפה ב-1.1 מיליון, ובסוף דירת 4 חדרים חדשה בשווי כ-1.7 מיליון (*אומדן, תלוי בפרויקט). דירה על הנייר: 1.6 מיליון, 3% בשנה, נטו אחרי הוצאות. פליפ: קנייה ב-1 מיליון, שיפוץ של 150 אלף, מכירה ב-1.4 מיליון. בכל העסקאות: 25% הון עצמי, חוץ מדירה על הנייר (20%).</div>
 
   <div class="grid4">
     <div class="card sg g-sky">
       <div class="ch"><div class="ico">{{I_KEY}}</div><h3>נכס מניב</h3></div>
       <p class="what">קונים דירה בעיר עם ביקוש לשכירות, משכירים אותה, והשוכר משלם חלק גדול מהמשכנתא.</p>
-      <div class="exb"><b>דוגמה:</b> דירת 3 חדרים בבאר שבע בכ-830 אלף ₪, הון עצמי כ-210 אלף. שכירות של כ-3,200 ₪ מכסה כ-<span dir="ltr">90%</span> מהחזר של כ-3,550 ₪.</div>
       <ul><li class="do">ההון עצמי עובד, והשוכר מממן את רוב ההחזר</li><li class="dont">חודשים בלי שוכר, תיקונים, ושכירות לא תמיד מכסה הכול</li></ul>
       <div class="meta"><span>⏱ טווח ארוך</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></em></span></div>
     </div>
     <div class="card sg g-teal">
       <div class="ch"><div class="ico">{{I_BUILD}}</div><h3>פינוי בינוי</h3></div>
       <p class="what">קונים דירה ישנה בבניין שנכנס לפרויקט, ומקבלים בסופו דירה חדשה וגדולה יותר.</p>
-      <div class="exb"><b>דוגמה:</b> דירת 3 חדרים ישנה בחיפה בכ-1.1 מיליון ₪, ובסוף הפרויקט דירת 4 חדרים חדשה עם ממ"ד וחניה.</div>
       <ul><li class="do">קפיצת ערך גדולה בלי לשלם על הבנייה</li><li class="dont">פרויקטים נמשכים שנים ויכולים להיתקע. בודקים באיזה שלב הם</li></ul>
       <div class="meta"><span>⏱ <span dir="ltr">5–10</span> שנים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></em></span></div>
     </div>
     <div class="card sg g-lime">
       <div class="ch"><div class="ico">{{I_HOME}}</div><h3>דירה על הנייר</h3></div>
       <p class="what">קונים מקבלן לפני הבנייה, משלמים חלק עכשיו ואת השאר במסירה.</p>
-      <div class="exb"><b>דוגמה:</b> דירה מקבלן ב-1.6 מיליון ₪ בתשלום מדורג: 20% עכשיו (320 אלף), 80% במסירה. עליית הערך עובדת על כל הדירה.</div>
       <ul><li class="do">מינוף גבוה בהון עצמי קטן, ופטור ממס רכישה בדירה ראשונה</li><li class="dont">עיכובים, הצמדה למדד תשומות, ולפעמים מחיר מנופח</li></ul>
       <div class="meta"><span>⏱ <span dir="ltr">2–4</span> שנים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></em></span></div>
     </div>
     <div class="card sg g-or">
       <div class="ch"><div class="ico">{{I_HAMMER}}</div><h3>עסקת פליפ</h3></div>
       <p class="what">קונים דירה מתחת למחיר השוק, משפצים, ומוכרים אחרי שנה וחצי לפחות.</p>
-      <div class="exb"><b>דוגמה:</b> דירה ישנה ב-1 מיליון ₪, מתחת למחיר השוק. שיפוץ של 150 אלף ועוד כ-40 אלף עלויות נלוות. מכירה ב-1.4 מיליון ₪ אחרי שנה וחצי: <b>רווח של כ-210 אלף ₪</b>, פטור ממס שבח כדירה יחידה.</div>
       <ul><li class="do">ערך שנוצר מהעבודה שלכם, ופטור ממס שבח אחרי 18 חודשים</li><li class="dont">מכירה לפני שנה וחצי = מס שבח. וחריגות בשיפוץ</li></ul>
       <div class="meta"><span>⏱ <span dir="ltr">18–24</span> חודשים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></em></span></div>
     </div>
