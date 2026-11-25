@@ -158,7 +158,7 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
 .race td.m{background:var(--orange-l)!important;font-family:'Rubik';font-weight:900;color:#9a5900;font-size:10pt}
 .race-note{font-size:8pt;color:var(--g800);margin-top:1.8mm;line-height:1.4}
 .race-note b{color:var(--royal)}
-.race-note span{display:block;font-size:6.8pt;color:var(--g600);margin-top:.6mm}
+.race-note > span{display:block;font-size:6.8pt;color:var(--g600);margin-top:.6mm}
 .nextp{margin-top:auto;margin-bottom:9mm;text-align:center;font-family:'Rubik';font-weight:800;font-size:10pt;color:var(--royal);background:var(--sky-l);border-radius:30px;padding:2.4mm}
 .grid4{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:3.6mm}
 .sg .what{font-size:8.3pt;color:var(--g800);line-height:1.38;margin-bottom:1.4mm}
@@ -169,6 +169,13 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
 .sg .rk i{display:block;width:4mm;height:1.6mm;border-radius:2px;background:var(--g200)}
 .sg .rk i.on{background:var(--red)}
 .p4 .steps .st p{font-size:7.6pt}.p4 .sg{padding:3.4mm 3.6mm}.p4 .sg .what{margin-bottom:2mm}.p4 .sg .exb{margin-bottom:2mm}.p4 .grid4{gap:3.6mm;margin-top:4.4mm}
+
+
+.chart.two{grid-template-columns:1fr 1fr 1.4fr;gap:6mm}
+.chart.two .col .bar{max-width:24mm}
+.chart .why{align-self:center;font-size:8.4pt;line-height:1.45;color:var(--g800);background:var(--g50);border-radius:10px;padding:3mm}
+.chart .why b{display:block;font-family:'Rubik';font-weight:800;font-size:9.6pt;color:var(--royal);margin-bottom:.8mm}
+.race tr.nat td{background:var(--sky-l)!important;font-weight:700}
 
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
@@ -416,44 +423,43 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
   </div>
 
   <div class="stats">
-    <div class="sx"><span>דירה ממוצעת בישראל</span><b>כ-2.29 מיליון ₪</b><small>למ"ס, רבעון 3 2026</small></div>
-    <div class="sx"><span>עלייה של 3% בשנה</span><b><span dir="ltr">+68,700</span> ₪</b><small>בכל שנה שמחכים</small></div>
-    <div class="sx hot"><span>כלומר, בכל חודש</span><b><span dir="ltr">+5,700</span> ₪</b><small>רק כדי לא להתרחק</small></div>
+    <div class="sx"><span>דירה ממוצעת בישראל</span><b>כ-2.33 מיליון ₪</b><small>למ"ס, ממוצע שנתי 2025</small></div>
+    <div class="sx"><span>עלייה של 3% בשנה</span><b><span dir="ltr">+69,900</span> ₪</b><small>בכל שנה שמחכים</small></div>
+    <div class="sx hot"><span>כלומר, בכל חודש</span><b><span dir="ltr">+5,830</span> ₪</b><small>רק כדי לא להתרחק</small></div>
   </div>
 
-  <div class="sec-t">דירת 3 חדרים יד שנייה: כמה היא מתייקרת? <small>בהנחה של עלייה של 3% בשנה</small></div>
+  <div class="sec-t">דירת <span dir="ltr">2.5–3</span> חדרים: כמה היא מתייקרת? <small>בהנחה של עלייה של 3% בשנה</small></div>
   <table class="race">
-    <thead><tr><th>עיר</th><th>מחיר ממוצע היום</th><th>התייקרות בשנה</th><th class="m">חיסכון חודשי רק כדי להדביק</th><th>אחרי 3 שנים</th></tr></thead>
-    <tbody><tr><td class="c">תל אביב</td><td>3.91 מיליון</td><td><span dir="ltr">+117,300</span></td><td class="m"><span dir="ltr">+9,775</span> ₪</td><td><span dir="ltr">+363 אלף</span></td></tr><tr><td class="c">ירושלים</td><td>כ-2.4 מיליון*</td><td><span dir="ltr">+72,000</span></td><td class="m"><span dir="ltr">+6,000</span> ₪</td><td><span dir="ltr">+223 אלף</span></td></tr><tr><td class="c">חיפה</td><td>1.3 מיליון</td><td><span dir="ltr">+39,000</span></td><td class="m"><span dir="ltr">+3,250</span> ₪</td><td><span dir="ltr">+121 אלף</span></td></tr><tr><td class="c">עפולה</td><td>945 אלף</td><td><span dir="ltr">+28,350</span></td><td class="m"><span dir="ltr">+2,360</span> ₪</td><td><span dir="ltr">+88 אלף</span></td></tr><tr><td class="c">באר שבע</td><td>830 אלף</td><td><span dir="ltr">+24,900</span></td><td class="m"><span dir="ltr">+2,075</span> ₪</td><td><span dir="ltr">+77 אלף</span></td></tr></tbody>
+    <thead><tr><th>עיר</th><th>מחיר ממוצע 2025</th><th>התייקרות בשנה</th><th class="m">חיסכון חודשי רק כדי להדביק</th><th>אחרי 3 שנים</th></tr></thead>
+    <tbody><tr class=nat><td class="c">כל הארץ</td><td>1.79 מיליון</td><td><span dir="ltr">+53,800</span></td><td class="m"><span dir="ltr">+4,490</span> ₪</td><td><span dir="ltr">+166 אלף</span></td></tr><tr><td class="c">תל אביב</td><td>3.65 מיליון</td><td><span dir="ltr">+109,400</span></td><td class="m"><span dir="ltr">+9,120</span> ₪</td><td><span dir="ltr">+338 אלף</span></td></tr><tr><td class="c">ירושלים</td><td>2.60 מיליון</td><td><span dir="ltr">+77,900</span></td><td class="m"><span dir="ltr">+6,500</span> ₪</td><td><span dir="ltr">+241 אלף</span></td></tr><tr><td class="c">חיפה</td><td>1.25 מיליון</td><td><span dir="ltr">+37,600</span></td><td class="m"><span dir="ltr">+3,130</span> ₪</td><td><span dir="ltr">+116 אלף</span></td></tr><tr><td class="c">באר שבע</td><td>862 אלף</td><td><span dir="ltr">+25,900</span></td><td class="m"><span dir="ltr">+2,160</span> ₪</td><td><span dir="ltr">+80 אלף</span></td></tr><tr><td class="c">עפולה*</td><td>945 אלף</td><td><span dir="ltr">+28,350</span></td><td class="m"><span dir="ltr">+2,360</span> ₪</td><td><span dir="ltr">+88 אלף</span></td></tr></tbody>
   </table>
-  <div class="race-note"><b>המשמעות:</b> אם אתם חוסכים פחות מהסכום בעמודה הכתומה, המרוץ נגדכם. החיסכון גדל, אבל הדירה מתרחקת מהר יותר. <span>* ירושלים: הערכה, לא נמצא נתון עדכני לדירות 3 חדרים. מקורות: למ"ס, רשות המסים, מדלן, יד2, ynet (2026). מחירים ממוצעים, משתנים לפי שכונה ומצב הדירה.</span></div>
+  <div class="race-note"><b>המשמעות:</b> אם אתם חוסכים פחות מהסכום בעמודה הכתומה, המרוץ נגדכם. החיסכון גדל, אבל הדירה מתרחקת מהר יותר. <span>מקור: הלמ"ס, לוח 2.2, ממוצע שנתי 2025 לדירות <span dir="ltr">2.5–3</span> חדרים (דירות חדשות ויד שנייה, ללא עסקאות בסבסוד ממשלתי). * עפולה: לפי נתוני רשות המסים, כי הלמ"ס מפרסמת רק ערים מעל 100 אלף תושבים. המחירים משתנים לפי שכונה ומצב הדירה.</span></div>
 
   <div class="sec-t">איך מקדימים את המחירים? מינוף</div>
   <div class="lev">
     <div class="lv a">
       <h4>בחיסכון: התשואה רק על הכסף שלכם</h4>
-      <div class="hb"><div class="base" style="width:22%">264 אלף</div><div class="ghost"></div></div>
-      <div class="gr"><div class="chip" style="width:12mm"><span dir="ltr">+13</span></div></div><div class="gcap">עלייה של 5% בערך = <b>כ-13 אלף ₪</b></div>
+      <div class="hb"><div class="base" style="width:22%">352 אלף</div><div class="ghost"></div></div>
+      <div class="gr"><div class="chip" style="width:12mm"><span dir="ltr">+11</span></div></div><div class="gcap">תשואה של 3% = <b>כ-11 אלף ₪</b></div>
     </div>
     <div class="lv r">
       <h4>בנדל"ן: עליית הערך על כל הדירה</h4>
-      <div class="hb"><div class="base own" style="width:22%">264 אלף שלכם</div><div class="base loan" style="width:78%">+ 936 אלף מימון = דירה ב-1.2 מיליון ₪</div></div>
-      <div class="gr"><div class="chip" style="width:55mm"><span dir="ltr">+60</span> אלף</div></div><div class="gcap">עלייה של 5% בערך = <b>כ-60 אלף ₪</b>, על אותם 264 אלף שלכם</div>
+      <div class="hb"><div class="base own" style="width:22%">352 אלף שלכם</div><div class="base loan" style="width:78%">+ 1.25 מיליון מימון = דירה ב-1.6 מיליון ₪</div></div>
+      <div class="gr"><div class="chip" style="width:52mm"><span dir="ltr">+48</span> אלף</div></div><div class="gcap">עליית ערך של 3% = <b>כ-48 אלף ₪</b>, על אותם 352 אלף שלכם</div>
     </div>
   </div>
-  <div class="sec-t">מה יכול לקרות ל-264 אלף ₪ תוך 3 שנים? <small>תרחיש להמחשה בלבד</small></div>
+  <div class="sec-t">מה קורה ל-352 אלף ₪ תוך 3 שנים, ב-3% בשנה? <small>תרחיש להמחשה בלבד</small></div>
   <div class="scen">
     <ul class="assume">
-      <li>דירה ראשונה ב-<b>1.2 מיליון ₪</b>, בתשלום מדורג: <b>20% עכשיו</b>, 80% במסירה בעוד 3 שנים</li>
-      <li>הון עצמי: 240 אלף + כ-24 אלף הוצאות = <b>264 אלף ₪</b></li>
+      <li>דירה ראשונה מקבלן ב-<b>1.6 מיליון ₪</b>, בתשלום מדורג: <b>20% עכשיו</b>, 80% במסירה בעוד 3 שנים</li>
+      <li>הון עצמי: 320 אלף + כ-32 אלף הוצאות = <b>352 אלף ₪</b></li>
       <li>דירה יחידה: פטור ממס רכישה עד התקרה</li>
       <li>בלי הצמדה, לפני עלויות מכירה ומס</li>
     </ul>
-    <div class="chart">
-      <div class="col sv"><div class="pc"><span dir="ltr">+16%</span></div><div class="v">306 אלף</div><div class="bar" style="height:20.6mm"></div><div class="lb">חיסכון<br>5% בשנה</div></div>
-      <div class="col c1"><div class="pc"><span dir="ltr">+33%</span></div><div class="v">351 אלף</div><div class="bar" style="height:23.6mm"></div><div class="lb">נדל"ן<br>3% בשנה</div></div>
-      <div class="col c2"><div class="pc"><span dir="ltr">+63%</span></div><div class="v">429 אלף</div><div class="bar" style="height:28.9mm"></div><div class="lb">נדל"ן<br>5% בשנה</div></div>
-      <div class="col c3"><div class="x2">כמעט פי 2</div><div class="pc"><span dir="ltr">+93%</span></div><div class="v">510 אלף</div><div class="bar" style="height:34.3mm"></div><div class="lb">נדל"ן<br>7% בשנה</div></div>
+    <div class="chart two">
+      <div class="col sv"><div class="pc"><span dir="ltr">+9%</span></div><div class="v">385 אלף</div><div class="bar" style="height:28.2mm"></div><div class="lb">חיסכון בגמל<br>תשואה של 3% בשנה</div></div>
+      <div class="col c3"><div class="x2">פי 3.5 יותר רווח</div><div class="pc"><span dir="ltr">+33%</span></div><div class="v">468 אלף</div><div class="bar" style="height:34.3mm"></div><div class="lb">דירה מקבלן<br>עליית ערך של 3% בשנה</div></div>
+      <div class="why"><b>אותם 3%, תוצאה אחרת.</b> בחיסכון ה-3% מחושבים על 352 אלף ומוסיפים כ-33 אלף. בדירה הם מחושבים על 1.6 מיליון: כ-148 אלף עליית ערך, וכ-116 אלף נטו אחרי ההוצאות.</div>
     </div>
   </div>
 
@@ -489,7 +495,7 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
     <div class="card sg g-lime">
       <div class="ch"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div><h3>דירה על הנייר</h3></div>
       <p class="what">קונים מקבלן לפני הבנייה, משלמים חלק עכשיו ואת השאר במסירה.</p>
-      <div class="exb"><b>דוגמה:</b> דירה ב-1.2 מיליון ₪ בתשלום מדורג: 20% עכשיו (240 אלף), 80% במסירה. עליית הערך עובדת על כל הדירה.</div>
+      <div class="exb"><b>דוגמה:</b> דירה מקבלן ב-1.6 מיליון ₪ בתשלום מדורג: 20% עכשיו (320 אלף), 80% במסירה. עליית הערך עובדת על כל הדירה.</div>
       <ul><li class="do">מינוף גבוה בהון עצמי קטן, ופטור ממס רכישה בדירה ראשונה</li><li class="dont">עיכובים, הצמדה למדד תשומות, ולפעמים מחיר מנופח</li></ul>
       <div class="meta"><span>⏱ <span dir="ltr">2–4</span> שנים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></em></span></div>
     </div>
