@@ -25,15 +25,15 @@ a{color:inherit;text-decoration:none}
 /* header */
 .hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:8mm;position:relative}
 .hdr .logo{width:38mm;flex-shrink:0;margin-top:1mm}
-.eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(255,157,0,.1);border:1.2px solid rgba(255,157,0,.35);color:#9a5900;font-weight:800;font-size:8pt;padding:3px 11px;border-radius:40px;margin-bottom:3mm}
-h1{font-size:27pt;font-weight:900;line-height:1.08;color:var(--onyx)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(255,157,0,.1);border:1.2px solid rgba(255,157,0,.35);color:#9a5900;font-weight:800;font-size:8pt;padding:3px 11px;border-radius:40px;margin-bottom:2mm}
+h1{font-size:24pt;font-weight:900;line-height:1.08;color:var(--onyx)}
 h1 em{font-style:normal;color:var(--royal)}
-.lead{margin-top:2.6mm;font-size:9.6pt;color:var(--g800);max-width:132mm}
+.lead{margin-top:2mm;font-size:9.2pt;color:var(--g800);max-width:132mm}
 .lead b{color:var(--royal)}
 
 /* timeline */
-.tl{margin-top:5mm;background:var(--g50);border-radius:14px;padding:4mm 5mm 3.6mm;position:relative}
-.tl-title{font-family:'Rubik';font-weight:800;font-size:9.5pt;color:var(--royal);margin-bottom:2.6mm}
+.tl{margin-top:3.4mm;background:var(--g50);border-radius:14px;padding:2.6mm 5mm 2.6mm;position:relative}
+.tl-title{font-family:'Rubik';font-weight:800;font-size:9pt;color:var(--royal);margin-bottom:1.4mm}
 .tl-row{display:grid;grid-template-columns:13mm 1fr 1fr 1fr 13mm;align-items:start;position:relative}
 .tl-row::before{content:'';position:absolute;top:5.2mm;right:6mm;left:6mm;height:2.4px;background:linear-gradient(to left,var(--royal),var(--royal-l));border-radius:2px}
 .tl-end{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
@@ -42,29 +42,39 @@ h1 em{font-style:normal;color:var(--royal)}
 .tl-end span{font-size:7pt;font-weight:700;color:var(--g600);margin-top:1mm;text-align:center;line-height:1.15}
 .tl-st{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
 .tl-st .pill{background:var(--royal);color:#fff;font-weight:800;font-size:7.6pt;padding:2.2mm 3.5mm;border-radius:30px;margin-top:1.6mm;box-shadow:0 0 0 3px var(--g50)}
-.tl-st .verb{font-family:'Rubik';font-weight:900;font-size:11pt;margin-top:1.6mm}
+.tl-st .verb{font-family:'Rubik';font-weight:900;font-size:10.5pt;margin-top:1mm;line-height:1.2}
 .tl-st .what{font-size:7.8pt;color:var(--g800);line-height:1.3}
 .tl-st.s1 .verb{color:var(--orange)} .tl-st.s2 .verb{color:var(--sky)} .tl-st.s3 .verb{color:#1d9bb2}
 
 /* cards */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:3.4mm;margin-top:4.5mm;flex:1;align-content:start}
-.card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:3.2mm 3.6mm 3.2mm 3.6mm;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(13,33,161,.06)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2.8mm;margin-top:3.4mm;flex:1;align-content:start}
+.card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:2.6mm 3.4mm;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(13,33,161,.06)}
 .card::after{content:'';position:absolute;top:0;bottom:0;right:0;width:4px;background:var(--gc)}
 .g-sky{--gc:var(--sky);--gl:var(--sky-l)} .g-lime{--gc:var(--lime);--gl:var(--lime-l)} .g-or{--gc:var(--orange);--gl:var(--orange-l)} .g-teal{--gc:var(--teal);--gl:var(--teal-l)}
-.ch{display:flex;align-items:center;gap:2.4mm;margin-bottom:1.6mm}
+.ch{display:flex;align-items:center;gap:2.4mm;margin-bottom:1.2mm}
 .num{width:7.4mm;height:7.4mm;border-radius:50%;background:var(--royal);color:#fff;font-family:'Rubik';font-weight:900;font-size:10.5pt;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ico{width:7.4mm;height:7.4mm;border-radius:8px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ico svg{width:4.6mm;height:4.6mm;stroke:var(--royal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ch h3{font-size:10.6pt;font-weight:800;line-height:1.15;color:var(--onyx)}
 .card ul{list-style:none;padding-right:.5mm}
-.card li{position:relative;padding-right:3.4mm;margin-bottom:.5mm;font-size:8.6pt}
+.card li{position:relative;padding-right:3.4mm;margin-bottom:.3mm;font-size:8.3pt;line-height:1.36}
 .card li::before{content:'';position:absolute;right:0;top:1.9mm;width:1.5mm;height:1.5mm;border-radius:50%;background:var(--gc)}
 .card li b{color:var(--royal)}
+
+.card li.do::before,.card li.dont::before{width:3mm;height:3mm;top:.75mm;border-radius:50%;color:#fff;font-size:6pt;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:1}
+.card li.do::before{content:'✓';background:var(--green)}
+.card li.dont::before{content:'✕';background:var(--red)}
+.card li.do,.card li.dont{padding-right:4.4mm}
+.card li.dont{color:#7f1d1d}
+.card li.do+li.dont{margin-top:.9mm;padding-top:.9mm;border-top:1px dashed var(--g200)}
+.calc{background:var(--gl);border-radius:7px;padding:1.4mm 2.4mm;margin-bottom:1.4mm}
+.calc .f{font-size:8pt;font-weight:700;color:var(--royal)}
+.calc .ex{font-size:7.4pt;color:var(--g800);margin-top:.5mm;line-height:1.3}
 .tip{margin-top:1.4mm;background:var(--orange-l);border-radius:6px;padding:1.2mm 2.4mm;font-size:8pt;color:#7a4700}
 .tip b{color:#9a5900}
 
 /* footer CTA */
-.cta{margin:4.5mm -12mm 0;background:var(--royal-d);color:#fff;padding:5.5mm 12mm 6mm;display:grid;grid-template-columns:1fr auto auto;gap:6mm;align-items:center;position:relative;overflow:hidden}
+.cta{margin:3.4mm -12mm 0;background:var(--royal-d);color:#fff;padding:4.4mm 12mm 5mm;display:grid;grid-template-columns:1fr auto auto;gap:6mm;align-items:center;position:relative;overflow:hidden}
 .cta::before{content:'';position:absolute;left:-30mm;top:-40mm;width:90mm;height:90mm;border-radius:50%;background:radial-gradient(circle,rgba(255,157,0,.18),transparent 70%)}
 .cta h2{font-size:17pt;font-weight:900;line-height:1.1}
 .cta h2 em{font-style:normal;color:var(--amber)}
@@ -79,6 +89,58 @@ h1 em{font-style:normal;color:var(--royal)}
 .qr img{width:100%;display:block}
 .qr span{display:block;color:var(--royal);font-size:6.6pt;font-weight:800;margin-top:.4mm}
 .next{font-size:7.4pt;opacity:.75;font-weight:700;margin-top:1.8mm}
+
+
+/* PAGE 3 */
+.p3 .hdr2 h1{font-size:22pt}
+.lev{margin-top:3.6mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.lv{border-radius:12px;padding:3mm 3.6mm;border:1px solid var(--g200);background:#fff}
+.lv h4{font-family:'Rubik';font-weight:800;font-size:9.6pt}
+.lv .bars{display:flex;align-items:flex-end;gap:3mm;height:19mm;margin-top:2mm}
+.lv .b{border-radius:6px 6px 0 0;display:flex;align-items:flex-end;justify-content:center;color:#fff;font-weight:800;font-size:7.6pt;padding-bottom:1mm;text-align:center;line-height:1.15}
+.lv .cap{font-size:8pt;color:var(--g800);margin-top:1.6mm}
+.lv .cap b{color:var(--royal)}
+.lv.a .b{background:var(--g400,#9ca3af)} .lv.r .b{background:var(--royal)}
+.lv .b.gain{background:var(--amber);color:var(--onyx)}
+.sec-t{font-family:'Rubik';font-weight:800;font-size:11pt;color:var(--onyx);margin:5.4mm 0 2.2mm;display:flex;align-items:center;gap:2mm}
+.sec-t small{font-family:'Heebo';font-weight:500;font-size:7.6pt;color:var(--g600)}
+.scen{display:grid;grid-template-columns:44mm 1fr;gap:3.4mm;align-items:stretch}
+.assume{background:var(--g50);border-radius:12px;padding:3mm 3.4mm;font-size:7.9pt;line-height:1.4}
+.assume b{color:var(--royal)}
+.assume li{list-style:none;position:relative;padding-right:3mm;margin-bottom:.8mm}
+.assume li::before{content:'';position:absolute;right:0;top:1.7mm;width:1.4mm;height:1.4mm;border-radius:50%;background:var(--royal)}
+.chart{border:1px solid var(--g200);border-radius:12px;padding:3mm 4mm 2.4mm;display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;align-items:end;position:relative}
+.chart .base{position:absolute;right:4mm;left:4mm;bottom:15.4mm;border-top:1.5px dashed var(--red);}
+.chart .base span{position:absolute;left:0;top:-4mm;font-size:6.8pt;color:var(--red);font-weight:700}
+.col{display:flex;flex-direction:column;align-items:center;text-align:center}
+.col .v{font-family:'Rubik';font-weight:900;font-size:10pt;color:var(--onyx)}
+.col .pc{font-size:7.6pt;font-weight:800;margin-bottom:1mm}
+.col .bar{width:100%;max-width:20mm;border-radius:6px 6px 0 0}
+.col .lb{font-size:7.6pt;font-weight:700;margin-top:1.4mm;line-height:1.25;height:8.6mm;color:var(--g800)}
+.col.sv .bar{background:var(--g400,#9ca3af)} .col.sv .pc{color:var(--g600)}
+.col.c1 .bar{background:#8fa0e8} .col.c2 .bar{background:var(--royal-l)} .col.c3 .bar{background:var(--royal)}
+.col.c1 .pc,.col.c2 .pc,.col.c3 .pc{color:var(--royal)}
+.x2{display:inline-block;background:var(--amber);color:var(--onyx);border-radius:20px;padding:.2mm 2mm;font-size:7pt;font-weight:900;margin-bottom:.8mm}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2.6mm}
+.st{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:2.6mm 3mm;position:relative}
+.st .n{width:6.4mm;height:6.4mm;border-radius:50%;background:var(--royal);color:#fff;font-family:'Rubik';font-weight:900;font-size:9pt;display:flex;align-items:center;justify-content:center;margin-bottom:1.2mm}
+.st b{display:block;font-family:'Rubik';font-weight:800;font-size:9pt;margin-bottom:.6mm}
+.st p{font-size:7.8pt;color:var(--g800);line-height:1.36}
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.dd .card ul{margin-top:.4mm}
+
+
+.hb{display:flex;height:10mm;margin-top:2.4mm;border-radius:7px;overflow:hidden;background:var(--g50)}
+.hb .base{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:7.6pt;white-space:nowrap;background:var(--g400,#9ca3af)}
+.lv.r .hb .base.own{background:var(--royal)} .lv.r .hb .base.loan{background:#8fa0e8}
+.gr{display:flex;align-items:center;margin-top:1.6mm}
+.gcap{font-size:8pt;color:var(--g800);margin-top:1.2mm}.gcap b{color:var(--royal)}
+.chip{background:var(--amber);color:var(--onyx);font-weight:900;font-size:7.4pt;border-radius:20px;padding:1mm 0;text-align:center;white-space:nowrap;flex-shrink:0}
+.fit{margin-top:4.6mm;display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:2.6mm;align-items:stretch}
+.fit .lbl{background:var(--royal);color:#fff;border-radius:10px;padding:2mm 4mm;display:flex;flex-direction:column;justify-content:center}
+.fit .lbl b{font-family:'Rubik';font-weight:900;font-size:10pt}
+.fit .lbl span{font-size:7.2pt;opacity:.85}
+.fit .yn{font-size:8pt}
 
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
@@ -163,77 +225,36 @@ h1 em{font-style:normal;color:var(--royal)}
   <div class="grid">
     <div class="card g-sky">
       <div class="ch"><div class="num">1</div><div class="ico">{{I_CARD}}</div><h3>חשבון משותף: כן, אבל נכון</h3></div>
-      <ul>
-        <li>אין "בנק הכי טוב". יש בנק שמתאים לכם</li>
-        <li><b>עמלות:</b> פעולה, ערוץ ישיר, דמי כרטיס, ומסלול עמלות בסיסי או מורחב</li>
-        <li><b>הטבות פתיחה:</b> פטור מעמלות לתקופה, מענק הצטרפות</li>
-      </ul>
-      <div class="tip"><b>הטיפ שלי:</b> חשבון משותף לבית + סכום אישי קבוע לכל אחד</div>
+      <ul><li class="do"><b>משווים עמלות:</b> פעולה, ערוץ ישיר, דמי כרטיס</li><li class="do"><b>מבקשים בכתב</b> פטור מעמלות והטבת פתיחה</li><li class="do">חשבון משותף לבית + סכום אישי קבוע לכל אחד</li><li class="dont">לא בוחרים בנק רק כי "ההורים שם"</li></ul>
     </div>
-
     <div class="card g-lime">
       <div class="ch"><div class="num">2</div><div class="ico">{{I_GIFT}}</div><h3>כסף החתונה: לא נותנים לו להתאדות</h3></div>
-      <ul>
-        <li>קודם סוגרים ספקים, מינוס והלוואות של האירוע</li>
-        <li>את היתרה <b>לא משאירים בבנק</b>: עו"ש ופיקדון כמעט לא מניבים</li>
-        <li>מעבירים מיד לאפיק חיסכון שעובד בשבילכם (סעיף 4)</li>
-      </ul>
+      <ul><li class="do">סוגרים קודם ספקים, מינוס והלוואות של האירוע</li><li class="do">את היתרה מעבירים <b>מיד</b> לחיסכון לדירה</li><li class="dont">לא משאירים בעו"ש או בפיקדון בנקאי</li><li class="dont">לא קונים רכב או רהיטים מכסף המתנות לפני שיש תוכנית</li></ul>
     </div>
-
     <div class="card g-or">
       <div class="ch"><div class="num">3</div><div class="ico">{{I_PIE}}</div><h3>תקציב משק בית: הבסיס של הכול</h3></div>
-      <ul>
-        <li>רושמים את כל ההכנסות וכל ההוצאות הקבועות</li>
-        <li>יעד חיסכון נקבע <b>לפני</b> שמוציאים, לא ממה שנשאר</li>
-        <li>20 דקות ביחד פעם בחודש חוסכות אלפי שקלים בשנה</li>
-      </ul>
+      <ul><li class="do">רושמים כל הכנסה וכל הוצאה קבועה</li><li class="do">קובעים סכום חיסכון <b>בתחילת</b> החודש, בהוראת קבע</li><li class="do">20 דקות ביחד פעם בחודש</li><li class="dont">לא חוסכים "ממה שנשאר" בסוף החודש</li><li class="dont">לא מנהלים בראש, רק בטבלה או באפליקציה</li></ul>
     </div>
-
     <div class="card g-lime">
-      <div class="ch"><div class="num">4</div><div class="ico">{{I_HOME}}</div><h3>חיסכון לדירה: לא בבנק</h3></div>
-      <ul>
-        <li><b>קופת גמל להשקעה:</b> נזילה, דמי ניהול נמוכים</li>
-        <li><b>פוליסת חיסכון:</b> גמישה, החלפת מסלול בלי מס</li>
-        <li><b>קרן השתלמות:</b> נזילה אחרי 6 שנים, פטורה ממס</li>
-        <li>הדירה רחוקה? יותר מניות. קרובה? מסלול סולידי</li>
-      </ul>
+      <div class="ch"><div class="num">4</div><div class="ico">{{I_HOME}}</div><h3>חיסכון לדירה: כמה חוסכים?</h3></div>
+      <div class="calc"><div class="f">כמה חוסכים בחודש? <b>יעד הון עצמי</b> (כ-<span dir="ltr">30%</span> ממחיר הדירה) פחות מה שכבר יש, חלקי <b>מספר החודשים</b> עד הקנייה</div><div class="ex">דוגמה: דירה ב-1.6 מיליון ₪, יעד של כ-480 אלף ₪. יש 80 אלף מהחתונה ונשארו 6 שנים: <b>כ-5,500 ₪ בחודש</b></div></div>
+      <ul><li class="do"><b>גמל להשקעה או פוליסת חיסכון</b>, מסלול לפי הזמן עד הדירה</li><li class="dont">לא בפיקדון בנקאי</li><li class="dont"><b>לא מושכים את קרן ההשתלמות לכל מטרה.</b> שומרים אותה לדירה</li></ul>
     </div>
-
     <div class="card g-lime">
       <div class="ch"><div class="num">5</div><div class="ico">{{I_USERS}}</div><h3>חיסכון משותף או נפרד?</h3></div>
-      <ul>
-        <li><b>משותף</b> ליעדים משותפים: דירה, ילדים, חירום</li>
-        <li><b>אישי:</b> פנסיה והשתלמות נשארות על שם כל אחד</li>
-        <li>העיקר: להחליט ביחד ובמודע</li>
-      </ul>
+      <ul><li class="do"><b>משותף</b> ליעדים משותפים: דירה, ילדים, חירום</li><li class="do"><b>אישי:</b> פנסיה והשתלמות נשארות על שם כל אחד</li><li class="dont">לא מסתירים חסכונות או חובות אחד מהשני</li><li class="dont">לא מחליטים לבד על כסף משותף</li></ul>
     </div>
-
     <div class="card g-teal">
       <div class="ch"><div class="num">6</div><div class="ico">{{I_SHIELD}}</div><h3>ביטוחים: כנראה משלמים פעמיים</h3></div>
-      <ul>
-        <li>פוליסות מההורים, מהעבודה ומה שעשיתם לבד</li>
-        <li>מאתרים כפילויות ומוותרים עליהן</li>
-        <li>מתאימים את הכיסוי לחיים המשותפים</li>
-      </ul>
+      <ul><li class="do">מרכזים את כל הפוליסות של שניכם ב"הר הביטוח"</li><li class="do">מוותרים על כפילויות ומתאימים כיסוי לחיים המשותפים</li><li class="dont">לא מבטלים פוליסה לפני שבודקים מה היא מכסה</li><li class="dont">לא מצטרפים לביטוח חדש בשיחת מכירה</li></ul>
     </div>
-
     <div class="card g-teal">
       <div class="ch"><div class="num">7</div><div class="ico">{{I_SPROUT}}</div><h3>קרן פנסיה: בוחרים מסלולים במודע</h3></div>
-      <ul>
-        <li><b>כיסוי שארים:</b> ויתרתם כרווקים? ודאו שחזר</li>
-        <li><b>אובדן כושר עבודה:</b> כמה מהשכר יישמר</li>
-        <li><b>מסלול השקעה:</b> לפי גיל וסיכון, לא ברירת מחדל</li>
-        <li><b>מוטבים ודמי ניהול:</b> לעדכן ולהשוות</li>
-      </ul>
+      <ul><li class="do">בוחרים <b>כיסוי שארים, אובדן כושר עבודה ומסלול השקעה</b></li><li class="do">מעדכנים מוטבים ומשווים דמי ניהול</li><li class="dont">לא משאירים ויתור על כיסוי שארים מתקופת הרווקות</li><li class="dont">לא נשארים בברירת מחדל רק כי "ככה נפתח בעבודה"</li></ul>
     </div>
-
     <div class="card g-teal">
       <div class="ch"><div class="num">8</div><div class="ico">{{I_UMB}}</div><h3>קרן חירום: הרשת שלכם</h3></div>
-      <ul>
-        <li><b><span dir="ltr">3–6</span> חודשי הוצאות</b> בצד</li>
-        <li>אפיק <b>ללא סיכון ונזיל:</b> קרן כספית או מסלול כספי</li>
-        <li>זמין תוך יום־יומיים, לא תלוי בבורסה</li>
-      </ul>
+      <ul><li class="do"><b><span dir="ltr">3–6</span> חודשי הוצאות</b> בקרן כספית או מסלול כספי</li><li class="do">ממלאים כל חודש בסכום קבוע עד שמגיעים ליעד</li><li class="dont">לא משקיעים אותה במניות</li><li class="dont">לא נוגעים בה לחופשה, מבצע או מתנה</li></ul>
     </div>
   </div>
 
@@ -353,6 +374,94 @@ h1 em{font-style:normal;color:var(--royal)}
     </div>
   </div>
   <div class="disc">המידע במדריך כללי ואינו מהווה ייעוץ השקעות, ייעוץ פנסיוני או תחליף לייעוץ אישי.</div>
+</section>
+
+<!-- ===================== PAGE 3 ===================== -->
+<section class="page p2 p3">
+  <div class="hdr2">
+    <div>
+      <div class="eyebrow">🏗️ בונוס: הדרך המהירה לדירה</div>
+      <h1>איך כסף החתונה יכול <em>לעבוד בשבילכם</em> בנדל"ן</h1>
+      <p class="lead">במקום לחסוך שנים עד שתגיעו לדירה שאתם רוצים, אפשר לקנות היום את הדירה הראשונה שאתם יכולים, לתת לעליית הערך לעבוד על <b>כל</b> מחיר הדירה, ולשדרג בהמשך.</p>
+    </div>
+    <img class="logo" src="{{LOGO}}" alt="MAKE SENSE">
+  </div>
+
+  <div class="lev">
+    <div class="lv a">
+      <h4>בחיסכון: התשואה רק על הכסף שלכם</h4>
+      <div class="hb"><div class="base" style="width:22%">264 אלף</div><div class="ghost"></div></div>
+      <div class="gr"><div class="chip" style="width:12mm"><span dir="ltr">+13</span></div></div><div class="gcap">עלייה של 5% בערך = <b>כ-13 אלף ₪</b></div>
+    </div>
+    <div class="lv r">
+      <h4>בנדל"ן: עליית הערך על כל הדירה</h4>
+      <div class="hb"><div class="base own" style="width:22%">264 אלף שלכם</div><div class="base loan" style="width:78%">+ 936 אלף מימון = דירה ב-1.2 מיליון ₪</div></div>
+      <div class="gr"><div class="chip" style="width:55mm"><span dir="ltr">+60</span> אלף</div></div><div class="gcap">עלייה של 5% בערך = <b>כ-60 אלף ₪</b>, על אותם 264 אלף שלכם</div>
+    </div>
+  </div>
+  <div class="sec-t">מה יכול לקרות ל-264 אלף ₪ תוך 3 שנים? <small>תרחיש להמחשה בלבד</small></div>
+  <div class="scen">
+    <ul class="assume">
+      <li>דירה ראשונה ב-<b>1.2 מיליון ₪</b>, בתשלום מדורג: <b>20% עכשיו</b>, 80% במסירה בעוד 3 שנים</li>
+      <li>הון עצמי: 240 אלף + כ-24 אלף הוצאות = <b>264 אלף ₪</b></li>
+      <li>דירה יחידה: פטור ממס רכישה עד התקרה</li>
+      <li>בלי הצמדה, לפני עלויות מכירה ומס</li>
+    </ul>
+    <div class="chart">
+      <div class="col sv"><div class="pc"><span dir="ltr">+16%</span></div><div class="v">306 אלף</div><div class="bar" style="height:20.6mm"></div><div class="lb">חיסכון<br>5% בשנה</div></div>
+      <div class="col c1"><div class="pc"><span dir="ltr">+33%</span></div><div class="v">351 אלף</div><div class="bar" style="height:23.6mm"></div><div class="lb">נדל"ן<br>3% בשנה</div></div>
+      <div class="col c2"><div class="pc"><span dir="ltr">+63%</span></div><div class="v">429 אלף</div><div class="bar" style="height:28.9mm"></div><div class="lb">נדל"ן<br>5% בשנה</div></div>
+      <div class="col c3"><div class="x2">כמעט פי 2</div><div class="pc"><span dir="ltr">+93%</span></div><div class="v">510 אלף</div><div class="bar" style="height:34.3mm"></div><div class="lb">נדל"ן<br>7% בשנה</div></div>
+    </div>
+  </div>
+
+  <div class="sec-t">4 צעדים לדירה הראשונה</div>
+  <div class="steps">
+    <div class="st"><div class="n">1</div><b>בודקים יכולת</b><p>אישור עקרוני למשכנתא לפני שמתחייבים, כולל ההחזר החודשי במסירה.</p></div>
+    <div class="st"><div class="n">2</div><b>בוחרים אזור</b><p>ביקוש אמיתי: תחבורה, תעסוקה ותוכניות פיתוח, ולא רק מחיר נמוך.</p></div>
+    <div class="st"><div class="n">3</div><b>בודקים את העסקה</b><p>יזם איתן, ליווי בנקאי וערבות חוק מכר, תנאי תשלום והצמדה.</p></div>
+    <div class="st"><div class="n">4</div><b>מחליטים במסירה</b><p>גרים בדירה, משכירים אותה, או מוכרים ומשדרגים.</p></div>
+  </div>
+
+  <div class="fit">
+    <div class="lbl"><b>למי זה מתאים?</b><span>לא לכל זוג, וזה בסדר</span></div>
+    <div class="yn y"><div class="mk">✓</div><div>יש הון עצמי מהחתונה ומחיסכון</div></div>
+    <div class="yn y"><div class="mk">✓</div><div>הכנסה יציבה שתאפשר משכנתא במסירה</div></div>
+    <div class="yn y"><div class="mk">✓</div><div>גמישים לגור בשכירות עוד כמה שנים</div></div>
+  </div>
+
+  <div class="sec-t">מה עושים ומה לא</div>
+  <div class="dd">
+    <div class="card g-lime"><ul>
+      <li class="do">קרן החירום נשארת בצד, גם אחרי הקנייה</li>
+      <li class="do">משווים מחיר: בתשלום מדורג הקבלן לפעמים מעלה את המחיר</li>
+      <li class="do">מתייעצים עם יועץ משכנתאות ועו"ד מקרקעין לפני חתימה</li>
+    </ul></div>
+    <div class="card g-or"><ul>
+      <li class="dont">לא מניחים שהמחירים רק עולים. הם יכולים גם לעמוד או לרדת</li>
+      <li class="dont">לא שוכחים: הכסף לא נזיל עד המסירה, ויכולים להיות עיכובים</li>
+      <li class="dont">לא מתחייבים בלי לדעת מה ההחזר החודשי על 80% במסירה</li>
+    </ul></div>
+  </div>
+
+  <div class="end">
+    <div>
+      <h2>רוצים לדעת אם זה מתאים לכם?</h2>
+      <p>בפגישה נבדוק יכולת משכנתא, הון עצמי ותרחיש מותאם אישית לכם.</p>
+      <a class="btn" href="{{WA}}">{{I_WA}} שלחו "סדר אחרי החתונה" בוואטסאפ ונעזור בהכל</a>
+    </div>
+    <div class="bcard">
+      <img class="face" src="{{FACE}}" alt="שיראל פרגר">
+      <div>
+        <div class="nm">שיראל פרגר</div>
+        <div class="rl">יועץ משכנתאות,<br>נדל"ן ופיננסים</div>
+        <a class="ph" href="tel:+972524415395">052-4415395</a>
+        <div class="brand">MAKE SENSE</div>
+      </div>
+      <a class="qr" href="{{WA}}"><img src="{{QR}}" alt="QR וואטסאפ"><span>סרקו לוואטסאפ</span></a>
+    </div>
+  </div>
+  <div class="disc">התרחיש להמחשה בלבד ומבוסס על הנחות. אין בו הבטחה לתשואה, ועליית מחירים בעבר אינה מבטיחה עלייה בעתיד. המידע כללי ואינו מהווה ייעוץ השקעות.</div>
 </section>
 </body>
 </html>
