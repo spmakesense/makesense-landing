@@ -37,3 +37,14 @@ import re as _re
 mhtml = _re.sub(r'class="hbar" style="width:([\d.]+)%"', lambda m: f'class="hbar" style="width:{float(m.group(1))*0.6:.1f}%"', mhtml)
 open(os.path.join(out, 'wedding-guide-mobile.html'), 'w', encoding='utf-8').write(mhtml)
 print('ok')
+
+# ---- responsive web version (index.html) ----
+wcss = open(os.path.join(D, 'web.css'), encoding='utf-8').read()
+wjs = open(os.path.join(D, 'web.js'), encoding='utf-8').read()
+whtml = mhtml.replace('<meta name="viewport" content="width=340">', '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="theme-color" content="#0D21A1">\n<meta name="description" content="מה לסדר בכסף אחרי החתונה: חשבון משותף, תקציב, חיסכון לדירה, ביטוחים ופנסיה. מדריך חינמי מאת שיראל פרגר, MAKE SENSE.">\n<meta property="og:title" content="המדריך הכלכלי לזוגות טריים | MAKE SENSE">\n<meta property="og:description" content="מה לסדר בכסף ב-90 הימים הראשונים אחרי החתונה, כולל דף עבודה למילוי.">\n<meta property="og:type" content="article">', 1)
+whtml = whtml.replace('@page{size:340px 10000px;margin:0}', '')
+whtml = whtml.replace('</head>', '<style>' + wcss + '</style>\n</head>', 1)
+sticky = '<div class="sticky"><a href="' + I['WA'] + '">' + I['I_WA'].replace('fill="#141414"', '') + ' שלחו "סדר אחרי החתונה" בוואטסאפ</a></div>'
+whtml = whtml.replace('</body>', sticky + '\n<script>' + wjs + '</script>\n</body>', 1)
+whtml = whtml.replace(I['LOGO'], b64('logo_s.png')).replace(I['FACE'], 'data:image/jpeg;base64,' + base64.b64encode(open(os.path.join(D, 'face_s.jpg'), 'rb').read()).decode())
+open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(whtml)
