@@ -31,4 +31,9 @@ assert '{{' not in html, html[html.index('{{'):html.index('{{')+30]
 out = sys.argv[1]
 os.makedirs(out, exist_ok=True)
 open(os.path.join(out, 'wedding-guide.html'), 'w', encoding='utf-8').write(html)
+mcss = open(os.path.join(D, 'mobile.css'), encoding='utf-8').read()
+mhtml = html.replace('</head>', '<meta name="viewport" content="width=340">\n<style>' + mcss + '</style>\n</head>', 1)
+import re as _re
+mhtml = _re.sub(r'class="hbar" style="width:([\d.]+)%"', lambda m: f'class="hbar" style="width:{float(m.group(1))*0.6:.1f}%"', mhtml)
+open(os.path.join(out, 'wedding-guide-mobile.html'), 'w', encoding='utf-8').write(mhtml)
 print('ok')

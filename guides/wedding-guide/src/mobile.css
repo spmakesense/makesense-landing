@@ -1,0 +1,137 @@
+/* ===== Mobile (single-column, scroll) overrides — page width 340px ===== */
+@page{size:340px 10000px;margin:0}
+html,body{width:340px}
+body{font-size:13px;line-height:1.5}
+.page{width:340px;height:auto!important;overflow:visible;padding:26px 16px 30px;page-break-after:auto;break-after:auto;border-bottom:10px solid #eef0f2}
+.page:last-child{border-bottom:0}
+.page::before{display:none}
+
+/* headers */
+.hdr,.hdr2{flex-direction:column-reverse;align-items:flex-start;gap:14px}
+.hdr .logo,.hdr2 .logo{width:120px;margin:0}
+.eyebrow{font-size:12px;padding:4px 12px;margin-bottom:10px}
+h1,.hdr2 h1,.p3 .hdr2 h1,.p2 .hdr2 h1{font-size:28px;line-height:1.15}
+
+.lead,.hdr2 .lead{font-size:15px;max-width:none;margin-top:10px}
+
+/* page 1 timeline: 3 stations, no end caps */
+.tl{margin-top:18px;padding:14px 10px 12px}
+.tl-title{font-size:14px;margin-bottom:8px}
+.tl-row{grid-template-columns:1fr 1fr 1fr}
+.tl-row::before{right:12%;left:12%;top:16px}
+.tl-end{display:none}
+.tl-st .pill{font-size:11px;padding:6px 10px}
+.tl-st .verb{font-size:16px}
+.tl-st .what{font-size:12px;padding:0 2px}
+
+/* all grids -> one column */
+.grid,.grid2,.grid4,.charts,.lev,.money,.emerg,.scen,.stats,.wgrid,.dd,.steps,.fit{grid-template-columns:1fr!important}
+.grid,.grid2,.grid4,.wgrid{gap:12px!important;margin-top:18px!important}
+.card,.grid2 .card,.p4 .sg,.wcard{padding:14px 15px!important}
+.ch{margin-bottom:8px}
+.ch h3,.grid2 .ch h3,.p4 .ch h3{font-size:17px!important;line-height:1.25}
+.num{width:30px;height:30px;font-size:15px}
+.ico{width:30px;height:30px}.ico svg{width:18px;height:18px}
+.box{width:24px;height:24px}
+.card li,.p4 .card li{font-size:15px!important;line-height:1.45;margin-bottom:5px!important;padding-right:22px!important}
+.card li.do::before,.card li.dont::before{width:15px;height:15px;font-size:9px;top:3px}
+.grid2 p,.p2:not(.p3):not(.p4) .grid2 p{font-size:15px!important;line-height:1.55!important}
+.calc,.rules{padding:9px 11px;margin-bottom:9px}
+.calc .f,.rules .rt{font-size:14px}
+.calc .ex,.rules ol li{font-size:14px}
+.tip{font-size:13px}
+
+/* page 1 CTA */
+.cta{margin:22px -16px -30px;padding:24px 16px 26px;grid-template-columns:1fr;gap:16px}
+.cta h2{font-size:24px}
+.cta p{font-size:15px;max-width:none}
+.who{border:0;padding:0;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}
+.who .nm{font-size:20px}.who .rl{font-size:14px}.who .ph{font-size:24px;text-align:right}
+.next{display:none}
+
+/* QR codes are useless on the phone itself */
+.qr{display:none!important}
+
+/* buttons: full-width, thumb-friendly */
+.btn,.end .btn,.wfoot .btn{display:flex;justify-content:center;width:100%;font-size:15px!important;padding:13px 14px!important;white-space:normal!important;text-align:center;margin-top:14px}
+.btn svg{width:20px;height:20px}
+
+/* page 2 */
+.money{gap:10px!important;margin-top:18px!important}
+.mcol{padding:12px 14px}
+.mcol .mt{font-size:16px}
+.mcol .row{font-size:14px;margin-top:6px;padding-top:6px}
+.emerg{gap:8px!important;margin-top:12px!important}
+.emerg .lbl{padding:10px 14px}.emerg .lbl b{font-size:16px}.emerg .lbl span{font-size:13px}
+.yn{font-size:14px;padding:10px 12px}.yn b{font-size:15px}.yn .mk{width:24px;height:24px;font-size:13px}
+
+/* end box + business card */
+.end{grid-template-columns:1fr;padding:18px 16px;margin-top:24px!important;margin-bottom:0!important;gap:16px}
+.end h2{font-size:22px}
+.end p{font-size:15px;max-width:none}
+.bcard{padding:12px 14px;gap:14px}
+.face{width:72px;height:72px}
+.bcard .nm{font-size:19px}.bcard .rl{font-size:13px}.bcard .ph{font-size:20px}.bcard .brand{font-size:11px}
+.disc{position:static;margin-top:16px;font-size:11px;line-height:1.4}
+
+/* page 3 */
+.stats{gap:10px!important;margin-top:18px!important}
+.sx{padding:12px 14px}.sx span{font-size:13px}.sx b,.p3 .sx b{font-size:26px}.sx small{font-size:12px}
+.sec-t,.p3 .sec-t{font-size:17px!important;margin:24px 0 10px!important;flex-wrap:wrap;line-height:1.3}
+.sec-t small{font-size:12px}
+table.race,.p3 table.race{font-size:14px!important}
+.race th:nth-child(3),.race td:nth-child(3),.race th:nth-child(5),.race td:nth-child(5){display:none}
+.race th,.p3 .race th{font-size:12px!important;padding:9px 8px!important}
+.race td,.p3 .race td{padding:11px 8px!important}
+.race td.m,.p3 .race td.m{font-size:16px!important}
+.race-note,.p3 .race-note{font-size:14px!important}
+.race-note > span{font-size:11px}
+.scen{gap:12px!important}
+.chart.two{grid-template-columns:1fr 1fr!important;gap:12px;padding:14px 12px}
+.chart.two .why{grid-column:1/-1;font-size:14px!important}
+.chart .why b{font-size:16px}
+.col .v{font-size:17px}.col .pc{font-size:13px}.col .lb{font-size:12px;height:auto}
+.assume,.p3 .assume{font-size:14px!important;padding:14px!important}
+.nextp{margin:22px 0 0;font-size:15px}
+
+/* page 4 */
+.charts{gap:12px!important;margin-top:18px!important}
+.hchart{padding:14px}
+.hchart .ht{font-size:18px}.hchart .hs{font-size:13px;margin-bottom:12px}
+.hr{grid-template-columns:112px 1fr;margin-bottom:12px}
+.hl{font-size:14px}.tm2{font-size:12px}
+.tr,.hbar{height:26px}
+.hv{font-size:15px}
+.cnote{font-size:12px}
+.sg .what,.p4 .sg .what{font-size:15px!important}
+.sg .meta,.p4 .sg .meta{font-size:13px!important}
+.sg .rk i{width:16px;height:6px}
+.lottery,.p4 .lottery{flex-direction:column;align-items:flex-start;gap:8px;padding:16px!important;margin-top:20px!important}
+.lottery b{font-size:17px}.lottery p,.lottery p b{font-size:15px}.lottery .warn{font-size:13px}
+
+/* page 5 worksheet */
+.wt{font-size:17px;margin-bottom:10px}
+.wt small{font-size:12px;flex-basis:100%}
+.wn{width:26px;height:26px;font-size:13px}
+table.ws{font-size:14px;margin-bottom:10px}
+.ws th{font-size:12px;padding:7px 8px}
+.ws th.n{width:84px}
+.ws td{height:32px;padding:0 8px}
+.ws td small.sub{font-size:11px}
+.bal{font-size:14px;padding:10px 12px}
+.blank{width:80px}
+.frac{font-size:13px;flex-basis:100%;margin:4px 0 0}
+.tlc{margin-top:18px}
+/* life timeline -> vertical */
+.life{height:auto;margin:6px 6px 0 0;direction:rtl;padding-right:18px;border-right:3px solid var(--royal)}
+.life .line,.tk{display:none}
+.ev,.ev.up,.ev:not(.up){position:relative;top:auto!important;left:auto!important;margin:0 0 14px;width:auto;display:flex;align-items:center;gap:10px;text-align:right;font-size:14px}
+.ev::before{content:'';position:absolute;right:-26px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--amber)}
+.ev .ei,.ev:not(.up) .ei{font-size:22px;display:inline}
+.ev b{font-size:16px;display:inline}
+.ev small{font-size:13px;display:inline;margin-right:auto}
+.wfoot{flex-direction:column;align-items:stretch;margin:22px 0 0;padding:16px;font-size:15px}
+.wfoot b{font-size:18px}
+.hr{grid-template-columns:104px 1fr}
+.hv{font-size:14px}
+.ws th.n{width:58px}.ws th{font-size:11.5px}
