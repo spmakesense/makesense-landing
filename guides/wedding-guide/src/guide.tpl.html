@@ -240,22 +240,22 @@ table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;
 .wt small{font-family:'Heebo';font-weight:500;font-size:7.4pt;color:var(--g600)}
 .wn{width:6mm;height:6mm;border-radius:50%;background:var(--royal);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8.6pt;font-weight:900}
 .tlc{margin-top:3.2mm}
-.life{position:relative;height:36mm;margin:0 6mm 0 8mm}
-.life .line{position:absolute;top:15mm;right:0;left:0;height:2.4px;background:linear-gradient(to left,var(--royal),var(--amber));border-radius:2px}
+.life{position:relative;height:33mm;margin:0 8mm 0 6mm;direction:ltr}
+.life .line{position:absolute;top:15mm;left:0;right:0;height:2.4px;background:linear-gradient(to right,var(--royal),var(--amber));border-radius:2px}
 .tk{position:absolute;top:13.9mm;width:0}
-.tk::before{content:'';position:absolute;right:-1.1mm;top:0;width:2.2mm;height:2.2mm;border-radius:50%;background:#fff;border:1.4px solid var(--royal)}
-.tk > span{position:absolute;top:3mm;right:-4mm;width:8mm;text-align:center;font-size:6.6pt;font-weight:700;color:var(--g600)}
-.ev{position:absolute;top:15.6mm;width:22mm;margin-right:-11mm;text-align:center;font-size:7.4pt;line-height:1.2}
+.tk::before{content:'';position:absolute;left:-1.1mm;top:0;width:2.2mm;height:2.2mm;border-radius:50%;background:#fff;border:1.4px solid var(--royal)}
+.tk > span{position:absolute;top:3mm;left:-4mm;width:8mm;text-align:center;font-size:6.6pt;font-weight:700;color:var(--g600)}
+.ev{position:absolute;top:15.6mm;width:22mm;margin-left:-11mm;direction:rtl;text-align:center;font-size:7.4pt;line-height:1.2}
 .ev.up{top:0}
 .ev .ei{font-size:11pt;line-height:1}
 .ev b{display:block;font-size:8pt}
 .ev small{display:block;color:var(--g600);font-size:6.8pt}
-.ev:not(.up){top:23mm}.ev:not(.up) .ei{display:inline}
+.ev:not(.up){top:21.6mm}.ev:not(.up) .ei{display:inline}
 .wgrid{display:grid;grid-template-columns:1fr 1fr;gap:3.2mm;margin-top:3.2mm}
 table.ws{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:1.6mm}
 .ws th{background:var(--g50);color:var(--royal);font-weight:800;font-size:7.6pt;text-align:right;padding:1.1mm 1.6mm}
-.ws th.n{width:17mm}
-.ws td{padding:0 1.6mm;height:5.6mm;border-bottom:1px dashed var(--g200)}
+.ws th.n{width:19mm}
+.ws td{padding:0 1.6mm;height:5.15mm;border-bottom:1px dashed var(--g200)}
 .ws td.lbl{color:var(--g800)}
 .ws tr.tot td{font-weight:800;color:var(--onyx);border-bottom:1.5px solid var(--royal);background:var(--sky-l)}
 .ws tr.ex td{color:var(--g600);font-style:italic;background:var(--g50)}
@@ -265,6 +265,15 @@ table.ws{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:1.6mm}
 .wfoot b{font-family:'Rubik';font-weight:900;font-size:10.5pt}
 .wfoot .ph2{display:block;font-weight:700;color:var(--royal);margin-top:.6mm}
 .wfoot .btn{margin-top:0;font-size:8.8pt;padding:2.2mm 4mm;white-space:nowrap}
+
+
+.frac{display:inline-flex;align-items:center;gap:1.4mm;font-family:'Heebo';font-weight:700;font-size:7.4pt;color:var(--g600);margin-right:1mm}
+.fr{display:inline-flex;flex-direction:column;align-items:center;line-height:1.15}
+.fr .nu{padding:0 1.2mm .3mm;border-bottom:1.3px solid var(--g800);color:var(--g800)}
+.fr .de{padding:.3mm 1.2mm 0;color:var(--g800)}
+.frac .eq{color:var(--royal);font-weight:800}
+.ws td small.sub{display:block;font-size:6.4pt;color:var(--g600);line-height:1.1;margin-top:-.3mm}
+.ws td.lbl{line-height:1.15}
 
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
@@ -436,7 +445,7 @@ table.ws{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:1.6mm}
 
   <div class="emerg">
     <div class="lbl"><b>מה זה חירום?</b><span>רק מה שלא צפוי והכרחי</span></div>
-    <div class="yn y"><div class="mk">✓</div><div><b>כן, חירום</b>אובדן הכנסה · הוצאה רפואית · תיקון דחוף ברכב או בבית</div></div>
+    <div class="yn y"><div class="mk">✓</div><div><b>כן, חירום</b>אובדן הכנסה · חל"ד מוארך · חל"ת · הוצאה רפואית · תיקון דחוף</div></div>
     <div class="yn n"><div class="mk">✕</div><div><b>לא חירום</b>חופשה · מבצע · מתנה · "הזדמנות"</div></div>
   </div>
 
@@ -636,17 +645,17 @@ table.ws{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:1.6mm}
     <div class="wcard">
       <div class="wt"><span class="wn">1</span>תקציב חודשי <small>₪ בחודש</small></div>
       <table class="ws"><thead><tr><th>הכנסות</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">שכר נטו (1)</td><td class="f"></td></tr><tr class=""><td class="lbl">שכר נטו (2)</td><td class="f"></td></tr><tr class=""><td class="lbl">הכנסות נוספות</td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ הכנסות</td><td class="f"></td></tr></tbody></table>
-      <table class="ws"><thead><tr><th>הוצאות</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">דיור (שכירות / משכנתא)</td><td class="f"></td></tr><tr class=""><td class="lbl">חשבונות: חשמל, מים, ארנונה</td><td class="f"></td></tr><tr class=""><td class="lbl">מזון וסופר</td><td class="f"></td></tr><tr class=""><td class="lbl">רכב ותחבורה</td><td class="f"></td></tr><tr class=""><td class="lbl">ביטוחים</td><td class="f"></td></tr><tr class=""><td class="lbl">תקשורת ומנויים</td><td class="f"></td></tr><tr class=""><td class="lbl">פנאי ובילויים</td><td class="f"></td></tr><tr class=""><td class="lbl">חיסכון (בתחילת החודש!)</td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ הוצאות</td><td class="f"></td></tr></tbody></table>
+      <table class="ws"><thead><tr><th>הוצאות</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">דיור (שכירות / משכנתא)</td><td class="f"></td></tr><tr class=""><td class="lbl">חשבונות: חשמל, מים, ארנונה</td><td class="f"></td></tr><tr class=""><td class="lbl">מזון וסופר</td><td class="f"></td></tr><tr class=""><td class="lbl">רכב ותחבורה</td><td class="f"></td></tr><tr class=""><td class="lbl">ביטוחים</td><td class="f"></td></tr><tr class=""><td class="lbl">אפליקציות, מנויים ותקשורת</td><td class="f"></td></tr><tr class=""><td class="lbl">יופי וטיפוח</td><td class="f"></td></tr><tr class=""><td class="lbl">בריאות ופארם</td><td class="f"></td></tr><tr class=""><td class="lbl">שירותים מקצועיים</td><td class="f"></td></tr><tr class=""><td class="lbl">פנאי ובילויים</td><td class="f"></td></tr><tr class=""><td class="lbl">חיסכון (בתחילת החודש!)</td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ הוצאות</td><td class="f"></td></tr></tbody></table>
       <div class="bal">הכנסות פחות הוצאות = <span class="blank"></span> ₪</div>
     </div>
     <div class="wcard">
       <div class="wt"><span class="wn">2</span>נכסים והתחייבויות <small>מה יש לנו, ואיפה</small></div>
-      <table class="ws"><thead><tr><th>נכסים</th><th>איפה</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">עו"ש</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">קרן כספית / קרן חירום</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">גמל להשקעה / פוליסת חיסכון</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">קרן השתלמות</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">פנסיה (צבירה)</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">רכב</td><td class="f"></td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ נכסים</td><td class="f"></td><td class="f"></td></tr></tbody></table>
-      <table class="ws"><thead><tr><th>התחייבויות</th><th>איפה</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">הלוואות</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">מינוס</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">תשלומים בכרטיס אשראי</td><td class="f"></td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ התחייבויות</td><td class="f"></td><td class="f"></td></tr></tbody></table>
+      <table class="ws"><thead><tr><th>נכסים</th><th>איפה</th><th class="n">סכום</th></tr></thead><tbody><tr class=""><td class="lbl">עו"ש</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">קרן כספית / קרן חירום<small class="sub">לאובדן הכנסה, חל"ד מוארך, חל"ת ועוד</small></td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">גמל להשקעה / פוליסת חיסכון</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">קרן השתלמות</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">פנסיה (צבירה)</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">רכב</td><td class="f"></td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ נכסים</td><td class="f"></td><td class="f"></td></tr></tbody></table>
+      <table class="ws"><thead><tr><th>התחייבויות</th><th class="n">החזר חודשי</th><th class="n">יתרה</th></tr></thead><tbody><tr class=""><td class="lbl">הלוואות</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">מינוס</td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">תשלומים בכרטיס אשראי</td><td class="f"></td><td class="f"></td></tr><tr class="tot"><td class="lbl">סה"כ התחייבויות</td><td class="f"></td><td class="f"></td></tr></tbody></table>
       <div class="bal">שווי נקי = נכסים פחות התחייבויות = <span class="blank"></span> ₪</div>
     </div>
     <div class="wcard">
-      <div class="wt"><span class="wn">3</span>מטרות וחיסכון <small>סכום ÷ (שנים × 12) = חיסכון חודשי</small></div>
+      <div class="wt"><span class="wn">3</span>מטרות וחיסכון <span class="frac"><span class="fr"><span class="nu">סכום יעד</span><span class="de">שנים × 12</span></span><span class="eq">= חיסכון חודשי</span></span></div>
       <table class="ws"><thead><tr><th>מטרה</th><th class="n">סכום יעד</th><th class="n">תוך כמה שנים</th><th class="n">חיסכון חודשי</th></tr></thead><tbody><tr class="ex"><td class="lbl">דוגמה: חופשה</td><td>18,000</td><td>1.5</td><td>1,000</td></tr><tr class=""><td class="lbl">קרן חירום</td><td class="f"></td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">דירה</td><td class="f"></td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">רכב</td><td class="f"></td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">טיול</td><td class="f"></td><td class="f"></td><td class="f"></td></tr><tr class=""><td class="lbl">ילד ראשון</td><td class="f"></td><td class="f"></td><td class="f"></td></tr></tbody></table>
     </div>
     <div class="wcard">
@@ -658,7 +667,7 @@ table.ws{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:1.6mm}
   <div class="wcard tlc">
     <div class="wt"><span class="wn">5</span>ציר החיים שלנו <small>כתבו בכל תחנה מתי היא מתוכננת. אפשר להזיז, להוסיף ולמחוק</small></div>
     <div class="life">
-      <div class="line"></div><div class="tk" style="right:0%"><span>היום</span></div><div class="tk" style="right:10%"><span><span dir="ltr">+1</span></span></div><div class="tk" style="right:20%"><span><span dir="ltr">+2</span></span></div><div class="tk" style="right:30%"><span><span dir="ltr">+3</span></span></div><div class="tk" style="right:40%"><span><span dir="ltr">+4</span></span></div><div class="tk" style="right:50%"><span><span dir="ltr">+5</span></span></div><div class="tk" style="right:60%"><span><span dir="ltr">+6</span></span></div><div class="tk" style="right:70%"><span><span dir="ltr">+7</span></span></div><div class="tk" style="right:80%"><span><span dir="ltr">+8</span></span></div><div class="tk" style="right:90%"><span><span dir="ltr">+9</span></span></div><div class="tk" style="right:100%"><span><span dir="ltr">+10</span></span></div><div class="ev" style="right:0%"><div class="ei">💍</div><b>החתונה</b><small>היום</small></div><div class="ev up" style="right:10%"><div class="ei">✈️</div><b>טיול</b><small>שנה: ______</small></div><div class="ev" style="right:20%"><div class="ei">🚗</div><b>רכב</b><small>שנה: ______</small></div><div class="ev up" style="right:35.0%"><div class="ei">🏠</div><b>דירה</b><small>שנה: ______</small></div><div class="ev" style="right:50%"><div class="ei">👶</div><b>ילד ראשון</b><small>שנה: ______</small></div><div class="ev up" style="right:75.0%"><div class="ei">👶</div><b>ילד שני</b><small>שנה: ______</small></div>
+      <div class="line"></div><div class="tk" style="left:0%"><span>היום</span></div><div class="tk" style="left:10%"><span><span dir="ltr">+1</span></span></div><div class="tk" style="left:20%"><span><span dir="ltr">+2</span></span></div><div class="tk" style="left:30%"><span><span dir="ltr">+3</span></span></div><div class="tk" style="left:40%"><span><span dir="ltr">+4</span></span></div><div class="tk" style="left:50%"><span><span dir="ltr">+5</span></span></div><div class="tk" style="left:60%"><span><span dir="ltr">+6</span></span></div><div class="tk" style="left:70%"><span><span dir="ltr">+7</span></span></div><div class="tk" style="left:80%"><span><span dir="ltr">+8</span></span></div><div class="tk" style="left:90%"><span><span dir="ltr">+9</span></span></div><div class="tk" style="left:100%"><span><span dir="ltr">+10</span></span></div><div class="ev" style="left:0%"><div class="ei">💍</div><b>החתונה</b><small>היום</small></div><div class="ev up" style="left:10%"><div class="ei">✈️</div><b>טיול</b><small>שנה: ______</small></div><div class="ev" style="left:20%"><div class="ei">🚗</div><b>רכב</b><small>שנה: ______</small></div><div class="ev up" style="left:35.0%"><div class="ei">🏠</div><b>דירה</b><small>שנה: ______</small></div><div class="ev" style="left:50%"><div class="ei">👶</div><b>ילד ראשון</b><small>שנה: ______</small></div><div class="ev up" style="left:75.0%"><div class="ei">👶</div><b>ילד שני</b><small>שנה: ______</small></div>
     </div>
   </div>
 
