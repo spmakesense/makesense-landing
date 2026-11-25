@@ -142,6 +142,34 @@ h1 em{font-style:normal;color:var(--royal)}
 .fit .lbl span{font-size:7.2pt;opacity:.85}
 .fit .yn{font-size:8pt}
 
+
+.stats{margin-top:3.4mm;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:3mm}
+.sx{background:var(--g50);border-radius:12px;padding:3mm 4mm;display:flex;flex-direction:column}
+.sx span{font-size:8pt;color:var(--g600);font-weight:700}
+.sx b{font-family:'Rubik';font-weight:900;font-size:17pt;color:var(--royal);line-height:1.15;margin-top:.6mm}
+.sx small{font-size:7pt;color:var(--g600)}
+.sx.hot{background:var(--amber)}.sx.hot b{color:var(--onyx)}.sx.hot span,.sx.hot small{color:#5a3500}
+table.race{width:100%;border-collapse:separate;border-spacing:0;font-size:8.8pt;border:1px solid var(--g200);border-radius:12px;overflow:hidden}
+.race th{background:var(--royal);color:#fff;font-weight:800;font-size:8pt;padding:2mm 2.4mm;text-align:right}
+.race th.m{background:var(--amber);color:var(--onyx)}
+.race td{padding:1.8mm 2.4mm;border-top:1px solid var(--g100);font-weight:500}
+.race tr:nth-child(even) td{background:var(--g50)}
+.race td.c{font-family:'Rubik';font-weight:800}
+.race td.m{background:var(--orange-l)!important;font-family:'Rubik';font-weight:900;color:#9a5900;font-size:10pt}
+.race-note{font-size:8pt;color:var(--g800);margin-top:1.8mm;line-height:1.4}
+.race-note b{color:var(--royal)}
+.race-note span{display:block;font-size:6.8pt;color:var(--g600);margin-top:.6mm}
+.nextp{margin-top:auto;margin-bottom:9mm;text-align:center;font-family:'Rubik';font-weight:800;font-size:10pt;color:var(--royal);background:var(--sky-l);border-radius:30px;padding:2.4mm}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:3.6mm}
+.sg .what{font-size:8.3pt;color:var(--g800);line-height:1.38;margin-bottom:1.4mm}
+.sg .exb{background:var(--gl);border-radius:7px;padding:1.4mm 2.4mm;font-size:7.9pt;line-height:1.38;margin-bottom:1.4mm}
+.sg .exb b{color:var(--royal)}
+.sg .meta{display:flex;justify-content:space-between;align-items:center;margin-top:1.4mm;font-size:7.6pt;font-weight:700;color:var(--g600)}
+.sg .rk em{display:inline-flex;gap:.8mm;margin-right:1.4mm;vertical-align:middle}
+.sg .rk i{display:block;width:4mm;height:1.6mm;border-radius:2px;background:var(--g200)}
+.sg .rk i.on{background:var(--red)}
+.p4 .steps .st p{font-size:7.6pt}.p4 .sg{padding:3.4mm 3.6mm}.p4 .sg .what{margin-bottom:2mm}.p4 .sg .exb{margin-bottom:2mm}.p4 .grid4{gap:3.6mm;margin-top:4.4mm}
+
 /* PAGE 2 */
 .hdr2{display:flex;justify-content:space-between;align-items:center;position:relative}
 .p2{padding-top:8mm}.p2 .eyebrow{margin-bottom:1.6mm}.hdr2 h1{font-size:21pt}
@@ -380,13 +408,27 @@ h1 em{font-style:normal;color:var(--royal)}
 <section class="page p2 p3">
   <div class="hdr2">
     <div>
-      <div class="eyebrow">🏗️ בונוס: הדרך המהירה לדירה</div>
-      <h1>איך כסף החתונה יכול <em>לעבוד בשבילכם</em> בנדל"ן</h1>
-      <p class="lead">במקום לחסוך שנים עד שתגיעו לדירה שאתם רוצים, אפשר לקנות היום את הדירה הראשונה שאתם יכולים, לתת לעליית הערך לעבוד על <b>כל</b> מחיר הדירה, ולשדרג בהמשך.</p>
+      <div class="eyebrow">🏁 המרוץ לדירה</div>
+      <h1>המחירים <em>לא מחכים לכם</em></h1>
+      <p class="lead">אם המחירים עולים מהר יותר ממה שאתם חוסכים, הדירה מתרחקת מכם בכל חודש. <b>ככה זה נראה:</b></p>
     </div>
     <img class="logo" src="{{LOGO}}" alt="MAKE SENSE">
   </div>
 
+  <div class="stats">
+    <div class="sx"><span>דירה ממוצעת בישראל</span><b>כ-2.29 מיליון ₪</b><small>למ"ס, רבעון 3 2026</small></div>
+    <div class="sx"><span>עלייה של 3% בשנה</span><b><span dir="ltr">+68,700</span> ₪</b><small>בכל שנה שמחכים</small></div>
+    <div class="sx hot"><span>כלומר, בכל חודש</span><b><span dir="ltr">+5,700</span> ₪</b><small>רק כדי לא להתרחק</small></div>
+  </div>
+
+  <div class="sec-t">דירת 3 חדרים יד שנייה: כמה היא מתייקרת? <small>בהנחה של עלייה של 3% בשנה</small></div>
+  <table class="race">
+    <thead><tr><th>עיר</th><th>מחיר ממוצע היום</th><th>התייקרות בשנה</th><th class="m">חיסכון חודשי רק כדי להדביק</th><th>אחרי 3 שנים</th></tr></thead>
+    <tbody><tr><td class="c">תל אביב</td><td>3.91 מיליון</td><td><span dir="ltr">+117,300</span></td><td class="m"><span dir="ltr">+9,775</span> ₪</td><td><span dir="ltr">+363 אלף</span></td></tr><tr><td class="c">ירושלים</td><td>כ-2.4 מיליון*</td><td><span dir="ltr">+72,000</span></td><td class="m"><span dir="ltr">+6,000</span> ₪</td><td><span dir="ltr">+223 אלף</span></td></tr><tr><td class="c">חיפה</td><td>1.3 מיליון</td><td><span dir="ltr">+39,000</span></td><td class="m"><span dir="ltr">+3,250</span> ₪</td><td><span dir="ltr">+121 אלף</span></td></tr><tr><td class="c">עפולה</td><td>945 אלף</td><td><span dir="ltr">+28,350</span></td><td class="m"><span dir="ltr">+2,360</span> ₪</td><td><span dir="ltr">+88 אלף</span></td></tr><tr><td class="c">באר שבע</td><td>830 אלף</td><td><span dir="ltr">+24,900</span></td><td class="m"><span dir="ltr">+2,075</span> ₪</td><td><span dir="ltr">+77 אלף</span></td></tr></tbody>
+  </table>
+  <div class="race-note"><b>המשמעות:</b> אם אתם חוסכים פחות מהסכום בעמודה הכתומה, המרוץ נגדכם. החיסכון גדל, אבל הדירה מתרחקת מהר יותר. <span>* ירושלים: הערכה, לא נמצא נתון עדכני לדירות 3 חדרים. מקורות: למ"ס, רשות המסים, מדלן, יד2, ynet (2026). מחירים ממוצעים, משתנים לפי שכונה ומצב הדירה.</span></div>
+
+  <div class="sec-t">איך מקדימים את המחירים? מינוף</div>
   <div class="lev">
     <div class="lv a">
       <h4>בחיסכון: התשואה רק על הכסף שלכם</h4>
@@ -415,19 +457,64 @@ h1 em{font-style:normal;color:var(--royal)}
     </div>
   </div>
 
+  <div class="nextp">בעמוד הבא: 4 דרכים לגרום לכסף לרוץ איתכם ←</div>
+  <div class="disc">התרחישים להמחשה בלבד ומבוססים על הנחות. אין בהם הבטחה לתשואה, ועליית מחירים בעבר אינה מבטיחה עלייה בעתיד.</div>
+</section>
+<!-- ===================== PAGE 4 ===================== -->
+<section class="page p2 p4">
+  <div class="hdr2">
+    <div>
+      <div class="eyebrow">🔑 הדרך המהירה לדירה</div>
+      <h1>4 דרכים לגרום לכסף <em>לרוץ איתכם</em></h1>
+      <p class="lead">לכל דרך יש קצב, סיכון והתאמה אחרים. הדוגמאות להמחשה, וכל עסקה נבדקת לגופה.</p>
+    </div>
+    <img class="logo" src="{{LOGO}}" alt="MAKE SENSE">
+  </div>
+
+  <div class="grid4">
+    <div class="card sg g-sky">
+      <div class="ch"><div class="ico">{{I_KEY}}</div><h3>נכס מניב</h3></div>
+      <p class="what">קונים דירה בעיר עם ביקוש לשכירות, משכירים אותה, והשוכר משלם חלק גדול מהמשכנתא.</p>
+      <div class="exb"><b>דוגמה:</b> דירת 3 חדרים בבאר שבע בכ-830 אלף ₪, הון עצמי כ-210 אלף. שכירות של כ-3,200 ₪ מכסה כ-<span dir="ltr">90%</span> מהחזר של כ-3,550 ₪.</div>
+      <ul><li class="do">ההון עצמי עובד, והשוכר מממן את רוב ההחזר</li><li class="dont">חודשים בלי שוכר, תיקונים, ושכירות לא תמיד מכסה הכול</li></ul>
+      <div class="meta"><span>⏱ טווח ארוך</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></em></span></div>
+    </div>
+    <div class="card sg g-teal">
+      <div class="ch"><div class="ico">{{I_BUILD}}</div><h3>פינוי בינוי</h3></div>
+      <p class="what">קונים דירה ישנה בבניין שנכנס לפרויקט, ומקבלים בסופו דירה חדשה וגדולה יותר.</p>
+      <div class="exb"><b>דוגמה:</b> דירת 3 חדרים ישנה בחיפה בכ-1.1 מיליון ₪, ובסוף הפרויקט דירת 4 חדרים חדשה עם ממ"ד וחניה.</div>
+      <ul><li class="do">קפיצת ערך גדולה בלי לשלם על הבנייה</li><li class="dont">פרויקטים נמשכים שנים ויכולים להיתקע. בודקים באיזה שלב הם</li></ul>
+      <div class="meta"><span>⏱ <span dir="ltr">5–10</span> שנים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></em></span></div>
+    </div>
+    <div class="card sg g-lime">
+      <div class="ch"><div class="ico">{{I_HOME}}</div><h3>דירה על הנייר</h3></div>
+      <p class="what">קונים מקבלן לפני הבנייה, משלמים חלק עכשיו ואת השאר במסירה.</p>
+      <div class="exb"><b>דוגמה:</b> דירה ב-1.2 מיליון ₪ בתשלום מדורג: 20% עכשיו (240 אלף), 80% במסירה. עליית הערך עובדת על כל הדירה.</div>
+      <ul><li class="do">מינוף גבוה בהון עצמי קטן, ופטור ממס רכישה בדירה ראשונה</li><li class="dont">עיכובים, הצמדה למדד תשומות, ולפעמים מחיר מנופח</li></ul>
+      <div class="meta"><span>⏱ <span dir="ltr">2–4</span> שנים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></em></span></div>
+    </div>
+    <div class="card sg g-or">
+      <div class="ch"><div class="ico">{{I_HAMMER}}</div><h3>עסקת פליפ</h3></div>
+      <p class="what">קונים דירה מתחת למחיר השוק, משפצים ומוכרים ברווח.</p>
+      <div class="exb"><b>דוגמה:</b> דירה ישנה ב-900 אלף ₪, שיפוץ של 120 אלף, מכירה ב-1.15 מיליון ₪ אחרי כחצי שנה. רווח של כ-<span dir="ltr">80–100</span> אלף אחרי עלויות.</div>
+      <ul><li class="do">תוצאה מהירה, וערך שנוצר מהעבודה שלכם</li><li class="dont">חריגות בשיפוץ, מכירה איטית, ומיסוי אם זה הופך לעיסוק</li></ul>
+      <div class="meta"><span>⏱ <span dir="ltr">6–12</span> חודשים</span><span class="rk">סיכון <em><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></em></span></div>
+    </div>
+  </div>
+
+  <div class="fit">
+    <div class="lbl"><b>למי זה מתאים?</b><span>לא לכל זוג, וזה בסדר</span></div>
+    <div class="yn y"><div class="mk">✓</div><div>יש הון עצמי מהחתונה ומחיסכון</div></div>
+    <div class="yn y"><div class="mk">✓</div><div>הכנסה יציבה שתאפשר משכנתא</div></div>
+    <div class="yn y"><div class="mk">✓</div><div>גמישים לגור בשכירות עוד כמה שנים</div></div>
+  </div>
+
   <div class="sec-t">4 צעדים לדירה הראשונה</div>
   <div class="steps">
     <div class="st"><div class="n">1</div><b>בודקים יכולת</b><p>אישור עקרוני למשכנתא לפני שמתחייבים, כולל ההחזר החודשי במסירה.</p></div>
     <div class="st"><div class="n">2</div><b>בוחרים אזור</b><p>ביקוש אמיתי: תחבורה, תעסוקה ותוכניות פיתוח, ולא רק מחיר נמוך.</p></div>
     <div class="st"><div class="n">3</div><b>בודקים את העסקה</b><p>יזם איתן, ליווי בנקאי וערבות חוק מכר, תנאי תשלום והצמדה.</p></div>
     <div class="st"><div class="n">4</div><b>מחליטים במסירה</b><p>גרים בדירה, משכירים אותה, או מוכרים ומשדרגים.</p></div>
-  </div>
-
-  <div class="fit">
-    <div class="lbl"><b>למי זה מתאים?</b><span>לא לכל זוג, וזה בסדר</span></div>
-    <div class="yn y"><div class="mk">✓</div><div>יש הון עצמי מהחתונה ומחיסכון</div></div>
-    <div class="yn y"><div class="mk">✓</div><div>הכנסה יציבה שתאפשר משכנתא במסירה</div></div>
-    <div class="yn y"><div class="mk">✓</div><div>גמישים לגור בשכירות עוד כמה שנים</div></div>
   </div>
 
   <div class="sec-t">מה עושים ומה לא</div>
@@ -461,7 +548,7 @@ h1 em{font-style:normal;color:var(--royal)}
       <a class="qr" href="{{WA}}"><img src="{{QR}}" alt="QR וואטסאפ"><span>סרקו לוואטסאפ</span></a>
     </div>
   </div>
-  <div class="disc">התרחיש להמחשה בלבד ומבוסס על הנחות. אין בו הבטחה לתשואה, ועליית מחירים בעבר אינה מבטיחה עלייה בעתיד. המידע כללי ואינו מהווה ייעוץ השקעות.</div>
+  <div class="disc">הדוגמאות להמחשה בלבד ומבוססות על הנחות. אין בהן הבטחה לתשואה. המידע כללי ואינו מהווה ייעוץ השקעות או תחליף לייעוץ אישי.</div>
 </section>
 </body>
 </html>

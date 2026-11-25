@@ -9,9 +9,9 @@ const path = require('path');
   // overflow check: card grid must end above the CTA/end block
   const info = await p.evaluate(() => [...document.querySelectorAll('.page')].map(pg => {
     const r = pg.getBoundingClientRect(); let maxB = 0, over = [];
-    pg.querySelectorAll('.card,.cta,.end,.tl,.money,.emerg,.dd,.steps,.scen').forEach(e => { const b = e.getBoundingClientRect().bottom - r.top; if (b > r.height + 0.5) over.push(e.className); maxB = Math.max(maxB, b); });
-    const g = pg.querySelector('.grid,.grid2'), c = pg.querySelector('.cta,.end');
-    return { h: r.height, gridBottom: g ? g.getBoundingClientRect().bottom - r.top : null, ctaTop: c.getBoundingClientRect().top - r.top, ctaBottom: c.getBoundingClientRect().bottom - r.top, over };
+    pg.querySelectorAll('.card,.cta,.end,.tl,.money,.emerg,.dd,.steps,.scen,.race,.nextp,.grid4').forEach(e => { const b = e.getBoundingClientRect().bottom - r.top; if (b > r.height + 0.5) over.push(e.className); maxB = Math.max(maxB, b); });
+    const g = pg.querySelector('.grid,.grid2,.scen,.dd'), c = pg.querySelector('.cta,.end,.nextp');
+    return { h: r.height, gridBottom: g ? g.getBoundingClientRect().bottom - r.top : null, ctaTop: c ? c.getBoundingClientRect().top - r.top : null, ctaBottom: c ? c.getBoundingClientRect().bottom - r.top : null, over };
   }));
   console.log(JSON.stringify(info));
   const pages = await p.$$('.page');
