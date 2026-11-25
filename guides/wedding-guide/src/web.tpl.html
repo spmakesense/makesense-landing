@@ -230,6 +230,11 @@ table.ws{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:15px}
 .foot::before,.foot::after{content:'';position:absolute;bottom:-40px;width:70px;height:100px;background:linear-gradient(160deg,var(--blue),var(--blue-d));transform:skewY(-28deg);opacity:.9}
 .foot::before{right:-40px}.foot::after{left:-40px;background:linear-gradient(160deg,var(--teal),var(--blue))}
 
+table.calc{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+table.calc td{padding:6px 2px;border-bottom:1px dashed var(--line)}
+table.calc td.ltr{text-align:left;font-weight:800;color:var(--navy);white-space:nowrap}
+table.calc tr.ct td{padding-top:12px;font-weight:800;color:var(--teal-d);border-bottom:2px solid var(--sky)}
+table.calc tr.cg td{background:var(--sky);font-family:'Karantina';font-size:28px;color:var(--blue);text-align:center;border:0;border-radius:10px;padding:8px}
 /* sticky bar */
 .sticky{position:fixed;bottom:0;left:0;right:0;z-index:40;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(242,245,250,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 -4px 18px rgba(11,42,107,.10)}
 .sticky .btn{max-width:492px;margin:0 auto}

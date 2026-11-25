@@ -78,10 +78,14 @@ def task_html(i, t):
 
 # ---------------- deals ----------------
 DEALS = [
- dict(k='k1', c='d1', ic='key', n='נכס מניב', eq=230, pr=80, time='3 שנים', risk=2,
-      what='קונים דירה בעיר עם ביקוש לשכירות, משכירים אותה, והשוכר משלם חלק גדול מהמשכנתא.',
-      ex='דירת 3 חדרים בבאר שבע בכ-860 אלף ₪. הון עצמי של כ-230 אלף כולל הוצאות. שכירות של כ-3,200 ₪ מכסה את רוב ההחזר, ועליית ערך של 3% בשנה מוסיפה כ-80 אלף תוך 3 שנים.',
-      y=['ההון העצמי עובד, והשוכר מממן את רוב ההחזר'], no=['חודשים בלי שוכר, תיקונים, ושכירות לא תמיד מכסה הכול']),
+ dict(k='k1', c='d1', ic='key', n='נכס מניב', eq=223, pr=168, time='3 שנים', risk=2,
+      what='קונים מתחת למחיר השוק בעיר פריפריה עם פוטנציאל צמיחה ותשואה גבוהה, ומשכירים. השכירות מכסה כמעט את כל ההחזר.',
+      ex='דירה בעיר פריפריה בשווי 900 אלף ₪, שנקנית ב-825 אלף: 75 אלף מתחת למחיר השוק. השכירות, לפי תשואה של 4.5%, מכסה כמעט את כל החזר המשכנתא.',
+      calc=[('שווי שוק', '900,000 ₪'), ('מחיר קנייה (75 אלף מתחת לשוק)', '825,000 ₪'), ('הון עצמי: 25% + כ-2% הוצאות', 'כ-223,000 ₪'),
+            ('משכנתא 75%', '618,750 ₪'), ('שכירות בחודש (תשואה של 4.5%)', '+3,094 ₪'), ('החזר משכנתא בחודש (520 ₪ לכל 100 אלף, 30 שנה)', '−3,218 ₪'),
+            ('תזרים חודשי', '−124 ₪'), ('t', 'אחרי 3 שנים'), ('קנייה מתחת לשוק', '+75,000 ₪'), ('עליית ערך: 3% בשנה', '+83,500 ₪'),
+            ('קרן שנפרעה מהמשכנתא', '+30,200 ₪'), ('הוצאות קנייה', '−16,500 ₪'), ('תזרים מצטבר (36 חודשים)', '−4,500 ₪'), ('tot', 'רווח: כ-168,000 ₪')],
+      y=['קנייה מתחת לשוק, והשוכר מממן כמעט את כל ההחזר'], no=['חודשים בלי שוכר ותיקונים מורידים את התשואה']),
  dict(k='k2', c='d2', ic='building', n='פינוי בינוי', eq=300, pr=600, time=LTR('5–10') + ' שנים', risk=3, star=True,
       what='קונים דירה ישנה בבניין שנכנס לפרויקט, ומקבלים בסופו דירה חדשה וגדולה יותר.',
       ex='דירת 3 חדרים ישנה בחיפה בכ-1.1 מיליון ₪, הון עצמי של כ-300 אלף. בסוף הפרויקט: דירת 4 חדרים חדשה עם ממ"ד וחניה, בשווי מוערך של כ-1.7 מיליון. הרווח הוא אומדן ותלוי בפרויקט.',
@@ -104,12 +108,20 @@ EQ = ''.join(hrow(d, d['eq'], 440) for d in DEALS)
 PR = ''.join(hrow(d, d['pr'], 600, True) for d in DEALS)
 TILES = ''.join(f'<button class="deal {d["k"]}" data-open="deal{i}"><span class="ic">{I(d["ic"])}</span><b>{d["n"]}</b>'
                 f'<small>הון עצמי {d["eq"]} אלף · {d["time"]}</small><span class="more">לכל הפרטים {I("arrow")}</span></button>' for i, d in enumerate(DEALS))
+def calc_html(d):
+    if not d.get('calc'): return ''
+    out = '<table class="calc">'
+    for a, b in d['calc']:
+        if a == 't': out += f'<tr class="ct"><td colspan="2">{b}</td></tr>'
+        elif a == 'tot': out += f'<tr class="cg"><td colspan="2">{b}</td></tr>'
+        else: out += f'<tr><td>{a}</td><td class="ltr">{b}</td></tr>'
+    return out + '</table><p class="small" style="margin-top:6px">לפני מס, תחזוקה וחודשים בלי שוכר. להמחשה בלבד.</p>'
 def risk(n): return '<span class="risk">' + ''.join(f'<i class="{"on" if k < n else ""}"></i>' for k in range(4)) + '</span>'
 TPLS = ''.join(f'''<template id="tpl-deal{i}">
   <div class="ph-head"><div class="grab"></div><button class="x" data-close aria-label="סגירה">{I("x")}</button><h3 id="sheetTitle">{d["n"]}</h3><p>{d["what"]}</p></div>
   <div class="pbody">
     <div class="kpis"><div class="kpi"><span>הון עצמי</span><b>{d["eq"]} אלף</b></div><div class="kpi"><span>רווח משוער</span><b>{d["pr"]} אלף{"*" if d.get("star") else ""}</b></div><div class="kpi"><span>זמן</span><b style="font-size:24px">{d["time"]}</b></div></div>
-    <div class="card" style="margin-bottom:12px"><b style="color:var(--blue-d)">דוגמה</b><p style="font-size:15.5px;margin-top:4px">{d["ex"]}</p></div>
+    <div class="card" style="margin-bottom:12px"><b style="color:var(--blue-d)">דוגמה</b><p style="font-size:15.5px;margin-top:4px">{d["ex"]}</p>{calc_html(d)}</div>
     <ul class="dd">{''.join(f'<li class="y">{x}</li>' for x in d["y"])}{''.join(f'<li class="n">{x}</li>' for x in d["no"])}</ul>
     <p class="small">רמת סיכון: {risk(d["risk"])}</p>
     <div class="stack"><button class="btn" data-open="contact">{I("arrow")}לבדוק אם זה מתאים לנו</button></div>
