@@ -235,6 +235,32 @@ table.calc td{padding:6px 2px;border-bottom:1px dashed var(--line)}
 table.calc td.ltr{text-align:left;font-weight:800;color:var(--navy);white-space:nowrap}
 table.calc tr.ct td{padding-top:12px;font-weight:800;color:var(--teal-d);border-bottom:2px solid var(--sky)}
 table.calc tr.cg td{background:var(--sky);font-family:'Karantina';font-size:28px;color:var(--blue);text-align:center;border:0;border-radius:10px;padding:8px}
+
+/* life timeline */
+.lt{position:relative;margin:2px 0 16px}
+.lt::before{content:'';position:absolute;top:14px;bottom:14px;right:76px;width:3px;border-radius:3px;background:linear-gradient(180deg,var(--blue),var(--teal))}
+.lr{display:grid;grid-template-columns:64px 28px 1fr;align-items:center;margin-bottom:10px;position:relative}
+.lr:last-child{margin-bottom:0}
+.ly{font-family:'Karantina';font-size:28px;line-height:1;color:var(--blue);text-align:center}
+.ly small{display:block;font-family:'Heebo';font-size:11px;font-weight:700;color:var(--gray)}
+.ld{display:flex;justify-content:center;position:relative;z-index:1}
+.ld span{width:30px;height:30px;border-radius:50%;background:#fff;border:2.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 0 4px var(--card)}
+.lc{margin-right:12px;background:var(--sky2);border-radius:12px;padding:9px 12px;min-height:46px;display:flex;flex-direction:column;justify-content:center}
+.lc b{color:var(--navy);font-size:16px;line-height:1.2}
+.lc small{color:var(--gray);font-size:13px;line-height:1.3}
+.lt.mine .ld span{border-color:var(--blue);color:var(--blue);font-weight:800;font-size:13px;font-family:'Heebo'}
+.lt.mine .lc{background:#fff;border:1.5px dashed #C9D5E6;padding:2px 12px}
+.ly input{width:100%;border:0;border-bottom:1.5px dashed var(--x);background:transparent;text-align:center;font-family:'Karantina';font-size:26px;color:var(--blue);outline:none;padding:2px 0}
+.ly input::placeholder{font-family:'Heebo';font-size:13px;color:var(--x)}
+.lc input{width:100%;border:0;background:transparent;font-family:'Heebo';font-size:16px;color:var(--navy);outline:none;padding:10px 0}
+.lc input:focus,.ly input:focus{background:var(--sky2)}
+.tl-head{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px}
+.tl-head .tlab{margin:0}
+.tl-head small{font-size:12px;color:var(--gray)}
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 /* sticky bar */
 .sticky{position:fixed;bottom:0;left:0;right:0;z-index:40;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(242,245,250,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 -4px 18px rgba(11,42,107,.10)}
 .sticky .btn{max-width:492px;margin:0 auto}
@@ -380,7 +406,7 @@ table.calc tr.cg td{background:var(--sky);font-family:'Karantina';font-size:28px
   <div class="hchart"><h3>כמה אפשר להרוויח?</h3><p class="hs">ותוך כמה זמן</p>{{PR_ROWS}}<p class="small">* אומדן, תלוי בפרויקט. כל המספרים להמחשה.</p></div>
   <div class="deals">{{DEAL_TILES}}</div>
   <div class="lottery"><div class="ic">{{I:ticket}}</div><div><b>לפני הכול: דירה בהנחה (מחיר למשתכן)</b><p>זוגות בלי דירה יכולים להשתתף בהגרלות. <b style="display:inline;font-size:15px">מוציאים תעודת זכאות עכשיו</b>, לפני ההגרלות הבאות.</p><p class="w">קניית דירה לפני כן עלולה לפגוע בזכאות. בודקים את הסדר הנכון.</p></div></div>
-  <div class="cta-strip"><h3>רוצים לדעת מה מתאים לכם?</h3><p>נבדוק יכולת משכנתא והון עצמי, ונבנה תרחיש שמתאים לכם.</p><button class="btn" data-open="contact">{{I:arrow}}לפגישת "בית ראשון"</button></div>
+  <div class="cta-strip"><h3>רוצים לדעת מה מתאים לכם?</h3><p>נבדוק יכולת משכנתא והון עצמי, ונבנה תרחיש שמתאים לכם.</p><a class="btn" href="{{BOOK}}" target="_blank" rel="noopener">{{I:calendar}}לקביעת פגישת "בית ראשון"</a></div>
 </section>
 
 <!-- 06 worksheet -->
@@ -402,7 +428,7 @@ table.calc tr.cg td{background:var(--sky);font-family:'Karantina';font-size:28px
       <li class="y">בדיקת יכולת משכנתא עוד לפני שמחפשים</li>
       <li class="y">סדר בחשבון, בביטוחים ובפנסיה מהיום הראשון</li>
     </ul>
-    <button class="btn" data-open="contact">{{I:arrow}}לקביעת פגישה</button>
+    <a class="btn" href="{{BOOK}}" target="_blank" rel="noopener">{{I:calendar}}לקביעת פגישה ביומן</a>
   </div>
   <p class="sig">איתכם לכל הדרך,<br>שיראל.</p>
 </section>
@@ -434,7 +460,8 @@ table.calc tr.cg td{background:var(--sky);font-family:'Karantina';font-size:28px
       <li class="y">סדר בחשבון, בביטוחים ובפנסיה</li>
     </ul>
     <div class="stack">
-      <a class="btn" href="{{WA}}" target="_blank" rel="noopener">{{I:wa}}שלחו "סדר אחרי החתונה" בוואטסאפ</a>
+      <a class="btn" href="{{BOOK}}" target="_blank" rel="noopener">{{I:calendar}}קבעו פגישה ביומן</a>
+      <a class="btn alt" href="{{WA}}" target="_blank" rel="noopener">{{I:wa}}שלחו "סדר אחרי החתונה" בוואטסאפ</a>
       <a class="btn alt" href="tel:+972524415395">{{I:phone}}<span class="ltr">052-441-5395</span></a>
       <a class="btn alt" href="mailto:sp.makesense@gmail.com">{{I:mail}}sp.makesense@gmail.com</a>
     </div>

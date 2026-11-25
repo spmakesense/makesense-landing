@@ -80,13 +80,14 @@
       }
     });
   });
-  document.querySelectorAll('.mrow').forEach(function (row, r) {
-    [['תחנה (למשל: דירה)', ''], ['שנה', 'yr']].forEach(function (d) {
-      var inp = document.createElement('input'), id = 'l' + r + d[1];
-      inp.placeholder = d[0]; inp.dataset.id = id; inp.setAttribute('aria-label', d[0] + ' ' + (r + 1));
-      if (d[1]) { inp.className = 'yr'; inp.inputMode = 'numeric'; }
+  document.querySelectorAll('.lt.mine .lr').forEach(function (row) {
+    var r = row.getAttribute('data-r');
+    [['.ly', 'שנה', 'yr'], ['.lc', 'תחנה (למשל: דירה)', '']].forEach(function (d) {
+      var inp = document.createElement('input'), id = 'l' + r + d[2];
+      inp.placeholder = d[1]; inp.dataset.id = id; inp.setAttribute('aria-label', d[1] + ' ' + (+r + 1));
+      if (d[2]) inp.inputMode = 'numeric';
       if (store.w[id]) inp.value = store.w[id];
-      row.appendChild(inp);
+      row.querySelector(d[0]).appendChild(inp);
     });
   });
   function total(t) {
@@ -123,4 +124,22 @@
   document.addEventListener('input', function (e) { var i = e.target; if (!i.dataset || !i.dataset.id) return; store.w[i.dataset.id] = i.value; save(); recalc(); });
   document.addEventListener('change', function (e) { if (e.target.closest('.task')) recalc(); });
   recalc();
+
+  /* ---------- scroll reveal (float up) ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    var hero = Array.prototype.slice.call(document.querySelectorAll('.hero > *'));
+    hero.forEach(function (el, n) { el.classList.add('rv'); el.style.transitionDelay = (n * 90) + 'ms'; });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { hero.forEach(function (el) { el.classList.add('in'); }); }); });
+    var sel = 'section.s > .tag, section.s > h2.h, section.s > .sub, .tl .st, .task, .mc, .emerg > *, .sx, table.race, .note, .chart, .hchart, .deal, .lottery, .cta-strip, .wcard, section.s > .card, .sig, .foot img, .foot p, .lr';
+    var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) {
+      var sib = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.classList.add('rv'); el.style.transitionDelay = Math.min(sib % 4, 3) * 70 + 'ms';
+      io.observe(el);
+    });
+  }
 })();

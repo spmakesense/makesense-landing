@@ -29,6 +29,7 @@ P = {  # lucide-style icon paths
  'users': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
  'chev': '<path d="M6 9l6 6 6-6"/>',
  'check': '<path d="M20 6L9 17l-5-5"/>',
+ 'calendar': '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/>',
  'clock': '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
 }
 def I(n, cls='i'):
@@ -154,9 +155,11 @@ WS = (
  + '<div class="wcard"><div class="wt"><span class="wn">4</span>ביטוחים<small>בודקים ב"הר הביטוח"</small></div>'
  + tbl(['סוג', 'חברה', 'פרמיה בחודש', 'כפילות?'], rows(['בריאות', 'חיים / ריסק', 'מחלות קשות', 'קופת חולים ומסלול (שב"ן)', 'דירה ותכולה', 'רכב', 'סיעודי'], 4)) + '</div>'
  + '<div class="wcard"><div class="wt"><span class="wn">5</span>ציר החיים שלנו<small>קודם דוגמה, ואז הציר שלכם</small></div>'
- + '<span class="tlab">דוגמה</span><div class="life">'
- + ''.join(f'<div class="ev"><span class="e">{e}</span><b>{n}</b><small>{y}</small></div>' for e, n, y in [('💍', 'החתונה', '2026'), ('✈️', 'טיול', '2027'), ('🚗', 'רכב', '2028'), ('🏠', 'דירה', '2030'), ('👶', 'ילד ראשון', '2031'), ('👶', 'ילד שני', '2034')])
- + '</div><span class="tlab">הציר שלנו</span>' + '<div class="mrow"></div>' * 6
+ + '<div class="tl-head"><span class="tlab">דוגמה</span><small>ככה זה יכול להיראות</small></div><div class="lt ex">'
+ + ''.join(f'<div class="lr"><div class="ly">{y}</div><div class="ld"><span>{e}</span></div><div class="lc"><b>{n}</b>' + (f'<small>{s}</small>' if s else '') + '</div></div>' for e, n, y, s in [('💍', 'החתונה', '2026', 'היום'), ('✈️', 'טיול ראשון', '2027', 'חיסכון ייעודי'), ('🚗', 'רכב', '2028', 'בלי הלוואה יקרה'), ('🏠', 'דירה', '2030', 'הון עצמי מוכן'), ('👶', 'ילד ראשון', '2031', 'קרן חירום מלאה'), ('👶', 'ילד שני', '2034', '')])
+ + '</div><div class="tl-head"><span class="tlab">הציר שלנו</span><small>כתבו שנה ותחנה</small></div><div class="lt mine">'
+ + ''.join(f'<div class="lr in-row" data-r="{r}"><div class="ly"></div><div class="ld"><span>{r + 1}</span></div><div class="lc"></div></div>' for r in range(6))
+ + '</div>'
  + '<div class="stack"><a class="btn wsend" href="' + WA + '" target="_blank" rel="noopener">' + I('wa') + 'שלחו לי את הסיכום בוואטסאפ</a></div>'
  + '<p class="saved">מה שתמלאו נשמר רק בטלפון שלכם. הכפתור שולח סיכום של הסכומים.</p></div>'
 )
@@ -165,7 +168,7 @@ html = open(os.path.join(D, 'web.tpl.html'), encoding='utf-8').read()
 rep = {'{{TASKS}}': ''.join(task_html(i, t) for i, t in enumerate(TASKS)), '{{EQ_ROWS}}': EQ, '{{PR_ROWS}}': PR,
        '{{DEAL_TILES}}': TILES, '{{DEAL_TPLS}}': TPLS, '{{WORKSHEET}}': WS,
        '{{JS}}': open(os.path.join(D, 'webapp.js'), encoding='utf-8').read(),
-       '{{LOGO}}': img('logo_s.png', 'image/png'), '{{FACE}}': img('face_s.jpg', 'image/jpeg'), '{{WA}}': WA}
+       '{{LOGO}}': img('logo_s.png', 'image/png'), '{{FACE}}': img('face_s.jpg', 'image/jpeg'), '{{WA}}': WA, '{{BOOK}}': 'https://moneyflow-ai.com/book/73f13f06-117d-4784-817d-d12000ae27a7'}
 for k, v in rep.items(): html = html.replace(k, v)
 html = re.sub(r'\{\{I:(\w+)\}\}', lambda m: I(m.group(1)), html)
 assert '{{' not in html, html[html.index('{{'):html.index('{{') + 40]
