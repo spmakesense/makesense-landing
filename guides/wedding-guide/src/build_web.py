@@ -1,7 +1,7 @@
 """Builds the mobile web guide (../index.html) from web.tpl.html + content below + webapp.js."""
 import base64, os, re
 D = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(D, '..', 'index.html')
+OUT = os.path.join(D, '..', 'guide.html')
 
 def img(name, mime):
     return f'data:{mime};base64,' + base64.b64encode(open(os.path.join(D, name), 'rb').read()).decode()
